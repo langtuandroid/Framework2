@@ -1,0 +1,25 @@
+{
+    "name": "Framework",
+    "rootNamespace": "",
+    "references": [
+        "Unity.TextMeshPro",
+        "YooAsset",
+        "CatJson",
+        "BetterStreamingAssets"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Debugger.dll",
+        "Sirenix.OdinInspector.Attributes.dll",
+        "DOTweenPro.dll",
+        "DOTween.dll",
+        "Sirenix.Serialization.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

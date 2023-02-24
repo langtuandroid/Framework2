@@ -1,0 +1,18 @@
+using Framework;
+
+[UI("#PrefabPath")]
+public class #ClassName : View
+{
+    private #VMName vm;
+	
+    #region Components
+    #endregion
+
+    protected override void OnVmChange()
+    {
+        vm = ViewModel as #VMName;
+    }
+     
+    public override UILevel UILevel { get; } = UILevel.Common;
+    
+}

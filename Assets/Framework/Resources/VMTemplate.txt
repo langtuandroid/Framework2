@@ -1,0 +1,9 @@
+using Framework;
+
+public class #ClassName : ViewModel
+{
+    public #ClassName()
+    {
+
+    }
+}
