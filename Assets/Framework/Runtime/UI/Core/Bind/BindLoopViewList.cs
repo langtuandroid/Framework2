@@ -35,7 +35,7 @@ namespace Framework
         {
             if (!itemTrans2View.TryGetValue(itemTrans, out var item))
             {
-                item = ReflectionHelper.CreateInstance(viewType) as View;
+                item = Activator.CreateInstance(viewType) as View;
                 itemTrans2View[itemTrans] = item;
                 item.SetGameObject(itemTrans.gameObject);
             }

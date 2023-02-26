@@ -24,7 +24,7 @@ public class BuildContext
         BuildPath = buildPath;
         if (string.IsNullOrEmpty(buildPath))
         {
-            BuildPath = Path.Combine(FApplication.ProjectRoot, "Build");
+            BuildPath = Path.Combine(ApplicationHelper.ProjectRoot, "Build");
         }
         UpVersion = upVersion;
         ExportAAB = exportAab;

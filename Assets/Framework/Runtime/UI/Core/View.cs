@@ -18,6 +18,7 @@ namespace Framework
         FullScreen,
     }
     
+    [UI("")]
     public abstract class View : ICustomRes
     {
         private List<View> _subViews;
@@ -48,7 +49,7 @@ namespace Framework
 
         private void SetComponent()
         {
-            var type = this.GetCLRType();
+            var type = this.GetType();
             if (!_type2TransPath.TryGetValue(type, out var paths))
             {
                 paths = new List<Tuple<FieldInfo, string>>();

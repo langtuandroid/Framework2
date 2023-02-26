@@ -62,7 +62,7 @@ namespace Framework
 
         private void AddItem(int index, ViewModel vm)
         {
-            var view = ReflectionHelper.CreateInstance(_item.GetCLRType()) as View;
+            var view = Activator.CreateInstance(_item.GetType()) as View;
             var go = Object.Instantiate(_template, _content);
             go.transform.SetSiblingIndex(index + 1);
             go.ActiveShow();

@@ -68,7 +68,7 @@ namespace Framework
             }
             else
             {
-                view = ReflectionHelper.CreateInstance(type) as View;
+                view = Activator.CreateInstance(type) as View;
                 Executors.RunOnCoroutineNoReturn(CreateViewGo(promise, view, path, viewModel));
             }
             
@@ -87,7 +87,7 @@ namespace Framework
         {
             ProgressResult<float, T> progressResult = new ProgressResult<float, T>();
             var type = typeof(T);
-            var view = ReflectionHelper.CreateInstance(type) as View;
+            var view = Activator.CreateInstance(type) as View;
             var path = (GetClassData(type).Attribute as UIAttribute).Path;
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
@@ -96,7 +96,7 @@ namespace Framework
         public IProgressResult<float, View> CreateViewAsync(Type type, ViewModel vm)
         {
             ProgressResult<float, View> progressResult = new ProgressResult<float, View>();
-            var view = ReflectionHelper.CreateInstance(type) as View;
+            var view = Activator.CreateInstance(type) as View;
             var path = (GetClassData(type).Attribute as UIAttribute).Path;
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
@@ -147,7 +147,7 @@ namespace Framework
         {
             var path = (GetClassData(type).Attribute as UIAttribute).Path;
             var loadGo = _res.Instantiate(path);
-            View view = ReflectionHelper.CreateInstance(type) as View;
+            View view = Activator.CreateInstance(type) as View;
             view.SetGameObject(loadGo);
             view.SetVm(viewModel);
             Sort(view);
@@ -166,7 +166,7 @@ namespace Framework
         {
             if (view.IsSingle)
             {
-                Close(view.GetCLRType());
+                Close(view.GetType());
                 return;
             }
             for (int i = 0; i < openedViews.Count; i++)

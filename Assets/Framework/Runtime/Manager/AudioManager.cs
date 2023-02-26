@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public sealed class AudioManager : MonoSingleton<AudioManager>
+    public sealed class AudioManager : Singleton<AudioManager> , ISingletonAwake
     {
 
         /// <summary>
@@ -52,9 +52,11 @@ namespace Framework
         private readonly Dictionary<GameObject, AudioSource> _worldAudio = new Dictionary<GameObject, AudioSource>();
         private bool _isMute;
         private IRes res;
+        private GameObject gameObject;
 
-        private void Awake()
+        void ISingletonAwake.Awake()
         {
+            gameObject = new GameObject("Audio");
             _backgroundAudio = CreateAudioSource("BackgroundAudio", BackgroundPriority, BackgroundVolume);
             _singleAudio = CreateAudioSource("SingleAudio", SinglePriority, SoundEffectVolume);
             res = Res.Create();

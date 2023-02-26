@@ -49,7 +49,7 @@ namespace Framework
             _wrappers = new List<ViewWrapper>(childCount);
             for (int i = 0; i < childCount; i++)
             {
-                var view = ReflectionHelper.CreateInstance(viewType) as View;
+                var view =Activator.CreateInstance(viewType) as View;
                 var wrapper = new ViewWrapper(view, _content,i);
                 wrapper.SetTag(i);
                 _list.AddListener(((IBindList<ViewModel>)wrapper).GetBindListFunc());
@@ -108,7 +108,7 @@ namespace Framework
                 var child = root.GetChild(i);
                 if (regex.IsMatch(child.name))
                 {
-                    var view = ReflectionHelper.CreateInstance(viewType) as View;
+                    var view =Activator.CreateInstance(viewType) as View;
                     view.SetGameObject (child.gameObject);
                     _views.Add(view);
                 }

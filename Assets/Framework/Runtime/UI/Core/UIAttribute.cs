@@ -2,11 +2,11 @@ using System;
 
 namespace Framework
 {
-    public class UIAttribute : ManagerAttribute
+    public class UIAttribute : BaseAttribute
     {
-        public string Path { get; private set; }
+        public string Path { get; }
 
-        public UIAttribute(string path) : base(-1)
+        public UIAttribute(string path)
         {
             Path = path;
         }

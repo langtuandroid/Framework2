@@ -319,7 +319,7 @@ namespace IngameDebugConsole
 					return;
 				}
 
-				Type parameterType = ReflectionHelper.GetCLRTypeFunc(parameters[i].ParameterType);
+				Type parameterType = parameters[i].ParameterType;
 				if( parseFunctions.ContainsKey( parameterType ) || typeof( Component ).IsAssignableFrom( parameterType ) || parameterType.IsEnum || IsSupportedArrayType( parameterType ) )
 					parameterTypes[i] = parameterType;
 				else

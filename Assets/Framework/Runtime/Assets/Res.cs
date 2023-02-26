@@ -45,13 +45,13 @@ namespace Framework
             return Activator.CreateInstance(DefaultResType) as IRes;
         }
         
-        public abstract T LoadAsset<T>(string key) where T : Object;
+        public abstract T LoadAsset<T>(string key) where T : ETObject;
         protected abstract IEnumerator LoadScene(IProgressPromise<float, string> promise, string path,
             LoadSceneMode loadSceneMode, bool allowSceneActivation = true);
 
         public abstract IProgressResult<float,string> CheckDownloadSize();
         public abstract IProgressResult<DownloadProgress> DownloadAssets();
-        protected abstract IEnumerator loadAssetAsync<T>(string key, IProgressPromise<float, T> promise) where T : Object;
+        protected abstract IEnumerator loadAssetAsync<T>(string key, IProgressPromise<float, T> promise) where T : ETObject;
         public abstract void Dispose();
         
         public IProgressResult<float,string> LoadScene(string path, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
@@ -61,7 +61,7 @@ namespace Framework
             return progressResult;
         }
         
-        public IProgressResult<float, T> LoadAssetAsync<T>(string key) where T : Object
+        public IProgressResult<float, T> LoadAssetAsync<T>(string key) where T : ETObject
         {
             ProgressResult<float, T> progressResult = new ProgressResult<float, T>(true);
             Executors.RunOnCoroutineReturn(loadAssetAsync(key, progressResult));
@@ -78,7 +78,7 @@ namespace Framework
             {
                 if (result.IsCancelled)
                 {
-                    Object.Destroy(progressResult.Result);
+                    ETObject.Destroy(progressResult.Result);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Framework
             {
                 if (result.IsCancelled && progressResult.Result != null)
                 {
-                    Object.Destroy(progressResult.Result);
+                    ETObject.Destroy(progressResult.Result);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace Framework
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;
-                var go = Object.Instantiate(result.Result);
+                var go = ETObject.Instantiate(result.Result);
                 go.transform.SetParent(parent, instantiateInWorldSpace);
                 resultProgress.SetResult(go);
             }));
@@ -141,7 +141,7 @@ namespace Framework
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;
-                var trans = Object.Instantiate(result.Result).transform;
+                var trans = ETObject.Instantiate(result.Result).transform;
                 trans.SetParent(parent);
                 trans.localPosition = localPosition;
                 trans.localRotation = localRotation;
@@ -155,7 +155,7 @@ namespace Framework
         public GameObject Instantiate(string key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
-            var trans = Object.Instantiate(LoadAsset<GameObject>(key)).transform;
+            var trans = ETObject.Instantiate(LoadAsset<GameObject>(key)).transform;
             trans.SetParent(parent, instantiateInWorldSpace);
             return trans.gameObject;
         }
@@ -166,7 +166,7 @@ namespace Framework
             {
                 string hostServerIP = HostServerURL;
                 string gameVersion = ConfigBase.Load<FrameworkRuntimeConfig>().GameVersion;
-                return $"{hostServerIP}/CDN/{FApplication.GetPlatformPath(Application.platform)}/{gameVersion}";
+                return $"{hostServerIP}/CDN/{ApplicationHelper.GetPlatformPath(Application.platform)}/{gameVersion}";
             }
         }
         
@@ -177,7 +177,7 @@ namespace Framework
                 string hostServerIP = FallbackHostServerURL;
                 string gameVersion = ConfigBase.Load<FrameworkRuntimeConfig>().GameVersion;
 #if UNITY_EDITOR
-                return $"{hostServerIP}/CDN/{FApplication.GetPlatformPath(UnityEditor.EditorUserBuildSettings.activeBuildTarget)}/{gameVersion}";
+                return $"{hostServerIP}/CDN/{ApplicationHelper.GetPlatformPath(UnityEditor.EditorUserBuildSettings.activeBuildTarget)}/{gameVersion}";
 #else
                 return $"{hostServerIP}/CDN/{FApplication.GetPlatformPath(Application.platform)}/{gameVersion}";
 #endif

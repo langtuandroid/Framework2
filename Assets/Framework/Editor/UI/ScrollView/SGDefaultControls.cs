@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace Framework.Editor.UI
+namespace Framework.Editor
 {
     public static class SGDefaultControls
     {

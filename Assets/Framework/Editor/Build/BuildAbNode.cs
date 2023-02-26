@@ -40,7 +40,7 @@ public class BuildAbNode : IBuildTask , IPostprocessBuildWithReport
         {
             Debug.Log("开始拷贝");
             // bundle 拷贝到 cdn
-            string cdnPath = Path.Combine(context.BuildPath, "CDN", FApplication.GetPlatformPath(context.BuildTarget), ConfigBase.Load<FrameworkRuntimeConfig>().GameVersion);
+            string cdnPath = Path.Combine(context.BuildPath, "CDN", ApplicationHelper.GetPlatformPath(context.BuildTarget), ConfigBase.Load<FrameworkRuntimeConfig>().GameVersion);
             var buildOutPath =
                 $"{buildParameters.OutputRoot}/{buildParameters.BuildTarget}";
             DirectoryInfo buildOutDir = new DirectoryInfo(buildOutPath);

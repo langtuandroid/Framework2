@@ -16,7 +16,7 @@ namespace Framework.Editor
             {
                 UpVersion(context.BuildTarget);
             }
-            var buildPath = Path.Combine(context.BuildPath, FApplication.GetPlatformPath(context.BuildTarget));
+            var buildPath = Path.Combine(context.BuildPath, ApplicationHelper.GetPlatformPath(context.BuildTarget));
             Directory.CreateDirectory(buildPath);
             switch (context.BuildTarget)
             {
