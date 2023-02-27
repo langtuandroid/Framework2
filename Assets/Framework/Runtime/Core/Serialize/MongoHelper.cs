@@ -199,7 +199,7 @@ namespace Framework
             return obj.ToBson();
         }
 
-        public static void Serialize(object message, MemoryStream stream)
+        public static void Serialize(object message, Stream stream)
         {
             using (BsonBinaryWriter bsonWriter = new BsonBinaryWriter(stream, BsonBinaryWriterSettings.Defaults))
             {

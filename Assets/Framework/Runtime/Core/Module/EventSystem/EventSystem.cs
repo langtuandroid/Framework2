@@ -72,7 +72,8 @@ namespace Framework
 
         private readonly Dictionary<string, Type> allTypes = new();
 
-        private readonly UnOrderMultiMapSet<Type, Type> types = new();
+        private readonly UnOrderMultiMapSet<Type, Type> attribute2Types = new();
+        private readonly UnOrderMultiMapSet<Type, (BaseAttribute attribute, Type type)> attribute2TypesAndAttribute = new();
 
         private readonly Dictionary<Type, List<EventInfo>> allEvents = new();
 
@@ -93,7 +94,8 @@ namespace Framework
         public void Add(Dictionary<string, Type> addTypes)
         {
             this.allTypes.Clear();
-            this.types.Clear();
+            this.attribute2Types.Clear();
+            this.attribute2TypesAndAttribute.Clear();
 
             foreach ((string fullName, Type type) in addTypes)
             {
@@ -109,7 +111,8 @@ namespace Framework
 
                 foreach (object o in objects)
                 {
-                    this.types.Add(o.GetType(), type);
+                    this.attribute2Types.Add(o.GetType(), type);
+                    this.attribute2TypesAndAttribute.Add(o.GetType(), (o as BaseAttribute, type));
                 }
             }
 
@@ -132,7 +135,7 @@ namespace Framework
             }
 
             this.allEvents.Clear();
-            foreach (Type type in types[typeof(EventAttribute)])
+            foreach (Type type in attribute2Types[typeof(EventAttribute)])
             {
                 IEvent obj = Activator.CreateInstance(type) as IEvent;
                 if (obj == null)
@@ -159,7 +162,7 @@ namespace Framework
             }
 
             this.allInvokes = new Dictionary<Type, Dictionary<int, object>>();
-            foreach (Type type in types[typeof(InvokeAttribute)])
+            foreach (Type type in attribute2Types[typeof(InvokeAttribute)])
             {
                 object obj = Activator.CreateInstance(type);
                 IInvoke iInvoke = obj as IInvoke;
@@ -193,12 +196,22 @@ namespace Framework
 
         public HashSet<Type> GetTypes(Type systemAttributeType)
         {
-            if (!this.types.ContainsKey(systemAttributeType))
+            if (!this.attribute2Types.TryGetValue(systemAttributeType, out var result))
             {
-                return new HashSet<Type>();
+                result = new HashSet<Type>();
             }
 
-            return this.types[systemAttributeType];
+            return result;
+        }
+        
+        public HashSet<(BaseAttribute attribute, Type type)> GetTypesAndAttribute(Type systemAttributeType)
+        {
+            if (!this.attribute2TypesAndAttribute.TryGetValue(systemAttributeType, out var result))
+            {
+                result = new HashSet<(BaseAttribute attribute, Type type)>();
+            }
+
+            return result;
         }
 
         public Dictionary<string, Type> GetTypes()

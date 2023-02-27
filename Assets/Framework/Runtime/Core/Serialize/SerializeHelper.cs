@@ -8,21 +8,22 @@ namespace Framework
     {
         public static object Deserialize(Type type, byte[] bytes, int index, int count)
         {
-            return null;
+            return MongoHelper.Deserialize(type, bytes, index, count);
         }
 
         public static byte[] Serialize(object message)
         {
-            return null;
+            return MongoHelper.Serialize(message);
         }
 
         public static void Serialize(object message, Stream stream)
         {
+            MongoHelper.Serialize(message, stream);
         }
 
         public static object Deserialize(Type type, Stream stream)
         {
-            return null;
+            return MongoHelper.Deserialize(type, stream);
         }
     }
 }

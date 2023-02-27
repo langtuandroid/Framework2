@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Framework
 {
@@ -9,9 +10,6 @@ namespace Framework
     /// </summary>
     public class ConfigComponent : Singleton<ConfigComponent>
     {
-        public struct GetAllConfigBytes
-        {
-        }
 
         public struct GetOneConfigBytes
         {
@@ -50,28 +48,28 @@ namespace Framework
         public void Load()
         {
             this.allConfig.Clear();
-            Dictionary<Type, byte[]> configBytes =
-                EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, byte[]>>(new GetAllConfigBytes());
+            var typeAndAttribute = EventSystem.Instance.GetTypesAndAttribute(typeof(ConfigAttribute));
+            using RecyclableList<Task> recyclableListTasks = RecyclableList<Task>.Create();
 
-            foreach (Type type in configBytes.Keys)
+            foreach ((BaseAttribute attribute, Type type) item in typeAndAttribute)
             {
-                byte[] oneConfigBytes = configBytes[type];
-                this.LoadOneInThread(type, oneConfigBytes);
+                var oneConfigBytes =
+                    Res.Default.LoadAsset<TextAsset>((item.attribute as ConfigAttribute).Path).bytes;
+                LoadOneInThread(item.type, oneConfigBytes);
             }
         }
 
         public async ETTask LoadAsync()
         {
             this.allConfig.Clear();
-            Dictionary<Type, byte[]> configBytes =
-                EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, byte[]>>(new GetAllConfigBytes());
-
+            var typeAndAttribute = EventSystem.Instance.GetTypesAndAttribute(typeof(ConfigAttribute));
             using RecyclableList<Task> recyclableListTasks = RecyclableList<Task>.Create();
 
-            foreach (Type type in configBytes.Keys)
+            foreach ((BaseAttribute attribute, Type type) item in typeAndAttribute)
             {
-                byte[] oneConfigBytes = configBytes[type];
-                Task task = Task.Run(() => LoadOneInThread(type, oneConfigBytes));
+                var oneConfigBytes =
+                    (await Res.Default.LoadAssetAsync<TextAsset>((item.attribute as ConfigAttribute).Path)).bytes;
+                Task task = Task.Run(() => LoadOneInThread(item.type, oneConfigBytes));
                 recyclableListTasks.Add(task);
             }
 
