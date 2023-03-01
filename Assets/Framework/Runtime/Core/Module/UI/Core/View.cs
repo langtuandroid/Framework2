@@ -142,14 +142,14 @@ namespace Framework
 
         public IProgressResult<float, View> AddSubView<T>(ViewModel viewModel = null) where T : View
         {
-            var progressResult = UIManager.Ins.CreateViewAsync(typeof(T), viewModel);
+            var progressResult = UIManager.Instance.CreateViewAsync(typeof(T), viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
         
         public IProgressResult<float, View> AddSubView(Type type, ViewModel viewModel = null)
         {
-            var progressResult = UIManager.Ins.CreateViewAsync(type, viewModel);
+            var progressResult = UIManager.Instance.CreateViewAsync(type, viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
@@ -178,7 +178,7 @@ namespace Framework
 
         protected void Close()
         {
-            UIManager.Ins.Close(this);
+            UIManager.Instance.Close(this);
         }
 
         public void Dispose()

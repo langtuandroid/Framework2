@@ -10,23 +10,17 @@ namespace Framework
 {
     public class Toast
     {
-
-        private static UIManager GetUIViewLocator()
-        {
-            return UIManager.Ins;
-        }
-
         private static ToastContent toastContent;
         
         public static async Task<IAsyncResult<View>> Show(string text,int fontSize = 36, float duration = 3f,bool fly = true, Action callback = null)
         {
             if (toastContent == null)
             {
-                toastContent = await UIManager.Ins.OpenAsync<ToastContent>() as ToastContent;
+                toastContent = await UIManager.Instance.OpenAsync<ToastContent>() as ToastContent;
             }
             else if (toastContent.Go == null)
             {
-                toastContent = await UIManager.Ins.OpenAsync<ToastContent>() as ToastContent;
+                toastContent = await UIManager.Instance.OpenAsync<ToastContent>() as ToastContent;
             }
             var result = toastContent.AddSubView<ToastView>();
             result.Callbackable().OnCallback(progressResult =>

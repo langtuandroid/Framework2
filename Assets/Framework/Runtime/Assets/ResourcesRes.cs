@@ -10,7 +10,7 @@ namespace Framework
     public class ResourcesRes : Res
     {
 
-        private List<ETObject> _handles = new List<ETObject>();
+        private List<Object> _handles = new List<Object>();
         private List<ResourceRequest> requests = new List<ResourceRequest>();
 
         public override IAsyncResult Init()

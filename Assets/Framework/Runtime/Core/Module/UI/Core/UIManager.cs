@@ -7,32 +7,21 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class UIManager : GameModuleWithAttribute<UIManager, UIAttribute, Type>
+    public class UIManager : Singleton<UIManager>, ISingletonAwake
     {
-        public static UIManager Ins => SingletonProperty<UIManager>.Instance;
         private IRes _res;
+        public Canvas Canvas { get; private set; }
+        private Dictionary<Type, string> viewType2Path = new();
 
-        public Canvas Canvas { get; private set; } 
 
-        public override void Init()
+        public void Awake()
         {
-            Canvas = GameObject.Find("UIRoot").GetComponent<Canvas>();
-            if (Canvas == null)
-            {
-                throw new Exception("找不到名为UIRoot的canvas");
-            }
+            Canvas = Resources.Load<GameObject>("UIRoot").GetComponent<Canvas>();
             Object.DontDestroyOnLoad(Canvas);
             _res = Res.Create();
-        }
-
-        public override void CheckType(Type type)
-        {
-            var attrs = type.GetCustomAttributes(typeof(UIAttribute), false);
-            if (attrs.Length <= 0) return;
-            var attr = (UIAttribute)attrs[0];
-            if (attr != null)
+            foreach (var tuple in EventSystem.Instance.GetTypesAndAttribute(typeof(UIAttribute)))
             {
-                ClassDataMap[type] = new ClassData {Attribute = attr, Type = type};
+                viewType2Path[tuple.type] = (tuple.attribute as UIAttribute).Path;
             }
         }
 
@@ -55,7 +44,7 @@ namespace Framework
 
         private void InternalOpenAsync<T>(Type type, ProgressResult<float, T> promise, ViewModel viewModel) where T : View
         {
-            var path = (GetClassData(type).Attribute as UIAttribute).Path;
+            var path = viewType2Path[type];
             promise.Callbackable().OnCallback(progressResult =>
             {
                 Sort(progressResult.Result);
@@ -88,7 +77,7 @@ namespace Framework
             ProgressResult<float, T> progressResult = new ProgressResult<float, T>();
             var type = typeof(T);
             var view = Activator.CreateInstance(type) as View;
-            var path = (GetClassData(type).Attribute as UIAttribute).Path;
+            var path = viewType2Path[type];
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
         }
@@ -97,7 +86,7 @@ namespace Framework
         {
             ProgressResult<float, View> progressResult = new ProgressResult<float, View>();
             var view = Activator.CreateInstance(type) as View;
-            var path = (GetClassData(type).Attribute as UIAttribute).Path;
+            var path = viewType2Path[type];
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
         }
@@ -145,7 +134,7 @@ namespace Framework
 
         private View CreateView(Type type, ViewModel viewModel)
         {
-            var path = (GetClassData(type).Attribute as UIAttribute).Path;
+            var path = viewType2Path[type];
             var loadGo = _res.Instantiate(path);
             View view = Activator.CreateInstance(type) as View;
             view.SetGameObject(loadGo);
@@ -254,5 +243,6 @@ namespace Framework
             else
                 viewTransform.SetSiblingIndex(index);
         }
+
     }
 }

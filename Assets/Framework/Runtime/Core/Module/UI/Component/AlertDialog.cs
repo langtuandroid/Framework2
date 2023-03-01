@@ -14,11 +14,6 @@ namespace Framework
         public const int BUTTON_NEGATIVE = -1;
         public const int BUTTON_NEUTRAL = 0;
 
-        private static UIManager GetUIViewLocator()
-        {
-            return UIManager.Ins;
-        }
-
         /// <summary>
         /// Displays information to the user. 
         /// </summary>
@@ -113,8 +108,7 @@ namespace Framework
             viewModel.CanceledOnTouchOutside.Value = canceledOnTouchOutside;
             viewModel.Click = clickCallback;
 
-            UIManager locator = GetUIViewLocator();
-            AlertDialogView window = (await locator.OpenAsync<AlertDialogView>()) as AlertDialogView;
+            AlertDialogView window = (await UIManager.Instance.OpenAsync<AlertDialogView>()) as AlertDialogView;
             AlertDialog dialog = new AlertDialog(window, contentView, viewModel);
             dialog.Show();
             return window;
@@ -132,8 +126,7 @@ namespace Framework
             AlertDialogView view = null;
             try
             {
-                UIManager locator = GetUIViewLocator();
-                view = await locator.OpenAsync<AlertDialogView>() as AlertDialogView;
+                view = await UIManager.Instance.OpenAsync<AlertDialogView>() as AlertDialogView;
                 AlertDialog dialog = new AlertDialog(view, null, viewModel);
                 dialog.Show();
                 return dialog;
@@ -141,7 +134,7 @@ namespace Framework
             catch (Exception e)
             {
                 if (view != null)
-                    UIManager.Ins.Close(view);
+                    UIManager.Instance.Close(view);
                 Log.Error(e);
                 throw;
             }

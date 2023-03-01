@@ -45,13 +45,13 @@ namespace Framework
             return Activator.CreateInstance(DefaultResType) as IRes;
         }
         
-        public abstract T LoadAsset<T>(string key) where T : ETObject;
+        public abstract T LoadAsset<T>(string key) where T : Object;
         protected abstract IEnumerator LoadScene(IProgressPromise<float, string> promise, string path,
             LoadSceneMode loadSceneMode, bool allowSceneActivation = true);
 
         public abstract IProgressResult<float,string> CheckDownloadSize();
         public abstract IProgressResult<DownloadProgress> DownloadAssets();
-        protected abstract IEnumerator loadAssetAsync<T>(string key, IProgressPromise<float, T> promise) where T : ETObject;
+        protected abstract IEnumerator loadAssetAsync<T>(string key, IProgressPromise<float, T> promise) where T : Object;
         public abstract void Dispose();
         
         public IProgressResult<float,string> LoadScene(string path, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
@@ -61,7 +61,7 @@ namespace Framework
             return progressResult;
         }
         
-        public IProgressResult<float, T> LoadAssetAsync<T>(string key) where T : ETObject
+        public IProgressResult<float, T> LoadAssetAsync<T>(string key) where T : Object
         {
             ProgressResult<float, T> progressResult = new ProgressResult<float, T>(true);
             Executors.RunOnCoroutineReturn(loadAssetAsync(key, progressResult));
@@ -78,7 +78,7 @@ namespace Framework
             {
                 if (result.IsCancelled)
                 {
-                    ETObject.Destroy(progressResult.Result);
+                    Object.Destroy(progressResult.Result);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Framework
             {
                 if (result.IsCancelled && progressResult.Result != null)
                 {
-                    ETObject.Destroy(progressResult.Result);
+                    Object.Destroy(progressResult.Result);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace Framework
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;
-                var go = ETObject.Instantiate(result.Result);
+                var go = Object.Instantiate(result.Result);
                 go.transform.SetParent(parent, instantiateInWorldSpace);
                 resultProgress.SetResult(go);
             }));
@@ -141,7 +141,7 @@ namespace Framework
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;
-                var trans = ETObject.Instantiate(result.Result).transform;
+                var trans = Object.Instantiate(result.Result).transform;
                 trans.SetParent(parent);
                 trans.localPosition = localPosition;
                 trans.localRotation = localRotation;
@@ -155,7 +155,7 @@ namespace Framework
         public GameObject Instantiate(string key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
-            var trans = ETObject.Instantiate(LoadAsset<GameObject>(key)).transform;
+            var trans = Object.Instantiate(LoadAsset<GameObject>(key)).transform;
             trans.SetParent(parent, instantiateInWorldSpace);
             return trans.gameObject;
         }

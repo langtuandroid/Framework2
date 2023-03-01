@@ -61,12 +61,9 @@ namespace Framework
         {
             public IEvent IEvent { get; }
 
-            public SceneType SceneType { get; }
-
             public EventInfo(IEvent iEvent, SceneType sceneType)
             {
                 this.IEvent = iEvent;
-                this.SceneType = sceneType;
             }
         }
 
@@ -604,6 +601,7 @@ namespace Framework
                 }
             }
         }
+        
 
         public async ETTask PublishAsync<T>(Scene scene, T a) where T : struct
         {
@@ -617,11 +615,6 @@ namespace Framework
 
             foreach (EventInfo eventInfo in iEvents)
             {
-                if (scene.SceneType != eventInfo.SceneType && eventInfo.SceneType != SceneType.None)
-                {
-                    continue;
-                }
-
                 if (!(eventInfo.IEvent is AEvent<T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");
@@ -652,12 +645,6 @@ namespace Framework
             SceneType sceneType = scene.SceneType;
             foreach (EventInfo eventInfo in iEvents)
             {
-                if (sceneType != eventInfo.SceneType && eventInfo.SceneType != SceneType.None)
-                {
-                    continue;
-                }
-
-
                 if (!(eventInfo.IEvent is AEvent<T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");
