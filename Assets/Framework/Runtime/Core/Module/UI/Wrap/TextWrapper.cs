@@ -32,10 +32,5 @@ namespace Framework
         {
             return value => Component.text = value.ToString(CultureInfo.InvariantCulture);
         }
-
-
-        public TextWrapper(Text component, View view) : base(component, view)
-        {
-        }
     }
 }

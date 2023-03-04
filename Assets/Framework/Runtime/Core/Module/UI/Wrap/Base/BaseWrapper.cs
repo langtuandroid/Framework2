@@ -3,16 +3,10 @@ using UnityEngine;
 
 namespace Framework
 {
-    public class BaseWrapper<T> : IFieldChangeCb<bool> where T : class
+    public class BaseWrapper<T> : IWrapper, IFieldChangeCb<bool> where T : class
     {
         protected T Component;
         protected object Container;
-
-        protected BaseWrapper(T component, object container)
-        {
-            this.Component = component;
-            this.Container = container;
-        }
 
         Action<bool> IFieldChangeCb<bool>.GetFieldChangeCb()
         {
@@ -20,5 +14,22 @@ namespace Framework
             if (Component is GameObject go) return value => go.SetActive(value);
             return null;
         }
+
+        public virtual void Clear()
+        {
+            Component = null;
+            Container = null;
+        }
+
+        public virtual void Init(object component, object container)
+        {
+            Component = component as T;
+            Container = container;
+        }
+    }
+
+    public interface IWrapper : IReference
+    {
+        void Init(object component, object container);
     }
 }

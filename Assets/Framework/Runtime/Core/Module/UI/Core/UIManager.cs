@@ -7,12 +7,16 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class UIManager : Singleton<UIManager>, ISingletonAwake
+    public class UIManager : Singleton<UIManager>, ISingletonAwake, ISingletonUpdate
     {
         private IRes _res;
         public Canvas Canvas { get; private set; }
-        private Dictionary<Type, string> viewType2Path = new();
-
+        private Dictionary<Type, UIAttribute> viewType2Attribute = new();
+        private Dictionary<Type, View> openedSingleViews = new();
+        private MultiMap<Type, (GameObject go, DateTime destroyTime)> _waitDestroyViews = new();
+        private Dictionary<Type, IProgressResult<float, View>> loadingView = new();
+        private Dictionary<UILevel, List<View>> uiLevel2View = new();
+        private const double ViewDestroyTime = 5;
 
         public void Awake()
         {
@@ -21,34 +25,36 @@ namespace Framework
             _res = Res.Create();
             foreach (var tuple in EventSystem.Instance.GetTypesAndAttribute(typeof(UIAttribute)))
             {
-                viewType2Path[tuple.type] = (tuple.attribute as UIAttribute).Path;
+                viewType2Attribute[tuple.type] = tuple.attribute as UIAttribute;
             }
         }
 
-        private List<View> openedViews = new List<View>();
-        private Dictionary<Type, View> openedSingleViews = new Dictionary<Type, View>();
-
         public IProgressResult<float, View> OpenAsync<T>(ViewModel viewModel = null) where T : View
         {
-            ProgressResult<float, View> result = new ProgressResult<float, View>();
-            InternalOpenAsync(typeof(T), result, viewModel);
-            return result;
+            var type = typeof(T);
+            if (viewType2Attribute[type].IsSingle && loadingView.TryGetValue(type, out var result))
+                return result;
+            ProgressResult<float, View> result1 = new();
+            InternalOpenAsync<T>(type, result1, viewModel);
+            return result1;
         }
 
-        public IProgressResult<float, View> OpenAsync(Type type, ViewModel viewModel = null)
+        private void InternalOpenAsync<T>(Type type, ProgressResult<float, View> promise, ViewModel viewModel)
+            where T : View
         {
-            ProgressResult<float, View> result = new ProgressResult<float, View>();
-            InternalOpenAsync(type, result, viewModel);
-            return result;
-        }
-
-        private void InternalOpenAsync<T>(Type type, ProgressResult<float, T> promise, ViewModel viewModel) where T : View
-        {
-            var path = viewType2Path[type];
+            var attribute = viewType2Attribute[type];
+            loadingView[type] = promise;
             promise.Callbackable().OnCallback(progressResult =>
             {
+                // 如果加载过程中就关闭了，直接放到销毁池里
+                if (progressResult.IsCancelled)
+                {
+                    _waitDestroyViews.Add(type, (progressResult.Result.Go, DateTime.Now.AddSeconds(ViewDestroyTime)));
+                    return;
+                }
                 Sort(progressResult.Result);
                 progressResult.Result.Show();
+                loadingView.Remove(type);
             });
             if (openedSingleViews.TryGetValue(type, out var view))
             {
@@ -58,35 +64,41 @@ namespace Framework
             else
             {
                 view = Activator.CreateInstance(type) as View;
-                Executors.RunOnCoroutineNoReturn(CreateViewGo(promise, view, path, viewModel));
+                Executors.RunOnCoroutineNoReturn(CreateViewGo(promise, view, attribute.Path, viewModel));
             }
-            
-            if (view.IsSingle)
+
+            if (!uiLevel2View.TryGetValue(view.UILevel, out var list))
+            {
+                list = new List<View>();
+                uiLevel2View[view.UILevel] = list;
+            }
+
+            if (attribute.IsSingle)
             {
                 openedSingleViews[type] = view;
-                openedViews.TryAddSingle(view);
+                list.TryAddSingle(view);
             }
             else
             {
-                openedViews.Add(view);    
+                list.Add(view);
             }
         }
 
         public IProgressResult<float, T> CreateViewAsync<T>(ViewModel vm) where T : View
         {
-            ProgressResult<float, T> progressResult = new ProgressResult<float, T>();
+            ProgressResult<float, T> progressResult = new();
             var type = typeof(T);
             var view = Activator.CreateInstance(type) as View;
-            var path = viewType2Path[type];
+            var path = viewType2Attribute[type].Path;
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
         }
         
         public IProgressResult<float, View> CreateViewAsync(Type type, ViewModel vm)
         {
-            ProgressResult<float, View> progressResult = new ProgressResult<float, View>();
+            ProgressResult<float, View> progressResult = new();
             var view = Activator.CreateInstance(type) as View;
-            var path = viewType2Path[type];
+            var path = viewType2Attribute[type].Path;
             Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, path, vm));
             return progressResult;
         }
@@ -94,24 +106,37 @@ namespace Framework
         private IEnumerator CreateViewGo<T>(IProgressPromise<float, T> promise,View view,string path, ViewModel viewModel)
             where T : View
         {
-            
-            var request = _res.LoadAssetAsync<GameObject>(path);
-            while (!request.IsDone)
+            GameObject go = null;
+            var type = typeof(T);
+            if (_waitDestroyViews.TryGetValue(type, out var list) && list.Count > 0)
             {
-                promise.UpdateProgress(request.Progress);
-                yield return null;
+                go = list.RemoveLast().go;
+                if (list.Count <= 0)
+                    _waitDestroyViews.Remove(type);
             }
-            GameObject viewTemplateGo = request.Result;
-            if (viewTemplateGo == null)
+            else
             {
-                promise.UpdateProgress(1f);
-                Log.Error($"Not found the window path = \"{path}\".");
-                promise.SetException(new FileNotFoundException(path));
-                yield break;
+                var request = _res.LoadAssetAsync<GameObject>(path);
+                while (!request.IsDone)
+                {
+                    promise.UpdateProgress(request.Progress);
+                    yield return null;
+                }
+
+                GameObject viewTemplateGo = request.Result;
+                if (viewTemplateGo == null)
+                {
+                    promise.UpdateProgress(1f);
+                    Log.Error($"Not found the window path = \"{path}\".");
+                    promise.SetException(new FileNotFoundException(path));
+                    yield break;
+                }
+
+                go = Object.Instantiate(viewTemplateGo);
             }
-            GameObject go = Object.Instantiate(viewTemplateGo);
+
             view.SetGameObject(go);
-            go.name = viewTemplateGo.name;
+            go.name = type.Name;
             promise.UpdateProgress(1f);
             promise.SetResult(view);
             view.SetVm(viewModel);
@@ -119,27 +144,46 @@ namespace Framework
 
         public T Open<T>(ViewModel viewModel = null) where T : View
         {
-            var view = CreateView(typeof(T), viewModel) as T;
-            if (view.IsSingle)
+            var type = typeof(T);
+            var view = CreateView(type, viewModel) as T;
+            Sort(view);
+            if (!uiLevel2View.TryGetValue(view.UILevel, out var list))
             {
-                openedSingleViews[typeof(T)] = view;
-                openedViews.TryAddSingle(view);
+                list = new List<View>();
+                uiLevel2View[view.UILevel] = list;
+            }
+
+            if (viewType2Attribute[type].IsSingle)
+            {
+                openedSingleViews[type] = view;
+                list.TryAddSingle(view);
             }
             else
             {
-                openedViews.Add(view);    
+                list.Add(view);
             }
+
             return view;
         }
 
         private View CreateView(Type type, ViewModel viewModel)
         {
-            var path = viewType2Path[type];
-            var loadGo = _res.Instantiate(path);
+            GameObject go = null;
+            if (_waitDestroyViews.TryGetValue(type, out var list) && list.Count > 0)
+            {
+                go = list.RemoveLast().go;
+                if (list.Count <= 0)
+                    _waitDestroyViews.Remove(type);
+            }
+            else
+            {
+                var path = viewType2Attribute[type].Path;
+                go = _res.Instantiate(path);
+            }
+
             View view = Activator.CreateInstance(type) as View;
-            view.SetGameObject(loadGo);
+            view.SetGameObject(go);
             view.SetVm(viewModel);
-            Sort(view);
             return view;
         }
 
@@ -153,20 +197,15 @@ namespace Framework
 
         public void Close(View view)
         {
-            if (view.IsSingle)
+            if (viewType2Attribute[view.GetType()].IsSingle)
             {
                 Close(view.GetType());
                 return;
             }
-            for (int i = 0; i < openedViews.Count; i++)
-            {
-                if (view == openedViews[i])
-                {
-                    openedViews.RemoveAt(i);
-                    view.Dispose();
-                    break;
-                }
-            }
+
+            uiLevel2View[view.UILevel].Remove(view);
+            view.Dispose();
+            _waitDestroyViews.Add(view.GetType(), (view.Go, DateTime.Now.AddSeconds(ViewDestroyTime)));
         }
         
         public T Get<T>() where T : View
@@ -189,26 +228,19 @@ namespace Framework
             if (!openedSingleViews.TryGetValue(type, out var view))
                 return;
             openedSingleViews.Remove(type);
-            for (int i = 0; i < openedViews.Count; i++)
-            {
-                if (view == openedViews[i])
-                {
-                    openedViews.RemoveAt(i);
-                    break;
-                }
-            }
+            uiLevel2View[view.UILevel].Remove(view);
             view.Dispose();
-            //_waitDestroyViews[view] = DateTime.Now.AddSeconds(ViewDestroyTime);
+            _waitDestroyViews.Add(type, (view.Go, DateTime.Now.AddSeconds(ViewDestroyTime)));
         }
-        
+
         public void CloseAll()
         {
-            foreach (var openedView in openedViews)
+            using RecyclableList<View> views = RecyclableList<View>.Create();
+            uiLevel2View.Values.ForEach(v => views.AddRange(v));
+            foreach (var view in views)
             {
-                openedView.Dispose();
+                Close(view);
             }
-            openedViews.Clear();
-            openedSingleViews.Clear();
         }
 
         private void Sort(View view)
@@ -244,5 +276,9 @@ namespace Framework
                 viewTransform.SetSiblingIndex(index);
         }
 
+        public void Update()
+        {
+            
+        }
     }
 }

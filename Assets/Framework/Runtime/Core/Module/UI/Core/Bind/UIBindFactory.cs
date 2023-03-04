@@ -18,7 +18,8 @@ namespace Framework
             }
             else
             {
-                bind = new BindViewList<TItemVm, TItemView>();
+                bind = ReferencePool.Allocate<BindViewList<TItemVm, TItemView>>();
+                bind.Init(Container);
             }
             bind.Reset(list, root);
             AddClearable(bind);
@@ -35,68 +36,13 @@ namespace Framework
             }
             else
             {
-                bind = new BindLoopViewList<TItemVm, TItemView>();
+                bind = ReferencePool.Allocate<BindLoopViewList<TItemVm, TItemView>>();
+                bind.Init(Container);
             }
             bind.Reset(list, root);
             AddClearable(bind);
         }
 
-#if ILRUNTIME
-        /// <summary>
-        /// 用在热更的BindView
-        /// </summary>
-        public void BindViewList(ObservableList<ViewModelAdapter.Adapter> list,LoopScrollRect root, Type view)
-        {
-            BindLoopViewList<ViewModelAdapter.Adapter,ViewAdapter.Adapter> bind;
-            if (CacheBinds.Count > 0)
-            {
-                bind = (BindLoopViewList<ViewModelAdapter.Adapter,ViewAdapter.Adapter>) CacheBinds.Dequeue();
-            }
-            else
-            {
-                bind = new BindLoopViewList<ViewModelAdapter.Adapter,ViewAdapter.Adapter>();
-            }
-            bind.SetViewType(view);
-            bind.Reset(list, root);
-            AddClearable(bind);
-        }
-        
-        /// <summary>
-        /// 用在热更的BindView
-        /// </summary>
-        public void BindViewList(ObservableList<ViewModelAdapter.Adapter> list,Transform root, Type view)
-        {
-            BindViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter> bind;
-            if (CacheBinds.Count > 0)
-            {
-                bind = (BindViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter>) CacheBinds.Dequeue();
-            }
-            else
-            {
-                bind = new BindViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter>();
-            }
-            bind.SetViewType(view);
-            bind.Reset(list, root);
-            AddClearable(bind);
-        }
-        
-        public void BindIpairs
-            (ObservableList<ViewModelAdapter.Adapter> list, Transform root, string pattern, Type view)
-        {
-            BindIpairsViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter> bind;
-            if (CacheBinds.Count > 0)
-            {
-                bind = (BindIpairsViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter>) CacheBinds.Dequeue();
-            }
-            else
-            {
-                bind = new BindIpairsViewList<ViewModelAdapter.Adapter, ViewAdapter.Adapter>();
-            }
-            bind.SetViewType(view);
-            bind.Reset(list, pattern, root);
-            AddClearable(bind);
-        }
-#endif
         public void BindIpairs<TItemVm, TItemView>
             (ObservableList<TItemVm> list, Transform root, string pattern) where TItemVm : ViewModel
         where TItemView : View
@@ -108,7 +54,8 @@ namespace Framework
             }
             else
             {
-                bind = new BindIpairsViewList<TItemVm, TItemView>();
+                bind = ReferencePool.Allocate<BindIpairsViewList<TItemVm, TItemView>>();
+                bind.Init(Container);
             }
             bind.Reset(list, pattern, root);
             AddClearable(bind);
@@ -119,10 +66,6 @@ namespace Framework
         {
             TwoWayBind(dropdown, property);
             BindList(dropdown, listProperty);
-        }
-
-        public UIBindFactory(View view) : base(view)
-        {
         }
     }
 }

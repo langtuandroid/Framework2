@@ -35,11 +35,17 @@ namespace Framework
         protected override void Awake()
         {
             base.Awake();
-            Message.defaultEvent.Register(this, "Language", () =>
+            if (!string.IsNullOrEmpty(languageKey))
             {
-                if (GetLanguageStr != null && !string.IsNullOrEmpty(languageKey)) text = GetLanguageStr(languageKey);
-            });
-            if (GetLanguageStr != null && !string.IsNullOrEmpty(languageKey)) text = GetLanguageStr(languageKey);
+                if (Application.isPlaying)
+                {
+                    if (GetLanguageStr != null) text = GetLanguageStr(languageKey);
+                }
+                else
+                {
+                    text = languageKey;
+                }
+            }
             ShowOutline();
             ShowShadow();
         }
@@ -125,12 +131,6 @@ namespace Framework
             {
                 text = b.ToString(CultureInfo.InvariantCulture);
             };
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            Message.defaultEvent.Unregister(this);
         }
     }
 }

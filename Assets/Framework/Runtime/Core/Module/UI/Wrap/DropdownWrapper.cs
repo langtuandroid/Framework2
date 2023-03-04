@@ -50,9 +50,5 @@ namespace Framework
         {
             Component.options.Clear();
         }
-
-        public DropdownWrapper(Dropdown component, View view) : base(component, view)
-        {
-        }
     }
 }

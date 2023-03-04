@@ -6,13 +6,13 @@ using CatJson;
 
 namespace Framework
 {
-    public class ObservableList<T> : IList<T> , IObservable, IList, IReference
+    public class ObservableList<T> : IList<T>, IObservable, IList, IReference
     {
         private event Action<NotifyCollectionChangedAction, T, int> CollectionChanged;
-        
+
         private List<T> _items;
-        private readonly object _locker = new object();
         private event Action<List<T>> ListUpdateChanged;
+
         public void CopyTo(Array array, int index)
         {
             ((IList)_items).CopyTo(array, index);
@@ -43,7 +43,7 @@ namespace Framework
         {
             _items = new List<T>(collection);
         }
-        
+
         public ObservableList(int capacity)
         {
             _items = new List<T>(capacity);
@@ -175,65 +175,47 @@ namespace Framework
 
         private void AddItem(T item)
         {
-            lock (_locker)
-            {
-                _items.Add(item);
-                OnCollectionChanged(NotifyCollectionChangedAction.Add, item, Count - 1);
-            }
+            _items.Add(item);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, item, Count - 1);
         }
 
         private void RemoveItem(int index)
         {
-            lock (_locker)
-            {
-                var item = _items[index];
-                OnCollectionChanged(NotifyCollectionChangedAction.Remove, item, index);
-                _items.RemoveAt(index);
-            }
+            var item = _items[index];
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, item, index);
+            _items.RemoveAt(index);
         }
 
         private void RemoveItem(T item)
         {
-            lock (_locker)
-            {
-                var index = _items.IndexOf(item);
-                RemoveItem(index);
-            }
+            var index = _items.IndexOf(item);
+            RemoveItem(index);
         }
 
         private void InsertItem(int index, T item)
         {
-            lock (_locker)
-            {
-                _items.Insert(index, item);
-                OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
-            }
+            _items.Insert(index, item);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
         }
 
         private void ClearItems()
         {
-            lock (_locker)
-            {
-                var count = Count;
-                OnCollectionChanged(NotifyCollectionChangedAction.Reset, default, count);
-                _items.Clear();
-            }
+            var count = Count;
+            OnCollectionChanged(NotifyCollectionChangedAction.Reset, default, count);
+            _items.Clear();
         }
 
         protected void SetItem(int index, T item)
         {
-            lock (_locker)
-            {
-                _items[index] = item;
-                OnCollectionChanged(NotifyCollectionChangedAction.Replace, item, index);
-            }
+            _items[index] = item;
+            OnCollectionChanged(NotifyCollectionChangedAction.Replace, item, index);
         }
-        
+
         public void Sort()
         {
             Sort(0, Count, null);
         }
-        
+
         public void Sort(IComparer<T> comparer)
         {
             Sort(0, Count, comparer);
@@ -259,7 +241,7 @@ namespace Framework
         {
             if (CollectionChanged != null) CollectionChanged -= listener;
         }
-        
+
         public void RemoveListener(Action<List<T>> listener)
         {
             ListUpdateChanged -= listener;
@@ -271,7 +253,7 @@ namespace Framework
             ListUpdateChanged += listener;
             return new UnRegister(() => ListUpdateChanged -= listener);
         }
-        
+
         public UnRegister AddListenerWithoutCall(Action<List<T>> listener)
         {
             ListUpdateChanged += listener;
@@ -289,7 +271,7 @@ namespace Framework
             ListUpdateChanged = null;
             CollectionChanged = null;
         }
-        
+
         public static implicit operator List<T>(ObservableList<T> self)
         {
             return self._items;
@@ -297,15 +279,17 @@ namespace Framework
 
         void IObservable.AddRawListener(Action<object> listener)
         {
-            ListUpdateChanged += (l)=> listener(l);
+            ListUpdateChanged += (l) => listener(l);
         }
-        
+
         object IObservable.RawValue => _items;
         Type IObservable.RawType => _items.GetType();
+
         void IObservable.InitRawValueWithoutCb(object val)
         {
             _items = (List<T>)val;
         }
+
         void IObservable.ForceTrigger()
         {
             throw new NotSupportedException("List not support force trigger");

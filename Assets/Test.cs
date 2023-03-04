@@ -1,12 +1,14 @@
-﻿using System.Collections;
-using Framework;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Test : MonoBehaviour
 {
-
-    async ETTask<float> Load()
+    [Button]
+    private void Start()
     {
-         
+        UnityAction action = default;
+        print(action);
     }
 }

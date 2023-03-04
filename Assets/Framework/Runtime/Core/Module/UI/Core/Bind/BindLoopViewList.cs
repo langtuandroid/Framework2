@@ -7,16 +7,11 @@ namespace Framework
 {
     public class BindLoopViewList<TVm, TView> : BaseBind where TVm : ViewModel where TView : View , new()
     {
-        private Dictionary<Transform, View> itemTrans2View = new Dictionary<Transform, View>();
+        private Dictionary<Transform, View> itemTrans2View = new();
         private ObservableList<TVm> itemsVm;
         private LoopScrollRect loopScrollRect;
         private Type viewType;
         
-        public BindLoopViewList()  : base(null)
-        {
-            viewType = typeof(TView);
-        }
-
         public void SetViewType(Type type)
         {
             viewType = type;
@@ -59,8 +54,8 @@ namespace Framework
             loopScrollRect.RefillCells();
             delayRefreshCoroutine = null;
         }
-        
-        public override void Clear()
+
+        protected override void OnReset()
         {
             foreach (var view in itemTrans2View.Values)
             {
@@ -69,6 +64,14 @@ namespace Framework
             itemsVm.RemoveListener(OnListChanged);
             loopScrollRect.OnItemShow -= OnItemChanged;
             itemTrans2View.Clear();
+        }
+
+        protected override void OnClear()
+        {
+            itemTrans2View.Clear();
+            itemsVm = default;
+            loopScrollRect = default;
+            viewType = default;
         }
     }
 }

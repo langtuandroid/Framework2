@@ -6,17 +6,17 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class BindFactory
+    public class BindFactory : IReference
     {
-        protected List<IClearable> clearables = new List<IClearable>();
+        protected List<IResetBind> clearables = new List<IResetBind>();
         protected Queue<BaseBind> CacheBinds = new Queue<BaseBind>();
         protected object Container;
 
-        public BindFactory(object container)
+        public virtual void Init(object container)
         {
             Container = container;
         }
-        
+
         //单向绑定
         public void Bind<TComponent, TData>
         (TComponent component, ObservableProperty<TData> property, Action<TData> fieldChangeCb = null,
@@ -25,11 +25,12 @@ namespace Framework
             BindField<TComponent, TData> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindField<TComponent, TData>) CacheBinds.Dequeue();
+                bind = (BindField<TComponent, TData>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindField<TComponent, TData>(Container);
+                bind = ReferencePool.Allocate<BindField<TComponent, TData>>();
+                bind.Init(Container);
             }
 
             bind.Reset(component, property, fieldChangeCb, null, BindType.OnWay, prop2CpntWrap, null);
@@ -45,13 +46,14 @@ namespace Framework
             BindField<TComponent, TData> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindField<TComponent, TData>) CacheBinds.Dequeue();
-                
+                bind = (BindField<TComponent, TData>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindField<TComponent, TData>(Container);
+                bind = ReferencePool.Allocate<BindField<TComponent, TData>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, property, null, componentEvent, BindType.Revert, null, cpnt2PropWrap);
             AddClearable(bind);
         }
@@ -76,13 +78,14 @@ namespace Framework
             ConvertBindField<TComponent, TData, TResult> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (ConvertBindField<TComponent, TData, TResult>) CacheBinds.Dequeue();
-                
+                bind = (ConvertBindField<TComponent, TData, TResult>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new ConvertBindField<TComponent, TData, TResult>(Container);
+                bind = ReferencePool.Allocate<ConvertBindField<TComponent, TData, TResult>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, property, fieldChangeCb, field2CpntConvert, null, null);
             AddClearable(bind);
         }
@@ -96,13 +99,14 @@ namespace Framework
             ConvertBindField<TComponent, TData, TResult> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (ConvertBindField<TComponent, TData, TResult>) CacheBinds.Dequeue();
-                
+                bind = (ConvertBindField<TComponent, TData, TResult>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new ConvertBindField<TComponent, TData, TResult>(Container);
+                bind = ReferencePool.Allocate<ConvertBindField<TComponent, TData, TResult>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, property, null, null, cpnt2FieldConvert, componentEvent);
             AddClearable(bind);
         }
@@ -127,13 +131,14 @@ namespace Framework
             BindField<TComponent, TData1, TData2, TResult> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindField<TComponent, TData1, TData2, TResult>) CacheBinds.Dequeue();
-                
+                bind = (BindField<TComponent, TData1, TData2, TResult>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindField<TComponent, TData1, TData2, TResult>(Container);
+                bind = ReferencePool.Allocate<BindField<TComponent, TData1, TData2, TResult>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, property1, property2, wrapFunc, filedChangeCb);
             AddClearable(bind);
         }
@@ -142,18 +147,21 @@ namespace Framework
         {
             AddClearable(property.AddListener(cb));
         }
-        
-        public void BindData<TData1,TData2>(ObservableProperty<TData1> property,ObservableProperty<TData2> property2, Action<TData1, TData2> cb)
+
+        public void BindData<TData1, TData2>(ObservableProperty<TData1> property, ObservableProperty<TData2> property2,
+            Action<TData1, TData2> cb)
         {
             AddClearable(property.AddListener(data1 => cb?.Invoke(data1, property2)));
             AddClearable(property2.AddListener(data2 => cb?.Invoke(property, data2)));
         }
-        
-        public void BindData<TData1,TData2,TData3>(ObservableProperty<TData1> property,ObservableProperty<TData2> property2,ObservableProperty<TData3> property3, Action<TData1, TData2, TData3> cb)
+
+        public void BindData<TData1, TData2, TData3>(ObservableProperty<TData1> property,
+            ObservableProperty<TData2> property2, ObservableProperty<TData3> property3,
+            Action<TData1, TData2, TData3> cb)
         {
-            AddClearable(property.AddListener((data1) =>  cb?.Invoke(data1, property2, property3)));
-            AddClearable(property2.AddListener((data2) =>  cb?.Invoke(property, data2, property3)));
-            AddClearable(property3.AddListener((data3) =>  cb?.Invoke(property, property2, data3)));
+            AddClearable(property.AddListener((data1) => cb?.Invoke(data1, property2, property3)));
+            AddClearable(property2.AddListener((data2) => cb?.Invoke(property, data2, property3)));
+            AddClearable(property3.AddListener((data3) => cb?.Invoke(property, property2, data3)));
         }
 
         //绑定command
@@ -164,13 +172,14 @@ namespace Framework
             BindCommand<TComponent> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindCommand<TComponent>) CacheBinds.Dequeue();
-                
+                bind = (BindCommand<TComponent>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindCommand<TComponent>(Container);
+                bind = ReferencePool.Allocate<BindCommand<TComponent>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, command, componentEvent, wrapFunc);
             AddClearable(bind);
         }
@@ -183,51 +192,66 @@ namespace Framework
             BindCommandWithPara<TComponent, TData> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindCommandWithPara<TComponent, TData>) CacheBinds.Dequeue();
-                
+                bind = (BindCommandWithPara<TComponent, TData>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindCommandWithPara<TComponent, TData>(Container);
+                bind = ReferencePool.Allocate<BindCommandWithPara<TComponent, TData>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, command, componentEvent, wrapFunc);
             AddClearable(bind);
         }
 
         public void BindList<TComponent, TData>(TComponent component, ObservableList<TData> property,
-            Action<TComponent, TData> onCreate = null, Action<TComponent, TData> onDestroy = null) where TComponent : Object
+            Action<TComponent, TData> onCreate = null, Action<TComponent, TData> onDestroy = null)
+            where TComponent : Object
         {
             BindList<TComponent, TData> bind;
             if (CacheBinds.Count > 0)
             {
-                bind = (BindList<TComponent, TData>) CacheBinds.Dequeue();
-                
+                bind = (BindList<TComponent, TData>)CacheBinds.Dequeue();
             }
             else
             {
-                bind = new BindList<TComponent, TData>(Container);
+                bind = ReferencePool.Allocate<BindList<TComponent, TData>>();
+                bind.Init(Container);
             }
+
             bind.Reset(component, property, onCreate, onDestroy);
             AddClearable(bind);
         }
 
         public void Reset()
         {
+            CacheBinds.Clear();
             foreach (var clearable in clearables)
             {
-                clearable.Clear();
+                clearable.Reset();
                 if (clearable is BaseBind bind)
                 {
                     CacheBinds.Enqueue(bind);
                 }
             }
+
             clearables.Clear();
         }
 
-        public void AddClearable(IClearable clearable)
+        public void AddClearable(IResetBind resetBind)
         {
             //viewModel.OnClearModelBinding += clearable.ClearModel;
-            clearables.Add(clearable);
+            clearables.Add(resetBind);
+        }
+
+        public void Clear()
+        {
+            Reset();
+            foreach (var bind in CacheBinds)
+            {
+                bind.Clear();
+                ReferencePool.Free(bind);
+            }
         }
     }
 

@@ -32,9 +32,5 @@ namespace Framework
         {
             return value => Component.text = value.ToString(CultureInfo.InvariantCulture);
         }
-
-        public TmpWrapper(TextMeshProUGUI component, View view) : base(component, view)
-        {
-        }
     }
 }

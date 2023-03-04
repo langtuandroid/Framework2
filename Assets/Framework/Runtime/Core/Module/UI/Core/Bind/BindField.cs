@@ -15,10 +15,6 @@ namespace Framework
         private object _defaultWrapper;
         private BindType _bindType;
 
-        public BindField(object container) : base(container)
-        {
-        }
-
         public void Reset(TComponent component, ObservableProperty<TData> property,
             Action<TData> propChangeCb,
             UnityEvent<TData> componentEvent, BindType bindType,
@@ -41,7 +37,7 @@ namespace Framework
             _propChangeCb = propChangeCb;
             this._componentEvent = componentEvent;
         }
-        
+
         private void InitEvent()
         {
             if (_propChangeCb == null || _componentEvent == null)
@@ -59,8 +55,10 @@ namespace Framework
                         {
                             changeCb = cb;
                         }
+
                         _propChangeCb = changeCb?.GetFieldChangeCb();
                     }
+
                     Debug.Assert(_propChangeCb != null,
                         $"_propChangeCb != null , can not found wrapper , check if the folder(Runtime/UI/Wrap) has {typeof(TComponent).Name} wrapper or {typeof(TComponent).Name} implements IFieldChangeCb<{typeof(TData).Name}> interface");
                     _property.AddListener(PropertyListener);
@@ -74,8 +72,10 @@ namespace Framework
                         {
                             changeCb = cb;
                         }
+
                         _componentEvent = changeCb?.GetComponentEvent();
                     }
+
                     Debug.Assert(_componentEvent != null,
                         $" can not found wrapper , check if the folder(Runtime/UI/Wrap) has {typeof(TComponent).Name} wrapper or {typeof(TComponent).Name} implements IComponentEvent<{typeof(TData).Name}> interface");
                     _componentEvent.AddListener(ComponentListener);
@@ -93,14 +93,26 @@ namespace Framework
             _property.Value = _cpnt2PropWrap == null ? data : _cpnt2PropWrap(data);
         }
 
-        public override void Clear()
+        protected override void OnReset()
         {
             _componentEvent?.RemoveListener(ComponentListener);
             _property?.RemoveListener(PropertyListener);
         }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _propChangeCb = default;
+            _componentEvent = default;
+            _prop2CpntWrap = default;
+            _cpnt2PropWrap = default;
+            _property = default;
+            _defaultWrapper = default;
+            _bindType = default;
+        }
     }
 
-    public class BindField<TComponent, TData1, TData2, TResult> : BaseBind where TComponent : class 
+    public class BindField<TComponent, TData1, TData2, TResult> : BaseBind where TComponent : class
     {
         private TComponent _component;
         private Action<TResult> _propertyChangeCb;
@@ -109,10 +121,6 @@ namespace Framework
         private Func<TData1, TData2, TResult> _wrapFunc;
         private object _defaultWrapper;
 
-        public BindField(object container)  : base(container)
-        {
-        }
-
         public void Reset(TComponent component, ObservableProperty<TData1> property1,
             ObservableProperty<TData2> property2,
             Func<TData1, TData2, TResult> wrapFunc, Action<TResult> filedChangeCb)
@@ -120,7 +128,7 @@ namespace Framework
             SetValue(component, property1, property2, wrapFunc, filedChangeCb);
             InitEvent();
         }
-        
+
         private void SetValue(TComponent component, ObservableProperty<TData1> property1,
             ObservableProperty<TData2> property2,
             Func<TData1, TData2, TResult> wrapFunc, Action<TResult> propertyChangeCb)
@@ -142,30 +150,42 @@ namespace Framework
                 {
                     changeCb = cb;
                 }
+
                 _propertyChangeCb = changeCb?.GetFieldChangeCb();
             }
+
             Debug.Assert(_propertyChangeCb != null,
                 $" can not found wrapper , check if the folder(Runtime/UI/Wrap) has {typeof(TComponent).Name} wrapper or {typeof(TComponent).Name} implements IFieldChangeCb<{typeof(TResult).Name}> interface");
             _property1.AddListener(Property1Listener);
             _property2.AddListener(Property2Listener);
             _propertyChangeCb(_wrapFunc(_property1.Value, _property2.Value));
         }
-        
+
 
         private void Property1Listener(TData1 data1)
         {
             _propertyChangeCb(_wrapFunc(data1, _property2.Value));
         }
-        
+
         private void Property2Listener(TData2 data2)
         {
             _propertyChangeCb(_wrapFunc(_property1.Value, data2));
         }
 
-        public override void Clear()
+        protected override void OnReset()
         {
             _property1.RemoveListener(Property1Listener);
             _property2.RemoveListener(Property2Listener);
+        }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _propertyChangeCb = default;
+            _property1 = default;
+            _property2 = default;
+            _wrapFunc = default;
+            _defaultWrapper = default;
         }
     }
 }

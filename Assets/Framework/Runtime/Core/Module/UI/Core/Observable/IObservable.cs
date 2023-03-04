@@ -11,7 +11,7 @@ namespace Framework
         void ForceTrigger();
     }
 
-    public struct UnRegister : IClearable , IDisposable
+    public struct UnRegister : IResetBind
     {
         private Action action;
 
@@ -20,14 +20,14 @@ namespace Framework
             this.action = action;
         }
 
-        public void Clear()
+        public void Invoke()
         {
             action();
         }
 
-        public void Dispose()
+        public void Reset()
         {
-            Clear();
+            Invoke();
         }
     }
 }

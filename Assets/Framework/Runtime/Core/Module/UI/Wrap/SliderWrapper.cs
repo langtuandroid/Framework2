@@ -15,9 +15,5 @@ namespace Framework
         {
             return Component.onValueChanged;
         }
-
-        public SliderWrapper(Slider component, View view) : base(component, view)
-        {
-        }
     }
 }

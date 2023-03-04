@@ -2,7 +2,7 @@
 
 namespace Framework
 {
-    public class ObservableProperty<T> : IClearable , IObservable, IReference
+    public class ObservableProperty<T> :  IObservable, IReference , IResetBind
     {
         public ObservableProperty(T value)
         {
@@ -56,6 +56,11 @@ namespace Framework
         public override string ToString()
         {
             return _value != null ? _value.ToString() : "null";
+        }
+
+        public void Reset()
+        {
+            Clear();
         }
 
         void IObservable.AddRawListener(Action<object> listener)

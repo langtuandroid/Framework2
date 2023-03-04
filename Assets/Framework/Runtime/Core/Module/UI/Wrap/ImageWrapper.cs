@@ -32,9 +32,5 @@ namespace Framework
                     });
             };
         }
-
-        public ImageWrapper(Image component, View view) : base(component, view)
-        {
-        }
     }
 }

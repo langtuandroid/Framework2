@@ -15,9 +15,5 @@ namespace Framework
         {
             return Component.onValueChanged;
         }
-
-        public ToggleWrapper(Toggle component, View view) : base(component, view)
-        {
-        }
     }
 }

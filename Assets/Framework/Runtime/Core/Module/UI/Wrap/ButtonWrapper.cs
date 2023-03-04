@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,13 +15,20 @@ namespace Framework
             return Component.onClick;
         }
 
-        public ButtonWrapper(Button component, View view) : base(component, view)
+        public override void Init(object component, object container)
         {
-            text = component.GetComponentInChildren<Text>();
-            tmpText = component.GetComponentInChildren<TextMeshProUGUI>();
+            base.Init(component, container);
+            text = Component.GetComponentInChildren<Text>();
+            tmpText = Component.GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public Action<string> GetFieldChangeCb()
+        public override void Clear()
+        {
+            text = null;
+            tmpText = null;
+        }
+
+        Action<string> IFieldChangeCb<string>.GetFieldChangeCb()
         {
             return val =>
             {
@@ -47,9 +55,9 @@ namespace Framework
             return val =>
             {
                 if (text)
-                    text.text = val.ToString();
+                    text.text = val.ToString(CultureInfo.InvariantCulture);
                 if (tmpText)
-                    tmpText.text = val.ToString();
+                    tmpText.text = val.ToString(CultureInfo.InvariantCulture);
             };
         }
 
@@ -69,9 +77,9 @@ namespace Framework
             return val =>
             {
                 if (text)
-                    text.text = val.ToString();
+                    text.text = val.ToString(CultureInfo.InvariantCulture);
                 if (tmpText)
-                    tmpText.text = val.ToString();
+                    tmpText.text = val.ToString(CultureInfo.InvariantCulture);
             };
         }
     }

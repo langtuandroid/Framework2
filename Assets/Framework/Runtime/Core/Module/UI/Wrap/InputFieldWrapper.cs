@@ -9,16 +9,12 @@ namespace Framework
     {
         Action<string> IFieldChangeCb<string>.GetFieldChangeCb()
         {
-            return (value) => Component.text = value;
+            return value => Component.text = value;
         }
 
         UnityEvent<string> IComponentEvent<string>.GetComponentEvent()
         {
             return Component.onEndEdit;
-        }
-
-        public InputFieldWrapper(InputField component, View view) : base(component, view)
-        {
         }
     }
     
@@ -33,10 +29,6 @@ namespace Framework
         UnityEvent<string> IComponentEvent<string>.GetComponentEvent()
         {
             return Component.onEndEdit;
-        }
-
-        public TMPInputFieldWrapper(TMP_InputField component, View view) : base(component, view)
-        {
         }
     }
 }

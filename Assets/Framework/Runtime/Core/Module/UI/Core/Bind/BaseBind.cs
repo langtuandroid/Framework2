@@ -1,15 +1,30 @@
 namespace Framework
 {
-    public abstract class BaseBind : IClearable
+    public abstract class BaseBind : IResetBind , IReference
     {
         protected object Container;
 
-        public BaseBind(object container)
+        public virtual void Init(object container)
         {
             Container = container;
         }
-        
-        public abstract void Clear();
 
+        /// <summary>
+        /// 换绑的时候
+        /// </summary>
+        public void Reset()
+        {
+            OnReset();
+        }
+        protected abstract void OnReset();
+
+        /// <summary>
+        /// 销毁的时候
+        /// </summary>
+        public void Clear()
+        {
+            OnClear();
+        }
+        protected abstract void OnClear();
     }
 }

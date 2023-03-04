@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Framework
 {
@@ -13,11 +9,6 @@ namespace Framework
         private TComponent _component;
         private ObservableList<TVm> _list;
         private IBindList<TVm> _bindList;
-
-        public BindList(object container) : base(container)
-        {
-            
-        }
 
         public void Reset(TComponent component, ObservableList<TVm> list, Action<TComponent, TVm> onCreate,
             Action<TComponent, TVm> onDestroy)
@@ -45,9 +36,16 @@ namespace Framework
             _list.AddListener(_bindList.GetBindListFunc());
         }
 
-        public override void Clear()
+        protected override void OnReset()
         {
             _list.RemoveListener(_bindList.GetBindListFunc());
+        }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _list = default;
+            _bindList = default;
         }
     }
 }

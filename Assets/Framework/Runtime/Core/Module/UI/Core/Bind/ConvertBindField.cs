@@ -14,10 +14,6 @@ namespace Framework
         private ObservableProperty<TData> _property;
         private object _defaultWrapper;
 
-        public ConvertBindField(object container) : base(container)
-        {
-        }
-
         public void Reset(TComponent component, ObservableProperty<TData> property,
             Action<TResult> propChangeCb,
             Func<TData, TResult> prop2CpntWrap,
@@ -69,8 +65,8 @@ namespace Framework
         {
             _propChangeCb(_prop2CpntWrap(data));
         }
-        
-        public override void Clear()
+
+        protected override void OnReset()
         {
             if (_prop2CpntWrap != null)
             {
@@ -81,6 +77,17 @@ namespace Framework
             {
                 _componentEvent.RemoveListener(ComponentListener);
             }
+        }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _propChangeCb = default;
+            _componentEvent = default;
+            _prop2CpntWrap = default;
+            _cpnt2PropWrap = default;
+            _property = default;
+            _defaultWrapper = default;
         }
     }
 }

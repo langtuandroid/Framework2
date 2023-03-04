@@ -32,9 +32,5 @@ namespace Framework
                     });
             };
         }
-
-        public RawImageWrapper(RawImage component, View view) : base(component, view)
-        {
-        }
     }
 }

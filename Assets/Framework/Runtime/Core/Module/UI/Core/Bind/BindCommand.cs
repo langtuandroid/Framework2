@@ -4,17 +4,13 @@ using UnityEngine.Events;
 
 namespace Framework
 {
-    public class BindCommand<TComponent> : BaseBind
+    public class BindCommand<TComponent> : BaseBind where TComponent : class
     {
         private TComponent _component;
         private Action _command;
         private UnityEvent _componentEvent;
         private object _defaultWrapper;
         private Func<Action, Action> _wrapFunc;
-
-        public BindCommand(object container) : base(container)
-        {
-        }
 
         public void Reset(TComponent component, Action command, UnityEvent componentEvent,
             Func<Action, Action> wrapFunc)
@@ -51,9 +47,18 @@ namespace Framework
                 _command();
         }
 
-        public override void Clear()
+        protected override void OnReset()
         {
             _componentEvent.RemoveListener(Listener);
+        }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _command = default;
+            _componentEvent = default;
+            _defaultWrapper = default;
+            _wrapFunc = default;
         }
     }
 
@@ -64,11 +69,6 @@ namespace Framework
         private Func<Action<TData>, Action<TData>> _wrapFunc;
         private UnityEvent<TData> _componentEvent;
         private object _defaultWrapper;
-
-        public BindCommandWithPara(object container) : base(container)
-        {
-            
-        }
 
         public void Reset(TComponent component, Action<TData> command, UnityEvent<TData> componentEvent,
             Func<Action<TData>, Action<TData>> wrapFunc)
@@ -113,9 +113,18 @@ namespace Framework
                 _command(data);
         }
 
-        public override void Clear()
+        protected override void OnReset()
         {
             _componentEvent.RemoveListener(Listener);
+        }
+
+        protected override void OnClear()
+        {
+            _component = default;
+            _command = null;
+            _wrapFunc = null;
+            _componentEvent = null;
+            _defaultWrapper = null;
         }
     }
 }

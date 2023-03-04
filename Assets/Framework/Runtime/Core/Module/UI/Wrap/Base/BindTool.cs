@@ -24,21 +24,24 @@ namespace Framework
         private static readonly object[] args = new object[2];
         private static ConstructorInfo defaultWrapperCon;
 
-        public static object GetDefaultWrapper<T>(object container, T component)
+        public static IWrapper GetDefaultWrapper<T>(object container, T component)
         {
             args[1] = container;
             args[0] = component;
+            Type wrapperType = null;
             foreach (var type in supportWrapperTypes)
+            {
                 if (type.Key.IsInstanceOfType(component))
                 {
-                    return Activator.CreateInstance(type.Value, args);
+                    wrapperType = type.Value;
                 }
-            if (defaultWrapperCon == null)
-            {
-                defaultWrapperCon = typeof(DefaultWrapper).GetConstructor(BindingFlags.Public | BindingFlags.Instance,
-                    null, new[] {typeof(object), typeof(object)}, null);
             }
-            return defaultWrapperCon.Invoke(args);
+
+            if (wrapperType == null)
+                wrapperType = typeof(DefaultWrapper);
+            IWrapper wrapper = ReferencePool.Allocate(wrapperType) as IWrapper;
+            wrapper.Init(component, container);
+            return wrapper;
         }
     }
 }
