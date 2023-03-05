@@ -20,7 +20,7 @@ namespace Framework
 #if UNITY_EDITOR
             if (config == null)
             {
-                string filePath = $"{ApplicationHelper.AssetsRoot}/Resources/{path}";
+                string filePath = $"Assets/Resources/{path}";
                 config = ScriptableAssetHelper.LoadScriptableAsset<T>(filePath);
             }
 #endif

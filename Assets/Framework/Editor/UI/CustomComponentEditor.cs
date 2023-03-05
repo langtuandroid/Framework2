@@ -61,7 +61,7 @@ namespace Framework.Editor
             if (txt)
             {
                 txt.color = Color.black;
-                txt.text = "说点什么..";
+                txt.text = "text..";
                 txt.supportRichText = false;
                 txt.raycastTarget = false;
                 txt.alignment = TextAnchor.MiddleCenter;
@@ -71,7 +71,7 @@ namespace Framework.Editor
             if (tmp)
             {
                 tmp.color = Color.black;
-                tmp.text = "说点什么..";
+                tmp.text = "text..";
                 tmp.richText = false;
                 tmp.raycastTarget = false;
                 tmp.horizontalAlignment = HorizontalAlignmentOptions.Center;

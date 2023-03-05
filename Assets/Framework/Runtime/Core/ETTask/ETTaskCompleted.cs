@@ -30,15 +30,4 @@ namespace Framework
         {
         }
     }
-
-    public struct AA : ICriticalNotifyCompletion
-    {
-        public void OnCompleted(Action continuation)
-        {
-        }
-
-        public void UnsafeOnCompleted(Action continuation)
-        {
-        }
-    }
 }
