@@ -54,16 +54,6 @@ namespace IngameDebugConsole
 
 		[SerializeField]
 		[HideInInspector]
-		[Tooltip( "If enabled, console will be initialized as a popup" )]
-		private bool startInPopupMode = true;
-
-		[SerializeField]
-		[HideInInspector]
-		[Tooltip( "If enabled, console window will initially be invisible" )]
-		private bool startMinimized = false;
-
-		[SerializeField]
-		[HideInInspector]
 		[Tooltip( "If enabled, pressing the Toggle Key will show/hide (i.e. toggle) the console window at runtime" )]
 		private bool toggleWithKey = false;
 

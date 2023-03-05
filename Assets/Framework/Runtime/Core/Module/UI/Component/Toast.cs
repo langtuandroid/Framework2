@@ -109,7 +109,7 @@ namespace Framework
         }
     }
     
-    [UI("Assets/Framework/Runtime/UI/Res/ToastContent.prefab")]
+    [UI("Assets/Framework/Runtime/UI/Res/ToastContent.prefab", false, false)]
     public class ToastContent : View
     {
         protected override void OnVmChange()
@@ -119,13 +119,11 @@ namespace Framework
         public override UILevel UILevel { get; } = UILevel.Toast;
     }
     
-    [UI("Assets/Framework/Runtime/UI/Res/Toast.prefab")]
+    [UI("Assets/Framework/Runtime/UI/Res/Toast.prefab", false, false)]
     public class ToastView : View
     {
-        [TransformPath("content/Text")]
         public Text Text;
         public override UILevel UILevel { get; } = UILevel.Toast;
-        public override bool IsSingle { get; } = false;
 
         public LayoutElement LayoutElement { get; private set; }
 

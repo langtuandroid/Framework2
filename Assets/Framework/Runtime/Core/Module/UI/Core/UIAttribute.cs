@@ -11,14 +11,12 @@ namespace Framework
         /// 是否会隐藏其下所有ui
         /// </summary>
         public bool IsMaskBottomView { get; }
-        public bool CacheDestroy { get; }
 
-        public UIAttribute(string path, bool isSingle, bool isMaskBottomView, bool cacheDestroy)
+        public UIAttribute(string path, bool isSingle, bool isMaskBottomView)
         {
             Path = path;
             IsSingle = isSingle;
             IsMaskBottomView = isMaskBottomView;
-            CacheDestroy = cacheDestroy;
         }
     }
 }

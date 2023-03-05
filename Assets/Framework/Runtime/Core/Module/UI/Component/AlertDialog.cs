@@ -174,23 +174,20 @@ namespace Framework
         }
     }
 
-    [UI("AlertDialog")]
+    [UI("AlertDialog", false, false)]
     public class AlertDialogView : View
     {
-        [TransformPath("Panel/Title")] private Text Title;
+        private Text Title;
 
-        [TransformPath("Panel/Content")] private Text Message;
+        private Text Message;
 
-        [TransformPath("Panel/ButtonGroup/Confirm")]
         private Button ConfirmButton;
 
-        [TransformPath("Panel/ButtonGroup/Neutral")]
         private Button NeutralButton;
 
-        [TransformPath("Panel/ButtonGroup/Cancel")]
         private Button CancelButton;
 
-        [TransformPath("Background")] private Button OutsideButton;
+        private Button OutsideButton;
 
         public bool CanceledOnTouchOutside { get; set; }
 
@@ -301,8 +298,6 @@ namespace Framework
                 this.OutsideButton.onClick.AddListener(() => { this.Button_OnClick(AlertDialog.BUTTON_NEGATIVE); });
             }
         }
-
-        public override bool IsSingle { get; } = false;
 
     }
 
