@@ -46,6 +46,8 @@ namespace Framework
         }
         
         public abstract T LoadAsset<T>(string key) where T : Object;
+        public abstract void UnloadAsset(string key);
+
         protected abstract IEnumerator LoadScene(IProgressPromise<float, string> promise, string path,
             LoadSceneMode loadSceneMode, bool allowSceneActivation = true);
 

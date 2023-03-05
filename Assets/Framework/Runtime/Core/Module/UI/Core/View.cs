@@ -9,6 +9,7 @@ namespace Framework
 {
     public enum UILevel
     {
+        //这个在第一个
         None,
         Bg,
         Common,
@@ -16,6 +17,8 @@ namespace Framework
         Toast,
         Guide,
         FullScreen,
+        //这个放到最下边
+        Max,
     }
     
     public abstract class View : ICustomRes
@@ -133,19 +136,21 @@ namespace Framework
         protected void Close()
         {
             UIManager.Instance.Close(this);
-        }
-
-        public void Dispose()
-        {
-            Hide();
-            Res.Dispose();
             OnClose();
             for (int i = 0; i < _subViews.Count; i++)
             {
                 _subViews[i].OnClose();
             }
-            Binding.Clear();
             ViewModel?.OnViewDestroy();
+        }
+
+        public void Dispose()
+        {
+            Close();
+            Res.Dispose();
+            Binding.Clear();
+            if(Go != null)
+                Object.Destroy(Go);
         }
 
         protected abstract void OnVmChange();

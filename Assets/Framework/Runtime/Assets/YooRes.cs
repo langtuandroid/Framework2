@@ -167,6 +167,14 @@ namespace Framework
             }
         }
 
+        public override void UnloadAsset(string key)
+        {
+            if (handles.TryGetValue(key, out var handle))
+            {
+                handle.Release();
+            }
+        }
+
         protected override IEnumerator LoadScene(IProgressPromise<float, string> promise, string path,
             LoadSceneMode loadSceneMode, bool allowSceneActivation = true)
         {

@@ -33,5 +33,7 @@ namespace Framework
         GameObject Instantiate(string key, Transform parent = null, bool instantiateInWorldSpace = false);
         
         T LoadAsset<T>(string key) where T : Object;
+
+        void UnloadAsset(string key);
     }
 }

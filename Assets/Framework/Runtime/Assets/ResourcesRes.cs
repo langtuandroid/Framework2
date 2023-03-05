@@ -21,6 +21,10 @@ namespace Framework
         public override string HostServerURL { get; set; }
         public override string FallbackHostServerURL { get; set; }
 
+        public override void UnloadAsset(string key)
+        {
+        }
+
         protected override IEnumerator LoadScene(IProgressPromise<float, string> promise, string path, LoadSceneMode loadSceneMode, bool allowSceneActivation = true)
         {
             var operation = SceneManager.LoadSceneAsync(path, loadSceneMode);

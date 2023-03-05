@@ -1,5 +1,3 @@
-using System;
-
 namespace Framework
 {
     public class UIAttribute : BaseAttribute
@@ -10,15 +8,17 @@ namespace Framework
         /// </summary>
         public bool IsSingle { get; }
         /// <summary>
-        /// 是否是全屏ui，如果是的话就会隐藏其下所有ui
+        /// 是否会隐藏其下所有ui
         /// </summary>
-        public bool IsFullScreen { get; }
+        public bool IsMaskBottomView { get; }
+        public bool CacheDestroy { get; }
 
-        public UIAttribute(string path, bool isSingle, bool isFullScreen)
+        public UIAttribute(string path, bool isSingle, bool isMaskBottomView, bool cacheDestroy)
         {
             Path = path;
             IsSingle = isSingle;
-            IsFullScreen = isFullScreen;
+            IsMaskBottomView = isMaskBottomView;
+            CacheDestroy = cacheDestroy;
         }
     }
 }
