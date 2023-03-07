@@ -9,6 +9,7 @@ namespace Framework
 
         private static readonly Stack<ISingleton> singletons = new Stack<ISingleton>();
         private static readonly Queue<ISingleton> updates = new Queue<ISingleton>();
+        private static readonly Queue<ISingleton> rendererUpdates = new Queue<ISingleton>();
         private static readonly Queue<ISingleton> lateUpdates = new Queue<ISingleton>();
         private static readonly Queue<ETTask> frameFinishTask = new Queue<ETTask>();
 
@@ -40,6 +41,11 @@ namespace Framework
             if (singleton is ISingletonUpdate)
             {
                 updates.Enqueue(singleton);
+            }
+            
+            if (singleton is ISingletonRendererUpdate)
+            {
+                rendererUpdates.Enqueue(singleton);
             }
 
             if (singleton is ISingletonLateUpdate)
@@ -76,6 +82,35 @@ namespace Framework
                 try
                 {
                     update.Update();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+        }
+        
+        public static void RendererUpdate()
+        {
+            int count = rendererUpdates.Count;
+            while (count-- > 0)
+            {
+                ISingleton singleton = rendererUpdates.Dequeue();
+
+                if (singleton.IsDisposed())
+                {
+                    continue;
+                }
+
+                if (singleton is not ISingletonRendererUpdate update)
+                {
+                    continue;
+                }
+
+                updates.Enqueue(singleton);
+                try
+                {
+                    update.RendererUpdate();
                 }
                 catch (Exception e)
                 {

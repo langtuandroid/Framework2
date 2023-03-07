@@ -44,11 +44,19 @@ namespace Framework
         }
 
         // 线程安全
+        /// <summary>
+        /// 返回值是毫秒
+        /// </summary>
+        /// <returns></returns>
         public long ClientNow()
         {
             return (DateTime.UtcNow.Ticks - this.dt1970.Ticks) / 10000;
         }
 
+        /// <summary>
+        /// 返回值是毫秒
+        /// </summary>
+        /// <returns></returns>
         public long ServerNow()
         {
             return ClientNow() + Instance.ServerMinusClientTime;

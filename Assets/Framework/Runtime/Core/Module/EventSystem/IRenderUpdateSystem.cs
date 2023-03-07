@@ -3,19 +3,19 @@
 namespace Framework
 {
     // 逻辑计算update 会以较低的帧率来跑
-    public interface IUpdate
+    public interface IRendererUpdate
     {
     }
 
-    public interface IUpdateSystem : ISystemType
+    public interface IRendererUpdateSystem : ISystemType
     {
         void Run(Entity o, float deltaTime);
     }
 
     [ObjectSystem]
-    public abstract class UpdateSystem<T> : IUpdateSystem where T : Entity, IUpdate
+    public abstract class RendererUpdateSystem<T> : IRendererUpdateSystem where T : Entity, IRendererUpdate
     {
-        void IUpdateSystem.Run(Entity o, float deltaTime)
+        void IRendererUpdateSystem.Run(Entity o, float deltaTime)
         {
             this.Update((T)o);
         }
@@ -27,14 +27,14 @@ namespace Framework
 
         Type ISystemType.SystemType()
         {
-            return typeof(IUpdateSystem);
+            return typeof(IRendererUpdateSystem);
         }
 
         InstanceQueueIndex ISystemType.GetInstanceQueueIndex()
         {
-            return InstanceQueueIndex.Update;
+            return InstanceQueueIndex.RendererUpdate;
         }
 
         protected abstract void Update(T self);
-    }
+    } 
 }

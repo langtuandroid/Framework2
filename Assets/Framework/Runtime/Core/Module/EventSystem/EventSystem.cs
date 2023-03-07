@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Framework
 {
-    public class EventSystem : Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate
+    public class EventSystem : Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate, ISingletonRendererUpdate
     {
         private class OneTypeSystems
         {
@@ -521,8 +521,11 @@ namespace Framework
             }
         }
 
+        private long lastUpdateTime;
         public void Update()
         {
+            long currentTime = TimeInfo.Instance.ClientNow();
+            float deltaTime = (currentTime - lastUpdateTime) / 1000f;
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.Update];
             int count = queue.Count;
             while (count-- > 0)
@@ -551,7 +554,7 @@ namespace Framework
                 {
                     try
                     {
-                        iUpdateSystem.Run(component);
+                        iUpdateSystem.Run(component, deltaTime);
                     }
                     catch (Exception e)
                     {
@@ -559,6 +562,53 @@ namespace Framework
                     }
                 }
             }
+
+            lastUpdateTime = currentTime;
+        }
+        
+        private long lastRendererUpdateTime;
+        public void RendererUpdate()
+        {
+            long currentTime = TimeInfo.Instance.ClientNow();
+            float deltaTime = (currentTime - lastRendererUpdateTime) / 1000f;
+            Queue<long> queue = this.queues[(int)InstanceQueueIndex.RendererUpdate];
+            int count = queue.Count;
+            while (count-- > 0)
+            {
+                long instanceId = queue.Dequeue();
+                Entity component = Root.Instance.Get(instanceId);
+                if (component == null)
+                {
+                    continue;
+                }
+
+                if (component.IsDisposed)
+                {
+                    continue;
+                }
+
+                List<object> iUpdateSystems = this.typeSystems.GetSystems(component.GetType(), typeof(IRendererUpdateSystem));
+                if (iUpdateSystems == null)
+                {
+                    continue;
+                }
+
+                queue.Enqueue(instanceId);
+
+                foreach (IRendererUpdateSystem iUpdateSystem in iUpdateSystems)
+                {
+                    try
+                    {
+                        iUpdateSystem.Run(component, deltaTime);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+            }
+
+            lastRendererUpdateTime = currentTime;
         }
 
         public void LateUpdate()
