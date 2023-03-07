@@ -2,6 +2,6 @@
 {
     public interface ISingletonRendererUpdate
     {
-        void RendererUpdate();
+        void RendererUpdate(float deltaTime);
     }
 }

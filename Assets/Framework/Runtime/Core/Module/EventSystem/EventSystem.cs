@@ -521,11 +521,8 @@ namespace Framework
             }
         }
 
-        private long lastUpdateTime;
-        public void Update()
+        public void Update(float deltaTime)
         {
-            long currentTime = TimeInfo.Instance.ClientNow();
-            float deltaTime = (currentTime - lastUpdateTime) / 1000f;
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.Update];
             int count = queue.Count;
             while (count-- > 0)
@@ -563,14 +560,11 @@ namespace Framework
                 }
             }
 
-            lastUpdateTime = currentTime;
         }
         
-        private long lastRendererUpdateTime;
-        public void RendererUpdate()
+        public void RendererUpdate(float deltaTime)
         {
             long currentTime = TimeInfo.Instance.ClientNow();
-            float deltaTime = (currentTime - lastRendererUpdateTime) / 1000f;
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.RendererUpdate];
             int count = queue.Count;
             while (count-- > 0)
@@ -608,10 +602,9 @@ namespace Framework
                 }
             }
 
-            lastRendererUpdateTime = currentTime;
         }
 
-        public void LateUpdate()
+        public void LateUpdate(float deltaTime)
         {
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.LateUpdate];
             int count = queue.Count;

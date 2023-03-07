@@ -12,7 +12,7 @@ namespace Framework
             SynchronizationContext.SetSynchronizationContext(this.threadSynchronizationContext);
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             this.threadSynchronizationContext.Update();
         }

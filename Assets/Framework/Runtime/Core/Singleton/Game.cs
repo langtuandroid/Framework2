@@ -61,7 +61,7 @@ namespace Framework
             await task;
         }
 
-        public static void Update()
+        public static void Update(float deltaTime)
         {
             int count = updates.Count;
             while (count-- > 0)
@@ -81,7 +81,7 @@ namespace Framework
                 updates.Enqueue(singleton);
                 try
                 {
-                    update.Update();
+                    update.Update(deltaTime);
                 }
                 catch (Exception e)
                 {
@@ -90,7 +90,7 @@ namespace Framework
             }
         }
         
-        public static void RendererUpdate()
+        public static void RendererUpdate(float deltaTime)
         {
             int count = rendererUpdates.Count;
             while (count-- > 0)
@@ -110,7 +110,7 @@ namespace Framework
                 updates.Enqueue(singleton);
                 try
                 {
-                    update.RendererUpdate();
+                    update.RendererUpdate(deltaTime);
                 }
                 catch (Exception e)
                 {
@@ -119,7 +119,7 @@ namespace Framework
             }
         }
 
-        public static void LateUpdate()
+        public static void LateUpdate(float deltaTime)
         {
             int count = lateUpdates.Count;
             while (count-- > 0)
@@ -139,7 +139,7 @@ namespace Framework
                 lateUpdates.Enqueue(singleton);
                 try
                 {
-                    lateUpdate.LateUpdate();
+                    lateUpdate.LateUpdate(deltaTime);
                 }
                 catch (Exception e)
                 {

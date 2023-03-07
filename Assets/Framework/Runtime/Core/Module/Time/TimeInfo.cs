@@ -30,7 +30,7 @@ namespace Framework
             this.FrameTime = this.ClientNow();
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             this.FrameTime = this.ClientNow();
         }

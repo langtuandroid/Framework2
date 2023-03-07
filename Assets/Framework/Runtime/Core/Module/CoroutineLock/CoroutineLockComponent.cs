@@ -23,7 +23,7 @@ namespace Framework
             this.nextFrameRun.Clear();
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             // 循环过程中会有对象继续加入队列
             while (this.nextFrameRun.Count > 0)

@@ -2,6 +2,6 @@
 {
     public interface ISingletonLateUpdate
     {
-        void LateUpdate();
+        void LateUpdate(float deltaTime);
     }
 }

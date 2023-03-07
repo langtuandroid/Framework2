@@ -83,7 +83,7 @@ namespace Framework
             return TimeHelper.ClientFrameTime();
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             if (this.TimeId.Count == 0)
             {
