@@ -1,0 +1,4 @@
+﻿[BsonDeserializerRegister]
+public class BuffNodeDataBase
+{
+}
