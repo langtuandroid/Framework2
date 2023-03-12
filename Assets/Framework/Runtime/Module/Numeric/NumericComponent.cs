@@ -8,7 +8,7 @@ namespace Framework
     {
         public static float GetAsFloat(this NumericComponent self, int numericType)
         {
-            return (float)self.GetByKey(numericType) / 10000;
+            return (float)self.GetByKey(numericType) / 1000;
         }
 
         public static int GetAsInt(this NumericComponent self, int numericType)
@@ -16,34 +16,34 @@ namespace Framework
             return (int)self.GetByKey(numericType);
         }
 
-        public static long GetAsLong(this NumericComponent self, int numericType)
+        public static void Set(this NumericComponent self, int nt, float value, bool isPublicEvent = true)
         {
-            return self.GetByKey(numericType);
+            self.Insert(nt, (int)(value * 1000), isPublicEvent);
         }
 
-        public static void Set(this NumericComponent self, int nt, float value)
+        public static void Set(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
         {
-            self[nt] = (int)(value * 10000);
+            self.Insert(nt, value, isPublicEvent);
         }
 
-        public static void Set(this NumericComponent self, int nt, int value)
+        public static void ApplyChange(this NumericComponent self, int nt, float value, bool isPublicEvent = true)
         {
-            self[nt] = value;
+            self.Insert(nt, self[nt] + (int)(value * 1000), isPublicEvent);
         }
 
-        public static void Set(this NumericComponent self, int nt, long value)
+        public static void ApplyChange(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
         {
-            self[nt] = value;
+            self.Insert(nt, self[nt] + value, isPublicEvent);
         }
 
-        public static void SetNoEvent(this NumericComponent self, int numericType, long value)
+        public static void SetNoEvent(this NumericComponent self, int numericType, int value)
         {
             self.Insert(numericType, value, false);
         }
 
-        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent = true)
+        public static void Insert(this NumericComponent self, int numericType, int value, bool isPublicEvent = true)
         {
-            long oldValue = self.GetByKey(numericType);
+            int oldValue = self.GetByKey(numericType);
             if (oldValue == value)
             {
                 return;
@@ -65,9 +65,9 @@ namespace Framework
             }
         }
 
-        public static long GetByKey(this NumericComponent self, int key)
+        public static int GetByKey(this NumericComponent self, int key)
         {
-            long value = 0;
+            int value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;
         }
@@ -83,7 +83,7 @@ namespace Framework
 
             // 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
-            long result = (long)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f +
+            int result = (int)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f +
                                   self.GetByKey(finalAdd)) *
                 (100 + self.GetAsFloat(finalPct)) / 100f);
             self.Insert(final, result, isPublicEvent);
@@ -96,17 +96,17 @@ namespace Framework
         {
             public Unit Unit;
             public int NumericType;
-            public long Old;
-            public long New;
+            public int Old;
+            public int New;
         }
     }
 
     public class NumericComponent : Entity, IAwake, ITransfer
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, long> NumericDic = new Dictionary<int, long>();
+        public Dictionary<int, int> NumericDic = new Dictionary<int, int>();
 
-        public long this[int numericType]
+        public int this[int numericType]
         {
             get { return this.GetByKey(numericType); }
             set { this.Insert(numericType, value); }

@@ -1,8 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 
-public class FlashDamageBuffData : BuffDataBase
+public class FlashDamageBuffData : BuffWithValueData
 {
-    [BoxGroup("自定义项")] [LabelText("伤害类型")] public BuffDamageTypes BuffDamageTypes;
 
     [BoxGroup("自定义项")] [LabelText("伤害附带的信息")]
     public string CustomData;

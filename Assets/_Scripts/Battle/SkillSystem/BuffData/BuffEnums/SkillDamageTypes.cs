@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 
 [System.Flags]
-public enum BuffDamageTypes
+public enum SkillDamageTypes
 {
     /// <summary>
     /// 无伤害

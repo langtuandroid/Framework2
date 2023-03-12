@@ -79,7 +79,7 @@ public class NPBehaveGraph : BaseGraph
         //配置每个节点Id
         foreach (var node in m_AllNodes)
         {
-            node.NP_GetNodeData().id = IdGenerater.Instance.GenerateId();
+            node.NP_GetNodeData().id = IdGenerator.Instance.GenerateId();
         }
     }
 

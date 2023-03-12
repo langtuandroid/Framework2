@@ -54,7 +54,7 @@ namespace Framework
         public InstanceIdStruct(long id)
         {
             ulong result = (ulong)id;
-            this.Value = (uint)(result & IdGenerater.Mask18bit);
+            this.Value = (uint)(result & IdGenerator.Mask18bit);
             result >>= 18;
             this.Time = (uint)result;
         }
@@ -123,7 +123,7 @@ namespace Framework
         }
     }
 
-    public class IdGenerater : Singleton<IdGenerater>
+    public class IdGenerator : Singleton<IdGenerator>
     {
         public const int Mask18bit = 0x03ffff;
 
@@ -142,7 +142,7 @@ namespace Framework
         private ushort unitIdValue;
         private uint lastUnitIdTime;
 
-        public IdGenerater()
+        public IdGenerator()
         {
             long epoch1970tick = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000;
             this.epoch2020 = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000 - epoch1970tick;
@@ -196,7 +196,7 @@ namespace Framework
             {
                 ++this.instanceIdValue;
 
-                if (this.instanceIdValue > IdGenerater.Mask18bit - 1) // 18bit
+                if (this.instanceIdValue > IdGenerator.Mask18bit - 1) // 18bit
                 {
                     ++this.lastInstanceIdTime; // 借用下一秒
                     this.instanceIdValue = 0;

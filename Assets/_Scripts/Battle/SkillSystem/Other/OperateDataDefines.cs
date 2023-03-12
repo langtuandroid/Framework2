@@ -26,7 +26,7 @@ namespace Framework
     /// </summary>
     public class DamageData: OperateData
     {
-        public BuffDamageTypes BuffDamageTypes;
+        public SkillDamageTypes SkillDamageTypes;
         public float DamageValue;
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace Framework
         /// </summary>
         public string CustomData;
 
-        public DamageData InitData(BuffDamageTypes buffDamageTypes, float damageValue, Unit attackCaster, Unit attackReceiver,
+        public DamageData InitData(SkillDamageTypes skillDamageTypes, float damageValue, Unit attackCaster, Unit attackReceiver,
             string customData = null)
         {
-            BuffDamageTypes = buffDamageTypes;
+            SkillDamageTypes = skillDamageTypes;
             DamageValue = damageValue;
             this.OperateCaster = attackCaster;
             this.OperateTaker = attackReceiver;
@@ -48,7 +48,7 @@ namespace Framework
         public override void Clear()
         {
             base.Clear();
-            BuffDamageTypes = BuffDamageTypes.None;
+            SkillDamageTypes = SkillDamageTypes.None;
             DamageValue = 0;
             CustomData = null;
         }

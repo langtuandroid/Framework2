@@ -1,6 +1,9 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
+/// <summary>
+/// buff值的加成类型
+/// </summary>
 public enum BuffAdditionTypes
 {
     [HideInInspector] [LabelText("百分比Buff")]
