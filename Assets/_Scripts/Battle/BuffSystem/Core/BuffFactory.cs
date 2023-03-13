@@ -15,16 +15,13 @@ namespace Framework
         {
             {typeof(ChangePropertyBuffData), typeof(ChangePropertyBuffSystem)},
             {typeof(ListenBuffCallBackBuffData), typeof(ListenBuffCallBackBuffSystem)},
-            {typeof(BindStateBuffData), typeof(BindStateBuffSystem)},
             {typeof(PlayEffectBuffData), typeof(PlayEffectBuffSystem)},
-            {typeof(ReplaceAnimBuffData), typeof(ReplaceAnimBuffSystem)},
             {typeof(ChangeMaterialBuffData), typeof(ChangeMaterialBuffSystem)},
 
             {typeof(RefreshTargetBuffTimeBuffData), typeof(RefreshTargetBuffTimeBuffSystem)},
             {typeof(FlashDamageBuffData), typeof(FlashDamageBuffSystem)},
             {typeof(SustainDamageBuffData), typeof(SustainDamageBuffSystem)},
             {typeof(TreatmentBuffData), typeof(TreatmentBuffSystem)},
-            {typeof(ReplaceAttackBuffData), typeof(ReplaceAttackBuffSystem)}
         };
 
         /// <summary>
@@ -118,7 +115,7 @@ namespace Framework
         /// <param name="aBuffSystemBase"></param>
         public static void RecycleBuff<T>(ABuffSystemBase<T> aBuffSystemBase) where T : BuffDataBase
         {
-            ReferencePool.Release(aBuffSystemBase);
+            ReferencePool.Free(aBuffSystemBase);
         }
     }
 }
