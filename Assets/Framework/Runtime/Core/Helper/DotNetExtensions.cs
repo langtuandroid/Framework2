@@ -2646,3 +2646,21 @@ public static class StringExtension
         return startIndex < 0 ? str : str.Substring(startIndex);
     }
 }
+
+public static class EnumExtension
+{
+    public static bool Contains<T>(this T self, T other) where T : Enum
+    {
+        int selfInt = Convert.ToInt32(self);
+        int otherInt = Convert.ToInt32(other);
+        return (selfInt & otherInt) == otherInt;
+    }
+    
+    public static T Remove<T>(this T self, T other) where T : Enum
+    {
+        int selfInt = Convert.ToInt32(self);
+        int otherInt = Convert.ToInt32(other);
+
+        return (T)Enum.ToObject(typeof(T), selfInt & ~otherInt);
+    } 
+}

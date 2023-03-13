@@ -1,4 +1,4 @@
-﻿public class ChangePropertyBuffData : BuffWithValueData
+﻿public class ChangePropertyBuffData : BuffDataBase
 {
 
 }

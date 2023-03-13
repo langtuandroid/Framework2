@@ -158,9 +158,6 @@ MonoBehaviour:
     - Name: BuffData
       Entry: 7
       Data: 7|SustainDamageBuffData, Game.Runtime
-    - Name: SkillDamageTypes
-      Entry: 3
-      Data: 0
     - Name: WorkInternal
       Entry: 3
       Data: 0

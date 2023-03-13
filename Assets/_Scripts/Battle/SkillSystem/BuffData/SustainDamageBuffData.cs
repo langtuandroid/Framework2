@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class SustainDamageBuffData : BuffWithValueData
+public class SustainDamageBuffData : BuffDataBase 
 {
     [Tooltip("1000为1s")] [BoxGroup("自定义项")] [LabelText("作用间隔")]
     public long WorkInternal = 0;

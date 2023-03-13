@@ -6,6 +6,7 @@ namespace Framework
     {
         //最小值，小于此值的都被认为是原始属性
        public const int Max = 10000;
+       public const int None = 1000;
 
        //生命值
        public const int Hp = 1001;
@@ -56,6 +57,9 @@ namespace Framework
                    Str2TypeDoubleMap.Add(fieldInfo.Name, type);
                }
            }
+
+           Str2TypeDoubleMap.Add(nameof(None), None);
+           Str2TypeDoubleMap.Add(nameof(Hp), Hp);
        }
     }
 }

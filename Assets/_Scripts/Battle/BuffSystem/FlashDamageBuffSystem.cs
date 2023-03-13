@@ -10,8 +10,7 @@
             FlashDamageBuffData flashDamageBuffData = this.GetBuffDataWithTType;
 
             DamageData damageData = ReferencePool.Allocate<DamageData>().InitData(flashDamageBuffData.DamageType,
-                BuffDataCalculateHelper.CalculateCurrentData(this), this.TheUnitFrom, this.TheUnitBelongto,
-                flashDamageBuffData.CustomData);
+                BuffDataCalculateHelper.CalculateCurrentData(this), this.TheUnitFrom, this.TheUnitBelongto);
 
             damageData.DamageValue *= flashDamageBuffData.DamageFix;
 

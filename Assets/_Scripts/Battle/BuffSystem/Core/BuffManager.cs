@@ -14,8 +14,8 @@ namespace Framework
         /// <summary>
         /// 用于查找的——基于Buff生效方式
         /// </summary>
-        private Dictionary<BuffWorkTypes, IBuffSystem> m_BuffsForFind_BuffWorkType =
-            new Dictionary<BuffWorkTypes, IBuffSystem>();
+        private Dictionary<BuffWorkState, IBuffSystem> m_BuffsForFind_BuffWorkType =
+            new Dictionary<BuffWorkState, IBuffSystem>();
 
         /// <summary>
         /// 用于查找的——基于Buff的Id
@@ -46,7 +46,7 @@ namespace Framework
                     aBuff.Finished(currentFrame);
                     this.m_Next = this.m_Current.Next;
                     m_Buffs.Remove(this.m_Current);
-                    m_BuffsForFind_BuffWorkType.Remove(this.m_Current.Value.BuffData.BuffWorkType);
+                    m_BuffsForFind_BuffWorkType.Remove(this.m_Current.Value.BuffData.BuffWorkState);
                     this.m_BuffsForFind_BuffId.Remove(this.m_Current.Value.BuffData.BuffId);
                     // Log.Info(
                     //     $"移除一个Buff，Id为{this.m_Current.Value.BuffData.BuffId},BuffManager是否还有?:{this.FindBuffById(this.m_Current.Value.BuffData.BuffId)}");
@@ -65,7 +65,7 @@ namespace Framework
         {
             m_Buffs.AddLast(aBuff);
 
-            this.m_BuffsForFind_BuffWorkType[aBuff.BuffData.BuffWorkType] = aBuff;
+            this.m_BuffsForFind_BuffWorkType[aBuff.BuffData.BuffWorkState] = aBuff;
             this.m_BuffsForFind_BuffId[aBuff.BuffData.BuffId] = aBuff;
             // Log.Info($"把ID为{aBuff.BuffData.BuffId}的buff加入检索表");
         }
@@ -90,11 +90,11 @@ namespace Framework
         /// <summary>
         /// 通过作用方式查找Buff
         /// </summary>
-        /// <param name="buffWorkTypes"></param>
+        /// <param name="buffWorkState"></param>
         /// <returns></returns>
-        public bool FindBuffByWorkType(BuffWorkTypes buffWorkTypes)
+        public bool FindBuffByWorkType(BuffWorkState buffWorkState)
         {
-            if (this.m_BuffsForFind_BuffWorkType.TryGetValue(buffWorkTypes, out IBuffSystem _temp))
+            if (this.m_BuffsForFind_BuffWorkType.TryGetValue(buffWorkState, out IBuffSystem _temp))
             {
                 return true;
             }
@@ -124,10 +124,10 @@ namespace Framework
         /// <summary>
         /// 通过作用方式获得Buff
         /// </summary>
-        /// <param name="buffWorkTypes"></param>
-        public IBuffSystem GetBuffByWorkType(BuffWorkTypes buffWorkTypes)
+        /// <param name="buffWorkState"></param>
+        public IBuffSystem GetBuffByWorkType(BuffWorkState buffWorkState)
         {
-            if (m_BuffsForFind_BuffWorkType.TryGetValue(buffWorkTypes, out IBuffSystem _temp))
+            if (m_BuffsForFind_BuffWorkType.TryGetValue(buffWorkState, out IBuffSystem _temp))
             {
                 return _temp;
             }

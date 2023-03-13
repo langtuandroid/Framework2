@@ -26,8 +26,8 @@ namespace Framework
             {
                 return default(T);
             }
-
             return (T)Enum.Parse(typeof(T), str);
         }
     }
+
 }

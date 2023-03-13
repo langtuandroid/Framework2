@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Framework;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,7 +18,7 @@ public class BuffDataBase
     [HideInInspector]
     [LabelText("Buff的Id")]
     [BoxGroup("必填项")]
-    public long BuffId { get; set; } 
+    public long BuffId { get; set; }
 
     [LabelText("Buff的添加目标")]
     [BoxGroup("必填项")]
@@ -27,6 +29,11 @@ public class BuffDataBase
     [BoxGroup("必填项")]
     [ShowInInspector]
     public BuffBaseType BuffBaseType { get; set; }
+
+    [LabelText("Buff类型")]
+    [BoxGroup("必填项")]
+    [ShowInInspector]
+    public virtual BuffWorkState BuffWorkState { get; set; }
 
     [BoxGroup("选填项")]
     [LabelText("Buff是否状态栏可见")]
@@ -68,4 +75,34 @@ public class BuffDataBase
     [BoxGroup("选填项")]
     [ShowInInspector]
     public long SustainTime { get; set; }
+
+    [LabelText("伤害类型")]
+    [BoxGroup("选填项")]
+    [ShowInInspector]
+    public SkillDamageTypes DamageType { get; set; }
+
+    [LabelText("Buff基础数值影响者")]
+    [BoxGroup("选填项")]
+    [ShowInInspector]
+    public BuffBaseDataEffectTypes BaseBuffBaseDataEffectTypes { get; set; }
+
+    [LabelText("基础数值")]
+    [BoxGroup("选填项")]
+    [ShowInInspector]
+    public int BasicValue { get; set; }
+
+    [Tooltip("具体的加成(可能会一个效果多种加成方式)，例如法强加成")]
+    [BoxGroup("选填项")]
+    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+    [ShowInInspector]
+    public Dictionary<BuffAdditionTypes, float> AdditionValue { get; set; } =
+        new Dictionary<BuffAdditionTypes, float>();
+
+    [LabelText("修改的属性")]
+    [ShowIf()]
+    [BoxGroup("选填项")]
+    [ValueDropdown("@NumericType.Str2TypeDoubleMap.Keys")]
+    public string PropTypeStr { get; set; } = nameof(NumericType.None);
+
+    public int PropType => NumericType.Str2TypeDoubleMap.GetValueByKey(PropTypeStr);
 }

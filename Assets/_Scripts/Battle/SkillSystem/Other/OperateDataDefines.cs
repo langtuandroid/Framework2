@@ -29,19 +29,12 @@ namespace Framework
         public SkillDamageTypes SkillDamageTypes;
         public float DamageValue;
 
-        /// <summary>
-        /// 自定义数据标记，比如标识此伤害来自于W技能
-        /// </summary>
-        public string CustomData;
-
-        public DamageData InitData(SkillDamageTypes skillDamageTypes, float damageValue, Unit attackCaster, Unit attackReceiver,
-            string customData = null)
+        public DamageData InitData(SkillDamageTypes skillDamageTypes, float damageValue, Unit attackCaster, Unit attackReceiver)
         {
             SkillDamageTypes = skillDamageTypes;
             DamageValue = damageValue;
             this.OperateCaster = attackCaster;
             this.OperateTaker = attackReceiver;
-            CustomData = customData;
             return this;
         }
 
@@ -50,7 +43,11 @@ namespace Framework
             base.Clear();
             SkillDamageTypes = SkillDamageTypes.None;
             DamageValue = 0;
-            CustomData = null;
         }
+    }
+
+    public class StateData : OperateData
+    {
+        public BuffWorkState
     }
 }
