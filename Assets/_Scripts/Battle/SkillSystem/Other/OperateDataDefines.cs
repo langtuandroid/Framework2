@@ -46,8 +46,4 @@ namespace Framework
         }
     }
 
-    public class StateData : OperateData
-    {
-        public BuffWorkState
-    }
 }

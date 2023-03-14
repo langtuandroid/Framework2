@@ -9,9 +9,7 @@ namespace Framework
     {
         public static float CalculateCurrentData(IBuffSystem buffSystem)
         {
-            //取得来源Unit的Hero数据
-            UnitAttributesDataComponent theUnitFromUnitAttributesData =
-                buffSystem.TheUnitFrom.GetComponent<UnitAttributesDataComponent>();
+            var numericComponent = buffSystem.TheUnitFrom.GetComponent<NumericComponent>();
         
             float tempData = 0;
         

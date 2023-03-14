@@ -29,11 +29,9 @@
             //强制类型转换为伤害Buff数据 
             SustainDamageBuffData temp = this.GetBuffDataWithTType;
 
-            DamageData damageData = ReferencePool.Acquire<DamageData>().InitData(temp.SkillDamageTypes,
+            DamageData damageData = ReferencePool.Allocate<DamageData>().InitData(temp.DamageType,
                 BuffDataCalculateHelper.CalculateCurrentData(this), this.TheUnitFrom, this.TheUnitBelongto);
             
-            damageData.DamageValue *= temp.DamageFix;
-
             this.TheUnitFrom.GetComponent<CastDamageComponent>().BaptismDamageData(damageData);
 
             float finalDamage =

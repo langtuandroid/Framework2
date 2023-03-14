@@ -33,7 +33,7 @@ public class BuffDataBase
     [LabelText("Buff类型")]
     [BoxGroup("必填项")]
     [ShowInInspector]
-    public virtual BuffWorkState BuffWorkState { get; set; }
+    public virtual BuffWorkType BuffWorkType { get; set; }
 
     [BoxGroup("选填项")]
     [LabelText("Buff是否状态栏可见")]
@@ -76,11 +76,6 @@ public class BuffDataBase
     [ShowInInspector]
     public long SustainTime { get; set; }
 
-    [LabelText("伤害类型")]
-    [BoxGroup("选填项")]
-    [ShowInInspector]
-    public SkillDamageTypes DamageType { get; set; }
-
     [LabelText("Buff基础数值影响者")]
     [BoxGroup("选填项")]
     [ShowInInspector]
@@ -99,10 +94,11 @@ public class BuffDataBase
         new Dictionary<BuffAdditionTypes, float>();
 
     [LabelText("修改的属性")]
-    [ShowIf()]
+    [ShowIf("@BuffWorkType.Contains(BuffWorkType.ChangeProp)")]
     [BoxGroup("选填项")]
     [ValueDropdown("@NumericType.Str2TypeDoubleMap.Keys")]
     public string PropTypeStr { get; set; } = nameof(NumericType.None);
 
     public int PropType => NumericType.Str2TypeDoubleMap.GetValueByKey(PropTypeStr);
+
 }
