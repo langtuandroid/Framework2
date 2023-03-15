@@ -57,6 +57,15 @@ namespace Framework
        //魔法伤害减少 15% 根据魔抗计算来的
        public const int SpackReduce = 1011;
 
+       public const int Level = 1012;
+
+       // 物理伤害加成
+       public const int PhysicalMul = 1013;
+       // 真实伤害加成
+       public const int RealAckMul = 1014;
+       // 魔法伤害加成
+       public const int SpAckMul = 1015;
+
        public static DoubleMap<string, int> Str2TypeDoubleMap { get; }
 
        static NumericType()

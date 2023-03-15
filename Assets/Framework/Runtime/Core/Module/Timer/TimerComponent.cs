@@ -26,11 +26,24 @@ namespace Framework
             return timerAction;
         }
 
+        public static TimerAction Create(long id, TimerClass timerClass, long startTime, long time, Action action)
+        {
+            TimerAction timerAction = ObjectPool.Instance.Fetch<TimerAction>();
+            timerAction.Id = id;
+            timerAction.TimerClass = timerClass;
+            timerAction.StartTime = startTime;
+            timerAction.Time = time;
+            timerAction.Action = action;
+            return timerAction;
+        }
+
         public long Id;
 
         public TimerClass TimerClass;
 
         public object Object;
+
+        public Action Action;
 
         public long StartTime;
 
@@ -46,6 +59,7 @@ namespace Framework
             this.Time = 0;
             this.TimerClass = TimerClass.None;
             this.Type = 0;
+            Action = null;
             ObjectPool.Instance.Recycle(this);
         }
     }
@@ -141,7 +155,16 @@ namespace Framework
             {
                 case TimerClass.OnceTimer:
                 {
-                    EventSystem.Instance.Invoke(timerAction.Type, new TimerCallback() { Args = timerAction.Object });
+                    if (timerAction.Action == null)
+                    {
+                        EventSystem.Instance.Invoke(timerAction.Type,
+                            new TimerCallback() { Args = timerAction.Object });
+                    }
+                    else
+                    {
+                        timerAction.Action();
+                    }
+
                     timerAction.Recycle();
                     break;
                 }
@@ -174,14 +197,7 @@ namespace Framework
             }
         }
 
-        public bool Remove(ref long id)
-        {
-            long i = id;
-            id = 0;
-            return this.Remove(i);
-        }
-
-        private bool Remove(long id)
+        public bool Remove(long id)
         {
             if (id == 0)
             {
@@ -267,15 +283,15 @@ namespace Framework
                 cancellationToken?.Remove(CancelAction);
             }
         }
-        
+
         public ETCancellationToken NewOnceTimerAsync(long duration, Action action)
         {
             ETCancellationToken cancellationToken = new ETCancellationToken();
             WaitSync(duration, action, cancellationToken);
             return cancellationToken;
         }
-        
-        public ETCancellationToken NewFrameTimer(Action action)
+
+        public ETCancellationToken NewFrameTimerAsync(Action action)
         {
             ETCancellationToken cancellationToken = new ETCancellationToken();
             WaitSync(5, action, cancellationToken);
@@ -320,17 +336,19 @@ namespace Framework
             this.AddTimer(timer);
             return timer.Id;
         }
-        
-        public long NewOnceTimer(long tillTime, Action action)
+
+        public long NewOnceTimer(long duration, Action action)
         {
-            if (tillTime < TimeHelper.ServerNow())
-            {
-                Log.Error($"new once time too small: {tillTime}");
-            }
-            TimerAction timer = this.AddChild<TimerAction, TimerClass, long, object>(TimerClass.OnceTimer, 0, action, true);
-            this.AddTimer(tillTime, timer);
+            TimerAction timer = TimerAction.Create(GetId(), TimerClass.OnceTimer, TimeInfo.Instance.ClientNow(),
+                duration, action);
+            this.AddTimer(timer);
             return timer.Id;
-        } 
+        }
+
+        public long NewFrameTimer(Action action)
+        {
+            return NewOnceTimer(0, action);
+        }
 
         public long NewRepeatedTimer(long time, int type, object args)
         {

@@ -11,6 +11,19 @@
         {
             Unit damageTaker = self.GetParent<Unit>();
             damageData.OperateTaker = damageTaker;
+            var numeric = self.GetParent<Entity>().GetComponent<NumericComponent>();
+            switch (damageData.SkillDamageTypes)
+            {
+                case SkillDamageTypes.Physical:
+                    damageData.DamageValue = (int)(damageData.DamageValue * (1 - numeric.GetAsFloat(NumericType.AckReduce)));
+                    break;
+                case SkillDamageTypes.Real:
+                    break;
+                case SkillDamageTypes.Magic:
+                    damageData.DamageValue = (int)(damageData.DamageValue * (1 - numeric.GetAsFloat(NumericType.SpackReduce)));
+                    break;
+            }
+
             return damageData.DamageValue < 0 ? 0 : damageData.DamageValue;
         }
 
@@ -31,28 +44,19 @@
             damageData.OperateTaker = self.GetParent<Unit>();
             self.BaptismDamageData(damageData);
 
-            float currentHp = self.GetParent<Unit>().GetComponent<NumericComponent>()[NumericType.Hp];
+            float currentHp = self.GetParent<Unit>().GetComponent<NumericComponent>().GetByKey(NumericType.Hp);
             float finalHp = currentHp - damageData.DamageValue;
 
-            Unit unit = self.GetParent<Unit>();
-
-            // if (finalHp <= 0)
-            // {
-            //     finalHp = 0;
-            //     self.GetParent<Unit>().GetComponent<NumericComponent>()[NumericType.Hp] = finalHp;
-            //
-            //     MessageHelper.BroadcastToRoom(unit.BelongToRoom,
-            //         new M2C_ReceiveDamage() {FinalValue = damageData.DamageValue, UnitId = unit.Id});
-            //     Game.EventSystem.Publish(new EventType.SpriteDead()
-            //         {KillerSprite = damageData.OperateCaster, DeadSprite = damageData.OperateTaker}).Coroutine();
-            // }
-            // else
-            // {
-            //     self.GetParent<Unit>().GetComponent<NumericComponent>()[NumericType.Hp] = finalHp;
-            //     MessageHelper.BroadcastToRoom(unit.BelongToRoom,
-            //         new M2C_ReceiveDamage() {FinalValue = damageData.DamageValue, UnitId = unit.Id});
-            // }
-            //
+            if (finalHp <= 0)
+            {
+                finalHp = 0;
+                self.GetParent<Unit>().GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
+            }
+            else
+            {
+                self.GetParent<Unit>().GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
+            }
+            
             ReferencePool.Free(damageData);
         }
     }

@@ -51,7 +51,7 @@ namespace ET
 
     public class B2S_RoleCastComponentAwakeSystem : AwakeSystem<B2S_RoleCastComponent, RoleCamp, RoleTag>
     {
-        public override void Awake(B2S_RoleCastComponent self, RoleCamp a, RoleTag b)
+        protected override void Awake(B2S_RoleCastComponent self, RoleCamp a, RoleTag b)
         {
             self.RoleCamp = a;
             self.RoleTag = b;

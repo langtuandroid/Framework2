@@ -64,7 +64,7 @@ namespace Framework
             progressResult.Callbackable().OnCallback(progress =>
             {
                 finishProgress++;
-                if (!CheckAllFinish())
+                if (! CheckAllFinish())
                 {
                     SetNextProgress();
                 }
@@ -83,7 +83,7 @@ namespace Framework
             if (currentProgress.IsDone && progressQueue.Count <= 0)
             {
                 //延迟一帧 否则会比子任务提前完成
-                TimerComponent.Instance.NewOnceTimer(0, () => SetResult());
+                TimerComponent.Instance.NewFrameTimer(() => SetResult());
                 return true;
             }
             return false;

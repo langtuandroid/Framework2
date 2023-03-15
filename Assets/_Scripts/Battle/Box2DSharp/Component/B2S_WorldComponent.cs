@@ -13,7 +13,7 @@ namespace ET
 {
     public class B2S_WorldComponentAwakeSystem : AwakeSystem<B2S_WorldComponent>
     {
-        public override void Awake(B2S_WorldComponent self)
+        protected override void Awake(B2S_WorldComponent self)
         {
             self.Awake();
         }

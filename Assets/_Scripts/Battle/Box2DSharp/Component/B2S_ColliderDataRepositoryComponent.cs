@@ -49,69 +49,35 @@ namespace ET
         /// </summary>
         private void ReadcolliderData()
         {
-#if SERVER
-            if (File.Exists($"{this.colliderDataPath}/{this.colliderDataName[0]}.bytes"))
-            {
-                byte[] mfile0 = File.ReadAllBytes($"{this.colliderDataPath}/{this.colliderDataName[0]}.bytes");
-                //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
-                if (mfile0.Length > 0)
-                    this.BoxColliderDatas =
-                            BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
-                //Log.Info($"已经读取矩形数据，数据大小为{mfile0.Length}");
-            }
-
-            if (File.Exists($"{this.colliderDataPath}/{this.colliderDataName[1]}.bytes"))
-            {
-                byte[] mfile1 = File.ReadAllBytes($"{this.colliderDataPath}/{this.colliderDataName[1]}.bytes");
-                if (mfile1.Length > 0)
-                    this.CircleColliderDatas =
-                            BsonSerializer.Deserialize<ColliderDataSupporter>(mfile1);
-                //Log.Info($"已经读取圆形数据，数据大小为{mfile1.Length}");
-            }
-
-            if (File.Exists($"{this.colliderDataPath}/{this.colliderDataName[2]}.bytes"))
-            {
-                byte[] mfile2 = File.ReadAllBytes($"{this.colliderDataPath}/{this.colliderDataName[2]}.bytes");
-                if (mfile2.Length > 0)
-                {
-                    this.PolygonColliderDatas =
-                            BsonSerializer.Deserialize<ColliderDataSupporter>(mfile2);
-                }
-
-                //Log.Info($"已经读取多边形数据，数据大小为{mfile2.Length}");
-            }
-#else
-
-            byte[] mfile0 = XAssetLoader
-                .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[0]))?.bytes;
-            //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
-            if (mfile0 != null && mfile0.Length > 0)
-            {
-                this.BoxColliderDatas =
-                    BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
-                Log.Info($"已经读取矩形数据，数据大小为{mfile0.Length}");
-            }
-
-            byte[] mfile1 = XAssetLoader
-                .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[1]))?.bytes;
-            if (mfile1 != null && mfile1.Length > 0)
-            {
-                this.CircleColliderDatas =
-                    BsonSerializer.Deserialize<ColliderDataSupporter>(mfile1);
-                Log.Info($"已经读取圆形数据，数据大小为{mfile1.Length}");
-            }
-
-
-            byte[] mfile2 = XAssetLoader
-                .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[2]))?.bytes;
-            if (mfile2 != null && mfile2.Length > 0)
-            {
-                this.PolygonColliderDatas =
-                    BsonSerializer.Deserialize<ColliderDataSupporter>(mfile2);
-
-                Log.Info($"已经读取多边形数据，数据大小为{mfile2.Length}");
-            }
-#endif
+            // byte[] mfile0 = XAssetLoader
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[0]))?.bytes;
+            // //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
+            // if (mfile0 != null && mfile0.Length > 0)
+            // {
+            //     this.BoxColliderDatas =
+            //         BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
+            //     Log.Info($"已经读取矩形数据，数据大小为{mfile0.Length}");
+            // }
+            //
+            // byte[] mfile1 = XAssetLoader
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[1]))?.bytes;
+            // if (mfile1 != null && mfile1.Length > 0)
+            // {
+            //     this.CircleColliderDatas =
+            //         BsonSerializer.Deserialize<ColliderDataSupporter>(mfile1);
+            //     Log.Info($"已经读取圆形数据，数据大小为{mfile1.Length}");
+            // }
+            //
+            //
+            // byte[] mfile2 = XAssetLoader
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[2]))?.bytes;
+            // if (mfile2 != null && mfile2.Length > 0)
+            // {
+            //     this.PolygonColliderDatas =
+            //         BsonSerializer.Deserialize<ColliderDataSupporter>(mfile2);
+            //
+            //     Log.Info($"已经读取多边形数据，数据大小为{mfile2.Length}");
+            // }
         }
 
         public B2S_ColliderDataStructureBase GetDataByColliderId(long id)

@@ -91,8 +91,8 @@ namespace ET
             
             foreach (var cachedCollisionData in this.m_CollisionRecorder)
             {
-                Unit unitA = this.GetParent<Room>().GetComponent<UnitComponent>().Get(cachedCollisionData.Item1);
-                Unit unitB = this.GetParent<Room>().GetComponent<UnitComponent>().Get(cachedCollisionData.Item2);
+                Unit unitA = this.DomainScene().GetComponent<UnitComponent>().Get(cachedCollisionData.Item1);
+                Unit unitB = this.DomainScene().GetComponent<UnitComponent>().Get(cachedCollisionData.Item2);
                 
                 if (unitA == null || unitB == null || unitA.IsDisposed || unitB.IsDisposed)
                 {

@@ -16,41 +16,11 @@ namespace Framework
             {typeof(ChangePropertyBuffData), typeof(ChangePropertyBuffSystem)},
             {typeof(ListenBuffCallBackBuffData), typeof(ListenBuffCallBackBuffSystem)},
             {typeof(PlayEffectBuffData), typeof(PlayEffectBuffSystem)},
-            {typeof(ChangeMaterialBuffData), typeof(ChangeMaterialBuffSystem)},
-
             {typeof(RefreshTargetBuffTimeBuffData), typeof(RefreshTargetBuffTimeBuffSystem)},
             {typeof(FlashDamageBuffData), typeof(FlashDamageBuffSystem)},
             {typeof(SustainDamageBuffData), typeof(SustainDamageBuffSystem)},
             {typeof(TreatmentBuffData), typeof(TreatmentBuffSystem)},
         };
-
-        /// <summary>
-        /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="npsupportDataId">Buff数据归属的数据块Id</param>
-        /// <param name="buffNodeId">Buff节点的Id</param>
-        /// <param name="theUnitIdFrom">Buff来源者</param>
-        /// <param name="theUnitIdBelongTo">Buff寄生者</param>
-        /// <param name="theSkillCanvasIdBelongTo"></param>
-        /// <returns></returns>
-        public static IBuffSystem AcquireBuff(long npsupportDataId, long buffNodeId, long theUnitIdFrom,
-            long theUnitIdBelongTo,
-            long theSkillCanvasIdBelongTo)
-        {
-            UnitComponent unitComponent = Root.Instance.Scene.GetComponent<UnitComponent>();
-            Unit theUnitFrom = unitComponent.Get(theUnitIdFrom);
-            Unit theUnitBelongTo = unitComponent.Get(theUnitIdBelongTo);
-
-            NP_RuntimeTree npRuntimeTree = theUnitFrom.GetComponent<NP_RuntimeTreeManager>()
-                .GetTreeByRuntimeID(theSkillCanvasIdBelongTo);
-
-            return AcquireBuff(
-                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
-                    .GetNP_TreeData(npsupportDataId)
-                    .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
-                theUnitFrom, theUnitBelongTo, npRuntimeTree);
-        }
 
         /// <summary>
         /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal

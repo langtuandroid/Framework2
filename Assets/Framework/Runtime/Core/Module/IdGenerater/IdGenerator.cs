@@ -173,13 +173,13 @@ namespace Framework
 
         private uint TimeSince2020()
         {
-            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epoch2020) / 1000);
+            uint a = (uint)((TimeInfo.Instance.ClientNow() - this.epoch2020) / 1000);
             return a;
         }
 
         private uint TimeSinceThisYear()
         {
-            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epochThisYear) / 1000);
+            uint a = (uint)((TimeInfo.Instance.ClientNow() - this.epochThisYear) / 1000);
             return a;
         }
 

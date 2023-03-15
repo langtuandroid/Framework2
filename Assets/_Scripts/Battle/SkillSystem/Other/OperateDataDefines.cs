@@ -27,9 +27,9 @@ namespace Framework
     public class DamageData: OperateData
     {
         public SkillDamageTypes SkillDamageTypes;
-        public float DamageValue;
+        public int DamageValue;
 
-        public DamageData InitData(SkillDamageTypes skillDamageTypes, float damageValue, Unit attackCaster, Unit attackReceiver)
+        public DamageData InitData(SkillDamageTypes skillDamageTypes, int damageValue, Unit attackCaster, Unit attackReceiver)
         {
             SkillDamageTypes = skillDamageTypes;
             DamageValue = damageValue;
