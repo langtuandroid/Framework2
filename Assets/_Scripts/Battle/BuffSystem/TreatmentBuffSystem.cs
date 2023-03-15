@@ -5,7 +5,7 @@
     /// </summary>
     public class TreatmentBuffSystem : ABuffSystemBase<TreatmentBuffData>
     {
-        public override void OnExecute(uint currentFrame)
+        public override void OnExecute(float currentTime)
         {
             float finalTreatValue;
             finalTreatValue = BuffDataCalculateHelper.CalculateCurrentData(this);

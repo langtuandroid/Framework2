@@ -2,17 +2,17 @@
 {
     public class PlayEffectBuffSystem : ABuffSystemBase<PlayEffectBuffData>
     {
-        public override void OnExecute(uint currentFrame)
+        public override void OnExecute(float currentTime)
         {
 
         }
 
-        public override void OnFinished(uint currentFrame)
+        public override void OnFinished(float currentTime)
         {
 
         }
 
-        public override void OnRefreshed(uint currentFrame)
+        public override void OnRefreshed(float currentTime)
         {
 
         }

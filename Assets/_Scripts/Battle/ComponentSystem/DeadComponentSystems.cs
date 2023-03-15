@@ -1,9 +1,11 @@
 ﻿using ET;
 using Framework;
 
+
+
 public class DeadComponentAwakeSystem : AwakeSystem<DeadComponent, long>
 {
-    protected override void Awake(DeadComponent self, long resurrectionTime)
+    protected override async void Awake(DeadComponent self, long resurrectionTime)
     {
         self.ResurrectionTime = resurrectionTime;
 
@@ -19,7 +21,7 @@ public class DeadComponentAwakeSystem : AwakeSystem<DeadComponent, long>
 
 public class DeadComponentDestroySystem : DestroySystem<DeadComponent>
 {
-    public override void Destroy(DeadComponent self)
+    protected override void Destroy(DeadComponent self)
     {
         Unit unit = self.GetParent<Unit>();
 

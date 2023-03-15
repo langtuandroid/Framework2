@@ -21,18 +21,14 @@ namespace Framework
 
         public long ServerMinusClientTime { private get; set; }
 
-        public long FrameTime;
-
         public TimeInfo()
         {
             this.dt1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             this.dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            this.FrameTime = this.ClientNow();
         }
 
         public void Update(float deltaTime)
         {
-            this.FrameTime = this.ClientNow();
         }
 
         /// <summary> 
@@ -60,16 +56,6 @@ namespace Framework
         public long ServerNow()
         {
             return ClientNow() + Instance.ServerMinusClientTime;
-        }
-
-        public long ClientFrameTime()
-        {
-            return this.FrameTime;
-        }
-
-        public long ServerFrameTime()
-        {
-            return this.FrameTime + Instance.ServerMinusClientTime;
         }
 
         public long Transition(DateTime d)

@@ -5,7 +5,7 @@
     /// </summary>
     public class FlashDamageBuffSystem : ABuffSystemBase<FlashDamageBuffData>
     {
-        public override void OnExecute(uint currentFrame)
+        public override void OnExecute(float currentTime)
         {
             FlashDamageBuffData flashDamageBuffData = this.GetBuffDataWithTType;
 
@@ -21,12 +21,11 @@
             
             if (finalDamage >= 0)
             {
-                this.TheUnitBelongto.GetComponent<UnitAttributesDataComponent>().NumericComponent
-                    .ApplyChange(NumericType.Hp, -finalDamage);
+                this.TheUnitBelongto.GetComponent<NumericComponent>().ApplyChange(NumericType.Hp, -finalDamage);
                 //抛出伤害事件
-                this.GetBuffTarget().BelongToRoom.GetComponent<BattleEventSystemComponent>().Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
+                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
                 //抛出受伤事件
-                this.GetBuffTarget().BelongToRoom.GetComponent<BattleEventSystemComponent>().Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
+                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
             }
 
             //TODO 从当前战斗Entity获取BattleEventSystem来Run事件
@@ -34,7 +33,7 @@
             {
                 foreach (var eventId in this.BuffData.EventIds)
                 {
-                    this.GetBuffTarget().BelongToRoom.GetComponent<BattleEventSystemComponent>().Run($"{eventId}{this.TheUnitFrom.Id}", this);
+                    this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"{eventId}{this.TheUnitFrom.Id}", this);
                     //Log.Info($"抛出了{this.MSkillBuffDataBase.theEventID}{this.theUnitFrom.Id}");
                 }
             }

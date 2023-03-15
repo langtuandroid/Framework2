@@ -1,4 +1,6 @@
-﻿namespace Framework
+﻿using ET;
+
+namespace Framework
 {
     /// <summary>
     /// 持续伤害，一般描述为X秒内造成Y伤害，或者每X秒造成Y伤害
@@ -8,23 +10,23 @@
         /// <summary>
         /// 自身下一个时间点
         /// </summary>
-        private uint m_SelfNextExcuteFrame = 0;
+        private float selfNextExcuteTime = 0;
 
-        public override void OnExecute(uint currentFrame)
+        public override void OnExecute(float currentTime)
         {
-            ExcuteDamage(currentFrame);
+            ExcuteDamage(currentTime);
             //Log.Info($"作用间隔为{selfNextimer - TimeHelper.Now()},持续时间为{temp.SustainTime},持续到{this.selfNextimer}");
         }
 
-        public override void OnUpdate(uint currentFrame)
+        public override void OnUpdate(float currentTime)
         {
-            if (currentFrame >= this.m_SelfNextExcuteFrame)
+            if (currentTime >= this.selfNextExcuteTime)
             {
-                ExcuteDamage(currentFrame);
+                ExcuteDamage(currentTime);
             }
         }
 
-        private void ExcuteDamage(uint currentFrame)
+        private void ExcuteDamage(float currentTime)
         {
             //强制类型转换为伤害Buff数据 
             SustainDamageBuffData temp = this.GetBuffDataWithTType;
@@ -39,18 +41,17 @@
 
             if (finalDamage >= 0)
             {
-                this.TheUnitBelongto.GetComponent<UnitAttributesDataComponent>().NumericComponent
-                    .ApplyChange(NumericType.Hp, -finalDamage);
+                this.TheUnitBelongto.GetComponent<NumericComponent>().ApplyChange(NumericType.Hp, -finalDamage);
                 //抛出伤害事件
-                this.GetBuffTarget().BelongToRoom.GetComponent<BattleEventSystemComponent>()
+                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
                     .Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
                 //抛出受伤事件
-                this.GetBuffTarget().BelongToRoom.GetComponent<BattleEventSystemComponent>()
+                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
                     .Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
             }
 
             //设置下一个时间点
-            this.m_SelfNextExcuteFrame = currentFrame + TimeAndFrameConverter.Frame_Long2Frame(temp.WorkInternal);
+            this.selfNextExcuteTime = currentTime + (temp.WorkInternal);
         }
 
     }

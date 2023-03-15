@@ -12,7 +12,7 @@ namespace Framework
         /// <summary>
         /// 持续时间（目标帧）（到达这个帧就会移除）
         /// </summary>
-        public uint MaxLimitFrame { get; set; }
+        public float MaxLimitTime { get; set; }
 
         public BuffDataBase BuffData { get; set; }
         public long BuffNodeId { get; set; }
@@ -24,7 +24,7 @@ namespace Framework
         /// </summary>
         public T GetBuffDataWithTType => BuffData as T;
 
-        public void Init(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, uint currentFrame)
+        public void Init(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, float currentTime)
         {
             //设置Buff来源Unit和归属Unit
             this.TheUnitFrom = theUnitFrom;
@@ -32,10 +32,10 @@ namespace Framework
             this.BuffData = buffData as T;
 
             // 如果没加入成功，说明已有同一个Buff，需要进入对象池
-            if (BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, currentFrame))
+            if (BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, currentTime))
             {
                 this.BuffState = BuffState.Waiting;
-                OnInit(buffData, theUnitFrom, theUnitBelongto, currentFrame);
+                OnInit(buffData, theUnitFrom, theUnitBelongto, currentTime);
             }
             else
             {
@@ -43,7 +43,7 @@ namespace Framework
             }
         }
 
-        public void Excute(uint currentFrame)
+        public void Excute(float currentTime)
         {
             switch (this.BuffData.SustainTime)
             {
@@ -58,29 +58,29 @@ namespace Framework
                     break;
             }
 
-            this.OnExecute(currentFrame);
+            this.OnExecute(currentTime);
         }
 
-        public void Update(uint currentFrame)
+        public void Update(float currentTime)
         {
-            if (currentFrame >= MaxLimitFrame && this.BuffState != BuffState.Forever)
+            if (currentTime >= MaxLimitTime && this.BuffState != BuffState.Forever)
             {
                 this.BuffState = BuffState.Finished;
             }
             else
             {
-                this.OnUpdate(currentFrame);
+                this.OnUpdate(currentTime);
             }
         }
 
-        public void Finished(uint currentFrame)
+        public void Finished(float currentTime)
         {
-            this.OnFinished(currentFrame);
+            this.OnFinished(currentTime);
         }
 
-        public void Refresh(uint currentFrame)
+        public void Refresh(float currentTime)
         {
-            this.OnRefreshed(currentFrame);
+            this.OnRefreshed(currentTime);
         }
 
         /// <summary>
@@ -89,33 +89,33 @@ namespace Framework
         /// <param name="buffData">Buff数据</param>
         /// <param name="theUnitFrom">来自哪个Unit</param>
         /// <param name="theUnitBelongto">寄生于哪个Unit</param>
-        public virtual void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, uint currentFrame)
+        public virtual void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, float currentTime)
         {
         }
 
         /// <summary>
         /// Buff触发
         /// </summary>
-        public abstract void OnExecute(uint currentFrame);
+        public abstract void OnExecute(float currentTime);
 
         /// <summary>
         /// Buff持续
         /// </summary>
-        public virtual void OnUpdate(uint currentFrame)
+        public virtual void OnUpdate(float currentTime)
         {
         }
 
         /// <summary>
         /// 重置Buff用
         /// </summary>
-        public virtual void OnFinished(uint currentFrame)
+        public virtual void OnFinished(float currentTime)
         {
         }
 
         /// <summary>
         /// 刷新，用于刷新Buff状态
         /// </summary>
-        public virtual void OnRefreshed(uint currentFrame)
+        public virtual void OnRefreshed(float currentTime)
         {
         }
 
@@ -124,7 +124,7 @@ namespace Framework
             BelongtoRuntimeTree = null;
             BuffState = BuffState.Waiting;
             CurrentOverlay = 0;
-            MaxLimitFrame = 0;
+            MaxLimitTime = 0;
             BuffData = null;
             TheUnitFrom = null;
             TheUnitBelongto = null;

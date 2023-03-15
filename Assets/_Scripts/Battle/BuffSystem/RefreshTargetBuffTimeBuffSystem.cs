@@ -2,7 +2,7 @@
 {
     public class RefreshTargetBuffTimeBuffSystem: ABuffSystemBase<RefreshTargetBuffTimeBuffData>
     {
-        public override void OnExecute(uint currentFrame)
+        public override void OnExecute(float currentTime)
         {
             BuffManagerComponent buffManagerComponent = this.GetBuffTarget().GetComponent<BuffManagerComponent>();
 
@@ -17,7 +17,7 @@
                 {
                     // Log.Info(
                     //     $"刷新了指定Buff——{buffId}持续时间{TimeHelper.Now() + buffSystemBase.MSkillBuffDataBase.SustainTime},原本为{buffSystemBase.MaxLimitTime}");
-                    aBuffSystemBase.MaxLimitFrame = currentFrame + TimeAndFrameConverter.Frame_Long2Frame(aBuffSystemBase.BuffData.SustainTime);
+                    aBuffSystemBase.MaxLimitTime = currentTime + aBuffSystemBase.BuffData.SustainTime;
                 }
             }
         }

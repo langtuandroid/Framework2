@@ -101,11 +101,10 @@ namespace Framework
             Unit theUnitBelongTo,
             NP_RuntimeTree theSkillCanvasBelongTo)
         {
-            LSF_Component lsfComponent = theUnitFrom.BelongToRoom.GetComponent<LSF_Component>();
-            IBuffSystem resultBuff = ReferencePool.Acquire(AllBuffSystemTypes[buffDataBase.GetType()]) as IBuffSystem;
+            IBuffSystem resultBuff = ReferencePool.Allocate(AllBuffSystemTypes[buffDataBase.GetType()]) as IBuffSystem;
             resultBuff.BelongtoRuntimeTree = theSkillCanvasBelongTo;
             resultBuff.BuffNodeId = buffNodeId;
-            resultBuff.Init(buffDataBase, theUnitFrom, theUnitBelongTo, lsfComponent.CurrentFrame);
+            resultBuff.Init(buffDataBase, theUnitFrom, theUnitBelongTo, TimeInfo.Instance.ClientNow());
             return resultBuff;
         }
 

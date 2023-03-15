@@ -11,11 +11,10 @@ namespace Framework
 
         public string Name { get; }
 
-        public Scene(long instanceId, int zone, SceneType sceneType, string name, Entity parent)
+        public Scene(long instanceId, SceneType sceneType, string name, Entity parent)
         {
             this.Id = instanceId;
             this.InstanceId = instanceId;
-            this.Zone = zone;
             this.SceneType = sceneType;
             this.Name = name;
             this.IsCreated = true;

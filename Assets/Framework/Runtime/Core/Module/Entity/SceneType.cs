@@ -2,8 +2,7 @@
 {
     public enum SceneType
     {
-        // 客户端Model层
-        Client = 31,
+        Root = 31,
         Battle,
         None
     }

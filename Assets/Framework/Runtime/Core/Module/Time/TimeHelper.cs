@@ -31,15 +31,5 @@ namespace Framework
         {
             return TimeInfo.Instance.ServerNow();
         }
-
-        public static long ClientFrameTime()
-        {
-            return TimeInfo.Instance.ClientFrameTime();
-        }
-
-        public static long ServerFrameTime()
-        {
-            return TimeInfo.Instance.ServerFrameTime();
-        }
     }
 }

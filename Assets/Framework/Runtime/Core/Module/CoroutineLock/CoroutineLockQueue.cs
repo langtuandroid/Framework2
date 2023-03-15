@@ -37,7 +37,7 @@ namespace Framework
             this.queue.Enqueue(waitCoroutineLock);
             if (time > 0)
             {
-                long tillTime = TimeHelper.ClientFrameTime() + time;
+                long tillTime = TimeHelper.ClientNow() + time;
                 TimerComponent.Instance.NewOnceTimer(tillTime, TimerCoreInvokeType.CoroutineTimeout, waitCoroutineLock);
             }
 

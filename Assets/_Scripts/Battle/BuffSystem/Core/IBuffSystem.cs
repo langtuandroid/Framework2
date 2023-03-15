@@ -21,7 +21,7 @@
         /// <summary>
         /// 持续时间（目标帧）（到达这个帧就会移除）
         /// </summary>
-        uint MaxLimitFrame { get; set; }
+        float MaxLimitTime { get; set; }
 
         /// <summary>
         /// Buff数据
@@ -43,14 +43,14 @@
         /// </summary>
         Unit TheUnitBelongto { get; set; }
 
-        void Init(BuffDataBase buffDataBase, Unit theUnitFrom, Unit theUnitBelongto, uint currentFrame);
+        void Init(BuffDataBase buffDataBase, Unit theUnitFrom, Unit theUnitBelongto, float currentTime);
 
-        void Excute(uint currentFrame);
+        void Excute(float currentTime);
 
-        void Update(uint currentFrame);
+        void Update(float currentTime);
 
-        void Finished(uint currentFrame);
+        void Finished(float currentTime);
 
-        void Refresh(uint currentFrame);
+        void Refresh(float currentTime);
     }
 }

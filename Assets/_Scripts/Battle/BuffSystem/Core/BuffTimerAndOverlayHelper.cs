@@ -7,10 +7,10 @@
         /// 为Buff计算时间和层数
         /// </summary>
         /// <param name="buffSystemBase"></param>
-        /// <param name="currentFrame"></param>
+        /// <param name="currentTime"></param>
         /// <param name="layer">为 -1 时需要计算层数，否则直接强制应用层数</param>
         /// <returns>是否成功加入了运行时Buff列表</returns>
-        public static bool CalculateTimerAndOverlay(IBuffSystem buffSystemBase, uint currentFrame, int layer = -1)
+        public static bool CalculateTimerAndOverlay(IBuffSystem buffSystemBase, float currentTime, int layer = -1)
         {
             BuffManagerComponent buffManagerComponent =
                 buffSystemBase.GetBuffTarget().GetComponent<BuffManagerComponent>();
@@ -20,15 +20,15 @@
 
             if (targetBuffSystemBase != null)
             {
-                CalculateTimerAndOverlayHelper(targetBuffSystemBase, currentFrame, layer);
+                CalculateTimerAndOverlayHelper(targetBuffSystemBase, currentTime, layer);
                 //刷新当前已有的Buff
-                targetBuffSystemBase.Refresh(currentFrame);
+                targetBuffSystemBase.Refresh(currentTime);
 
                 return false;
             }
             else
             {
-                CalculateTimerAndOverlayHelper(buffSystemBase, currentFrame, layer);
+                CalculateTimerAndOverlayHelper(buffSystemBase, currentTime, layer);
 
                 //Log.Info($"本次新加BuffID为{buffDataBase.FlagId}");
                 buffSystemBase.BuffState = BuffState.Waiting;
@@ -41,7 +41,7 @@
         /// <summary>
         /// 计算刷新的持续时间和层数
         /// </summary>
-        private static void CalculateTimerAndOverlayHelper(IBuffSystem buffSystemBase, uint currentFrame,
+        private static void CalculateTimerAndOverlayHelper(IBuffSystem buffSystemBase, float currentTime,
             int layer = -1)
         {
             //可以叠加，并且当前层数加上要添加Buff的目标层数未达到最高层
@@ -73,9 +73,7 @@
             if (buffSystemBase.BuffData.SustainTime + 1 > 0)
             {
                 //Log.Info($"原本结束时间：{temp.MaxLimitTime},续命之后的结束时间{TimeHelper.Now() + buffDataBase.SustainTime}");
-                buffSystemBase.MaxLimitFrame = currentFrame +
-                                               TimeAndFrameConverter.Frame_Long2Frame(buffSystemBase
-                                                   .BuffData.SustainTime);
+                buffSystemBase.MaxLimitTime = currentTime + buffSystemBase.BuffData.SustainTime;
             }
         }
     }

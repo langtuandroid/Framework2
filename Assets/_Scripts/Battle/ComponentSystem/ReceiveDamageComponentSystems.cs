@@ -2,8 +2,6 @@
 
     public static class ReceiveDamageComponentSystems
     {
-        #region 公有成员
-
         /// <summary>
         /// 洗礼这个伤害值
         /// </summary>
@@ -13,7 +11,6 @@
         {
             Unit damageTaker = self.GetParent<Unit>();
             damageData.OperateTaker = damageTaker;
-            damageData.DamageValue = damageData.DamageValue * self.DamagePrefix;
             return damageData.DamageValue < 0 ? 0 : damageData.DamageValue;
         }
 
@@ -27,7 +24,7 @@
             //如果已经死亡就不能继续受到伤害
             if (self.GetParent<Unit>().GetComponent<DeadComponent>() != null)
             {
-                ReferencePool.Release(damageData);
+                ReferencePool.Free(damageData);
                 return;
             }
 
@@ -58,6 +55,4 @@
             //
             ReferencePool.Free(damageData);
         }
-
-        #endregion
     }

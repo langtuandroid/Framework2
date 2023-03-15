@@ -80,7 +80,7 @@ namespace Framework
 
         private static long GetNow()
         {
-            return TimeHelper.ClientFrameTime();
+            return TimeHelper.ClientNow();
         }
 
         public void Update(float deltaTime)
@@ -268,7 +268,7 @@ namespace Framework
             }
         }
         
-        public ETCancellationToken NewOnceTimer(long duration, Action action)
+        public ETCancellationToken NewOnceTimerAsync(long duration, Action action)
         {
             ETCancellationToken cancellationToken = new ETCancellationToken();
             WaitSync(duration, action, cancellationToken);
@@ -291,15 +291,13 @@ namespace Framework
         // 用这个优点是可以热更，缺点是回调式的写法，逻辑不连贯。WaitTillAsync不能热更，优点是逻辑连贯。
         // wait时间短并且逻辑需要连贯的建议WaitTillAsync
         // wait时间长不需要逻辑连贯的建议用NewOnceTimer
-        public long NewOnceTimer(long tillTime, int type, object args)
+        /// <summary>
+        /// ms
+        /// </summary>
+        public long NewOnceTimer(long duration, int type, object args)
         {
             long timeNow = GetNow();
-            if (tillTime < timeNow)
-            {
-                Log.Error($"new once time too small: {tillTime}");
-            }
-
-            TimerAction timer = TimerAction.Create(this.GetId(), TimerClass.OnceTimer, timeNow, tillTime - timeNow,
+            TimerAction timer = TimerAction.Create(this.GetId(), TimerClass.OnceTimer, timeNow, duration,
                 type, args);
             this.AddTimer(timer);
             return timer.Id;
@@ -322,6 +320,17 @@ namespace Framework
             this.AddTimer(timer);
             return timer.Id;
         }
+        
+        public long NewOnceTimer(long tillTime, Action action)
+        {
+            if (tillTime < TimeHelper.ServerNow())
+            {
+                Log.Error($"new once time too small: {tillTime}");
+            }
+            TimerAction timer = this.AddChild<TimerAction, TimerClass, long, object>(TimerClass.OnceTimer, 0, action, true);
+            this.AddTimer(tillTime, timer);
+            return timer.Id;
+        } 
 
         public long NewRepeatedTimer(long time, int type, object args)
         {
