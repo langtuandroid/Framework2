@@ -422,8 +422,8 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: -246, y: 0, z: 0}
-  scale: {x: 1, y: 1, z: 1}
+  position: {x: -280, y: 54, z: 0}
+  scale: {x: 0.8695652, y: 0.8695652, z: 1}
   Name: 
   SavePathClient: 
   references:
