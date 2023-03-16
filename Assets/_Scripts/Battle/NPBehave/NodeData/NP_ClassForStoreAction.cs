@@ -10,6 +10,11 @@ using Action = System.Action;
 public class NP_ClassForStoreAction
 {
     /// <summary>
+    /// 归属的UnitID
+    /// </summary>
+    [HideInEditorMode] public Unit BelongToUnit;
+
+    /// <summary>
     /// 归属的运行时行为树实例
     /// </summary>
     [HideInEditorMode] public NP_RuntimeTree BelongtoRuntimeTree;
