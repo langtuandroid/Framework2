@@ -43,73 +43,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 7
-      Data: 2|ChangePropertyBuffNode, NodeGraphEditor
+      Data: 2|SustainDamageBuffNode, NodeGraphEditor
     - Name: computeOrder
       Entry: 3
       Data: 0
-    - Name: debug
-      Entry: 5
-      Data: false
-    - Name: expanded
-      Entry: 5
-      Data: false
-    - Name: GUID
-      Entry: 1
-      Data: 5a4e6004-a7f0-45cc-afb9-2f7d4f243393
-    - Name: nodeCustomName
-      Entry: 6
-      Data: 
-    - Name: nodeLock
-      Entry: 5
-      Data: false
-    - Name: position
-      Entry: 7
-      Data: UnityEngine.Rect, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 322
-    - Name: 
-      Entry: 4
-      Data: 221
-    - Name: 
-      Entry: 4
-      Data: 179
-    - Name: 
-      Entry: 4
-      Data: 101
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: PrevNode
-      Entry: 6
-      Data: 
-    - Name: NextNode
-      Entry: 6
-      Data: 
-    - Name: SkillBuffBases
-      Entry: 7
-      Data: 3|NormalBuffNodeData, Game.Runtime
-    - Name: BuffDes
-      Entry: 1
-      Data: "\u4FEE\u6539\u5C5E\u6027Buff"
-    - Name: BuffData
-      Entry: 7
-      Data: 4|ChangePropertyBuffData, Game.Runtime
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 5|SustainDamageBuffNode, NodeGraphEditor
-    - Name: computeOrder
-      Entry: 3
-      Data: 1
     - Name: debug
       Entry: 5
       Data: false
@@ -151,16 +88,79 @@ MonoBehaviour:
       Data: 
     - Name: SkillBuffBases
       Entry: 7
-      Data: 6|NormalBuffNodeData, Game.Runtime
+      Data: 3|NormalBuffNodeData, Game.Runtime
     - Name: BuffDes
       Entry: 1
       Data: "\u6301\u7EED\u4F24\u5BB3Buff"
     - Name: BuffData
       Entry: 7
-      Data: 7|SustainDamageBuffData, Game.Runtime
+      Data: 4|SustainDamageBuffData, Game.Runtime
     - Name: WorkInternal
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|ChangePropertyBuffNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 1
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 91ced840-a738-4b6a-8a2b-f26a6127acda
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1076.96
+    - Name: 
+      Entry: 4
+      Data: 216
+    - Name: 
+      Entry: 4
+      Data: 179
+    - Name: 
+      Entry: 4
+      Data: 101
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NextNode
+      Entry: 6
+      Data: 
+    - Name: SkillBuffBases
+      Entry: 7
+      Data: 6|NormalBuffNodeData, Game.Runtime
+    - Name: BuffDes
+      Entry: 1
+      Data: "\u4FEE\u6539\u5C5E\u6027Buff"
+    - Name: BuffData
+      Entry: 7
+      Data: 7|ChangePropertyBuffData, Game.Runtime
     - Name: 
       Entry: 8
       Data: 
@@ -319,6 +319,9 @@ MonoBehaviour:
     - Name: SkillDataSupportor_Client
       Entry: 7
       Data: 20|NP_DataSupportor, Game.Runtime
+    - Name: BuffNodeDataDic
+      Entry: 6
+      Data: 
     - Name: NpDataSupportorBase
       Entry: 7
       Data: 21|NP_DataSupportorBase, Game.Runtime
@@ -366,6 +369,9 @@ MonoBehaviour:
     - Name: SkillDataSupportor_Client_Des
       Entry: 7
       Data: 24|NP_DataSupportor, Game.Runtime
+    - Name: BuffNodeDataDic
+      Entry: 6
+      Data: 
     - Name: NpDataSupportorBase
       Entry: 7
       Data: 25|NP_DataSupportorBase, Game.Runtime
@@ -416,7 +422,7 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 0, y: 0, z: 0}
+  position: {x: -246, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
   Name: 
   SavePathClient: 

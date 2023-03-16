@@ -14,31 +14,12 @@ namespace Framework
         public static Dictionary<Type, Type> AllBuffSystemTypes = new Dictionary<Type, Type>()
         {
             {typeof(ChangePropertyBuffData), typeof(ChangePropertyBuffSystem)},
-            {typeof(ListenBuffCallBackBuffData), typeof(ListenBuffCallBackBuffSystem)},
             {typeof(PlayEffectBuffData), typeof(PlayEffectBuffSystem)},
             {typeof(RefreshTargetBuffTimeBuffData), typeof(RefreshTargetBuffTimeBuffSystem)},
             {typeof(FlashDamageBuffData), typeof(FlashDamageBuffSystem)},
             {typeof(SustainDamageBuffData), typeof(SustainDamageBuffSystem)},
             {typeof(TreatmentBuffData), typeof(TreatmentBuffSystem)},
         };
-
-        /// <summary>
-        /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal
-        /// </summary>
-        /// <param name="dataId">Buff数据归属的数据块Id</param>
-        /// <param name="buffNodeId">Buff节点的Id</param>
-        /// <param name="theUnitFrom">Buff来源者</param>
-        /// <param name="theUnitBelongTo">Buff寄生者</param>
-        /// <param name="theSkillCanvasBelongTo"></param>
-        /// <returns></returns>
-        public static IBuffSystem AcquireBuff(long dataId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
-            NP_RuntimeTree theSkillCanvasBelongTo)
-        {
-            return AcquireBuff(
-                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNP_TreeData(dataId)
-                    .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
-                theUnitFrom, theUnitBelongTo, theSkillCanvasBelongTo);
-        }
 
         /// <summary>
         /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal

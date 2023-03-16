@@ -4,7 +4,7 @@
 /// Buff的奏效的表现
 /// </summary>
 [System.Flags]
-public enum BuffWorkType
+public enum BuffWorkTypes
 {
     [LabelText("无")] None = 1,
 

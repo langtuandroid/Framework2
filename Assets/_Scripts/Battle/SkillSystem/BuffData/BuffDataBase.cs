@@ -33,7 +33,7 @@ public class BuffDataBase
     [LabelText("Buff类型")]
     [BoxGroup("必填项")]
     [ShowInInspector]
-    public virtual BuffWorkType BuffWorkType { get; set; }
+    public virtual BuffWorkTypes BuffWorkType { get; set; }
 
     [BoxGroup("选填项")]
     [LabelText("Buff是否状态栏可见")]
@@ -94,11 +94,13 @@ public class BuffDataBase
         new Dictionary<BuffAdditionTypes, float>();
 
     [LabelText("修改的属性")]
-    [ShowIf("@BuffWorkType.Contains(BuffWorkType.ChangeProp)")]
+    [ShowInInspector]
+    [ShowIf("@((BuffWorkType & BuffWorkTypes.ChangeProp) == BuffWorkTypes.ChangeProp)")]
     [BoxGroup("选填项")]
     [ValueDropdown("@NumericType.Str2TypeDoubleMap.Keys")]
     public string PropTypeStr { get; set; } = nameof(NumericType.None);
 
     public int PropType => NumericType.Str2TypeDoubleMap.GetValueByKey(PropTypeStr);
+
 
 }

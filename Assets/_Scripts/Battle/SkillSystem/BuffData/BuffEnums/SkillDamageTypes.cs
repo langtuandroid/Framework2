@@ -12,5 +12,5 @@ public enum SkillDamageTypes
 
     [LabelText("真实伤害")] Real = 1 << 7,
     
-    [LabelText("魔法上海")] Magic = 1 << 8,
+    [LabelText("魔法伤害")] Magic = 1 << 8,
 }
