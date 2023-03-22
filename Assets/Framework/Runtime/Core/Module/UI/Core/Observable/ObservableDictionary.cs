@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using CatJson;
-using UnityEngine;
 
 namespace Framework
 {
@@ -16,11 +13,6 @@ namespace Framework
         private event Action<Dictionary<TKey, TValue>> dicChanged;
 
         private Dictionary<TKey, TValue> dictionary;
-
-        static ObservableDictionary()
-        {
-            JsonParser.AddCustomJsonFormatter(typeof(ObservableDictionary<,>), new DictionaryFormatter());
-        }
 
         public ObservableDictionary()
         {

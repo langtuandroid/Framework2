@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using CatJson;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 
@@ -38,7 +39,8 @@ namespace Framework.Editor
             {
                 content = File.ReadAllText(ProjectScanPath.LocalScanConfigPath);
             }
-            GlobalConfig = JsonParser.Default.ParseJson<ProjectScanGlobalConfig>(content);
+
+            GlobalConfig = BsonSerializer.Deserialize<ProjectScanGlobalConfig>(content);
             CreateMenuRules();
         }
 
@@ -181,12 +183,12 @@ namespace Framework.Editor
                     resultSaves.Add(scanRule.RuleId,scanResultSave);
                 }
             }
-            File.WriteAllText(string.Format(ProjectScanPath.ScanResultJsonPath,$"{DateTime.Now:yy-MM-dd HH.mm}"), JsonParser.Default.ToJson(resultSaves));
+            File.WriteAllText(string.Format(ProjectScanPath.ScanResultJsonPath,$"{DateTime.Now:yy-MM-dd HH.mm}"), resultSaves.ToBsonDocument().ToJson());
         }
 
         public static void LoadScanResult(string path)
         {
-            var resultSaves = JsonParser.Default.ParseJson<Dictionary<string,ScanResultSave>>(File.ReadAllText(path));
+            var resultSaves = BsonSerializer.Deserialize<Dictionary<string,ScanResultSave>>(File.ReadAllText(path));
             foreach (var scanRule in scanRules)
             {
                 if (resultSaves.TryGetValue(scanRule.RuleId, out var save))

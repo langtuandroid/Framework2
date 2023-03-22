@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using CatJson;
 
 namespace Framework
 {
@@ -27,11 +26,6 @@ namespace Framework
         {
             get => _items[index];
             set => _items[index] = (T)value;
-        }
-
-        static ObservableList()
-        {
-            JsonParser.AddCustomJsonFormatter(typeof(ObservableList<>), new ListFormatter());
         }
 
         public ObservableList()

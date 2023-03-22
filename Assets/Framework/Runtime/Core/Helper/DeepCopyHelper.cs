@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using CatJson;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace Framework
 {
@@ -22,7 +23,7 @@ namespace Framework
                     return null;
                 }
 
-                return JsonParser.Default.ParseJson<T>(JsonParser.Default.ToJson(obj));
+                return BsonSerializer.Deserialize<T>(obj.ToBson());
             }
             catch (Exception e)
             {

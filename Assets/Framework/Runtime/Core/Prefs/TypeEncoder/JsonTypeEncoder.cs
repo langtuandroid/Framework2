@@ -23,7 +23,8 @@
  */
 
 using System;
-using CatJson;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using UnityEngine;
 
 namespace Framework
@@ -41,7 +42,7 @@ namespace Framework
         {
             try
             {
-                return JsonParser.Default.ToJson(value);
+                return value.ToBsonDocument().ToJson();
             }
             catch (Exception e)
             {
@@ -53,7 +54,7 @@ namespace Framework
         {
             try
             {
-                return JsonParser.Default.ParseJson(value, type);
+                return BsonSerializer.Deserialize(value, type);
             }
             catch (Exception e)
             {

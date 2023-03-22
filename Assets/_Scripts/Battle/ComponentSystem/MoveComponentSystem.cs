@@ -248,40 +248,6 @@ public static class MoveComponentSystem
         }
     }
 
-    /// <summary>
-    /// 寻路到某个点然后做某事，如果当前距离小于目标距离则直接进入状态，否则就寻路到适合的地点再进行状态切换
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="target">目标地点</param>
-    /// <param name="targetRange">目标距离</param>
-    /// <param name="targetState">目标状态</param>
-    public static async ETVoid NavigateTodoSomething(this Unit self, Vector3 target, float targetRange,
-        AFsmStateBase targetState, ETCancellationToken etCancellationToken = null)
-    {
-        Unit unit = self;
-
-        if (!unit.GetComponent<StackFsmComponent>().ChangeState<NavigateState>(StateTypes.Run, "Navigate", 1))
-        {
-            ReferencePool.Release(targetState);
-            return;
-        }
-
-        if (await unit.FindPathMoveToAsync(target, targetRange, etCancellationToken))
-        {
-            if (targetState != null)
-            {
-                if (unit.GetComponent<StackFsmComponent>().ChangeState(targetState))
-                {
-#if !SERVER
-                    Game.EventSystem.Publish(new EventType.FSMStateChanged_PlayAnim() { Unit = unit }).Coroutine();
-#endif
-                }
-            }
-        }
-
-        await ETTask.CompletedTask;
-    }
-
     private static Vector3 GetFaceV(this MoveComponent self)
     {
         return self.NextTarget - self.PreTarget;
