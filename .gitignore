@@ -60,3 +60,8 @@ crashlytics-build.properties
 
 /.idea
 /UserSettings
+/Unity/Temp
+/Unity/.idea
+/Unity/Library
+/Unity/Logs
+/Unity/obj
