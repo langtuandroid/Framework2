@@ -1,29 +1,69 @@
 ﻿using System.IO;
 using System;
-using MongoDB.Bson.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 
 namespace Framework
 {
     public static class SerializeHelper
     {
-        public static object Deserialize(Type type, byte[] bytes, int index, int count)
+        public static T Deserialize<T>(byte[] bytes, int index = 0, int count = 0)
         {
-            return MongoHelper.Deserialize(type, bytes, index, count);
+            return (T)Deserialize(typeof(T), bytes, index, count);
+        }
+        
+        public static object Deserialize(Type type, byte[] bytes, int index = 0, int count = 0)
+        {
+            if (count == -1) count = bytes.Length;
+            using MemoryStream ms = new MemoryStream();
+            using BsonDataReader reader = new BsonDataReader(ms);
+            ms.Write(bytes, index, count);
+            JsonSerializer serializer = JsonSerializer.Create();
+            return serializer.Deserialize(reader, type);
         }
 
         public static byte[] Serialize(object message)
         {
-            return MongoHelper.Serialize(message);
+            return message.ToBson();
         }
 
         public static void Serialize(object message, Stream stream)
         {
-            MongoHelper.Serialize(message, stream);
+            using BsonDataWriter writer = new BsonDataWriter(stream);
+            JsonSerializer serializer = JsonSerializer.Create();
+            serializer.Serialize(writer, message);
         }
 
         public static object Deserialize(Type type, Stream stream)
         {
-            return MongoHelper.Deserialize(type, stream);
+            using BsonDataReader reader = new BsonDataReader(stream);
+            JsonSerializer serializer = JsonSerializer.Create();
+            return serializer.Deserialize(reader, type); 
+        }
+
+
+        public static object Deserialize(Type type, string json)
+        {
+            return JsonConvert.DeserializeObject(json, type);
+        }
+
+        public static T Deserialize<T>(string json)
+        {
+            return (T)Deserialize(typeof(T), json);
+        }
+
+        public static byte[] ToBson(this object obj)
+        {
+            using MemoryStream ms = new MemoryStream();
+            using BsonDataWriter writer = new BsonDataWriter(ms);
+            JsonSerializer serializer = JsonSerializer.Create();
+            serializer.Serialize(writer, obj);
+            return ms.GetBuffer();
+        }
+
+        public static string ToJson(this object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }

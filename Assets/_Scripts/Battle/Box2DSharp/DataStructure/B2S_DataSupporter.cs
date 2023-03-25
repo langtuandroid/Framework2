@@ -4,15 +4,7 @@
 // Data: 2019年7月12日 20:55:57
 //------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace ET
 {
@@ -29,7 +21,6 @@ namespace ET
     /// </summary>
     public class ColliderDataSupporter
     {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<long, B2S_ColliderDataStructureBase> colliderDataDic = new Dictionary<long, B2S_ColliderDataStructureBase>();
     }
 }

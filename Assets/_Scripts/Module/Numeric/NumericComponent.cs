@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 
 namespace Framework
 {
@@ -103,7 +101,6 @@ namespace Framework
 
     public class NumericComponent : Entity, IAwake, ITransfer
     {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, int> NumericDic = new Dictionary<int, int>();
 
         public int this[int numericType]

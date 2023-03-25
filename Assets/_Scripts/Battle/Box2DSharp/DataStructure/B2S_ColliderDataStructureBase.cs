@@ -21,7 +21,6 @@ namespace ET
         PolygonCollider,
     }
     
-    [BsonDeserializerRegister]
     public class B2S_ColliderDataStructureBase
     {
         [LabelText("碰撞体ID")]

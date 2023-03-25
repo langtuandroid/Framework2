@@ -1,8 +1,6 @@
 ﻿ using System;
  using System.IO;
  using Framework;
- using MongoDB.Bson.IO;
- using MongoDB.Bson.Serialization;
  using Sirenix.OdinInspector;
 
  public class SkillGraph : NPBehaveGraph
@@ -34,7 +32,8 @@
 
          using (FileStream file = File.Create($"{SavePathClient}/{this.Name}.bytes"))
          {
-             BsonSerializer.Serialize(new BsonBinaryWriter(file), SkillDataSupportor_Client);
+            var bytes = NpDataSupportor_Client.ToBson();
+            file.Write(bytes,0,bytes.Length);
          }
 
          Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
@@ -47,7 +46,7 @@
          {
              byte[] mClientfile = File.ReadAllBytes($"{SavePathClient}/{this.Name}.bytes");
              if (mClientfile.Length == 0) Log.Msg("没有读取到文件");
-             SkillDataSupportor_Client_Des = BsonSerializer.Deserialize<NP_DataSupportor>(mClientfile);
+             SkillDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportor>(mClientfile);
              Log.Msg($"反序列化 {SavePathClient}/{this.Name}.bytes 成功");
          }
          catch (Exception e)

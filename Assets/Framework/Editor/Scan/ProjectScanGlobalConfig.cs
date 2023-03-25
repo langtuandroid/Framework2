@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
+using Newtonsoft.Json;
 
 namespace Framework.Editor
 {
@@ -12,17 +9,14 @@ namespace Framework.Editor
     {
         public List<string> IncludeDir = new() { "Assets" };
         public List<string> IgnoreDir = new() { "Assets/Ignore" };
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, ScanRuleConfig> RuleConfig = new();
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, bool> MenuEnable = new();
-        [BsonIgnore] public Dictionary<string, ScanRuleNameConfig> RuleNameConfig { get; } = new();
-        [BsonIgnore] public Dictionary<string, List<string>> WhiteListDic = new();
-
+        [JsonIgnore] public Dictionary<string, ScanRuleNameConfig> RuleNameConfig { get; } = new();
+        [JsonIgnore] public Dictionary<string, List<string>> WhiteListDic = new();
         public ProjectScanGlobalConfig()
         {
             string ruleContent = File.ReadAllText(ProjectScanPath.LocalScanRuleTxtPath);
-            var result = BsonSerializer.Deserialize<List<ScanRuleNameConfig>>(ruleContent);
+            var result = SerializeHelper.Deserialize<List<ScanRuleNameConfig>>(ruleContent);
             foreach (var rule in result)
             {
                 RuleNameConfig[rule.Id] = rule;
@@ -31,14 +25,14 @@ namespace Framework.Editor
             if (File.Exists(ProjectScanPath.FixWhiteListPath))
             {
                 string whiteList = File.ReadAllText(ProjectScanPath.FixWhiteListPath);
-                WhiteListDic = BsonSerializer.Deserialize<Dictionary<string, List<string>>>(whiteList);
+                WhiteListDic = SerializeHelper.Deserialize<Dictionary<string, List<string>>>(whiteList);
             }
         }
 
         public void Save()
         {
             File.WriteAllText(ProjectScanPath.ProjectScanConfigPath, this.ToJson());
-            File.WriteAllText(ProjectScanPath.FixWhiteListPath, WhiteListDic.ToBsonDocument().ToJson());
+            File.WriteAllText(ProjectScanPath.FixWhiteListPath, WhiteListDic.ToJson());
         }
     }
 

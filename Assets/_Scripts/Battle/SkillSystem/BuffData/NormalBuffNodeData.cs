@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 
 [Title("Buff节点数据块", TitleAlignment = TitleAlignments.Centered)]
@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 [HideLabel]
 public class NormalBuffNodeData : BuffNodeDataBase
 {
-    [LabelText("Buff描述")] [BsonIgnore] public string BuffDes;
+    [LabelText("Buff描述")] [JsonIgnore] public string BuffDes;
 
     /// <summary>
     /// Buff数据

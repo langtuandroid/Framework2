@@ -19,8 +19,6 @@ public class Init : MonoBehaviour
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<CoroutineLockComponent>();
         Game.AddSingleton<Root>();
-        MongoHelper.Init();
-        Framework.MongoHelper.Init();
 
         ETTask.ExceptionHandler += e => Log.Error(e);
 

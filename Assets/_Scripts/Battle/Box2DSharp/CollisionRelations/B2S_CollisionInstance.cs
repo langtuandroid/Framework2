@@ -5,7 +5,7 @@
 //------------------------------------------------------------
 
 using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 
 namespace ET
@@ -16,7 +16,7 @@ namespace ET
     public class B2S_CollisionInstance
     {        
         [LabelText("此结点标识")]
-        [BsonIgnore]
+        [JsonIgnore]
         public string Flag;
 
         [LabelText("此结点ID")]
@@ -30,12 +30,12 @@ namespace ET
 
         [InfoBox("（请前往Canvas处点击“自动配置所有Node数据”）")]
         [LabelText("此结点归属Group")]
-        [BsonIgnore]
+        [JsonIgnore]
         [DisableInEditorMode]
         public string BelongGroup;
 
         [LabelText("与此结点有碰撞关系的结点ID")]
-        [BsonIgnore]
+        [JsonIgnore]
         [DisableInEditorMode]
         public List<long> CollisionRelations = new List<long>();
     }

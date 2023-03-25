@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using Framework;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Title("Buff数据块", TitleAlignment = TitleAlignments.Centered)]
 [HideLabel]
 [HideReferenceObjectPicker]
-[BsonDeserializerRegister]
 public class BuffDataBase
 {
     /// <summary>
@@ -88,7 +85,6 @@ public class BuffDataBase
 
     [Tooltip("具体的加成(可能会一个效果多种加成方式)，例如法强加成")]
     [BoxGroup("选填项")]
-    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     [ShowInInspector]
     public Dictionary<BuffAdditionTypes, float> AdditionValue { get; set; } =
         new Dictionary<BuffAdditionTypes, float>();

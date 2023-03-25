@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,7 +13,7 @@ namespace Framework
         [LabelText("此节点ID在数据仓库中的Key")]
         [ValueDropdown("GetIdKey")]
         [OnValueChanged("ApplayId")]
-        [BsonIgnore]
+        [JsonIgnore]
         public string IdKey;
 
         [LabelText("Id")]

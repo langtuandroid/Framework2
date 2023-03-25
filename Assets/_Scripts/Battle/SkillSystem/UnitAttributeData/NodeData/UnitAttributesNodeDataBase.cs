@@ -5,7 +5,6 @@ namespace ET
     /// <summary>
     /// Unit基本属性数据,仅做配置和初始化使用
     /// </summary>
-    [BsonDeserializerRegister]
     public class UnitAttributesNodeDataBase
     {
         [LabelText("此结点(Unit数据结点)ID为")]

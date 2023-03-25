@@ -5,8 +5,6 @@
 //------------------------------------------------------------
 
 using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using Sirenix.OdinInspector;
 
 namespace ET
@@ -16,7 +14,6 @@ namespace ET
         [LabelText("此数据载体ID")]
         public long SupportId;
 
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<long, B2S_CollisionInstance> B2S_CollisionsRelationDic = new Dictionary<long, B2S_CollisionInstance>();
     }
 }

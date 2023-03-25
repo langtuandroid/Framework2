@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using Sirenix.OdinInspector;
 
 namespace ET
@@ -27,7 +25,6 @@ namespace ET
         public string R_SkillSprite;
 
         [LabelText("升级所需经验")]
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, int> LevelUpExp = new Dictionary<int, int>
         {
             { 1, 100 },

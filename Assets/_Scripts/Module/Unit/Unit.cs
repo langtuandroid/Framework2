@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using Framework;
-using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace Framework
@@ -10,9 +8,8 @@ namespace Framework
     {
         public int ConfigId { get; set; } //配置表id
 
-        [BsonElement] private float3 position; //坐标
+        private float3 position; //坐标
 
-        [BsonIgnore]
         public float3 Position
         {
             get => this.position;
@@ -25,16 +22,14 @@ namespace Framework
             }
         }
 
-        [BsonIgnore]
         public float3 Forward
         {
             get => math.mul(this.Rotation, math.forward());
             set => this.Rotation = quaternion.LookRotation(value, math.up());
         }
 
-        [BsonElement] private quaternion rotation;
+        private quaternion rotation;
 
-        [BsonIgnore]
         public quaternion Rotation
         {
             get => this.rotation;

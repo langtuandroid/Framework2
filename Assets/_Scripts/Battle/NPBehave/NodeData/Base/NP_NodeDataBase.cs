@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using NPBehave;
 using Sirenix.OdinInspector;
 
-[BsonDeserializerRegister]
 public abstract class NP_NodeDataBase
 {
     /// <summary>

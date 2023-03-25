@@ -1,4 +1,3 @@
-﻿[BsonDeserializerRegister]
-public class BuffNodeDataBase
+﻿public class BuffNodeDataBase
 {
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Framework
 {
@@ -22,15 +21,15 @@ namespace Framework
 #endif
 
         // 每次被重新使用的时候都会赋予新的实例id
-        [BsonIgnore] public long InstanceId { get; protected set; }
+        public long InstanceId { get; protected set; }
 
         protected Entity()
         {
         }
 
-        [BsonIgnore] private EntityStatus status = EntityStatus.None;
+        private EntityStatus status = EntityStatus.None;
 
-        [BsonIgnore]
+
         private bool IsFromPool
         {
             get => (this.status & EntityStatus.IsFromPool) == EntityStatus.IsFromPool;
@@ -47,7 +46,7 @@ namespace Framework
             }
         }
 
-        [BsonIgnore]
+
         protected bool IsRegister
         {
             get => (this.status & EntityStatus.IsRegister) == EntityStatus.IsRegister;
@@ -99,7 +98,7 @@ namespace Framework
             get { return this.GetType().Name; }
         }
 
-        [BsonIgnore]
+
         private bool IsComponent
         {
             get => (this.status & EntityStatus.IsComponent) == EntityStatus.IsComponent;
@@ -116,7 +115,7 @@ namespace Framework
             }
         }
 
-        [BsonIgnore]
+
         protected bool IsCreated
         {
             get => (this.status & EntityStatus.IsCreated) == EntityStatus.IsCreated;
@@ -133,7 +132,7 @@ namespace Framework
             }
         }
 
-        [BsonIgnore]
+
         protected bool IsNew
         {
             get => (this.status & EntityStatus.IsNew) == EntityStatus.IsNew;
@@ -150,12 +149,12 @@ namespace Framework
             }
         }
 
-        [BsonIgnore] public bool IsDisposed => this.InstanceId == 0;
+        public bool IsDisposed => this.InstanceId == 0;
 
-        [BsonIgnore] protected Entity parent;
+        protected Entity parent;
 
         // 可以改变parent，但是不能设置为null
-        [BsonIgnore]
+
         public Entity Parent
         {
             get => this.parent;
@@ -198,7 +197,7 @@ namespace Framework
         }
 
         // 该方法只能在AddComponent中调用，其他人不允许调用
-        [BsonIgnore]
+
         private Entity ComponentParent
         {
             set
@@ -244,16 +243,11 @@ namespace Framework
             return this.Parent as T;
         }
 
-        [BsonIgnoreIfDefault]
-        [BsonDefaultValue(0L)]
-        [BsonElement]
-        [BsonId]
         // 创建时就被确认，回收还是重新使用都不会更改
         public long Id { get; set; }
 
-        [BsonIgnore] protected Entity domain;
+        protected Entity domain;
 
-        [BsonIgnore]
         public Entity Domain
         {
             get { return this.domain; }
@@ -315,9 +309,9 @@ namespace Framework
         }
 
 
-        [BsonIgnore] private Dictionary<long, Entity> children;
+        private Dictionary<long, Entity> children;
 
-        [BsonIgnore]
+
         public Dictionary<long, Entity> Children
         {
             get { return this.children ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>(); }
@@ -342,14 +336,13 @@ namespace Framework
                 ObjectPool.Instance.Recycle(this.children);
                 this.children = null;
             }
-
         }
 
-        [BsonElement("C")] [BsonIgnoreIfNull] private HashSet<Entity> componentsDB;
+        private HashSet<Entity> componentsDB;
 
-        [BsonIgnore] private Dictionary<Type, Entity> components;
+        private Dictionary<Type, Entity> components;
 
-        [BsonIgnore]
+
         public Dictionary<Type, Entity> Components
         {
             get { return this.components ??= ObjectPool.Instance.Fetch<Dictionary<Type, Entity>>(); }

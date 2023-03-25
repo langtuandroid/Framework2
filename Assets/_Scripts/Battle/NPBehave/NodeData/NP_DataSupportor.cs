@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 /// 技能配置数据载体
 /// </summary>
 [HideLabel]
-[BsonDeserializerRegister]
 public class NP_DataSupportor
 {
     // [BoxGroup("技能中的Buff数据结点")]

@@ -11,8 +11,6 @@ using System.Linq;
 
 using Framework;
 using GraphProcessor;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -95,7 +93,8 @@ public class NPBehaveGraph : BaseGraph
 
         using (FileStream file = File.Create($"{SavePathClient}/{this.Name}.bytes"))
         {
-            BsonSerializer.Serialize(new BsonBinaryWriter(file), NpDataSupportor_Client);
+            var bytes = NpDataSupportor_Client.ToBson();
+            file.Write(bytes,0,bytes.Length);
         }
 
         Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
