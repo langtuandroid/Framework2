@@ -4,10 +4,8 @@ using Unity.Mathematics;
 namespace Framework
 {
     [DebuggerDisplay("ViewName,nq")]
-    public class Unit : Entity, IAwake<int>
+    public class Unit : Entity, IAwake
     {
-        public int ConfigId { get; set; } //配置表id
-
         private float3 position; //坐标
 
         public float3 Position

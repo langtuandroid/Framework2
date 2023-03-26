@@ -25,21 +25,6 @@ namespace Framework
             Log.Msg($"scene create: {this.SceneType} {this.Name} {this.Id} {this.InstanceId} {this.Zone}");
         }
 
-        public Scene(long id, long instanceId, int zone, SceneType sceneType, string name, Entity parent)
-        {
-            this.Id = id;
-            this.InstanceId = instanceId;
-            this.Zone = zone;
-            this.SceneType = sceneType;
-            this.Name = name;
-            this.IsCreated = true;
-            this.IsNew = true;
-            this.Parent = parent;
-            this.Domain = this;
-            this.IsRegister = true;
-            Log.Msg($"scene create: {this.SceneType} {this.Name} {this.Id} {this.InstanceId} {this.Zone}");
-        }
-
         public override void Dispose()
         {
             base.Dispose();

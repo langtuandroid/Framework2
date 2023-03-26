@@ -265,7 +265,7 @@ public static class MoveComponentSystem
     {
         if (speed < 0.001)
         {
-            Log.Error($"speed is 0 {self.GetParent<Unit>().ConfigId} {self.GetParent<Unit>().Id} {speed}");
+            Log.Error($"speed is 0 {self.GetParent<Unit>().Id} {speed}");
             return false;
         }
 
@@ -290,7 +290,7 @@ public static class MoveComponentSystem
 
         if (Math.Abs(speed) < 0.001)
         {
-            Log.Error($"speed is 0 {self.GetParent<Unit>().ConfigId} {self.GetParent<Unit>().Id}");
+            Log.Error($"speed is 0 {self.GetParent<Unit>().Id}");
             return false;
         }
 

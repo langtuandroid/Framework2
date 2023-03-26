@@ -17,7 +17,7 @@ namespace Framework
     {
         void IUpdateSystem.Run(Entity o, float deltaTime)
         {
-            this.Update((T)o);
+            this.Update((T)o, deltaTime);
         }
 
         Type ISystemType.Type()
@@ -35,6 +35,6 @@ namespace Framework
             return InstanceQueueIndex.Update;
         }
 
-        protected abstract void Update(T self);
+        protected abstract void Update(T self, float deltaTime);
     }
 }

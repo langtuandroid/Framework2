@@ -15,7 +15,7 @@ namespace Framework
 
         public void Awake()
         {
-            this.Scene = EntitySceneFactory.CreateScene(0, SceneType.Root, "Process");
+            this.Scene = EntitySceneFactory.CreateScene(SceneType.Root);
         }
 
         public override void Dispose()

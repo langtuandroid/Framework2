@@ -270,17 +270,6 @@ namespace Framework
                 {
                     this.InstanceId = IdGenerator.Instance.GenerateInstanceId();
                     this.IsRegister = true;
-
-                    // 反序列化出来的需要设置父子关系
-                    if (this.componentsDB != null)
-                    {
-                        foreach (Entity component in this.componentsDB)
-                        {
-                            component.IsComponent = true;
-                            this.Components.Add(component.GetType(), component);
-                            component.parent = this;
-                        }
-                    }
                 }
 
                 // 递归设置孩子的Domain
@@ -338,10 +327,7 @@ namespace Framework
             }
         }
 
-        private HashSet<Entity> componentsDB;
-
         private Dictionary<Type, Entity> components;
-
 
         public Dictionary<Type, Entity> Components
         {
@@ -369,17 +355,6 @@ namespace Framework
                 this.components.Clear();
                 ObjectPool.Instance.Recycle(this.components);
                 this.components = null;
-
-                // 创建的才需要回到池中,从db中不需要回收
-                if (this.componentsDB != null)
-                {
-                    this.componentsDB.Clear();
-                    if (this.IsNew)
-                    {
-                        ObjectPool.Instance.Recycle(this.componentsDB);
-                        this.componentsDB = null;
-                    }
-                }
             }
 
             // 清理Children
@@ -427,41 +402,9 @@ namespace Framework
             status = EntityStatus.None;
         }
 
-        private void AddToComponentsDB(Entity component)
-        {
-            if (!(component is ISerializeToEntity))
-            {
-                return;
-            }
-
-            this.componentsDB ??= ObjectPool.Instance.Fetch<HashSet<Entity>>();
-            this.componentsDB.Add(component);
-        }
-
-        private void RemoveFromComponentsDB(Entity component)
-        {
-            if (!(component is ISerializeToEntity))
-            {
-                return;
-            }
-
-            if (this.componentsDB == null)
-            {
-                return;
-            }
-
-            this.componentsDB.Remove(component);
-            if (this.componentsDB.Count == 0 && this.IsNew)
-            {
-                ObjectPool.Instance.Recycle(this.componentsDB);
-                this.componentsDB = null;
-            }
-        }
-
         private void AddToComponents(Entity component)
         {
             this.Components.Add(component.GetType(), component);
-            this.AddToComponentsDB(component);
         }
 
         private void RemoveFromComponents(Entity component)
@@ -479,7 +422,6 @@ namespace Framework
                 this.components = null;
             }
 
-            this.RemoveFromComponentsDB(component);
         }
 
         public K GetChild<K>(long id) where K : Entity
@@ -677,7 +619,7 @@ namespace Framework
             return component;
         }
 
-        public K AddComponent<K>(bool isFromPool = false) where K : Entity, IAwake, new()
+        public K AddComponent<K>(bool isFromPool = false) where K : Entity, new()
         {
             Type type = typeof(K);
             if (this.components != null && this.components.ContainsKey(type))

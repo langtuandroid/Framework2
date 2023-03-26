@@ -27,7 +27,7 @@ using System.Globalization;
 
 namespace Framework
 {
-    public enum UNIT
+    public enum DownloadUNIT
     {
         BYTE,
         KB,
@@ -109,45 +109,45 @@ namespace Framework
             }
         }
 
-        public virtual float GetTotalSize(UNIT unit = UNIT.BYTE)
+        public virtual float GetTotalSize(DownloadUNIT downloadUnit = DownloadUNIT.BYTE)
         {
-            switch (unit)
+            switch (downloadUnit)
             {
-                case UNIT.KB:
+                case DownloadUNIT.KB:
                     return this._totalSize / 1024f;
-                case UNIT.MB:
+                case DownloadUNIT.MB:
                     return this._totalSize / 1048576f;
-                case UNIT.GB:
+                case DownloadUNIT.GB:
                     return this._totalSize / 1073741824f;
                 default:
                     return (float)this._totalSize;
             }
         }
 
-        public virtual float GetCompletedSize(UNIT unit = UNIT.BYTE)
+        public virtual float GetCompletedSize(DownloadUNIT downloadUnit = DownloadUNIT.BYTE)
         {
-            switch (unit)
+            switch (downloadUnit)
             {
-                case UNIT.KB:
+                case DownloadUNIT.KB:
                     return this._completedSize / 1024f;
-                case UNIT.MB:
+                case DownloadUNIT.MB:
                     return this._completedSize / 1048576f;
-                case UNIT.GB:
+                case DownloadUNIT.GB:
                     return this._completedSize / 1073741824f;
                 default:
                     return (float)this._completedSize;
             }
         }
 
-        public virtual float GetSpeed(UNIT unit = UNIT.BYTE)
+        public virtual float GetSpeed(DownloadUNIT downloadUnit = DownloadUNIT.BYTE)
         {
-            switch (unit)
+            switch (downloadUnit)
             {
-                case UNIT.KB:
+                case DownloadUNIT.KB:
                     return _speed / 1024f;
-                case UNIT.MB:
+                case DownloadUNIT.MB:
                     return _speed / 1048576f;
-                case UNIT.GB:
+                case DownloadUNIT.GB:
                     return _speed / 1073741824f;
                 default:
                     return _speed;

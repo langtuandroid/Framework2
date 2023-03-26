@@ -107,7 +107,7 @@ namespace Framework
                     continue;
                 }
 
-                updates.Enqueue(singleton);
+                rendererUpdates.Enqueue(singleton);
                 try
                 {
                     update.RendererUpdate(deltaTime);
