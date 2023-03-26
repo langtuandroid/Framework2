@@ -7,28 +7,40 @@ using Newtonsoft.Json;
 public partial class SongList : BaseConfig
 {
     /// <summary> id </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 编号 </summary>
+	[JsonProperty]
 	public int Index { get; private set; }
 /// <summary> 歌曲名称 </summary>
+	[JsonProperty]
 	public string SongName { get; private set; }
 /// <summary> 歌手名称 </summary>
+	[JsonProperty]
 	public string Artist { get; private set; }
 /// <summary> 难度 </summary>
+	[JsonProperty]
 	public string Difficulty { get; private set; }
 /// <summary> 属性 </summary>
+	[JsonProperty]
 	public string Property { get; private set; }
 /// <summary> 曲风 </summary>
+	[JsonProperty]
 	public string Style { get; private set; }
 /// <summary> 锁状态（1-未锁定，2-金币锁定，3-广告锁定） </summary>
+	[JsonProperty]
 	public int Lock { get; private set; }
 /// <summary> 解锁价格 </summary>
+	[JsonProperty]
 	public int Price { get; private set; }
 /// <summary> 谱子路径 </summary>
+	[JsonProperty]
 	public string MapPath { get; private set; }
 /// <summary> 歌曲路径 </summary>
+	[JsonProperty]
 	public string SongPath { get; private set; }
 /// <summary> 歌曲封面 </summary>
+	[JsonProperty]
 	public string Cover { get; private set; }
 
 }

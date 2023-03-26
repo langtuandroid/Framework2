@@ -7,8 +7,10 @@ using Newtonsoft.Json;
 public partial class ModelData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
+	[JsonProperty]
 	public string ModelPath { get; private set; }
 
 }

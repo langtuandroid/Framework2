@@ -7,34 +7,49 @@ using Newtonsoft.Json;
 public partial class NodeData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 短节点路径 </summary>
+	[JsonProperty]
 	public List<string> ShortNodePath { get; private set; }
 /// <summary> 长节点路径 </summary>
+	[JsonProperty]
 	public List<string> LongNodePath { get; private set; }
 /// <summary> 长节点小组件的路径 </summary>
+	[JsonProperty]
 	public string LongNodeItemPath { get; private set; }
 /// <summary> 障碍物路径 </summary>
+	[JsonProperty]
 	public List<string> ColliderNodePath { get; private set; }
 /// <summary> 星星路径 </summary>
+	[JsonProperty]
 	public List<string> StarNodePath { get; private set; }
 /// <summary> 尝试皮肤路径 </summary>
+	[JsonProperty]
 	public List<string> TrySkinNodePath { get; private set; }
 /// <summary> 宝箱路径 </summary>
+	[JsonProperty]
 	public List<string> ChestKeyNode { get; private set; }
 /// <summary> 移动障碍物路径 </summary>
+	[JsonProperty]
 	public List<string> MoveColliderNodePath { get; private set; }
 /// <summary> 跳台路径 </summary>
+	[JsonProperty]
 	public List<string> TablePath { get; private set; }
 /// <summary> 跳台路径 </summary>
+	[JsonProperty]
 	public List<string> JumpHolrPath { get; private set; }
 /// <summary> 门路径 </summary>
+	[JsonProperty]
 	public List<string> DoorPath { get; private set; }
 /// <summary> 双倍路径 </summary>
+	[JsonProperty]
 	public List<string> DoublePath { get; private set; }
 /// <summary> 吸铁石路径 </summary>
+	[JsonProperty]
 	public List<string> MagnetPath { get; private set; }
 /// <summary> 空节点 </summary>
+	[JsonProperty]
 	public List<string> Empty { get; private set; }
 
 }

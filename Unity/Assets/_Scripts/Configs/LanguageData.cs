@@ -7,12 +7,16 @@ using Newtonsoft.Json;
 public partial class LanguageData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 描述 </summary>
+	[JsonProperty]
 	public string Desc { get; private set; }
 /// <summary> 英语 </summary>
+	[JsonProperty]
 	public string English { get; private set; }
 /// <summary> 葡语 </summary>
+	[JsonProperty]
 	public string BR { get; private set; }
 
 }

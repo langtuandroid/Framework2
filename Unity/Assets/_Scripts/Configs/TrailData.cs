@@ -7,14 +7,19 @@ using Newtonsoft.Json;
 public partial class TrailData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
+	[JsonProperty]
 	public string TrailModelPath { get; private set; }
 /// <summary> 图片路径 </summary>
+	[JsonProperty]
 	public string SpritePath { get; private set; }
 /// <summary> 临时图片路径 </summary>
+	[JsonProperty]
 	public string tmpTrailModelPath { get; private set; }
 /// <summary> 解锁需要的数量 </summary>
+	[JsonProperty]
 	public int Value { get; private set; }
 
 }

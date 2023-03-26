@@ -109,5 +109,18 @@ namespace Framework
                 this.allConfig[configType] = singleton;
             }
         }
+        
+        private void LoadOneInThread(Type configType, string content)
+        {
+            object category = SerializeHelper.Deserialize(configType, content);
+
+            lock (this)
+            {
+                ISingleton singleton = category as ISingleton;
+                singleton.Register();
+                this.allConfig[configType] = singleton;
+            }
+        }
+        
     }
 }

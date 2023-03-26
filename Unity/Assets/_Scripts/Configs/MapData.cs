@@ -7,20 +7,28 @@ using Newtonsoft.Json;
 public partial class MapData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 模型地址 </summary>
+	[JsonProperty]
 	public string ModelPath { get; private set; }
 /// <summary> 模型地址 </summary>
+	[JsonProperty]
 	public string ModelItemPath { get; private set; }
 /// <summary> 结尾地图的路径 </summary>
+	[JsonProperty]
 	public string EndMapPath { get; private set; }
 /// <summary> 模型外边环境的地址 </summary>
+	[JsonProperty]
 	public string EnvironmentPath { get; private set; }
 /// <summary> 环境的长度 </summary>
+	[JsonProperty]
 	public float EnvironmentLength { get; private set; }
 /// <summary> 跳台的地址 </summary>
+	[JsonProperty]
 	public string JumpTablePath { get; private set; }
 /// <summary>  </summary>
+	[JsonProperty]
 	public int NodeId { get; private set; }
 
 }

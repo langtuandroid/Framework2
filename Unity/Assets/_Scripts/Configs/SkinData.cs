@@ -7,12 +7,16 @@ using Newtonsoft.Json;
 public partial class SkinData : BaseConfig
 {
     /// <summary> ID </summary>
+	[JsonProperty]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
+	[JsonProperty]
 	public string ModelPath { get; private set; }
 /// <summary> 图片路径 </summary>
+	[JsonProperty]
 	public string SpritePath { get; private set; }
 /// <summary> 解锁需要的数量 </summary>
+	[JsonProperty]
 	public int Value { get; private set; }
 
 }
@@ -23,7 +27,7 @@ public class SkinDataFactory : ConfigSingleton<SkinDataFactory>
     private Dictionary<int, SkinData> dict = new Dictionary<int, SkinData>();
 
     [JsonProperty] 
-    public List<SkinData> list = new List<SkinData>();
+    private List<SkinData> list = new List<SkinData>();
 
     public void Merge(object o)
     {

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Framework;
+using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Init : MonoBehaviour
 {
+    [Button]
     private async void Start()
     {
         DontDestroyOnLoad(gameObject);
-
         AppDomain.CurrentDomain.UnhandledException += (sender, e) => { Log.Error(e.ExceptionObject.ToString()); };
 
         Game.AddSingleton<MainThreadSynchronizationContext>();
