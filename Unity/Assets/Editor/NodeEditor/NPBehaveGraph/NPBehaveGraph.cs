@@ -1,10 +1,4 @@
-﻿//------------------------------------------------------------
-// Author: 烟雨迷离半世殇
-// Mail: 1778139321@qq.com
-// Data: 2021年6月15日 11:19:33
-//------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -55,7 +49,7 @@ public class NPBehaveGraph : BaseGraph
 
         PrepareAllNodeData();
         this.AutoSetNP_NodeData(this.NpDataSupportor_Client);
-                                     this.AutoSetNP_BBDatas(this.NpDataSupportor_Client);
+        this.AutoSetNP_BBDatas(this.NpDataSupportor_Client);
     }
 
     // 准备所有节点的数据
@@ -106,15 +100,9 @@ public class NPBehaveGraph : BaseGraph
         try
         {
             this.NpDataSupportor_Client_Des = null;
-            using (var fs = new FileStream($"{SavePathClient}/{this.Name}.bytes", FileMode.Open, FileAccess.Read,
-                       FileShare.Read))
-            using (var reader = new BinaryReader(fs))
-            {
-                this.NpDataSupportor_Client_Des =
-                    SerializationUtility.DeserializeValue<NP_DataSupportorBase>(reader.BaseStream,
-                        DataFormat.Binary);
-                Log.Msg($"反序列化{SavePathClient}/{this.Name}.bytes成功");
-            }
+            var data = File.ReadAllBytes($"{SavePathClient}/{Name}.bytes");
+            this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportorBase>(data);
+            Log.Msg($"反序列化{SavePathClient}/{this.Name}.bytes成功");
         }
         catch (Exception e)
         {

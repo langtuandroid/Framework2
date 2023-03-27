@@ -12,5 +12,6 @@ public class NPBehaveGraphWindow : UniversalGraphWindow
 
         m_ToolbarView = new NPBehaveToolbarView(graphView, m_MiniMap, graph);
         graphView.Add(m_ToolbarView);
+        
     }
 }
