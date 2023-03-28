@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Reflection;
 using Framework;
 using GraphProcessor;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEditor;
 using UnityEngine;
 
 public class NPBehaveGraph : BaseGraph
 {
     [BoxGroup("本Canvas所有数据整理部分")] [LabelText("保存文件名"), GUIColor(0.9f, 0.7f, 1)]
     public string Name;
+    
+    [BoxGroup("本Canvas所有数据整理部分")] [LabelText("配置表中的Id"), GUIColor(0.9f, 0.7f, 1)]
+    public int IdInConfig;
 
     [BoxGroup("本Canvas所有数据整理部分")] [LabelText("保存路径(客户端)"), GUIColor(0.1f, 0.7f, 1)] [FolderPath]
     public string SavePathClient;
@@ -121,7 +125,8 @@ public class NPBehaveGraph : BaseGraph
         {
             return;
         }
-
+        
+        
         npDataSupportorBase.NPBehaveTreeDataId = 0;
         npDataSupportorBase.NP_DataSupportorDic.Clear();
 
@@ -136,6 +141,13 @@ public class NPBehaveGraph : BaseGraph
             }
         }
 
+        var configPath = (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+            .Path;
+        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).bytes;
+        SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
+        Debug.Log(factory.GetAll().Count);
+        return;
+        
         if (npDataSupportorBase.NPBehaveTreeDataId == 0)
         {
             //设置为根结点Id
@@ -196,4 +208,13 @@ public class NPBehaveGraph : BaseGraph
         }
     }
 
+    private IEnumerable<Type> GetConfigTypes()
+    {
+        var q = typeof(Init).Assembly.GetTypes()
+            .Where(x => !x.IsAbstract)
+            .Where(x => !x.IsGenericTypeDefinition)
+            .Where(x => x.IsSubclassOfGenericTypeDefinition(typeof(ConfigSingleton<>)));
+
+        return q;
+    }
 }
