@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Framework;
 using GraphProcessor;
+using MongoDB.Bson;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -89,11 +90,7 @@ public class NPBehaveGraph : BaseGraph
             return;
         }
 
-        using (FileStream file = File.Create($"{SavePathClient}/{this.Name}.bytes"))
-        {
-            var bytes = NpDataSupportor_Client.ToBson();
-            file.Write(bytes,0,bytes.Length);
-        }
+        File.WriteAllText($"{SavePathClient}/{this.Name}.json",NpDataSupportor_Client.ToJson());
 
         Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
     }
@@ -104,7 +101,7 @@ public class NPBehaveGraph : BaseGraph
         try
         {
             this.NpDataSupportor_Client_Des = null;
-            var data = File.ReadAllBytes($"{SavePathClient}/{Name}.bytes");
+            var data = File.ReadAllText($"{SavePathClient}/{Name}.json");
             this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportorBase>(data);
             Log.Msg($"反序列化{SavePathClient}/{this.Name}.bytes成功");
         }
@@ -143,15 +140,13 @@ public class NPBehaveGraph : BaseGraph
 
         var configPath = (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
             .Path;
-        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).bytes;
+        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
         SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
-        Debug.Log(factory.GetAll().Count);
-        return;
         
         if (npDataSupportorBase.NPBehaveTreeDataId == 0)
         {
             //设置为根结点Id
-            npDataSupportorBase.NPBehaveTreeDataId = m_ValidNodes[m_ValidNodes.Count - 1].NP_GetNodeData().id;
+            npDataSupportorBase.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
         }
         else
         {

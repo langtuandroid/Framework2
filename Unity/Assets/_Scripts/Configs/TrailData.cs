@@ -2,48 +2,44 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class TrailData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string TrailModelPath { get; private set; }
 /// <summary> 图片路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SpritePath { get; private set; }
 /// <summary> 临时图片路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string tmpTrailModelPath { get; private set; }
 /// <summary> 解锁需要的数量 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int Value { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/TrailData.bytes")]
-public class TrailDataFactory : ConfigSingleton<TrailDataFactory>
+[Config("Assets/Res/Configs/TrailData.json")]
+public partial class TrailDataFactory : ConfigSingleton<TrailDataFactory>
 {
     private Dictionary<int, TrailData> dict = new Dictionary<int, TrailData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<TrailData> list = new List<TrailData>();
 
-    public void Merge(object o)
+    public void Merge(TrailDataFactory o)
     {
-        TrailDataFactory s = o as TrailDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (TrailData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

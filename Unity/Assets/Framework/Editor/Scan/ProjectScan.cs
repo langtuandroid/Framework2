@@ -181,7 +181,7 @@ namespace Framework.Editor
                     resultSaves.Add(scanRule.RuleId,scanResultSave);
                 }
             }
-            File.WriteAllText(string.Format(ProjectScanPath.ScanResultJsonPath,$"{DateTime.Now:yy-MM-dd HH.mm}"), resultSaves.ToJson());
+            File.WriteAllText(string.Format(ProjectScanPath.ScanResultJsonPath,$"{DateTime.Now:yy-MM-dd HH.mm}"), resultSaves.ToNTJson());
         }
 
         public static void LoadScanResult(string path)

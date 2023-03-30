@@ -29,8 +29,8 @@ public class Init : MonoBehaviour
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Game).Assembly));
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Init).Assembly));
         EventSystem.Instance.InitType();
-        //await ResComponent.Instance.Init();
-        //ConfigComponent.Instance.Load();
+        await ResComponent.Instance.Init();
+        await ConfigComponent.Instance.LoadAsync();
         ETTask.ExceptionHandler += e => Log.Error(e);
         var currentScene = Root.Instance.Scene.AddComponent<CurrentScenesComponent>();
         currentScene.ChangeScene(SceneType.Launch);

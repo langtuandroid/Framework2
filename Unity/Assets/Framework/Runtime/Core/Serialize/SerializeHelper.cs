@@ -1,7 +1,11 @@
 ﻿using System.IO;
 using System;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace Framework
 {
@@ -15,10 +19,8 @@ namespace Framework
         public static object Deserialize(Type type, byte[] bytes, int index = 0, int count = 0)
         {
             if (count == -1) count = bytes.Length;
-            MemoryStream ms = new MemoryStream(bytes, index, count);
-            using BsonDataReader reader = new BsonDataReader(ms);
-            JsonSerializer serializer = JsonSerializer.Create();
-            return serializer.Deserialize(reader, type);
+            using MemoryStream memoryStream = new MemoryStream(bytes,index, count);
+            return BsonSerializer.Deserialize(memoryStream, type);
         }
 
         public static byte[] Serialize(object message)
@@ -28,22 +30,27 @@ namespace Framework
 
         public static void Serialize(object message, Stream stream)
         {
-            using BsonDataWriter writer = new BsonDataWriter(stream);
-            JsonSerializer serializer = JsonSerializer.Create();
-            serializer.Serialize(writer, message);
+            using BsonBinaryWriter bsonWriter = new BsonBinaryWriter(stream, BsonBinaryWriterSettings.Defaults);
+            BsonSerializationContext context = BsonSerializationContext.CreateRoot(bsonWriter);
+            BsonSerializationArgs args = default;
+            args.NominalType = typeof (object);
+            IBsonSerializer serializer = BsonSerializer.LookupSerializer(args.NominalType);
+            serializer.Serialize(context, args, message);
         }
 
         public static object Deserialize(Type type, Stream stream)
         {
-            using BsonDataReader reader = new BsonDataReader(stream);
-            JsonSerializer serializer = JsonSerializer.Create();
-            return serializer.Deserialize(reader, type); 
+            return BsonSerializer.Deserialize(stream, type);
         }
 
+        public static object NTDeserialize(Type type, string json)
+        {
+            return JsonConvert.DeserializeObject(json, type);
+        }
 
         public static object Deserialize(Type type, string json)
         {
-            return JsonConvert.DeserializeObject(json, type);
+            return BsonSerializer.Deserialize(json, type);
         }
 
         public static T Deserialize<T>(string json)
@@ -51,18 +58,23 @@ namespace Framework
             return (T)Deserialize(typeof(T), json);
         }
 
-        public static byte[] ToBson(this object obj)
-        {
-            using MemoryStream ms = new MemoryStream();
-            using BsonDataWriter writer = new BsonDataWriter(ms);
-            JsonSerializer serializer = JsonSerializer.Create();
-            serializer.Serialize(writer, obj);
-            return ms.GetBuffer();
-        }
+        // public static byte[] ToBson(this object obj)
+        // {
+        //     return obj.ToBson();
+        // }
+        //
+        // public static string ToJson(this object obj)
+        // {
+        //     return obj.tojs();
+        // }
 
-        public static string ToJson(this object obj)
+        /// <summary>
+        /// 使用Newtonsoft.json，优点不需要增加额外属性就可以序列化字典
+        /// 缺点是慢，特殊情况使用
+        /// </summary>
+        public static string ToNTJson(this object obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }

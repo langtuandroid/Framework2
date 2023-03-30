@@ -31,8 +31,8 @@ namespace Framework.Editor
 
         public void Save()
         {
-            File.WriteAllText(ProjectScanPath.ProjectScanConfigPath, this.ToJson());
-            File.WriteAllText(ProjectScanPath.FixWhiteListPath, WhiteListDic.ToJson());
+            File.WriteAllText(ProjectScanPath.ProjectScanConfigPath, this.ToNTJson());
+            File.WriteAllText(ProjectScanPath.FixWhiteListPath, WhiteListDic.ToNTJson());
         }
     }
 

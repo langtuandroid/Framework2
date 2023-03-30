@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 
 namespace Framework
@@ -22,7 +23,7 @@ namespace Framework
                     return null;
                 }
 
-                return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(obj));
+                return SerializeHelper.Deserialize<T>(obj.ToJson());
             }
             catch (Exception e)
             {

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Framework
 {
 
-    public abstract class ConfigSingleton<T> : ISingleton where T : ConfigSingleton<T>, new()
+    public abstract class ConfigSingleton<T> : ISingleton , ISupportInitialize where T : ConfigSingleton<T>, new()
     {
         private static T instance;
 
@@ -39,6 +40,14 @@ namespace Framework
         }
 
         public virtual void Dispose()
+        {
+        }
+
+        public virtual void BeginInit()
+        {
+        }
+
+        public virtual void EndInit()
         {
         }
     }

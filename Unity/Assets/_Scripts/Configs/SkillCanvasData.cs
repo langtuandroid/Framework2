@@ -2,45 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class SkillCanvasData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 对应技能图数据Id </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public long NPBehaveId { get; private set; }
 /// <summary> 归属技能Id </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public long BelongToSkillId { get; private set; }
 /// <summary> 资源名 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SkillConfigName { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/SkillCanvasData.bytes")]
-public class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFactory>
+[Config("Assets/Res/Configs/SkillCanvasData.json")]
+public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFactory>
 {
     private Dictionary<int, SkillCanvasData> dict = new Dictionary<int, SkillCanvasData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<SkillCanvasData> list = new List<SkillCanvasData>();
 
-    public void Merge(object o)
+    public void Merge(SkillCanvasDataFactory o)
     {
-        SkillCanvasDataFactory s = o as SkillCanvasDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (SkillCanvasData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

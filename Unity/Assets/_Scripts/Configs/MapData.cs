@@ -2,57 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class MapData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 模型地址 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string ModelPath { get; private set; }
 /// <summary> 模型地址 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string ModelItemPath { get; private set; }
 /// <summary> 结尾地图的路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string EndMapPath { get; private set; }
 /// <summary> 模型外边环境的地址 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string EnvironmentPath { get; private set; }
 /// <summary> 环境的长度 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public float EnvironmentLength { get; private set; }
 /// <summary> 跳台的地址 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string JumpTablePath { get; private set; }
 /// <summary>  </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int NodeId { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/MapData.bytes")]
-public class MapDataFactory : ConfigSingleton<MapDataFactory>
+[Config("Assets/Res/Configs/MapData.json")]
+public partial class MapDataFactory : ConfigSingleton<MapDataFactory>
 {
     private Dictionary<int, MapData> dict = new Dictionary<int, MapData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<MapData> list = new List<MapData>();
 
-    public void Merge(object o)
+    public void Merge(MapDataFactory o)
     {
-        MapDataFactory s = o as MapDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (MapData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

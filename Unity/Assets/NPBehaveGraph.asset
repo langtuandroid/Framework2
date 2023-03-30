@@ -91,7 +91,7 @@ MonoBehaviour:
       Data: 3|NP_RootNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1753916862451679236
+      Data: 1756766246835060740
     - Name: LinkedIds
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -100,7 +100,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 1753916862451679235
+      Data: 1756766246835060739
     - Name: 
       Entry: 13
       Data: 
@@ -172,7 +172,7 @@ MonoBehaviour:
       Data: 6|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1753916862451679235
+      Data: 1756766246835060739
     - Name: LinkedIds
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -181,13 +181,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 3
-      Data: 1753916862451679232
+      Data: 1756766246835060736
     - Name: 
       Entry: 3
-      Data: 1753916862451679233
+      Data: 1756766246835060737
     - Name: 
       Entry: 3
-      Data: 1753916862451679234
+      Data: 1756766246835060738
     - Name: 
       Entry: 13
       Data: 
@@ -253,7 +253,7 @@ MonoBehaviour:
       Data: 9|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1753916862451679232
+      Data: 1756766246835060736
     - Name: LinkedIds
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -349,7 +349,7 @@ MonoBehaviour:
       Data: 13|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1753916862451679233
+      Data: 1756766246835060737
     - Name: LinkedIds
       Entry: 7
       Data: 14|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -454,7 +454,7 @@ MonoBehaviour:
       Data: 17|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1753916862451679234
+      Data: 1756766246835060738
     - Name: LinkedIds
       Entry: 7
       Data: 18|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -511,7 +511,7 @@ MonoBehaviour:
       Data: 20|NP_DataSupportorBase, Game.Runtime
     - Name: NPBehaveTreeDataId
       Entry: 3
-      Data: 1753916862451679236
+      Data: 105926695190565
     - Name: NP_DataSupportorDic
       Entry: 7
       Data: 21|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
@@ -531,7 +531,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1753916862451679232
+      Data: 1756766246835060736
     - Name: $v
       Entry: 9
       Data: 9
@@ -543,7 +543,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1753916862451679233
+      Data: 1756766246835060737
     - Name: $v
       Entry: 9
       Data: 13
@@ -555,7 +555,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1753916862451679234
+      Data: 1756766246835060738
     - Name: $v
       Entry: 9
       Data: 17
@@ -567,7 +567,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1753916862451679235
+      Data: 1756766246835060739
     - Name: $v
       Entry: 9
       Data: 6
@@ -579,7 +579,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1753916862451679236
+      Data: 1756766246835060740
     - Name: $v
       Entry: 9
       Data: 3
@@ -709,6 +709,7 @@ MonoBehaviour:
   position: {x: -102, y: -66, z: 0}
   scale: {x: 1, y: 1, z: 1}
   Name: Test
+  IdInConfig: 10001
   SavePathClient: Assets/Res/Configs/OtherConfigs
   references:
     version: 2

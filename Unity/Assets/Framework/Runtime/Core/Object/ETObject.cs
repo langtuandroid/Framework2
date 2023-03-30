@@ -1,4 +1,6 @@
-﻿namespace Framework
+﻿using MongoDB.Bson;
+
+namespace Framework
 {
     public abstract class ETObject
     {

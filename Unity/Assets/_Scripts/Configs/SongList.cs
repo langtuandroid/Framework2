@@ -2,69 +2,65 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class SongList : BaseConfig
 {
     /// <summary> id </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 编号 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int Index { get; private set; }
 /// <summary> 歌曲名称 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SongName { get; private set; }
 /// <summary> 歌手名称 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Artist { get; private set; }
 /// <summary> 难度 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Difficulty { get; private set; }
 /// <summary> 属性 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Property { get; private set; }
 /// <summary> 曲风 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Style { get; private set; }
 /// <summary> 锁状态（1-未锁定，2-金币锁定，3-广告锁定） </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int Lock { get; private set; }
 /// <summary> 解锁价格 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int Price { get; private set; }
 /// <summary> 谱子路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string MapPath { get; private set; }
 /// <summary> 歌曲路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SongPath { get; private set; }
 /// <summary> 歌曲封面 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Cover { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/SongList.bytes")]
-public class SongListFactory : ConfigSingleton<SongListFactory>
+[Config("Assets/Res/Configs/SongList.json")]
+public partial class SongListFactory : ConfigSingleton<SongListFactory>
 {
     private Dictionary<int, SongList> dict = new Dictionary<int, SongList>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<SongList> list = new List<SongList>();
 
-    public void Merge(object o)
+    public void Merge(SongListFactory o)
     {
-        SongListFactory s = o as SongListFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (SongList config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

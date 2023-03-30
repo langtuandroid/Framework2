@@ -2,45 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class LanguageData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 描述 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string Desc { get; private set; }
 /// <summary> 英语 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string English { get; private set; }
 /// <summary> 葡语 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string BR { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/LanguageData.bytes")]
-public class LanguageDataFactory : ConfigSingleton<LanguageDataFactory>
+[Config("Assets/Res/Configs/LanguageData.json")]
+public partial class LanguageDataFactory : ConfigSingleton<LanguageDataFactory>
 {
     private Dictionary<int, LanguageData> dict = new Dictionary<int, LanguageData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<LanguageData> list = new List<LanguageData>();
 
-    public void Merge(object o)
+    public void Merge(LanguageDataFactory o)
     {
-        LanguageDataFactory s = o as LanguageDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (LanguageData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

@@ -2,45 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class SkinData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string ModelPath { get; private set; }
 /// <summary> 图片路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SpritePath { get; private set; }
 /// <summary> 解锁需要的数量 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int Value { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/SkinData.bytes")]
-public class SkinDataFactory : ConfigSingleton<SkinDataFactory>
+[Config("Assets/Res/Configs/SkinData.json")]
+public partial class SkinDataFactory : ConfigSingleton<SkinDataFactory>
 {
     private Dictionary<int, SkinData> dict = new Dictionary<int, SkinData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<SkinData> list = new List<SkinData>();
 
-    public void Merge(object o)
+    public void Merge(SkinDataFactory o)
     {
-        SkinDataFactory s = o as SkinDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (SkinData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

@@ -2,39 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class ModelData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 模型路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string ModelPath { get; private set; }
+/// <summary> aa </summary>
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
+	[MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
+	public Dictionary<int, string> TestDic { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/ModelData.bytes")]
-public class ModelDataFactory : ConfigSingleton<ModelDataFactory>
+[Config("Assets/Res/Configs/ModelData.json")]
+public partial class ModelDataFactory : ConfigSingleton<ModelDataFactory>
 {
     private Dictionary<int, ModelData> dict = new Dictionary<int, ModelData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<ModelData> list = new List<ModelData>();
 
-    public void Merge(object o)
+    public void Merge(ModelDataFactory o)
     {
-        ModelDataFactory s = o as ModelDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (ModelData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 

@@ -2,78 +2,74 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
-using Newtonsoft.Json;
 
 public partial class NodeData : BaseConfig
 {
     /// <summary> ID </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 短节点路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> ShortNodePath { get; private set; }
 /// <summary> 长节点路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> LongNodePath { get; private set; }
 /// <summary> 长节点小组件的路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string LongNodeItemPath { get; private set; }
 /// <summary> 障碍物路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> ColliderNodePath { get; private set; }
 /// <summary> 星星路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> StarNodePath { get; private set; }
 /// <summary> 尝试皮肤路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> TrySkinNodePath { get; private set; }
 /// <summary> 宝箱路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> ChestKeyNode { get; private set; }
 /// <summary> 移动障碍物路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> MoveColliderNodePath { get; private set; }
 /// <summary> 跳台路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> TablePath { get; private set; }
 /// <summary> 跳台路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> JumpHolrPath { get; private set; }
 /// <summary> 门路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> DoorPath { get; private set; }
 /// <summary> 双倍路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> DoublePath { get; private set; }
 /// <summary> 吸铁石路径 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> MagnetPath { get; private set; }
 /// <summary> 空节点 </summary>
-	[JsonProperty]
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public List<string> Empty { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/NodeData.bytes")]
-public class NodeDataFactory : ConfigSingleton<NodeDataFactory>
+[Config("Assets/Res/Configs/NodeData.json")]
+public partial class NodeDataFactory : ConfigSingleton<NodeDataFactory>
 {
     private Dictionary<int, NodeData> dict = new Dictionary<int, NodeData>();
 
-    [JsonProperty] 
+    [MongoDB.Bson.Serialization.Attributes.BsonElement]
     private List<NodeData> list = new List<NodeData>();
 
-    public void Merge(object o)
+    public void Merge(NodeDataFactory o)
     {
-        NodeDataFactory s = o as NodeDataFactory;
-        this.list.AddRange(s.list);
+        this.list.AddRange(o.list);
     }
 
-    [OnDeserialized]
-    public void ProtoEndInit(StreamingContext context)
+    public override void EndInit()
     {
         foreach (NodeData config in list)
         {
-            config.AfterInit();
             this.dict.Add(config.ID, config);
         }
 
