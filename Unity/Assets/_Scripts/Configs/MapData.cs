@@ -32,7 +32,7 @@ public partial class MapData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/MapData.json")]
+[Config("Assets/Res/Configs/MapData.bytes")]
 public partial class MapDataFactory : ConfigSingleton<MapDataFactory>
 {
     private Dictionary<int, MapData> dict = new Dictionary<int, MapData>();

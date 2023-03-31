@@ -23,7 +23,7 @@ public partial class TrailData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/TrailData.json")]
+[Config("Assets/Res/Configs/TrailData.bytes")]
 public partial class TrailDataFactory : ConfigSingleton<TrailDataFactory>
 {
     private Dictionary<int, TrailData> dict = new Dictionary<int, TrailData>();

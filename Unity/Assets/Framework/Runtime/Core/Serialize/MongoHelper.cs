@@ -91,8 +91,20 @@ namespace Framework
             RegisterStruct<float4>();
             RegisterStruct<quaternion>();
 
-            Dictionary<string, Type> types = EventSystem.Instance.GetTypes();
-            foreach (Type type in types.Values)
+#if UNITY_EDITOR
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var types = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                if (assembly.FullName.Contains("Game.Runtime") || assembly.FullName.Contains("Framework"))
+                {
+                    types.AddRange(assembly.GetTypes());
+                }
+            }
+#else
+            var types = EventSystem.Instance.GetTypes().Values;
+#endif
+            foreach (Type type in types)
             {
                 if (!type.IsSubclassOf(typeof (Object)))
                 {

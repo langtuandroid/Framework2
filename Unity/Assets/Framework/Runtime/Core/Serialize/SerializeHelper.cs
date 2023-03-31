@@ -11,12 +11,12 @@ namespace Framework
 {
     public static class SerializeHelper
     {
-        public static T Deserialize<T>(byte[] bytes, int index = 0, int count = 0)
+        public static T Deserialize<T>(byte[] bytes, int index = 0, int count = -1)
         {
             return (T)Deserialize(typeof(T), bytes, index, count);
         }
         
-        public static object Deserialize(Type type, byte[] bytes, int index = 0, int count = 0)
+        public static object Deserialize(Type type, byte[] bytes, int index = 0, int count = -1)
         {
             if (count == -1) count = bytes.Length;
             using MemoryStream memoryStream = new MemoryStream(bytes,index, count);
@@ -57,16 +57,16 @@ namespace Framework
         {
             return (T)Deserialize(typeof(T), json);
         }
-
-        // public static byte[] ToBson(this object obj)
-        // {
-        //     return obj.ToBson();
-        // }
-        //
-        // public static string ToJson(this object obj)
-        // {
-        //     return obj.tojs();
-        // }
+        
+        public static byte[] ToBson(this object obj)
+        {
+            return BsonExtensionMethods.ToBson(obj);
+        }
+        
+        public static string ToJson(this object obj)
+        {
+            return BsonExtensionMethods.ToJson(obj);
+        }
 
         /// <summary>
         /// 使用Newtonsoft.json，优点不需要增加额外属性就可以序列化字典

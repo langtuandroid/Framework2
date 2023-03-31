@@ -44,7 +44,7 @@ public partial class SongList : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/SongList.json")]
+[Config("Assets/Res/Configs/SongList.bytes")]
 public partial class SongListFactory : ConfigSingleton<SongListFactory>
 {
     private Dictionary<int, SongList> dict = new Dictionary<int, SongList>();

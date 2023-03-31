@@ -20,7 +20,7 @@ public partial class SkillCanvasData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/SkillCanvasData.json")]
+[Config("Assets/Res/Configs/SkillCanvasData.bytes")]
 public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFactory>
 {
     private Dictionary<int, SkillCanvasData> dict = new Dictionary<int, SkillCanvasData>();

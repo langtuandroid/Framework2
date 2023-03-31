@@ -20,7 +20,7 @@ public partial class LanguageData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/LanguageData.json")]
+[Config("Assets/Res/Configs/LanguageData.bytes")]
 public partial class LanguageDataFactory : ConfigSingleton<LanguageDataFactory>
 {
     private Dictionary<int, LanguageData> dict = new Dictionary<int, LanguageData>();
