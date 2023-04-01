@@ -2,7 +2,7 @@
 using NPBehave;
 using Root = NPBehave.Root;
 
-public class NP_RuntimeTree : Entity
+public class NP_RuntimeTree : Entity , IAwake<NP_DataSupportor, NP_SyncComponent, Unit> , IUpdate
 {
     /// <summary>
     /// NP行为树根结点

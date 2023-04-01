@@ -35,10 +35,6 @@ namespace Framework
             throw new NotImplementedException();
         }
 
-        public void AfterEndInit()
-        {
-        }
-
         public virtual void Dispose()
         {
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
 
@@ -33,15 +34,15 @@ public abstract class NP_NodeDataBase
     {
         return null;
     }
-
+    
     /// <summary>
     /// 创建装饰结点
     /// </summary>
+    /// <param name="unitId">行为树归属的Unit</param>
     /// <param name="runtimeTree">运行时归属的行为树</param>
     /// <param name="node">所装饰的结点</param>
-    /// <param name="unitId">行为树归属的Unit</param>
     /// <returns></returns>
-    public virtual Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public virtual Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)
     {
         return null;
     }
@@ -49,13 +50,13 @@ public abstract class NP_NodeDataBase
     /// <summary>
     /// 创建任务节点
     /// </summary>
-    /// <param name="runtimeTree">运行时归属的行为树</param>
     /// <param name="unitId">行为树归属的Unit</param>
+    /// <param name="runtimeTree">运行时归属的行为树</param>
     /// <returns></returns>
-    public virtual Task CreateTask(NP_RuntimeTree runtimeTree)
+    public virtual Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {
         return null;
-    }
+    } 
 }
 
 public enum NodeType

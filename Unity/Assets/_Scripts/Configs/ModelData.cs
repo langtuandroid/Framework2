@@ -42,6 +42,8 @@ public partial class ModelDataFactory : ConfigSingleton<ModelDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public ModelData Get(int id)
     {

@@ -1,4 +1,5 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [BoxGroup("行为结点数据")]
@@ -9,8 +10,9 @@ public class NP_ActionNodeData : NP_NodeDataBase
 
     public NP_ClassForStoreAction NpClassForStoreAction;
 
-    public override Task CreateTask(NP_RuntimeTree runtimeTree)
+    public override Task CreateTask(Unit unit,NP_RuntimeTree runtimeTree)
     {
+        NpClassForStoreAction.BelongToUnit = unit;
         this.NpClassForStoreAction.BelongtoRuntimeTree = runtimeTree;
         this.m_ActionNode = this.NpClassForStoreAction._CreateNPBehaveAction();
         return this.m_ActionNode;

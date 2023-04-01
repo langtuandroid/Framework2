@@ -1,4 +1,6 @@
-﻿namespace NPBehave
+﻿using UnityEngine;
+
+namespace NPBehave
 {
     public class Root : Decorator
     {
@@ -40,7 +42,7 @@
 
         public override void SetRoot(Root rootNode)
         {
-            Debug.Assert(this != rootNode);
+            Debug.Assert(this == rootNode);
             base.SetRoot(rootNode);
             this.mainNode.SetRoot(rootNode);
         }

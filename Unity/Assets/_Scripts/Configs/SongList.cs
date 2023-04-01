@@ -68,6 +68,8 @@ public partial class SongListFactory : ConfigSingleton<SongListFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public SongList Get(int id)
     {

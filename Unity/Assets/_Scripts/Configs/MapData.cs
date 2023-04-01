@@ -56,6 +56,8 @@ public partial class MapDataFactory : ConfigSingleton<MapDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public MapData Get(int id)
     {

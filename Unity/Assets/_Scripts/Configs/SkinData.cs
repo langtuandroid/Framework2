@@ -44,6 +44,8 @@ public partial class SkinDataFactory : ConfigSingleton<SkinDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public SkinData Get(int id)
     {

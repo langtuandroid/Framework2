@@ -1,4 +1,5 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [BoxGroup("黑板条件节点配置"), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
@@ -14,7 +15,7 @@ public class NP_BlackboardConditionNodeData : NP_NodeDataBase
     public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData()
         { WriteOrCompareToBB = true };
 
-    public override Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public override Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)
     {
         this.m_BlackboardConditionNode = new BlackboardCondition(this.NPBalckBoardRelationData.BBKey,
             this.Ope,

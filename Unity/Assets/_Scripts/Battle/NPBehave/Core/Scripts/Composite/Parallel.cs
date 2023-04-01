@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace NPBehave
 {
@@ -44,7 +45,7 @@ namespace NPBehave
         {
             foreach (Node child in Children)
             {
-                Debug.Assert(child.CurrentState != State.INACTIVE);
+                Debug.Assert(child.CurrentState == State.INACTIVE);
             }
 
             childrenAborted = false;

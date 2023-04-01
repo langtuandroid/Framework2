@@ -47,6 +47,8 @@ public partial class TrailDataFactory : ConfigSingleton<TrailDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public TrailData Get(int id)
     {

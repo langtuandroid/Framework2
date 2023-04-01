@@ -1,4 +1,6 @@
-﻿namespace NPBehave
+﻿using UnityEngine;
+
+namespace NPBehave
 {
     public abstract class Node
     {
@@ -80,7 +82,7 @@
         public void Start()
         {
             // Assert.AreEqual(this.currentState, State.INACTIVE, "can only start inactive nodes, tried to start: " + this.Name + "! PATH: " + GetPath());
-            Debug.Assert(this.currentState != State.INACTIVE, "can only start inactive nodes");
+            Debug.Assert(this.currentState == State.INACTIVE, "can only start inactive nodes");
             this.currentState = State.ACTIVE;
             DoStart();
         }
@@ -91,7 +93,7 @@
         public void Stop()
         {
             // Assert.AreEqual(this.currentState, State.ACTIVE, "can only stop active nodes, tried to stop " + this.Name + "! PATH: " + GetPath());
-            Debug.Assert(this.currentState != State.ACTIVE, "can only stop active nodes, tried to stop");
+            Debug.Assert(this.currentState == State.ACTIVE, "can only stop active nodes, tried to stop");
             this.currentState = State.STOP_REQUESTED;
             DoStop();
         }

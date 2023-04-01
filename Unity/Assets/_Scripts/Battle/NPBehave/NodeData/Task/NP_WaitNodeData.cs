@@ -1,4 +1,5 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [BoxGroup("等待结点数据")]
@@ -9,11 +10,11 @@ public class NP_WaitNodeData : NP_NodeDataBase
 
     public override NodeType BelongNodeType => NodeType.Task;
 
-    public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData();
+    public NP_BlackBoardRelationData NPBlackBoardRelationData = new NP_BlackBoardRelationData();
 
-    public override Task CreateTask(NP_RuntimeTree runtimeTree)
+    public override Task CreateTask(Unit unit,NP_RuntimeTree runtimeTree)
     {
-        this.m_WaitNode = new Wait(this.NPBalckBoardRelationData.BBKey);
+        this.m_WaitNode = new Wait(this.NPBlackBoardRelationData.BBKey);
         return this.m_WaitNode;
     }
 

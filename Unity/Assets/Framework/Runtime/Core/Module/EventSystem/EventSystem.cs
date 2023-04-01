@@ -347,6 +347,7 @@ namespace Framework
                 catch (Exception e)
                 {
                     Log.Error(e);
+                    throw;
                 }
             }
         }

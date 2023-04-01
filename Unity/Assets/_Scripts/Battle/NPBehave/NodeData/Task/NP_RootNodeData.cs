@@ -1,5 +1,7 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
+using Root = NPBehave.Root;
 
 public class NP_RootNodeData : NP_NodeDataBase
 {
@@ -7,7 +9,7 @@ public class NP_RootNodeData : NP_NodeDataBase
 
     public override NodeType BelongNodeType => NodeType.Decorator;
 
-    public override Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public override Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)
     {
         this.m_Root = new Root(node, runtimeTree.GetClock());
         return this.m_Root;

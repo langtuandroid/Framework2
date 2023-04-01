@@ -1,4 +1,5 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 public class NP_RepeaterNodeData : NP_NodeDataBase
@@ -12,7 +13,7 @@ public class NP_RepeaterNodeData : NP_NodeDataBase
         return this.m_Repeater;
     }
 
-    public override Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public override Decorator CreateDecoratorNode(Unit unit,NP_RuntimeTree runtimeTree, Node node)
     {
         this.m_Repeater = new Repeater(node);
         return this.m_Repeater;

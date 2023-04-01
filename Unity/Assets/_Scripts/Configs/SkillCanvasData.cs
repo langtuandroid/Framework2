@@ -44,6 +44,8 @@ public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFac
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public SkillCanvasData Get(int id)
     {

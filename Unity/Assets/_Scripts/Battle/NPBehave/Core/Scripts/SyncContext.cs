@@ -10,9 +10,9 @@ namespace NPBehave
 
         private Clock clock;
 
-        public SyncContext(NP_SyncComponent npSyncComponent)
+        public SyncContext()
         {
-            // clock = new Clock(npSyncComponent.GetParent<Unit>().BelongToRoom.GetComponent<LSF_Component>());
+            clock = new Clock();
         }
 
         public Clock GetClock()

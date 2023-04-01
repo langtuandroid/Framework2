@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Framework
 {
@@ -21,15 +22,16 @@ namespace Framework
 #endif
 
         // 每次被重新使用的时候都会赋予新的实例id
-        public long InstanceId { get; protected set; }
+        [BsonIgnore] public long InstanceId { get; protected set; }
 
         protected Entity()
         {
         }
 
-        private EntityStatus status = EntityStatus.None;
+        [BsonIgnore] private EntityStatus status = EntityStatus.None;
 
 
+        [BsonIgnore]
         private bool IsFromPool
         {
             get => (this.status & EntityStatus.IsFromPool) == EntityStatus.IsFromPool;
@@ -47,6 +49,7 @@ namespace Framework
         }
 
 
+        [BsonIgnore]
         protected bool IsRegister
         {
             get => (this.status & EntityStatus.IsRegister) == EntityStatus.IsRegister;
@@ -82,8 +85,9 @@ namespace Framework
                 {
                     this.viewGO = new UnityEngine.GameObject(this.ViewName);
                     this.viewGO.AddComponent<ComponentView>().Component = this;
-                    this.viewGO.transform.SetParent(this.Parent == null? 
-                            UnityEngine.GameObject.Find("Global").transform : this.Parent.viewGO.transform);
+                    this.viewGO.transform.SetParent(this.Parent == null
+                        ? UnityEngine.GameObject.Find("Global").transform
+                        : this.Parent.viewGO.transform);
                 }
                 else
                 {
@@ -99,6 +103,7 @@ namespace Framework
         }
 
 
+        [BsonIgnore]
         private bool IsComponent
         {
             get => (this.status & EntityStatus.IsComponent) == EntityStatus.IsComponent;
@@ -116,6 +121,7 @@ namespace Framework
         }
 
 
+        [BsonIgnore]
         protected bool IsCreated
         {
             get => (this.status & EntityStatus.IsCreated) == EntityStatus.IsCreated;
@@ -133,6 +139,7 @@ namespace Framework
         }
 
 
+        [BsonIgnore]
         protected bool IsNew
         {
             get => (this.status & EntityStatus.IsNew) == EntityStatus.IsNew;
@@ -149,12 +156,13 @@ namespace Framework
             }
         }
 
-        public bool IsDisposed => this.InstanceId == 0;
+        [BsonIgnore] public bool IsDisposed => this.InstanceId == 0;
 
-        protected Entity parent;
+        [BsonIgnore] protected Entity parent;
 
         // 可以改变parent，但是不能设置为null
 
+        [BsonIgnore]
         public Entity Parent
         {
             get => this.parent;
@@ -198,6 +206,7 @@ namespace Framework
 
         // 该方法只能在AddComponent中调用，其他人不允许调用
 
+        [BsonIgnore]
         private Entity ComponentParent
         {
             set
@@ -244,10 +253,15 @@ namespace Framework
         }
 
         // 创建时就被确认，回收还是重新使用都不会更改
+        [BsonIgnoreIfDefault]
+        [BsonDefaultValue(0L)]
+        [BsonElement]
+        [BsonId]
         public long Id { get; set; }
 
-        protected Entity domain;
+        [BsonIgnore] protected Entity domain;
 
+        [BsonIgnore]
         public Entity Domain
         {
             get { return this.domain; }
@@ -298,9 +312,13 @@ namespace Framework
         }
 
 
-        private Dictionary<long, Entity> children;
+        [BsonElement("Children")] [BsonIgnoreIfNull]
+        private HashSet<Entity> childrenDB;
+
+        [BsonIgnore] private Dictionary<long, Entity> children;
 
 
+        [BsonIgnore]
         public Dictionary<long, Entity> Children
         {
             get { return this.children ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>(); }
@@ -309,6 +327,7 @@ namespace Framework
         private void AddToChildren(Entity entity)
         {
             this.Children.Add(entity.Id, entity);
+            this.AddToChildrenDB(entity);
         }
 
         private void RemoveFromChildren(Entity entity)
@@ -325,10 +344,48 @@ namespace Framework
                 ObjectPool.Instance.Recycle(this.children);
                 this.children = null;
             }
+
+            this.RemoveFromChildrenDB(entity);
         }
 
-        private Dictionary<Type, Entity> components;
+        private void AddToChildrenDB(Entity entity)
+        {
+            if (!(entity is ISerializeToEntity))
+            {
+                return;
+            }
 
+            this.childrenDB ??= ObjectPool.Instance.Fetch<HashSet<Entity>>();
+
+            this.childrenDB.Add(entity);
+        }
+
+        private void RemoveFromChildrenDB(Entity entity)
+        {
+            if (!(entity is ISerializeToEntity))
+            {
+                return;
+            }
+
+            if (this.childrenDB == null)
+            {
+                return;
+            }
+
+            this.childrenDB.Remove(entity);
+
+            if (this.childrenDB.Count == 0 && this.IsNew)
+            {
+                ObjectPool.Instance.Recycle(this.childrenDB);
+                this.childrenDB = null;
+            }
+        }
+
+        [BsonElement("C")] [BsonIgnoreIfNull] private HashSet<Entity> componentsDB;
+
+        [BsonIgnore] private Dictionary<Type, Entity> components;
+
+        [BsonIgnore]
         public Dictionary<Type, Entity> Components
         {
             get { return this.components ??= ObjectPool.Instance.Fetch<Dictionary<Type, Entity>>(); }
@@ -355,6 +412,17 @@ namespace Framework
                 this.components.Clear();
                 ObjectPool.Instance.Recycle(this.components);
                 this.components = null;
+
+                // 创建的才需要回到池中,从db中不需要回收
+                if (this.componentsDB != null)
+                {
+                    this.componentsDB.Clear();
+                    if (this.IsNew)
+                    {
+                        ObjectPool.Instance.Recycle(this.componentsDB);
+                        this.componentsDB = null;
+                    }
+                }
             }
 
             // 清理Children
@@ -368,6 +436,17 @@ namespace Framework
                 this.children.Clear();
                 ObjectPool.Instance.Recycle(this.children);
                 this.children = null;
+
+                if (this.childrenDB != null)
+                {
+                    this.childrenDB.Clear();
+                    // 创建的才需要回到池中,从db中不需要回收
+                    if (this.IsNew)
+                    {
+                        ObjectPool.Instance.Recycle(this.childrenDB);
+                        this.childrenDB = null;
+                    }
+                }
             }
 
             // 触发Destroy事件
@@ -405,6 +484,7 @@ namespace Framework
         private void AddToComponents(Entity component)
         {
             this.Components.Add(component.GetType(), component);
+            this.AddToComponentsDB(component);
         }
 
         private void RemoveFromComponents(Entity component)
@@ -422,6 +502,38 @@ namespace Framework
                 this.components = null;
             }
 
+            RemoveFromComponentsDB(component);
+        }
+
+        private void AddToComponentsDB(Entity component)
+        {
+            if (!(component is ISerializeToEntity))
+            {
+                return;
+            }
+
+            this.componentsDB ??= ObjectPool.Instance.Fetch<HashSet<Entity>>();
+            this.componentsDB.Add(component);
+        }
+
+        private void RemoveFromComponentsDB(Entity component)
+        {
+            if (!(component is ISerializeToEntity))
+            {
+                return;
+            }
+
+            if (this.componentsDB == null)
+            {
+                return;
+            }
+
+            this.componentsDB.Remove(component);
+            if (this.componentsDB.Count == 0 && this.IsNew)
+            {
+                ObjectPool.Instance.Recycle(this.componentsDB);
+                this.componentsDB = null;
+            }
         }
 
         public K GetChild<K>(long id) where K : Entity

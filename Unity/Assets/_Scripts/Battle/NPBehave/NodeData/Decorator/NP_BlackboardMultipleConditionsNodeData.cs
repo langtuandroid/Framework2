@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
 using MatchType = NPBehave.MatchType;
@@ -17,7 +18,7 @@ public class NP_BlackboardMultipleConditionsNodeData : NP_NodeDataBase
 
     public override NodeType BelongNodeType => NodeType.Decorator;
 
-    public override Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public override Decorator CreateDecoratorNode(Unit unit,NP_RuntimeTree runtimeTree, Node node)
     {
         this.m_BlackboardMultipleConditions =
             new BlackboardMultipleConditions(this.MatchInfos, this.MatchType, this.Stop, node);

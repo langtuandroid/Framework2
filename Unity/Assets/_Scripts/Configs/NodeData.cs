@@ -77,6 +77,8 @@ public partial class NodeDataFactory : ConfigSingleton<NodeDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public NodeData Get(int id)
     {

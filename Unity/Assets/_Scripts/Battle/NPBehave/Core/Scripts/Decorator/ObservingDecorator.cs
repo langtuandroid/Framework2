@@ -1,4 +1,6 @@
-﻿namespace NPBehave
+﻿using UnityEngine;
+
+namespace NPBehave
 {
     public abstract class ObservingDecorator : Decorator
     {

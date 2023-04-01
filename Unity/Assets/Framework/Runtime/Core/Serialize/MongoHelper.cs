@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
@@ -98,7 +99,7 @@ namespace Framework
             {
                 if (assembly.FullName.Contains("Game.Runtime") || assembly.FullName.Contains("Framework"))
                 {
-                    types.AddRange(assembly.GetTypes());
+                    types.AddRange(assembly.GetTypes().Where(t => t.IsClass));
                 }
             }
 #else

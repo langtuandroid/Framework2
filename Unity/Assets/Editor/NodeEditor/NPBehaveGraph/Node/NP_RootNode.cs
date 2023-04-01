@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [NodeMenuItem("NPBehave行为树/根结点", typeof(NPBehaveGraph))]
-[NodeMenuItem("NPBehave行为树/根结点", typeof(SkillGraph))]
 public class NP_RootNode : NP_NodeBase
 {
     public override Color color => Color.cyan;

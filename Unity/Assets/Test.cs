@@ -11,16 +11,7 @@ public class Test : MonoBehaviour
     [Button]
     private void Start()
     {
-        var type = typeof(LanguageDataFactory);
-        print(type.IsSubclassOf(typeof(ConfigSingleton<>)));
-        print(typeof(ConfigSingleton<>).IsAssignableFrom(type));
-        print(IsSubclassOfRawGeneric(typeof(ConfigSingleton<>), type));
-        print(type.IsSubclassOfGenericTypeDefinition(typeof(ConfigSingleton<>)));
-        return;
-        var q = typeof(BaseConfig).Assembly.GetTypes()
-            .Where(x => !x.IsAbstract)
-            .Where(x => !x.IsGenericTypeDefinition)
-            .Where(x => x.IsSubclassOf(typeof(ConfigSingleton<>))); 
+        int a = 1;
     }
     
     static bool IsSubclassOfRawGeneric(Type generic, Type toCheck) {

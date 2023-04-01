@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Framework;
 
 namespace Framework
 {
-    public class NP_RuntimeTreeManager: Entity
+    public class NP_RuntimeTreeManager: Entity , IUpdate, IAwake
     {
         public Dictionary<long, NP_RuntimeTree> RuntimeTrees = new Dictionary<long, NP_RuntimeTree>();
 
@@ -82,4 +81,20 @@ namespace Framework
             this.m_HasAddedTrees.Clear();
         }
     }
+    
+    public class RuntimeTreeManagerUpdate : UpdateSystem<NP_RuntimeTreeManager>
+    {
+        protected override void Update(NP_RuntimeTreeManager self, float deltaTime)
+        {
+            self.GetComponent<NP_SyncComponent>().SyncContext.GetClock().Update(deltaTime);
+        }
+    }
+    
+    public class RuntimeTreeManagerAwake : AwakeSystem<NP_RuntimeTreeManager>
+    {
+        protected override void Awake(NP_RuntimeTreeManager self)
+        {
+            self.AddComponent<NP_SyncComponent>();
+        }
+    } 
 }

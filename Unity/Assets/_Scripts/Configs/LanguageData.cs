@@ -44,6 +44,8 @@ public partial class LanguageDataFactory : ConfigSingleton<LanguageDataFactory>
 
         this.AfterEndInit();
     }
+	
+    partial void AfterEndInit();
 
     public LanguageData Get(int id)
     {

@@ -1,4 +1,5 @@
-﻿using NPBehave;
+﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 public class NP_ServiceNodeData : NP_NodeDataBase
@@ -16,8 +17,9 @@ public class NP_ServiceNodeData : NP_NodeDataBase
         return this.m_Service;
     }
 
-    public override Decorator CreateDecoratorNode(NP_RuntimeTree runtimeTree, Node node)
+    public override Decorator CreateDecoratorNode(Unit unit,NP_RuntimeTree runtimeTree, Node node)
     {
+        NpClassForStoreAction.BelongToUnit = unit;
         this.NpClassForStoreAction.BelongtoRuntimeTree = runtimeTree;
         this.m_Service = new Service(interval, this.NpClassForStoreAction.GetActionToBeDone(), node);
         return this.m_Service;

@@ -24,10 +24,10 @@ public class NPBehaveGraph : BaseGraph
     public string SavePathClient;
 
     [BoxGroup("此行为树数据载体(客户端)")] [DisableInEditorMode]
-    public NP_DataSupportorBase NpDataSupportor_Client = new NP_DataSupportorBase();
+    public NP_DataSupportor NpDataSupportor_Client = new NP_DataSupportor();
 
     [BoxGroup("行为树反序列化测试(客户端)")] [DisableInEditorMode]
-    public NP_DataSupportorBase NpDataSupportor_Client_Des = new NP_DataSupportorBase();
+    public NP_DataSupportor NpDataSupportor_Client_Des = new NP_DataSupportor();
 
     /// <summary>
     /// 黑板数据管理器
@@ -40,13 +40,13 @@ public class NPBehaveGraph : BaseGraph
     /// <summary>
     /// 自动配置当前图所有数据（结点，黑板）
     /// </summary>
-    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportorBase的数据体</param>
+    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportor的数据体</param>
     [Button("自动配置所有结点数据(客户端)", 25), GUIColor(0.4f, 0.8f, 1)]
     public virtual void AutoSetCanvasDatas()
     {
         if (this.NpDataSupportor_Client == null)
         {
-            NpDataSupportor_Client = new NP_DataSupportorBase();
+            NpDataSupportor_Client = new NP_DataSupportor();
         }
 
         this.OnGraphEnable();
@@ -102,7 +102,7 @@ public class NPBehaveGraph : BaseGraph
         {
             this.NpDataSupportor_Client_Des = null;
             var data = File.ReadAllBytes($"{SavePathClient}/{Name}.bytes");
-            this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportorBase>(data);
+            this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportor>(data);
             Log.Msg($"反序列化{SavePathClient}/{this.Name}.bytes成功");
         }
         catch (Exception e)
@@ -115,14 +115,13 @@ public class NPBehaveGraph : BaseGraph
     /// <summary>
     /// 自动配置所有行为树结点
     /// </summary>
-    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportorBase的数据体</param>
-    private void AutoSetNP_NodeData(NP_DataSupportorBase npDataSupportorBase)
+    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportor的数据体</param>
+    private void AutoSetNP_NodeData(NP_DataSupportor npDataSupportorBase)
     {
         if (npDataSupportorBase == null)
         {
             return;
         }
-        
         
         npDataSupportorBase.NPBehaveTreeDataId = 0;
         npDataSupportorBase.NP_DataSupportorDic.Clear();
@@ -140,13 +139,18 @@ public class NPBehaveGraph : BaseGraph
 
         var configPath = (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
             .Path;
-        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
+        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).bytes;
         SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
-        
+        var skillCanvasData = factory.Get(IdInConfig);
+        if (skillCanvasData != null)
+        {
+            npDataSupportorBase.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
+        }
+
         if (npDataSupportorBase.NPBehaveTreeDataId == 0)
         {
             //设置为根结点Id
-            npDataSupportorBase.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
+            npDataSupportorBase.NPBehaveTreeDataId = m_ValidNodes[m_ValidNodes.Count - 1].NP_GetNodeData().id;
         }
         else
         {
@@ -192,8 +196,8 @@ public class NPBehaveGraph : BaseGraph
     /// <summary>
     /// 自动配置黑板数据
     /// </summary>
-    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportorBase的数据体</param>
-    private void AutoSetNP_BBDatas(NP_DataSupportorBase npDataSupportorBase)
+    /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportor的数据体</param>
+    private void AutoSetNP_BBDatas(NP_DataSupportor npDataSupportorBase)
     {
         npDataSupportorBase.NP_BBValueManager.Clear();
         //设置黑板数据
