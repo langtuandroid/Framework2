@@ -10,11 +10,3 @@ public class NP_RuntimeTreeAwakeSystem : AwakeSystem<NP_RuntimeTree, NP_DataSupp
         self.NpSyncComponent = npSyncComponent;
     }
 }
-
-public class NP_RuntimeTreeUpdateSysmte : UpdateSystem<NP_RuntimeTree>
-{
-    protected override void Update(NP_RuntimeTree self, float deltaTime)
-    {
-        self.GetClock().Update(deltaTime);
-    }
-}

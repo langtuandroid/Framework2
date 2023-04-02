@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Framework;
 using UnityEngine;
 
 namespace NPBehave

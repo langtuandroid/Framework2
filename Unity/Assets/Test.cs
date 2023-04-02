@@ -11,7 +11,6 @@ public class Test : MonoBehaviour
     [Button]
     private void Start()
     {
-        int a = 1;
     }
     
     static bool IsSubclassOfRawGeneric(Type generic, Type toCheck) {

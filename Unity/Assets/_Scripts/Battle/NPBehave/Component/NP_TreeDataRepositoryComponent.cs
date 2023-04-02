@@ -47,8 +47,11 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwake
         result.BuffNodeDataDic = source.BuffNodeDataDic;
         result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
         result.NP_DataSupportorDic = source.NP_DataSupportorDic;
-        result.NP_BBValueManager =
-            JsonConvert.DeserializeObject<Dictionary<string, ANP_BBValue>>(source.NP_BBValueManager.ToNTJson());
+        result.NP_BBValueManager = new Dictionary<string, ANP_BBValue>();
+        foreach (KeyValuePair<string,ANP_BBValue> valuePair in source.NP_BBValueManager)
+        {
+            result.NP_BBValueManager[valuePair.Key] = valuePair.Value.DeepCopy();
+        }
         return result;
     }
 

@@ -21,7 +21,7 @@ namespace Framework
                     return null;
                 }
 
-                return SerializeHelper.Deserialize<T>(obj.ToJson());
+                return SerializeHelper.Deserialize<T>(obj.ToBson());
             }
             catch (Exception e)
             {
