@@ -4,17 +4,13 @@ using NPBehave;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class LaunchSceneComponent : Entity ,IAwake
+public class LaunchSceneComponent : Entity ,IAwakeSystem
 {
-}
-
-public class LaunchSceneComponentAwakeSystem : AwakeSystem<LaunchSceneComponent>
-{
-    protected override void Awake(LaunchSceneComponent self)
+    public void Awake(Entity o)
     {
-        Log.Msg(self.DomainScene().Name);
-        self.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
-        var unitComponent = self.DomainScene().AddComponent<UnitComponent>();
+        Log.Msg(this.DomainScene().Name);
+        this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
+        var unitComponent = this.DomainScene().AddComponent<UnitComponent>();
         Unit unit = unitComponent.AddChild<Unit>();
         unit.Forward = new float3(0, 0, 1);
         unit.AddComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);

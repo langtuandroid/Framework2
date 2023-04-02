@@ -1,10 +1,11 @@
-﻿using Framework;
+﻿using ET;
+using Framework;
 
 /// <summary>
 /// 添加此组件代表Unit已死亡，一些其他组件逻辑将暂时失灵
 /// 相应的，移除此组件，其他组件的逻辑将恢复正常
 /// </summary>
-public class DeadComponent : Entity , IAwake<long>, IDestroy
+public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
 {
     /// <summary>
     /// 复活时长，在经过这个时间之后DeadComponent将会被移除, 当前默认10s
@@ -12,4 +13,29 @@ public class DeadComponent : Entity , IAwake<long>, IDestroy
     public long ResurrectionTime = 10000;
 
     public long DeadTimerId;
+
+    public void Awake(Entity o, long resurrectionTime)
+    {
+        ResurrectionTime = resurrectionTime;
+
+        Unit unit = GetParent<Unit>();
+
+        // 休眠刚体，不再会产生碰撞
+        unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = false;
+
+        DeadTimerId = TimerComponent.Instance.NewOnceTimer(TimeHelper.ClientNow() + ResurrectionTime,
+            () => { GetParent<Unit>()?.RemoveComponent<DeadComponent>(); });
+    }
+
+    public void OnDestroy(Entity o)
+    {
+        Unit unit = GetParent<Unit>();
+
+        if (!(unit.GetComponent<B2S_ColliderComponent>().Body is null))
+        {
+            unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = true;
+        }
+
+        TimerComponent.Instance.Remove(DeadTimerId);
+    }
 }

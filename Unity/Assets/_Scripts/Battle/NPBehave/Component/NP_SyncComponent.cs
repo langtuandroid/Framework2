@@ -2,16 +2,12 @@
 
 namespace Framework
 {
-    public class NP_SyncComponent : Entity , IAwake
+    public class NP_SyncComponent : Entity , IAwakeSystem
     {
         public SyncContext SyncContext;
-    }
-    
-    public class NP_SyncComponentAwakeSystem : AwakeSystem<NP_SyncComponent>
-    {
-        protected override void Awake(NP_SyncComponent self)
+        public void Awake(Entity o)
         {
-            self.SyncContext = new SyncContext();
+            SyncContext = new SyncContext();
         }
     }
 }

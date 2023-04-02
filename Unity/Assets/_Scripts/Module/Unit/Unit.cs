@@ -4,8 +4,14 @@ using Unity.Mathematics;
 namespace Framework
 {
     [DebuggerDisplay("ViewName,nq")]
-    public class Unit : Entity, IAwake
+    public class Unit : Entity, IAwakeSystem
     {
+    
+        public void Awake(Entity o)
+        {
+            
+        }
+        
         private float3 position; //坐标
 
         public float3 Position
@@ -42,5 +48,7 @@ namespace Framework
         {
             get { return $"{this.GetType().Name} ({this.Id})"; }
         }
+
+
     }
 }

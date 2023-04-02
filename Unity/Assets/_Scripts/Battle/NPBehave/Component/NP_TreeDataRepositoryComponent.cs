@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using NPBehave;
 using UnityEngine;
 
-public class NP_TreeDataRepositoryComponent : Entity, IAwake
+public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
 {
     /// <summary>
     /// 运行时的行为树仓库，注意，一定不能对这些数据做修改
@@ -48,10 +48,11 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwake
         result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
         result.NP_DataSupportorDic = source.NP_DataSupportorDic;
         result.NP_BBValueManager = new Dictionary<string, ANP_BBValue>();
-        foreach (KeyValuePair<string,ANP_BBValue> valuePair in source.NP_BBValueManager)
+        foreach (KeyValuePair<string, ANP_BBValue> valuePair in source.NP_BBValueManager)
         {
             result.NP_BBValueManager[valuePair.Key] = valuePair.Value.DeepCopy();
         }
+
         return result;
     }
 
@@ -70,11 +71,8 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwake
         Log.Error($"请求的行为树id不存在，id为{id}");
         return null;
     }
-}
 
-public class NP_RuntimeTreeRepositoryAwakeSystem : AwakeSystem<NP_TreeDataRepositoryComponent>
-{
-    protected override void Awake(NP_TreeDataRepositoryComponent self)
+    public void Awake(Entity o)
     {
         foreach (var skillCanvasConfig in SkillCanvasDataFactory.Instance.GetAll())
         {
@@ -88,7 +86,7 @@ public class NP_RuntimeTreeRepositoryAwakeSystem : AwakeSystem<NP_TreeDataReposi
 
                 Log.Msg($"反序列化行为树:{skillCanvasConfig.Value.SkillConfigName}完成");
 
-                self.NpRuntimeTreesDatas.Add(MnNpDataSupportor.NPBehaveTreeDataId, MnNpDataSupportor);
+                NpRuntimeTreesDatas.Add(MnNpDataSupportor.NPBehaveTreeDataId, MnNpDataSupportor);
             }
             catch (Exception e)
             {

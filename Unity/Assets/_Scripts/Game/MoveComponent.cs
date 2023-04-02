@@ -1,15 +1,10 @@
 ﻿using Framework;
-using UnityEngine;
 
-public class AMoveComponent : Entity, IUpdate
+public class AMoveComponent : Entity, IUpdateSystem
 {
-}
-
-public class AMoveUpdateSystem : UpdateSystem<AMoveComponent>
-{
-    protected override void Update(AMoveComponent self, float deltaTime)
+    public void Update(float deltaTime)
     {
-        var unit = self.GetParent<Unit>();
+        var unit = GetParent<Unit>();
         unit.Position += unit.Forward * (deltaTime);
         unit.GetComponent<GameObjectComponent>().GameObject.transform.position = unit.Position;
         Log.Msg(deltaTime);

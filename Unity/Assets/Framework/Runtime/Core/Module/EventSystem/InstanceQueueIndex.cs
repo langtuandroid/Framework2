@@ -1,4 +1,7 @@
-﻿namespace Framework
+﻿using System;
+using System.Collections.Generic;
+
+namespace Framework
 {
     public enum InstanceQueueIndex
     {
@@ -6,7 +9,17 @@
         Update,
         LateUpdate,
         RendererUpdate,
-        Load,
         Max,
+    }
+
+    public static class InstanceQueueMap
+    {
+        public static IReadOnlyDictionary<Type, InstanceQueueIndex> InstanceQueueMapDic =
+            new Dictionary<Type, InstanceQueueIndex>()
+            {
+                { typeof(IUpdateSystem), InstanceQueueIndex.Update },
+                { typeof(ILateUpdateSystem), InstanceQueueIndex.LateUpdate },
+                { typeof(IRendererUpdateSystem), InstanceQueueIndex.RendererUpdate },
+            };
     }
 }

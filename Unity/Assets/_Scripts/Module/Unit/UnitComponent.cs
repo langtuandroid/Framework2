@@ -1,54 +1,59 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Framework;
 
 namespace Framework
 {
-    public static class UnitComponentSystem
+    public class UnitComponent : Entity, IAwakeSystem, IDestroySystem
     {
-        public static void Add(this UnitComponent self, Unit unit)
+        public Dictionary<long, Unit> idUnits = new Dictionary<long, Unit>();
+
+        public void Awake(Entity o)
         {
-            self.idUnits.Add(unit.Id, unit);
         }
 
-        public static Unit Get(this UnitComponent self, long id)
+        public void Add(Unit unit)
+        {
+            idUnits.Add(unit.Id, unit);
+        }
+
+        public Unit Get(long id)
         {
             Unit unit;
-            self.idUnits.TryGetValue(id, out unit);
+            idUnits.TryGetValue(id, out unit);
             return unit;
         }
 
-        public static void Remove(this UnitComponent self, long id)
+        public void Remove(long id)
         {
             Unit unit;
-            self.idUnits.TryGetValue(id, out unit);
-            self.idUnits.Remove(id);
+            idUnits.TryGetValue(id, out unit);
+            idUnits.Remove(id);
             unit?.Dispose();
         }
 
-        public static void RemoveAll(this UnitComponent self)
+        public void RemoveAll()
         {
-            foreach (var unit in self.idUnits)
+            foreach (var unit in idUnits)
             {
                 unit.Value?.Dispose();
             }
 
-            self.idUnits.Clear();
+            idUnits.Clear();
         }
 
-        public static void RemoveNoDispose(this UnitComponent self, long id)
+        public void RemoveNoDispose(long id)
         {
-            self.idUnits.Remove(id);
+            idUnits.Remove(id);
         }
 
-        public static Unit[] GetAll(this UnitComponent self)
+        public Unit[] GetAll()
         {
-            return self.idUnits.Values.ToArray();
+            return idUnits.Values.ToArray();
         }
-    }
 
-    public class UnitComponent : Entity, IAwake, IDestroy
-    {
-        public Dictionary<long, Unit> idUnits = new Dictionary<long, Unit>();
+        public void OnDestroy(Entity o)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

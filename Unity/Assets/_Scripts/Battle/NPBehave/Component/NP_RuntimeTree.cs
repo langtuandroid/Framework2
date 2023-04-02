@@ -2,7 +2,7 @@
 using NPBehave;
 using Root = NPBehave.Root;
 
-public class NP_RuntimeTree : Entity , IAwake<NP_DataSupportor, NP_SyncComponent, Unit>
+public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComponent, Unit>
 {
     /// <summary>
     /// NP行为树根结点
@@ -70,5 +70,12 @@ public class NP_RuntimeTree : Entity , IAwake<NP_DataSupportor, NP_SyncComponent
         this.m_RootNode.CancelWithoutReturnResult();
         this.m_RootNode = null;
         this.BelongNP_DataSupportor = null;
+    }
+
+    public void Awake(Entity o, NP_DataSupportor belongNP_DataSupportor, NP_SyncComponent npSyncComponent, Unit belongToUnit)
+    {
+        BelongToUnit = belongToUnit;
+        BelongNP_DataSupportor = belongNP_DataSupportor;
+        NpSyncComponent = npSyncComponent;
     }
 }

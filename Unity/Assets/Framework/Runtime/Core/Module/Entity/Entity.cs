@@ -450,7 +450,7 @@ namespace Framework
             }
 
             // 触发Destroy事件
-            if (this is IDestroy)
+            if (this is IDestroySystem)
             {
                 EventSystem.Instance.Destroy(this);
             }
@@ -644,7 +644,7 @@ namespace Framework
             }
 
             // 如果有IGetComponent接口，则触发GetComponentSystem
-            if (this is IGetComponent)
+            if (this is IGetComponentSystem)
             {
                 EventSystem.Instance.GetComponent(this, component);
             }
@@ -666,7 +666,7 @@ namespace Framework
             }
 
             // 如果有IGetComponent接口，则触发GetComponentSystem
-            if (this is IGetComponent)
+            if (this is IGetComponentSystem)
             {
                 EventSystem.Instance.GetComponent(this, component);
             }
@@ -703,7 +703,7 @@ namespace Framework
 
             component.ComponentParent = this;
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -723,7 +723,7 @@ namespace Framework
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component);
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -744,7 +744,7 @@ namespace Framework
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component);
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -752,7 +752,7 @@ namespace Framework
             return component as K;
         }
 
-        public K AddComponent<K, P1>(P1 p1, bool isFromPool = false) where K : Entity, IAwake<P1>, new()
+        public K AddComponent<K, P1>(P1 p1, bool isFromPool = false) where K : Entity, IAwakeSystem<P1>, new()
         {
             Type type = typeof(K);
             if (this.components != null && this.components.ContainsKey(type))
@@ -765,7 +765,7 @@ namespace Framework
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1);
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -773,7 +773,7 @@ namespace Framework
             return component as K;
         }
 
-        public K AddComponent<K, P1, P2>(P1 p1, P2 p2, bool isFromPool = false) where K : Entity, IAwake<P1, P2>, new()
+        public K AddComponent<K, P1, P2>(P1 p1, P2 p2, bool isFromPool = false) where K : Entity, IAwakeSystem<P1, P2>, new()
         {
             Type type = typeof(K);
             if (this.components != null && this.components.ContainsKey(type))
@@ -786,7 +786,7 @@ namespace Framework
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1, p2);
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -795,7 +795,7 @@ namespace Framework
         }
 
         public K AddComponent<K, P1, P2, P3>(P1 p1, P2 p2, P3 p3, bool isFromPool = false)
-            where K : Entity, IAwake<P1, P2, P3>, new()
+            where K : Entity, IAwakeSystem<P1, P2, P3>, new()
         {
             Type type = typeof(K);
             if (this.components != null && this.components.ContainsKey(type))
@@ -808,7 +808,7 @@ namespace Framework
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1, p2, p3);
 
-            if (this is IAddComponent)
+            if (this is IAddComponentSystem)
             {
                 EventSystem.Instance.AddComponent(this, component);
             }
@@ -822,7 +822,7 @@ namespace Framework
             return entity;
         }
 
-        public T AddChild<T>(bool isFromPool = false) where T : Entity, IAwake
+        public T AddChild<T>(bool isFromPool = false) where T : Entity, IAwakeSystem
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -833,7 +833,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChild<T, A>(A a, bool isFromPool = false) where T : Entity, IAwake<A>
+        public T AddChild<T, A>(A a, bool isFromPool = false) where T : Entity, IAwakeSystem<A>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -844,7 +844,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChild<T, A, B>(A a, B b, bool isFromPool = false) where T : Entity, IAwake<A, B>
+        public T AddChild<T, A, B>(A a, B b, bool isFromPool = false) where T : Entity, IAwakeSystem<A, B>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -855,7 +855,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChild<T, A, B, C>(A a, B b, C c, bool isFromPool = false) where T : Entity, IAwake<A, B, C>
+        public T AddChild<T, A, B, C>(A a, B b, C c, bool isFromPool = false) where T : Entity, IAwakeSystem<A, B, C>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -867,7 +867,7 @@ namespace Framework
         }
 
         public T AddChild<T, A, B, C, D>(A a, B b, C c, D d, bool isFromPool = false)
-            where T : Entity, IAwake<A, B, C, D>
+            where T : Entity, IAwakeSystem<A, B, C, D>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -878,7 +878,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChildWithId<T>(long id, bool isFromPool = false) where T : Entity, IAwake, new()
+        public T AddChildWithId<T>(long id, bool isFromPool = false) where T : Entity, IAwakeSystem, new()
         {
             Type type = typeof(T);
             T component = Entity.Create(type, isFromPool) as T;
@@ -888,7 +888,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChildWithId<T, A>(long id, A a, bool isFromPool = false) where T : Entity, IAwake<A>
+        public T AddChildWithId<T, A>(long id, A a, bool isFromPool = false) where T : Entity, IAwakeSystem<A>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -899,7 +899,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChildWithId<T, A, B>(long id, A a, B b, bool isFromPool = false) where T : Entity, IAwake<A, B>
+        public T AddChildWithId<T, A, B>(long id, A a, B b, bool isFromPool = false) where T : Entity, IAwakeSystem<A, B>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);
@@ -911,7 +911,7 @@ namespace Framework
         }
 
         public T AddChildWithId<T, A, B, C>(long id, A a, B b, C c, bool isFromPool = false)
-            where T : Entity, IAwake<A, B, C>
+            where T : Entity, IAwakeSystem<A, B, C>
         {
             Type type = typeof(T);
             T component = (T)Entity.Create(type, isFromPool);

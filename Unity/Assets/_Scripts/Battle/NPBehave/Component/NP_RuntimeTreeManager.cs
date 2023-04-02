@@ -2,7 +2,7 @@
 
 namespace Framework
 {
-    public class NP_RuntimeTreeManager: Entity , IUpdate, IAwake
+    public class NP_RuntimeTreeManager : Entity, IUpdateSystem, IAwakeSystem
     {
         public Dictionary<long, NP_RuntimeTree> RuntimeTrees = new Dictionary<long, NP_RuntimeTree>();
 
@@ -10,7 +10,7 @@ namespace Framework
         /// 已经添加过的行为树，第一个id为配置id，第二个id为运行时id
         /// </summary>
         private Dictionary<long, long> m_HasAddedTrees = new Dictionary<long, long>();
-        
+
         /// <summary>
         /// 添加行为树
         /// </summary>
@@ -54,7 +54,7 @@ namespace Framework
             Log.Error($"通过预制id请求行为树,请求的ID不存在，id是{prefabid}");
             return null;
         }
-        
+
         public void RemoveTree(long id)
         {
             if (RuntimeTrees.ContainsKey(id))
@@ -70,31 +70,26 @@ namespace Framework
 
         public override void Dispose()
         {
-            if(IsDisposed)
+            if (IsDisposed)
                 return;
             base.Dispose();
             foreach (var runtimeTree in RuntimeTrees)
             {
                 runtimeTree.Value.Dispose();
             }
+
             RuntimeTrees.Clear();
             this.m_HasAddedTrees.Clear();
         }
-    }
-    
-    public class RuntimeTreeManagerUpdate : UpdateSystem<NP_RuntimeTreeManager>
-    {
-        protected override void Update(NP_RuntimeTreeManager self, float deltaTime)
+
+        public void Update(float deltaTime)
         {
-            self.GetComponent<NP_SyncComponent>().SyncContext.GetClock().Update(deltaTime);
+            GetComponent<NP_SyncComponent>().SyncContext.GetClock().Update(deltaTime);
+        }
+
+        public void Awake(Entity o)
+        {
+            AddComponent<NP_SyncComponent>();
         }
     }
-    
-    public class RuntimeTreeManagerAwake : AwakeSystem<NP_RuntimeTreeManager>
-    {
-        protected override void Awake(NP_RuntimeTreeManager self)
-        {
-            self.AddComponent<NP_SyncComponent>();
-        }
-    } 
 }

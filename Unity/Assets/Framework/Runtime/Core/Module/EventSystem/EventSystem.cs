@@ -129,7 +129,13 @@ namespace Framework
                     InstanceQueueIndex index = iSystemType.GetInstanceQueueIndex();
                     if (index > InstanceQueueIndex.None && index < InstanceQueueIndex.Max)
                     {
-                        oneTypeSystems.QueueFlag[(int)index] = true;
+                        foreach (KeyValuePair<Type,InstanceQueueIndex> instanceQueueIndex in InstanceQueueMap.InstanceQueueMapDic)
+                        {
+                            if (type.IsSubclassOf(instanceQueueIndex.Key))
+                            {
+                                oneTypeSystems.QueueFlag[(int)instanceQueueIndex.Value] = true;
+                            }
+                        }
                     }
                 }
             }
@@ -262,7 +268,7 @@ namespace Framework
 
                 try
                 {
-                    deserializeSystem.Run(component);
+                    deserializeSystem.OnDeserialize(component);
                 }
                 catch (Exception e)
                 {
@@ -289,7 +295,7 @@ namespace Framework
 
                 try
                 {
-                    getSystem.Run(entity, component);
+                    getSystem.OnGetComponent(entity, component);
                 }
                 catch (Exception e)
                 {
@@ -316,7 +322,7 @@ namespace Framework
 
                 try
                 {
-                    addComponentSystem.Run(entity, component);
+                    addComponentSystem.OnAddComponent(entity, component);
                 }
                 catch (Exception e)
                 {
@@ -342,7 +348,7 @@ namespace Framework
 
                 try
                 {
-                    aAwakeSystem.Run(component);
+                    aAwakeSystem.Awake(component);
                 }
                 catch (Exception e)
                 {
@@ -369,7 +375,7 @@ namespace Framework
 
                 try
                 {
-                    aAwakeSystem.Run(component, p1);
+                    aAwakeSystem.Awake(component, p1);
                 }
                 catch (Exception e)
                 {
@@ -395,7 +401,7 @@ namespace Framework
 
                 try
                 {
-                    aAwakeSystem.Run(component, p1, p2);
+                    aAwakeSystem.Awake(component, p1, p2);
                 }
                 catch (Exception e)
                 {
@@ -422,7 +428,7 @@ namespace Framework
 
                 try
                 {
-                    aAwakeSystem.Run(component, p1, p2, p3);
+                    aAwakeSystem.Awake(component, p1, p2, p3);
                 }
                 catch (Exception e)
                 {
@@ -449,51 +455,11 @@ namespace Framework
 
                 try
                 {
-                    aAwakeSystem.Run(component, p1, p2, p3, p4);
+                    aAwakeSystem.Awake(component, p1, p2, p3, p4);
                 }
                 catch (Exception e)
                 {
                     Log.Error(e);
-                }
-            }
-        }
-
-        public void Load()
-        {
-            Queue<long> queue = this.queues[(int)InstanceQueueIndex.Load];
-            int count = queue.Count;
-            while (count-- > 0)
-            {
-                long instanceId = queue.Dequeue();
-                Entity component = Root.Instance.Get(instanceId);
-                if (component == null)
-                {
-                    continue;
-                }
-
-                if (component.IsDisposed)
-                {
-                    continue;
-                }
-
-                List<object> iLoadSystems = this.typeSystems.GetSystems(component.GetType(), typeof(ILoadSystem));
-                if (iLoadSystems == null)
-                {
-                    continue;
-                }
-
-                queue.Enqueue(instanceId);
-
-                foreach (ILoadSystem iLoadSystem in iLoadSystems)
-                {
-                    try
-                    {
-                        iLoadSystem.Run(component);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
                 }
             }
         }
@@ -515,7 +481,7 @@ namespace Framework
 
                 try
                 {
-                    iDestroySystem.Run(component);
+                    iDestroySystem.OnDestroy(component);
                 }
                 catch (Exception e)
                 {
@@ -554,7 +520,7 @@ namespace Framework
                 {
                     try
                     {
-                        iUpdateSystem.Run(component, deltaTime);
+                        iUpdateSystem.Update(component, deltaTime);
                     }
                     catch (Exception e)
                     {
@@ -596,7 +562,7 @@ namespace Framework
                 {
                     try
                     {
-                        iUpdateSystem.Run(component, deltaTime);
+                        iUpdateSystem.RenderUpdate(component, deltaTime);
                     }
                     catch (Exception e)
                     {
@@ -638,7 +604,7 @@ namespace Framework
                 {
                     try
                     {
-                        iLateUpdateSystem.Run(component);
+                        iLateUpdateSystem.LateUpdate(component);
                     }
                     catch (Exception e)
                     {
