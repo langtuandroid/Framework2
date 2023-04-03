@@ -7,56 +7,56 @@
     "AssetList": [
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/LanguageData.bytes",
+            "AssetPath": "Assets/Res/Configs/LanguageData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/MapData.bytes",
+            "AssetPath": "Assets/Res/Configs/MapData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/ModelData.bytes",
+            "AssetPath": "Assets/Res/Configs/ModelData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/NodeData.bytes",
+            "AssetPath": "Assets/Res/Configs/NodeData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SkillCanvasData.bytes",
+            "AssetPath": "Assets/Res/Configs/SkillCanvasData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SkinData.bytes",
+            "AssetPath": "Assets/Res/Configs/SkinData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SongList.bytes",
+            "AssetPath": "Assets/Res/Configs/SongList.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/TrailData.bytes",
+            "AssetPath": "Assets/Res/Configs/TrailData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []

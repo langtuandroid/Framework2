@@ -18,7 +18,7 @@ public partial class ModelData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/ModelData.bytes")]
+[Config("Assets/Res/Configs/ModelData.json")]
 public partial class ModelDataFactory : ConfigSingleton<ModelDataFactory>
 {
     private Dictionary<int, ModelData> dict = new Dictionary<int, ModelData>();

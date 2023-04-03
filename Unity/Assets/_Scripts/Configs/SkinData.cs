@@ -20,7 +20,7 @@ public partial class SkinData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/SkinData.bytes")]
+[Config("Assets/Res/Configs/SkinData.json")]
 public partial class SkinDataFactory : ConfigSingleton<SkinDataFactory>
 {
     private Dictionary<int, SkinData> dict = new Dictionary<int, SkinData>();

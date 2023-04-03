@@ -53,7 +53,7 @@ public partial class NodeData : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/NodeData.bytes")]
+[Config("Assets/Res/Configs/NodeData.json")]
 public partial class NodeDataFactory : ConfigSingleton<NodeDataFactory>
 {
     private Dictionary<int, NodeData> dict = new Dictionary<int, NodeData>();

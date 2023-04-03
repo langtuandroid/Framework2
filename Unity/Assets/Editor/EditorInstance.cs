@@ -9,6 +9,5 @@ public static class EditorInstance
         Game.AddSingleton<TimeInfo>();
         Game.AddSingleton<IdGenerator>();
         MongoHelper.Init();
-        
     }
 }

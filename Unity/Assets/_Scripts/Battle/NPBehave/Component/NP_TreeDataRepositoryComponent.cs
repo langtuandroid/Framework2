@@ -82,7 +82,7 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
             if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
             try
             {
-                var MnNpDataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.bytes);
+                var MnNpDataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.text);
 
                 Log.Msg($"反序列化行为树:{skillCanvasConfig.Value.SkillConfigName}完成");
 

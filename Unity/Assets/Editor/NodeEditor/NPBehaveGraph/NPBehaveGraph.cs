@@ -90,7 +90,7 @@ public class NPBehaveGraph : BaseGraph
             return;
         }
 
-        File.WriteAllBytes($"{SavePathClient}/{this.Name}.bytes",NpDataSupportor_Client.ToBson());
+        File.WriteAllText($"{SavePathClient}/{this.Name}.bytes",NpDataSupportor_Client.ToJson());
 
         Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
     }
@@ -101,7 +101,7 @@ public class NPBehaveGraph : BaseGraph
         try
         {
             this.NpDataSupportor_Client_Des = null;
-            var data = File.ReadAllBytes($"{SavePathClient}/{Name}.bytes");
+            var data = File.ReadAllText($"{SavePathClient}/{Name}.bytes");
             this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportor>(data);
             Log.Msg($"反序列化{SavePathClient}/{this.Name}.bytes成功");
         }
@@ -139,7 +139,7 @@ public class NPBehaveGraph : BaseGraph
 
         var configPath = (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
             .Path;
-        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).bytes;
+        var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
         SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
         var skillCanvasData = factory.Get(IdInConfig);
         if (skillCanvasData != null)

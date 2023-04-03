@@ -2,6 +2,7 @@
 
 using Framework;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 [Title("打印信息", TitleAlignment = TitleAlignments.Centered)]
 public class NP_LogAction : NP_ClassForStoreAction
@@ -16,6 +17,6 @@ public class NP_LogAction : NP_ClassForStoreAction
 
     private void TestLog()
     {
-        Log.Msg(LogInfo);
+        Log.Msg(Time.time + "  " + LogInfo);
     }
 }

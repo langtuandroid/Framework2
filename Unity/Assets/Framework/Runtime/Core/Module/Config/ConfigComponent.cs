@@ -85,7 +85,7 @@ namespace Framework
             {
                 var path = (item.attribute as ConfigAttribute).Path;
                 var oneConfigBytes =
-                    (await ResComponent.Instance.LoadAssetAsync<TextAsset>(path)).bytes;
+                    (await ResComponent.Instance.LoadAssetAsync<TextAsset>(path)).text;
                 Task task = Task.Run(() =>
                 {
                     LoadOneInThread(item.type, oneConfigBytes);

@@ -16,7 +16,16 @@ namespace Framework
 
         public static T Instance
         {
-            get { return instance; }
+            get
+            {
+#if UNITY_EDITOR
+                if (!UnityEngine.Application.isPlaying)
+                {
+                    instance ??= Activator.CreateInstance<T>();
+                }
+#endif
+                return instance;
+            }
         }
 
         void ISingleton.Register()
