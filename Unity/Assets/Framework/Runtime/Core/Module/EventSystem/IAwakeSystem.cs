@@ -1,29 +1,27 @@
-using System;
-
 namespace Framework
 {
     public interface IAwakeSystem : ISystemType
     {
-        void Awake(Entity o);
+        void Awake();
     }
 
     public interface IAwakeSystem<A> : ISystemType
     {
-        void Awake(Entity o, A a);
+        void Awake(A a);
     }
 
     public interface IAwakeSystem<A, B> : ISystemType
     {
-        void Awake(Entity o, A a, B b);
+        void Awake(A a, B b);
     }
 
     public interface IAwakeSystem<A, B, C> : ISystemType
     {
-        void Awake(Entity o, A a, B b, C c);
+        void Awake(A a, B b, C c);
     }
 
     public interface IAwakeSystem<A, B, C, D> : ISystemType
     {
-        void Awake(Entity o, A a, B b, C c, D d);
+        void Awake(A a, B b, C c, D d);
     }
 }

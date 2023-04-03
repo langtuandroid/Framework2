@@ -25,7 +25,7 @@ namespace Framework
 
         public Dictionary<int, List<NumericWatcherInfo>> allWatchers;
 
-        public void Awake(Entity o)
+        public void Awake()
         {
             NumericWatcherComponent.Instance = this;
             Init();

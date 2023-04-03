@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LaunchSceneComponent : Entity ,IAwakeSystem
 {
-    public void Awake(Entity o)
+    public void Awake()
     {
         Log.Msg(this.DomainScene().Name);
         this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();

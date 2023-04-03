@@ -87,7 +87,7 @@ namespace Framework
             GetComponent<NP_SyncComponent>().SyncContext.GetClock().Update(deltaTime);
         }
 
-        public void Awake(Entity o)
+        public void Awake()
         {
             AddComponent<NP_SyncComponent>();
         }

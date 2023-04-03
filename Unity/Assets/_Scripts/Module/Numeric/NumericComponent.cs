@@ -108,7 +108,7 @@ namespace Framework
         }
 
 
-        public void Awake(Entity o)
+        public void Awake()
         {
         }
     }

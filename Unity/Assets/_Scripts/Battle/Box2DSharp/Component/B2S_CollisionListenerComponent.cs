@@ -125,7 +125,7 @@ namespace ET
             Log.Msg("创建完成");
         }
 
-        public void Awake(Entity o)
+        public void Awake()
         {
         
             //绑定指定的物理世界，正常来说一个房间一个物理世界,这里是Demo，直接获取了

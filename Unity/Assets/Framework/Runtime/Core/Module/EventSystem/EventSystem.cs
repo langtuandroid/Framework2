@@ -255,7 +255,7 @@ namespace Framework
             {
                 try
                 {
-                    addComponentSystem.OnAddComponent(entity, component);
+                    addComponentSystem.OnAddComponent(component);
                 }
                 catch (Exception e)
                 {
@@ -271,7 +271,7 @@ namespace Framework
             {
                 try
                 {
-                    awakeSystem.Awake(component);
+                    awakeSystem.Awake();
                 }
                 catch (Exception e)
                 {
@@ -287,7 +287,7 @@ namespace Framework
             {
                 try
                 {
-                    aAwakeSystem.Awake(component, p1);
+                    aAwakeSystem.Awake(p1);
                 }
                 catch (Exception e)
                 {
@@ -302,7 +302,7 @@ namespace Framework
             {
                 try
                 {
-                    aAwakeSystem.Awake(component, p1, p2);
+                    aAwakeSystem.Awake(p1, p2);
                 }
                 catch (Exception e)
                 {
@@ -317,7 +317,7 @@ namespace Framework
             {
                 try
                 {
-                    aAwakeSystem.Awake(component, p1, p2, p3);
+                    aAwakeSystem.Awake(p1, p2, p3);
                 }
                 catch (Exception e)
                 {
@@ -332,7 +332,7 @@ namespace Framework
             {
                 try
                 {
-                    aAwakeSystem.Awake(component, p1, p2, p3, p4);
+                    aAwakeSystem.Awake(p1, p2, p3, p4);
                 }
                 catch (Exception e)
                 {

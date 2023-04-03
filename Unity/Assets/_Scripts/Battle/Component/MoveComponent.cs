@@ -78,7 +78,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
     public Quaternion To;
 
 
-    public void Awake(Entity o)
+    public void Awake()
     {
         StartTime = 0;
         StartPos = Vector3.zero;

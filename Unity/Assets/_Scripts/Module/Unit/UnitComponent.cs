@@ -7,7 +7,7 @@ namespace Framework
     {
         public Dictionary<long, Unit> idUnits = new Dictionary<long, Unit>();
 
-        public void Awake(Entity o)
+        public void Awake()
         {
         }
 

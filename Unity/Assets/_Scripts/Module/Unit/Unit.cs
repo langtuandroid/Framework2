@@ -7,7 +7,7 @@ namespace Framework
     public class Unit : Entity, IAwakeSystem
     {
     
-        public void Awake(Entity o)
+        public void Awake()
         {
         }
         

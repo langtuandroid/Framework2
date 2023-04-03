@@ -4,6 +4,6 @@ namespace Framework
 {
     public interface IAddComponentSystem : ISystemType
     {
-        void OnAddComponent(Entity o, Entity component);
+        void OnAddComponent(Entity component);
     }
 }

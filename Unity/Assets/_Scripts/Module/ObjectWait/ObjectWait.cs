@@ -23,7 +23,7 @@ namespace Framework
     {
         public Dictionary<Type, object> tcss = new Dictionary<Type, object>();
 
-        public void Awake(Entity o)
+        public void Awake()
         {
             tcss.Clear();
         }

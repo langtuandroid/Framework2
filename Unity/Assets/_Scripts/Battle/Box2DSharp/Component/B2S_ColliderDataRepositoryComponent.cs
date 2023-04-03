@@ -80,7 +80,7 @@ namespace ET
             return null;
         }
 
-        public void Awake(Entity o)
+        public void Awake()
         {
             this.ReadcolliderData();
         }

@@ -72,7 +72,7 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
         return null;
     }
 
-    public void Awake(Entity o)
+    public void Awake()
     {
         foreach (var skillCanvasConfig in SkillCanvasDataFactory.Instance.GetAll())
         {

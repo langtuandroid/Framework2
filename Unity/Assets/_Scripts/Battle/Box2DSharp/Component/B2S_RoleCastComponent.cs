@@ -92,7 +92,7 @@ namespace ET
             return RoleCast.Friendly;
         }
 
-        public void Awake(Entity o, RoleCamp a, RoleTag b)
+        public void Awake(RoleCamp a, RoleTag b)
         {
             RoleCamp = a;
             RoleTag = b;

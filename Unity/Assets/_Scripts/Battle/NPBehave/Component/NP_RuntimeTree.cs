@@ -72,7 +72,7 @@ public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComp
         this.BelongNP_DataSupportor = null;
     }
 
-    public void Awake(Entity o, NP_DataSupportor belongNP_DataSupportor, NP_SyncComponent npSyncComponent, Unit belongToUnit)
+    public void Awake(NP_DataSupportor belongNP_DataSupportor, NP_SyncComponent npSyncComponent, Unit belongToUnit)
     {
         BelongToUnit = belongToUnit;
         BelongNP_DataSupportor = belongNP_DataSupportor;

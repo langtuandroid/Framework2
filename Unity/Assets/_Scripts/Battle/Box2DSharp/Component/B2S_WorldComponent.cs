@@ -62,7 +62,7 @@ namespace ET
             this.m_World = null;
         }
 
-        public void Awake(Entity o)
+        public void Awake()
         {
             this.m_World = B2S_WorldUtility.CreateWorld(new Vector2(0, 0));
         }

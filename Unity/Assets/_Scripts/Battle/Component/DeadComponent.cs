@@ -14,7 +14,7 @@ public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
 
     public long DeadTimerId;
 
-    public void Awake(Entity o, long resurrectionTime)
+    public void Awake(long resurrectionTime)
     {
         ResurrectionTime = resurrectionTime;
 
