@@ -14,5 +14,10 @@ namespace Framework
         {
             public Unit Unit;
         }
+        
+        public struct ChangeScale
+        {
+            public Unit Unit;
+        }
     }
 }

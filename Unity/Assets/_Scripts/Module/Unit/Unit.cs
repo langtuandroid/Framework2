@@ -9,7 +9,6 @@ namespace Framework
     
         public void Awake(Entity o)
         {
-            
         }
         
         private float3 position; //坐标
@@ -41,6 +40,18 @@ namespace Framework
             {
                 this.rotation = value;
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
+            }
+        }
+
+        private float3 scale;
+
+        public float3 Scale
+        {
+            get => scale;
+            set
+            {
+                scale = value;
+                EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeScale() { Unit = this });
             }
         }
 
