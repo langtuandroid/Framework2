@@ -9,19 +9,11 @@ using Framework;
 
 namespace ET
 {
-    [ObjectSystem]
-    public class B2S_ColliderDataRepositoryComponentAwakeSystem : AwakeSystem<B2S_ColliderDataRepositoryComponent>
-    {
-        protected override void Awake(B2S_ColliderDataRepositoryComponent self)
-        {
-            self.Awake();
-        }
-    }
 
     /// <summary>
     /// 碰撞体数据仓库，从二进制文件读取数据
     /// </summary>
-    public class B2S_ColliderDataRepositoryComponent : Entity ,IAwake
+    public class B2S_ColliderDataRepositoryComponent : Entity ,IAwakeSystem
     {
 #if SERVER
                 private string colliderDataPath = "../Config/ColliderDatas/";
@@ -34,11 +26,6 @@ namespace ET
         public ColliderDataSupporter BoxColliderDatas = new ColliderDataSupporter();
         public ColliderDataSupporter CircleColliderDatas = new ColliderDataSupporter();
         public ColliderDataSupporter PolygonColliderDatas = new ColliderDataSupporter();
-
-        public void Awake()
-        {
-            this.ReadcolliderData();
-        }
 
         /// <summary>
         /// 读取所有碰撞数据
@@ -91,6 +78,11 @@ namespace ET
 
             Log.Error($"未找到碰撞体数据，所查找的ID：{id}");
             return null;
+        }
+
+        public void Awake(Entity o)
+        {
+            this.ReadcolliderData();
         }
     }
 }

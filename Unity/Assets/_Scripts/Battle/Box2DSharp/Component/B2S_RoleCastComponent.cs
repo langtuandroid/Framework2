@@ -49,16 +49,7 @@ namespace ET
         SkillCollision,
     }
 
-    public class B2S_RoleCastComponentAwakeSystem : AwakeSystem<B2S_RoleCastComponent, RoleCamp, RoleTag>
-    {
-        protected override void Awake(B2S_RoleCastComponent self, RoleCamp a, RoleTag b)
-        {
-            self.RoleCamp = a;
-            self.RoleTag = b;
-        }
-    }
-
-    public class B2S_RoleCastComponent : Entity, IAwake<RoleCamp, RoleTag>
+    public class B2S_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
     {
         public RoleTag RoleTag;
 
@@ -99,6 +90,12 @@ namespace ET
             }
 
             return RoleCast.Friendly;
+        }
+
+        public void Awake(Entity o, RoleCamp a, RoleTag b)
+        {
+            RoleCamp = a;
+            RoleTag = b;
         }
     }
 }

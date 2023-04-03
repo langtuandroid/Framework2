@@ -14,22 +14,11 @@ using Framework;
 
 namespace ET
 {
-    [ObjectSystem]
-    public class B2S_CollisionListenerComponentAwake : AwakeSystem<B2S_CollisionListenerComponent>
-    {
-        protected override void Awake(B2S_CollisionListenerComponent self)
-        {
-            //绑定指定的物理世界，正常来说一个房间一个物理世界,这里是Demo，直接获取了
-            self.Parent.GetComponent<B2S_WorldComponent>().GetWorld().SetContactListener(self);
-            //self.TestCollision();
-            self.B2SWorldColliderManagerComponent = self.Parent.GetComponent<B2S_WorldColliderManagerComponent>();
-        }
-    }
 
     /// <summary>
     /// 某一物理世界所有碰撞的监听者，负责碰撞事件的分发
     /// </summary>
-    public class B2S_CollisionListenerComponent : Entity, IContactListener ,IAwake
+    public class B2S_CollisionListenerComponent : Entity, IContactListener ,IAwakeSystem
     {
         public B2S_WorldColliderManagerComponent B2SWorldColliderManagerComponent;
 
@@ -134,6 +123,15 @@ namespace ET
             m_Body1.CreateFixture(m_CircleShape1, 5);
 
             Log.Msg("创建完成");
+        }
+
+        public void Awake(Entity o)
+        {
+        
+            //绑定指定的物理世界，正常来说一个房间一个物理世界,这里是Demo，直接获取了
+            Parent.GetComponent<B2S_WorldComponent>().GetWorld().SetContactListener(this);
+            //self.TestCollision();
+            B2SWorldColliderManagerComponent = Parent.GetComponent<B2S_WorldColliderManagerComponent>();
         }
     }
 }

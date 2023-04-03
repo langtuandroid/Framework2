@@ -11,18 +11,11 @@ using Framework;
 
 namespace ET
 {
-    public class B2S_WorldComponentAwakeSystem : AwakeSystem<B2S_WorldComponent>
-    {
-        protected override void Awake(B2S_WorldComponent self)
-        {
-            self.Awake();
-        }
-    }
 
     /// <summary>
     /// 物理世界组件，代表一个物理世界
     /// </summary>
-    public class B2S_WorldComponent : Entity ,IAwake
+    public class B2S_WorldComponent : Entity ,IAwakeSystem
     {
         private World m_World;
 
@@ -36,11 +29,6 @@ namespace ET
             BodyToDestroy.Add(body);
         }
         
-        public void Awake()
-        {
-            this.m_World = B2S_WorldUtility.CreateWorld(new Vector2(0, 0));
-        }
-
         public void FixedUpdate()
         {
             foreach (var body in BodyToDestroy)
@@ -72,6 +60,11 @@ namespace ET
             
             this.m_World.Dispose();
             this.m_World = null;
+        }
+
+        public void Awake(Entity o)
+        {
+            this.m_World = B2S_WorldUtility.CreateWorld(new Vector2(0, 0));
         }
     }
 }
