@@ -34,9 +34,9 @@ namespace NPBehave
             }
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
-            Decoratee.Stop();
+            Decoratee.Cancel();
         }
 
         protected override void DoChildStopped(Node child, bool result)
@@ -71,7 +71,7 @@ namespace NPBehave
                     stopsOnChange == Stops.IMMEDIATE_RESTART)
                 {
                     // Debug.Log( this.key + " stopped self ");
-                    this.Stop();
+                    this.Cancel();
                 }
             }
             else if (!IsActive && IsConditionMet())

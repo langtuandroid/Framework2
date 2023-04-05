@@ -19,9 +19,9 @@ namespace NPBehave
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
-            Decoratee.Stop();
+            Decoratee.Cancel();
         }
 
         protected override void DoChildStopped(Node child, bool result)

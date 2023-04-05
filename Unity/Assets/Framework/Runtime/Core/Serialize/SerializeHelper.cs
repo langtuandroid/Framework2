@@ -57,7 +57,13 @@ namespace Framework
         {
             return (T)Deserialize(typeof(T), json);
         }
-        
+
+        public static T DeserializeNT<T>(string json)
+        {
+            return (T)JsonConvert.DeserializeObject<T>(json);
+        }
+
+
         public static byte[] ToBson(this object obj)
         {
             return BsonExtensionMethods.ToBson(obj);

@@ -71,7 +71,7 @@ namespace NPBehave
             }
         }
 
-        protected override void DoStop()
+        protected override void DoCancel()
         {
             Clock.RemoveTimer(onTimer);
             this.Stopped(false);

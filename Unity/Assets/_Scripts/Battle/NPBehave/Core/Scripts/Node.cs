@@ -62,7 +62,6 @@ namespace NPBehave
             get { return this.currentState == State.ACTIVE; }
         }
 
-
         public Node(string name)
         {
             this.name = name;
@@ -78,34 +77,27 @@ namespace NPBehave
             this.parentNode = parent;
         }
 
-
         public void Start()
         {
-            // Assert.AreEqual(this.currentState, State.INACTIVE, "can only start inactive nodes, tried to start: " + this.Name + "! PATH: " + GetPath());
             Debug.Assert(this.currentState == State.INACTIVE, "can only start inactive nodes");
             this.currentState = State.ACTIVE;
             DoStart();
         }
 
-        /// <summary>
-        /// TODO: Rename to "Cancel" in next API-Incompatible version
-        /// </summary>
-        public void Stop()
+        public void Cancel()
         {
-            // Assert.AreEqual(this.currentState, State.ACTIVE, "can only stop active nodes, tried to stop " + this.Name + "! PATH: " + GetPath());
             Debug.Assert(this.currentState == State.ACTIVE, "can only stop active nodes, tried to stop");
             this.currentState = State.STOP_REQUESTED;
-            DoStop();
+            DoCancel();
         }
 
         protected virtual void DoStart()
         {
         }
 
-        protected virtual void DoStop()
+        protected virtual void DoCancel()
         {
         }
-
 
         /// THIS ABSOLUTLY HAS TO BE THE LAST CALL IN YOUR FUNCTION, NEVER MODIFY
         /// ANY STATE AFTER CALLING Stopped !!!!
@@ -132,21 +124,6 @@ namespace NPBehave
         {
             /// be careful with this!
         }
-
-        // public Composite ParentComposite
-        // {
-        //     get
-        //     {
-        //         if (ParentNode != null && !(ParentNode is Composite))
-        //         {
-        //             return ParentNode.ParentComposite;
-        //         }
-        //         else
-        //         {
-        //             return ParentNode as Composite;
-        //         }
-        //     }
-        // }
 
         override public string ToString()
         {

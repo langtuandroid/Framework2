@@ -23,11 +23,7 @@
              return;
          }
 
-         using (FileStream file = File.Create($"{SavePathClient}/{this.Name}.bytes"))
-         {
-            var bytes = NpDataSupportor_Client.ToBson();
-            file.Write(bytes,0,bytes.Length);
-         }
+         File.WriteAllText($"{SavePathClient}/{this.Name}.bytes", NpDataSupportor_Client.ToJson());
 
          Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
      }
@@ -37,9 +33,8 @@
      {
          try
          {
-             byte[] mClientfile = File.ReadAllBytes($"{SavePathClient}/{this.Name}.bytes");
-             if (mClientfile.Length == 0) Log.Msg("没有读取到文件");
-             NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportor>(mClientfile);
+             var data = File.ReadAllText($"{SavePathClient}/{Name}.bytes");
+             this.NpDataSupportor_Client_Des = SerializeHelper.Deserialize<NP_DataSupportor>(data);
              Log.Msg($"反序列化 {SavePathClient}/{this.Name}.bytes 成功");
          }
          catch (Exception e)

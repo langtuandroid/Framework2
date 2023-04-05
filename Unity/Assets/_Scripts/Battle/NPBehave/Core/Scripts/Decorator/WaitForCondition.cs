@@ -49,12 +49,12 @@ namespace NPBehave
             }
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
             Clock.RemoveTimer(checkCondition);
             if (Decoratee.IsActive)
             {
-                Decoratee.Stop();
+                Decoratee.Cancel();
             }
             else
             {

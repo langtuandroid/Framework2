@@ -109,13 +109,13 @@ namespace NPBehave
             }
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
             if (Decoratee.IsActive)
             {
                 isReady = true;
                 Clock.RemoveTimer(TimeoutReached);
-                Decoratee.Stop();
+                Decoratee.Cancel();
             }
             else
             {

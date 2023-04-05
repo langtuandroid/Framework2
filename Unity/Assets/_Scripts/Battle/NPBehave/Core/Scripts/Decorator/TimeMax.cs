@@ -33,12 +33,12 @@ namespace NPBehave
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
             Clock.RemoveTimer(TimeoutReached);
             if (Decoratee.IsActive)
             {
-                Decoratee.Stop();
+                Decoratee.Cancel();
             }
             else
             {
@@ -63,7 +63,7 @@ namespace NPBehave
         {
             if (!waitForChildButFailOnLimitReached)
             {
-                Decoratee.Stop();
+                Decoratee.Cancel();
             }
             else
             {

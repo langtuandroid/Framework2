@@ -18,7 +18,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
     [ShowIf(nameof(SetRot))] [LabelText("将要设置的旋转")]
     public NP_BlackBoardRelationData RotBlackBoardRelationData = new NP_BlackBoardRelationData();
     
-    [ShowIf(nameof(SetRot))] [LabelText("将要设置的缩放")]
+    [ShowIf(nameof(SetScale))] [LabelText("将要设置的缩放")]
     public NP_BlackBoardRelationData ScaleBlackBoardRelationData = new NP_BlackBoardRelationData();
 
     public override Action GetActionToBeDone()
@@ -27,7 +27,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
         return this.Action;
     }
 
-    public void SetUnitTransformAction()
+    private void SetUnitTransformAction()
     {
         Unit unit = BelongToUnit;
         if (SetPos)
@@ -46,7 +46,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
 
         if (SetScale)
         {
-             System.Numerics.Vector3 result = PosBlackBoardRelationData.GetBlackBoardValue<System.Numerics.Vector3>(
+             System.Numerics.Vector3 result = ScaleBlackBoardRelationData.GetBlackBoardValue<System.Numerics.Vector3>(
                  this.BelongtoRuntimeTree
                      .GetBlackboard());
              unit.Scale = new Vector3(result.X, result.Y, result.Z);           

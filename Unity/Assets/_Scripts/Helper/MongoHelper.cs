@@ -6,9 +6,12 @@ using System.Reflection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using Unity.Mathematics;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Framework
 {
@@ -18,6 +21,42 @@ namespace Framework
         {
             public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TValue value)
             {
+                // MemberInfo[] members =
+                //     typeof(TValue).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                // context.Writer.WriteStartDocument();
+                // foreach (MemberInfo member in members)
+                // {
+                //     Type type = null;
+                //     object val = null;
+                //     string name = member.Name;
+                //     if (member is PropertyInfo propertyInfo)
+                //     {
+                //         var bsonElement = propertyInfo.GetCustomAttribute<BsonElementAttribute>();
+                //         if(bsonElement == null) continue;
+                //         type = propertyInfo.PropertyType;
+                //         val = propertyInfo.GetValue(value);
+                //         name = string.IsNullOrEmpty(bsonElement.ElementName) ? name : bsonElement.ElementName;
+                //     }
+                //     else if (member is FieldInfo fieldInfo)
+                //     {
+                //         // var bsonElement = fieldInfo.GetCustomAttribute<BsonElementAttribute>();
+                //         // if (fieldInfo.IsPrivate)
+                //         // {
+                //         //     if (bsonElement == null) continue;
+                //         // }
+                //
+                //         type = fieldInfo.FieldType;
+                //         val = fieldInfo.GetValue(value);
+                //         // if (bsonElement != null)
+                //         // {
+                //         //     name = string.IsNullOrEmpty(bsonElement.ElementName) ? name : bsonElement.ElementName;
+                //         // }
+                //     }
+                //
+                //     context.Writer.WriteName(name);
+                //     BsonSerializer.Serialize(context.Writer, type, val, null, args);
+                // }
+                
                 Type nominalType = args.NominalType;
 
                 IBsonWriter bsonWriter = context.Writer;
@@ -27,11 +66,13 @@ namespace Framework
                 FieldInfo[] fields = nominalType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 foreach (FieldInfo field in fields)
                 {
+                    var bsonElement = field.GetCustomAttribute<BsonIgnoreAttribute>();
+                    if (bsonElement != null) continue;
                     bsonWriter.WriteName(field.Name);
                     BsonSerializer.Serialize(bsonWriter, field.FieldType, field.GetValue(value));
                 }
 
-                bsonWriter.WriteEndDocument();
+                bsonWriter.WriteEndDocument(); 
             }
 
             public override TValue Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
@@ -91,6 +132,12 @@ namespace Framework
             RegisterStruct<float3>();
             RegisterStruct<float4>();
             RegisterStruct<quaternion>();
+            RegisterStruct<VTD_Id>();
+            RegisterStruct<VTD_EventId>();
+            RegisterStruct<Vector2>();
+            RegisterStruct<Vector3>();
+            RegisterStruct<Vector4>();
+            RegisterStruct<Quaternion>();
 
 #if UNITY_EDITOR
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();

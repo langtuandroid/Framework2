@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using MongoDB.Bson.Serialization.Attributes;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,12 +9,13 @@ using UnityEditor;
 namespace Framework
 {
     [HideReferenceObjectPicker]
+    [Serializable]
     public struct VTD_Id
     {
         [LabelText("此节点ID在数据仓库中的Key")]
         [ValueDropdown("GetIdKey")]
         [OnValueChanged("ApplayId")]
-        [JsonIgnore]
+        [BsonIgnore]
         public string IdKey;
 
         [LabelText("Id")]

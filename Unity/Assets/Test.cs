@@ -11,6 +11,11 @@ public class Test : MonoBehaviour
     [Button]
     private void Start()
     {
+        VTD_Id id = new VTD_Id() { IdKey = "aa", Value = 111 };
+        var json = id.ToJson();
+        print(json);
+        id = SerializeHelper.Deserialize<VTD_Id>(json);
+        print(id.Value);
     }
     
     static bool IsSubclassOfRawGeneric(Type generic, Type toCheck) {

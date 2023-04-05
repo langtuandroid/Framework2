@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 using UnityEditor.Experimental.GraphView;
 
 public class NPBehaveGraphWindow : UniversalGraphWindow
@@ -12,6 +13,12 @@ public class NPBehaveGraphWindow : UniversalGraphWindow
 
         m_ToolbarView = new NPBehaveToolbarView(graphView, m_MiniMap, graph);
         graphView.Add(m_ToolbarView);
-        ((NPBehaveGraph)graph).AutoSetCanvasDatas();
+
+        NP_BlackBoardHelper.SetCurrentBlackBoardDataManager(this.graph as NPBehaveGraph);
+    }
+
+    private void OnFocus()
+    {
+        NP_BlackBoardHelper.SetCurrentBlackBoardDataManager(this.graph as NPBehaveGraph);
     }
 }

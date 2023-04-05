@@ -6,113 +6,32 @@ using UnityEngine.UIElements;
 
 public class SkillGraphWindow : UniversalGraphWindow
 {
-    public bool ShowFlowPoint;
-
-    private readonly float m_FlowPointGap = 60f;
-
-    private readonly float m_FlowPointMoveSpeed = 0.003f;
-
-    protected override void Update()
-    {
-        base.Update();
-        if (ShowFlowPoint)
-            ShowEdgeFlowPoint();
-        else
-            HideEdgeFlowPoint();
-    }
-
     protected override void InitializeWindow(BaseGraph graph)
     {
-        graphView = new UniversalGraphView(this);
+        graphView = new NPBehaveGraphView(this);
 
-        m_MiniMap = new MiniMap { anchored = true };
+        m_MiniMap = new MiniMap() { anchored = true };
         graphView.Add(m_MiniMap);
 
-        m_ToolbarView = new SkillToolbarView(this, graphView, m_MiniMap, graph);
+        m_ToolbarView = new SkillToolbarView(graphView, m_MiniMap, graph);
         graphView.Add(m_ToolbarView);
+
+        SetCurrentBlackBoardDataManager();
     }
 
-    public void ShowOrHideEdgeFlowPoint()
+    private void OnFocus()
     {
-        ShowFlowPoint = !ShowFlowPoint;
+        SetCurrentBlackBoardDataManager();
     }
 
-    /// <summary>
-    ///     展示FlowPoint，自己计算位置信息
-    ///     ---------------------------------------------------------------------------------------
-    ///     也可以继承Manipulator实现一个控制器，对EdgeView添加AddManipulator，Manipulator即可自动同步位置
-    ///     只需要设置Manipulator的left和top间距即可，可参见https://github.com/HalfLobsterMan/3.0_GraphProcessor/blob/56c2928a1790994df4a1f8a9c2a30477bbe6e21d/Editor/Views/BaseEdgeView.cs
-    /// </summary>
-    private void ShowEdgeFlowPoint()
+    private void SetCurrentBlackBoardDataManager()
     {
-        foreach (var edgeView in graphView.edgeViews)
+        SkillGraph npBehaveGraph = (this.graph as SkillGraph);
+        if (npBehaveGraph == null)
         {
-            float edgeLength = 0;
-            for (var i = 0; i < edgeView.GetPointsAndTangents.Length - 1; i++)
-                edgeLength += Vector2.Distance(edgeView.GetPointsAndTangents[i],
-                    edgeView.GetPointsAndTangents[i + 1]);
-
-            var eachChunkContainsPercentage = m_FlowPointGap / edgeLength;
-            var flowPointCount = (int)(1 / eachChunkContainsPercentage);
-
-            if (flowPointCount % 2 == 0) flowPointCount++;
-
-            if (edgeView.EdgeFlowPointVisualElements != null && edgeView.EdgeFlowPointVisualElements.Count > 0 &&
-                //如果长度发生变化就需要重新计算
-                edgeView.EdgeFlowPointVisualElements.Count == flowPointCount)
-            {
-                for (var i = 0; i < flowPointCount; i++)
-                {
-                    edgeView.FlowPointProgress[i] += Time.deltaTime * m_FlowPointMoveSpeed;
-
-                    edgeView.EdgeFlowPointVisualElements[i].transform.position =
-                        EdgeFlowPointCaculator.GetFlowPointPosByPercentage(
-                            Mathf.Repeat(edgeView.FlowPointProgress[i], 1),
-                            edgeView.GetPointsAndTangents, edgeLength) -
-                        new Vector2(8 * i, 0);
-                }
-            }
-            else
-            {
-                if (edgeView.EdgeFlowPointVisualElements != null)
-                    foreach (var oldFlowPoint in edgeView.EdgeFlowPointVisualElements)
-                        edgeView.Remove(oldFlowPoint);
-
-                edgeView.EdgeFlowPointVisualElements = new List<VisualElement>();
-                edgeView.FlowPointProgress.Clear();
-
-                for (var i = 0; i < flowPointCount; i++)
-                {
-                    var initalPercentage = eachChunkContainsPercentage * i;
-
-                    var visualElement = new VisualElement
-                    {
-                        name = "EdgeFlowPoint", transform =
-                        {
-                            position = EdgeFlowPointCaculator.GetFlowPointPosByPercentage(
-                                           initalPercentage, edgeView.GetPointsAndTangents, edgeLength) -
-                                       new Vector2(8 * i, 0)
-                        }
-                    };
-
-                    //可以自定义流点颜色，但注意将其alpha通道设置为1
-                    //visualElement.style.unityBackgroundImageTintColor = edgeView.serializedEdge.outputNode.color;
-                    edgeView.FlowPointProgress.Add(initalPercentage);
-                    edgeView.EdgeFlowPointVisualElements.Add(visualElement);
-                    edgeView.Add(visualElement);
-                }
-            }
+            //因为OnFocus执行时机比较诡异，在OnEnable后，或者执行一些操作后都会执行，但这时Graph可能为空，所以做判断
+            return;
         }
-    }
-
-    private void HideEdgeFlowPoint()
-    {
-        foreach (var edgeView in graphView.edgeViews)
-        {
-            if (edgeView.EdgeFlowPointVisualElements == null) return;
-            foreach (var edgeFlowPoint in edgeView.EdgeFlowPointVisualElements) edgeView.Remove(edgeFlowPoint);
-
-            edgeView.EdgeFlowPointVisualElements.Clear();
-        }
+        NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager = (this.graph as SkillGraph).NpBlackBoardDataManager;
     }
 }

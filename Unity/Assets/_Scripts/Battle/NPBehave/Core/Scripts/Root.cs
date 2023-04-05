@@ -54,11 +54,11 @@ namespace NPBehave
             this.mainNode.Start();
         }
 
-        override protected void DoStop()
+        override protected void DoCancel()
         {
             if (this.mainNode.IsActive)
             {
-                this.mainNode.Stop();
+                this.mainNode.Cancel();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace NPBehave
             Debug.Assert(this.currentState == State.ACTIVE,
                 $"can only stop active nodes, tried to stop  PATH: {GetPath()}");
             this.currentState = State.STOP_REQUESTED;
-            DoStop();
+            DoCancel();
         }
     }
 }

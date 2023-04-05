@@ -58,7 +58,16 @@ namespace Framework
             resultBuff.Init(buffDataBase, theUnitFrom, theUnitBelongTo, TimeInfo.Instance.ClientNow());
             return resultBuff;
         }
-
+        
+        public static IBuffSystem AcquireBuff(long dataId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
+            NP_RuntimeTree theSkillCanvasBelongTo)
+        {
+            return AcquireBuff(
+                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNP_TreeData(dataId)
+                    .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
+                theUnitFrom, theUnitBelongTo, theSkillCanvasBelongTo);
+        } 
+        
         /// <summary>
         /// 回收一个Buff
         /// </summary>
