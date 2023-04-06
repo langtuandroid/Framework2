@@ -63,7 +63,7 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/OtherConfigs/Test.bytes",
+            "AssetPath": "Assets/Res/Configs/OtherConfigs/Skill.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []

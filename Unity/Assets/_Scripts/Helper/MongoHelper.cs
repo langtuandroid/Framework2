@@ -21,42 +21,6 @@ namespace Framework
         {
             public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TValue value)
             {
-                // MemberInfo[] members =
-                //     typeof(TValue).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                // context.Writer.WriteStartDocument();
-                // foreach (MemberInfo member in members)
-                // {
-                //     Type type = null;
-                //     object val = null;
-                //     string name = member.Name;
-                //     if (member is PropertyInfo propertyInfo)
-                //     {
-                //         var bsonElement = propertyInfo.GetCustomAttribute<BsonElementAttribute>();
-                //         if(bsonElement == null) continue;
-                //         type = propertyInfo.PropertyType;
-                //         val = propertyInfo.GetValue(value);
-                //         name = string.IsNullOrEmpty(bsonElement.ElementName) ? name : bsonElement.ElementName;
-                //     }
-                //     else if (member is FieldInfo fieldInfo)
-                //     {
-                //         // var bsonElement = fieldInfo.GetCustomAttribute<BsonElementAttribute>();
-                //         // if (fieldInfo.IsPrivate)
-                //         // {
-                //         //     if (bsonElement == null) continue;
-                //         // }
-                //
-                //         type = fieldInfo.FieldType;
-                //         val = fieldInfo.GetValue(value);
-                //         // if (bsonElement != null)
-                //         // {
-                //         //     name = string.IsNullOrEmpty(bsonElement.ElementName) ? name : bsonElement.ElementName;
-                //         // }
-                //     }
-                //
-                //     context.Writer.WriteName(name);
-                //     BsonSerializer.Serialize(context.Writer, type, val, null, args);
-                // }
-                
                 Type nominalType = args.NominalType;
 
                 IBsonWriter bsonWriter = context.Writer;
@@ -125,7 +89,6 @@ namespace Framework
             // 自动注册IgnoreExtraElements
 
             ConventionPack conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
-
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
 
             RegisterStruct<float2>();

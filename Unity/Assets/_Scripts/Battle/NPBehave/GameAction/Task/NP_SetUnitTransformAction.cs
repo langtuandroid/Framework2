@@ -32,10 +32,11 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
         Unit unit = BelongToUnit;
         if (SetPos)
         {
-            System.Numerics.Vector3 result = PosBlackBoardRelationData.GetBlackBoardValue<System.Numerics.Vector3>(
+            Vector3 result = PosBlackBoardRelationData.GetBlackBoardValue<Vector3>(
                 this.BelongtoRuntimeTree
                     .GetBlackboard());
-            unit.Position = new Vector3(result.X, result.Y, result.Z);
+            unit.Position = result;
+            unit.GetComponent<GameObjectComponent>().GameObject.transform.position = result;
         }
 
         if (SetRot)
@@ -46,10 +47,10 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
 
         if (SetScale)
         {
-             System.Numerics.Vector3 result = ScaleBlackBoardRelationData.GetBlackBoardValue<System.Numerics.Vector3>(
+             Vector3 result = ScaleBlackBoardRelationData.GetBlackBoardValue<Vector3>(
                  this.BelongtoRuntimeTree
                      .GetBlackboard());
-             unit.Scale = new Vector3(result.X, result.Y, result.Z);           
+             unit.Scale = result;
         }
     }
 }

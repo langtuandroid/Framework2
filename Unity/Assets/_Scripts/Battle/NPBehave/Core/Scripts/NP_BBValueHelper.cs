@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
-using Framework;
 using NPBehave;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Framework
 {

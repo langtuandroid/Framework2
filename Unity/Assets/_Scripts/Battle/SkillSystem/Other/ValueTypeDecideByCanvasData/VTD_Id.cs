@@ -9,7 +9,6 @@ using UnityEditor;
 namespace Framework
 {
     [HideReferenceObjectPicker]
-    [Serializable]
     public struct VTD_Id
     {
         [LabelText("此节点ID在数据仓库中的Key")]
@@ -22,6 +21,11 @@ namespace Framework
         [InfoBox("无法对其直接赋值，需要在CanvasDataManager中Ids中注册键值对，然后选择NodeIdKey的值")]
         [ReadOnly]
         public long Value;
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
 
 #if UNITY_EDITOR
         private IEnumerable<string> GetIdKey()

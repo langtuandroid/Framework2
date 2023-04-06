@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using Framework;
 
 namespace NPBehave
