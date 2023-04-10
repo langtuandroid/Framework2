@@ -30,7 +30,6 @@ public class Test : MonoBehaviour
     private void Start()
     {
         MongoHelper.RegisterStruct<AA>();
-        //MongoHelper.RegisterStruct<VTD_Id>();
         Log(Vector3.one * 0.2f);
         Log(new AA(){Value = 123});
         Log(new VTD_Id(){Value = 333});

@@ -14,16 +14,14 @@
 
             this.TheUnitFrom.GetComponent<CastDamageComponent>().BaptismDamageData(damageData);
 
-            float finalDamage =
-                this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().BaptismDamageData(damageData);
+            this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().BaptismDamageData(damageData);
             
-            if (finalDamage >= 0)
             {
-                this.TheUnitBelongto.GetComponent<NumericComponent>().ApplyChange(NumericType.Hp, -finalDamage);
+                this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().ReceiveDamage(damageData);
                 //抛出伤害事件
-                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
+                //this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"ExecuteDamage{this.TheUnitFrom.Id}", damageData);
                 //抛出受伤事件
-                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
+                //this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
             }
 
             //TODO 从当前战斗Entity获取BattleEventSystem来Run事件

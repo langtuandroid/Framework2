@@ -58,14 +58,14 @@ namespace Framework
             Unit theUnitBelongTo,
             NP_RuntimeTree theSkillCanvasBelongTo)
         {
-            int Layers = 0;
+            int layers = 0;
             if (LayersDetermindByBBValue)
             {
-                Layers = theSkillCanvasBelongTo.GetBlackboard().Get<int>(LayersThatDetermindByBBValue.BBKey);
+                layers = theSkillCanvasBelongTo.GetBlackboard().Get<int>(LayersThatDetermindByBBValue.BBKey);
             }
             else
             {
-                Layers = Layers;
+                layers = Layers;
             }
 
             if (LayersIsAbs)
@@ -74,9 +74,9 @@ namespace Framework
                     theUnitBelongTo,
                     theSkillCanvasBelongTo);
                 if (nextBuffSystemBase.CurrentOverlay < nextBuffSystemBase.BuffData.MaxOverlay &&
-                    nextBuffSystemBase.CurrentOverlay < Layers)
+                    nextBuffSystemBase.CurrentOverlay < layers)
                 {
-                    Layers -= nextBuffSystemBase.CurrentOverlay;
+                    layers -= nextBuffSystemBase.CurrentOverlay;
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Framework
                 }
             }
 
-            for (int i = 0; i < Layers; i++)
+            for (int i = 0; i < layers; i++)
             {
                 BuffFactory.AcquireBuff(npDataSupportor, buffNodeId, theUnitFrom, theUnitBelongTo,
                     theSkillCanvasBelongTo);

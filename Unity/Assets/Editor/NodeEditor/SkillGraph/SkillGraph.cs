@@ -7,12 +7,6 @@
  public class SkillGraph : NPBehaveGraph
  {
 
-     [Button("自动配置所有技能结点数据", 25), GUIColor(0.4f, 0.8f, 1)]
-     public void AutoSetCanvasDatas()
-     {
-         base.AutoSetCanvasDatas();
-     }
-
      [Button("保存技能树信息为二进制文件", 25), GUIColor(0.4f, 0.8f, 1)]
      public void Save()
      {
@@ -23,6 +17,7 @@
              return;
          }
 
+         AutoSetCanvasDatas();
          File.WriteAllText($"{SavePathClient}/{this.Name}.bytes", NpDataSupportor_Client.ToJson());
 
          Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
@@ -44,4 +39,31 @@
          }
      }
 
+     protected override void AutoSetCanvasDatas()
+     {
+         base.AutoSetCanvasDatas();
+         AutoSetSkillData_NodeData(NpDataSupportor_Client);
+     }
+     
+     private void AutoSetSkillData_NodeData(NP_DataSupportor npDataSupportor)
+     {
+         if (npDataSupportor.BuffNodeDataDic == null) return;
+         npDataSupportor.BuffNodeDataDic.Clear();
+
+         foreach (var node in this.nodes)
+         {
+             if (node is BuffNodeBase mNode)
+             {
+                 mNode.AutoAddLinkedBuffs();
+                 BuffNodeDataBase buffNodeDataBase = mNode.GetBuffNodeData();
+                 // if (buffNodeDataBase is NormalBuffNodeData normalBuffNodeData)
+                 // {
+                 //     normalBuffNodeData.BuffData.BelongToBuffDataSupportorId =
+                 //         npDataSupportor.NpDataSupportorBase.NPBehaveTreeDataId;
+                 // }
+
+                 npDataSupportor.BuffNodeDataDic.Add(buffNodeDataBase.NodeId.Value, buffNodeDataBase);
+             }
+         }
+     }
  }

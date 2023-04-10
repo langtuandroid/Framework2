@@ -4,7 +4,7 @@
 namespace Framework
 {
 
-    public class BuffManagerComponent : Entity
+    public class BuffManagerComponent : Entity, IUpdateSystem
     {
         /// <summary>
         /// Buff链表
@@ -25,25 +25,26 @@ namespace Framework
 
         private LinkedListNode<IBuffSystem> m_Current, m_Next;
 
-        public void FixedUpdate(uint currentFrame)
+        public void Update(float deltaTime)
         {
             this.m_Current = m_Buffs.First;
+            float currentTime = TimeInfo.Instance.ClientNow() / 1000f;
             //轮询链表
             while (this.m_Current != null)
             {
                 IBuffSystem aBuff = this.m_Current.Value;
                 if (aBuff.BuffState == BuffState.Waiting)
                 {
-                    aBuff.Excute(currentFrame);
+                    aBuff.Excute(currentTime);
                 }
                 else if (aBuff.BuffState == BuffState.Running || aBuff.BuffState == BuffState.Forever)
                 {
-                    aBuff.Update(currentFrame);
+                    aBuff.Update(currentTime);
                     this.m_Current = this.m_Current.Next;
                 }
                 else if (aBuff.BuffState == BuffState.Finished)
                 {
-                    aBuff.Finished(currentFrame);
+                    aBuff.Finished(currentTime);
                     this.m_Next = this.m_Current.Next;
                     m_Buffs.Remove(this.m_Current);
                     m_BuffsForFind_BuffWorkType.Remove(this.m_Current.Value.BuffData.BuffWorkType);

@@ -33,26 +33,21 @@ namespace Framework
 
             DamageData damageData = ReferencePool.Allocate<DamageData>().InitData(temp.DamageType,
                 BuffDataCalculateHelper.CalculateCurrentData(this), this.TheUnitFrom, this.TheUnitBelongto);
-            
+
             this.TheUnitFrom.GetComponent<CastDamageComponent>().BaptismDamageData(damageData);
 
-            float finalDamage =
-                this.TheUnitBelongto.GetComponent<ReceiveDamageComponent>().BaptismDamageData(damageData);
+            this.TheUnitBelongto.GetComponent<ReceiveDamageComponent>().BaptismDamageData(damageData);
 
-            if (finalDamage >= 0)
-            {
-                this.TheUnitBelongto.GetComponent<NumericComponent>().ApplyChange(NumericType.Hp, -finalDamage);
-                //抛出伤害事件
-                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
-                    .Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
-                //抛出受伤事件
-                this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
-                    .Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
-            }
+            this.TheUnitBelongto.GetComponent<ReceiveDamageComponent>().ReceiveDamage(damageData);
+            // //抛出伤害事件
+            // this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
+            //     .Run($"ExcuteDamage{this.TheUnitFrom.Id}", damageData);
+            // //抛出受伤事件
+            // this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
+            //     .Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
 
             //设置下一个时间点
             this.selfNextExcuteTime = currentTime + (temp.WorkInternal);
         }
-
     }
 }

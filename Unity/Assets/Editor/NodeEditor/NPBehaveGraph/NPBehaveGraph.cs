@@ -41,8 +41,7 @@ public class NPBehaveGraph : BaseGraph
     /// 自动配置当前图所有数据（结点，黑板）
     /// </summary>
     /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportor的数据体</param>
-    [Button("自动配置所有结点数据(客户端)", 25), GUIColor(0.4f, 0.8f, 1)]
-    public virtual void AutoSetCanvasDatas()
+    protected virtual void AutoSetCanvasDatas()
     {
         if (this.NpDataSupportor_Client == null)
         {
@@ -90,6 +89,7 @@ public class NPBehaveGraph : BaseGraph
             return;
         }
 
+        AutoSetCanvasDatas();
         File.WriteAllText($"{SavePathClient}/{this.Name}.bytes",NpDataSupportor_Client.ToJson());
 
         Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");

@@ -70,7 +70,7 @@
             }
 
             //如果是有限时长的 TODO:这里考虑处理持续时间和Buff层数挂钩的情况（比如磕了5瓶药，就是5*单瓶药的持续时间）
-            if (buffSystemBase.BuffData.SustainTime + 1 > 0)
+            if (buffSystemBase.BuffData.SustainTime > 0)
             {
                 //Log.Info($"原本结束时间：{temp.MaxLimitTime},续命之后的结束时间{TimeHelper.Now() + buffDataBase.SustainTime}");
                 buffSystemBase.MaxLimitTime = currentTime + buffSystemBase.BuffData.SustainTime;

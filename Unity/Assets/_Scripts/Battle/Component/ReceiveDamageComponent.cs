@@ -7,7 +7,7 @@ public class ReceiveDamageComponent : Unit
     /// </summary>
     /// <param name="damageData">伤害数据</param>
     /// <returns></returns>
-    public float BaptismDamageData(DamageData damageData)
+    public void BaptismDamageData(DamageData damageData)
     {
         Unit damageTaker = GetParent<Unit>();
         damageData.OperateTaker = damageTaker;
@@ -15,18 +15,14 @@ public class ReceiveDamageComponent : Unit
         switch (damageData.SkillDamageTypes)
         {
             case SkillDamageTypes.Physical:
-                damageData.DamageValue =
-                    (int)(damageData.DamageValue * (1 - numeric.GetAsFloat(NumericType.AckReduce)));
+                damageData.DamageValue -= damageData.DamageValue * numeric.GetAsInt(NumericType.AckReduce);
                 break;
             case SkillDamageTypes.Real:
                 break;
             case SkillDamageTypes.Magic:
-                damageData.DamageValue =
-                    (int)(damageData.DamageValue * (1 - numeric.GetAsFloat(NumericType.SpackReduce)));
+                damageData.DamageValue -= damageData.DamageValue * numeric.GetAsInt(NumericType.SpackReduce);
                 break;
         }
-
-        return damageData.DamageValue < 0 ? 0 : damageData.DamageValue;
     }
 
     /// <summary>
@@ -42,9 +38,6 @@ public class ReceiveDamageComponent : Unit
             ReferencePool.Free(damageData);
             return;
         }
-
-        damageData.OperateTaker = GetParent<Unit>();
-        BaptismDamageData(damageData);
 
         float currentHp = GetParent<Unit>().GetComponent<NumericComponent>().GetByKey(NumericType.Hp);
         float finalHp = currentHp - damageData.DamageValue;

@@ -18,13 +18,13 @@ public class CastDamageComponent : Entity
         switch (damageData.SkillDamageTypes)
         {
             case SkillDamageTypes.Physical:
-                damageData.DamageValue = (int)(damageData.DamageValue * numeric.GetAsFloat(NumericType.PhysicalMul));
+                damageData.DamageValue += (damageData.DamageValue * numeric.GetAsInt(NumericType.PhysicalMul));
                 break;
             case SkillDamageTypes.Real:
-                damageData.DamageValue = (int)(damageData.DamageValue * numeric.GetAsFloat(NumericType.RealAckMul));
+                damageData.DamageValue += (damageData.DamageValue * numeric.GetAsInt(NumericType.RealAckMul));
                 break;
             case SkillDamageTypes.Magic:
-                damageData.DamageValue = (int)(damageData.DamageValue * numeric.GetAsFloat(NumericType.SpAckMul));
+                damageData.DamageValue += (damageData.DamageValue * numeric.GetAsInt(NumericType.SpAckMul));
                 break;
         }
         return damageData.DamageValue < 0 ? 0 : damageData.DamageValue;

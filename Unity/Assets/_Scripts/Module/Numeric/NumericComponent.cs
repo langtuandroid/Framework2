@@ -23,7 +23,6 @@ namespace Framework
             set { this.Insert(numericType, value); }
         }
 
-
         public float GetAsFloat(int numericType)
         {
             return (float)GetByKey(numericType) / 1000;
