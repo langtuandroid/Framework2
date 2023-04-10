@@ -4,7 +4,7 @@
 namespace Framework
 {
 
-    public class BuffManagerComponent : Entity, IUpdateSystem
+    public class BuffManagerComponent : Entity, IBattleUpdateSystem
     {
         /// <summary>
         /// Buff链表
@@ -25,7 +25,7 @@ namespace Framework
 
         private LinkedListNode<IBuffSystem> m_Current, m_Next;
 
-        public void Update(float deltaTime)
+        public void BattleUpdate(float deltaTime)
         {
             this.m_Current = m_Buffs.First;
             float currentTime = TimeInfo.Instance.ClientNow() / 1000f;

@@ -2,7 +2,7 @@
 
 namespace Framework
 {
-    public class NP_RuntimeTreeManager : Entity, IUpdateSystem, IAwakeSystem
+    public class NP_RuntimeTreeManager : Entity, IBattleUpdateSystem, IAwakeSystem
     {
         public Dictionary<long, NP_RuntimeTree> RuntimeTrees = new Dictionary<long, NP_RuntimeTree>();
 
@@ -82,7 +82,7 @@ namespace Framework
             this.m_HasAddedTrees.Clear();
         }
 
-        public void Update(float deltaTime)
+        public void BattleUpdate(float deltaTime)
         {
             GetComponent<NP_SyncComponent>().SyncContext.GetClock().Update(deltaTime);
         }

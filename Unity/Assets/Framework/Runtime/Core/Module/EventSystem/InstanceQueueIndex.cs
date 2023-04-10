@@ -9,12 +9,13 @@ namespace Framework
         Update,
         LateUpdate,
         RendererUpdate,
+        BattleUpdate,
         Max,
     }
 
     public static class InstanceQueueMap
     {
-        public static IReadOnlyDictionary<Type, InstanceQueueIndex> InstanceQueueMapDic =
+        public static Dictionary<Type, InstanceQueueIndex> InstanceQueueMapDic =
             new Dictionary<Type, InstanceQueueIndex>()
             {
                 { typeof(IUpdateSystem), InstanceQueueIndex.Update },

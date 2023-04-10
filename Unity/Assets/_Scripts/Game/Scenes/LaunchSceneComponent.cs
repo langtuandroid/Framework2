@@ -1,12 +1,14 @@
-﻿using Framework;
+﻿using System;
+using Framework;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class LaunchSceneComponent : Entity ,IAwakeSystem
+public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem
 {
     public void Awake()
     {
         Log.Msg(this.DomainScene().Name);
+        InstanceQueueMap.InstanceQueueMapDic[typeof(IBattleUpdateSystem)] = InstanceQueueIndex.BattleUpdate;
         this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
         var unitComponent = this.DomainScene().AddComponent<UnitComponent>();
         Unit unit = unitComponent.AddChild<Unit>();
@@ -21,5 +23,38 @@ public class LaunchSceneComponent : Entity ,IAwakeSystem
         long nPDataId = 105926695190565;
         var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
         tree.Start();
+    }
+
+    public void Update(float deltaTime)
+    {
+        var queue = EventSystem.Instance.GetQueueByIndex(InstanceQueueIndex.BattleUpdate);
+        int count = queue.Count;
+        while (count-- > 0)
+        {
+            long instanceId = queue.Dequeue();
+            Entity component = Root.Instance.Get(instanceId);
+            if (component == null)
+            {
+                continue;
+            }
+
+            if (component.IsDisposed)
+            {
+                continue;
+            }
+            queue.Enqueue(instanceId);
+
+            if (component is IBattleUpdateSystem iUpdateSystem)
+            {
+                try
+                {
+                    iUpdateSystem.BattleUpdate(deltaTime);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+        }
     }
 }

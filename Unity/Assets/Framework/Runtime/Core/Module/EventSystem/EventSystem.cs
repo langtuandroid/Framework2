@@ -217,6 +217,11 @@ namespace Framework
             }
         }
 
+        public Queue<long> GetQueueByIndex(InstanceQueueIndex index)
+        {
+            return queues[(int)index];
+        }
+
         public void Deserialize(Entity component)
         {
             if(component is IDeserializeSystem deserializeSystem)
