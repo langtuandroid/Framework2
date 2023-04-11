@@ -271,7 +271,6 @@ namespace Framework
 
         public void Awake(Entity component)
         {
-
             if(component is IAwakeSystem awakeSystem)
             {
                 try

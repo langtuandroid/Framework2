@@ -206,7 +206,7 @@ namespace Framework
 
         public void BindList<TComponent, TData>(TComponent component, ObservableList<TData> property,
             Action<TComponent, TData> onCreate = null, Action<TComponent, TData> onDestroy = null)
-            where TComponent : Object
+            where TComponent : Component
         {
             BindList<TComponent, TData> bind;
             if (CacheBinds.Count > 0)

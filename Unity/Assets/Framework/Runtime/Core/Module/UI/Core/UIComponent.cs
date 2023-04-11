@@ -16,6 +16,7 @@ namespace Framework
         private readonly Dictionary<Type, IProgressResult<float, View>> loadingView = new();
         private readonly Dictionary<UILevel, List<View>> uiLevel2View = new();
         private readonly Dictionary<Type, List<DelayDestroyGo>> delayDestroyViewDic = new();
+        public static UIComponent Instance { get; private set; }
 
         private class DelayDestroyGo : IReference
         {
@@ -31,6 +32,7 @@ namespace Framework
 
         public void Awake()
         {
+            Instance = this;
             destroyPoolContent = new GameObject("DestroyPool").transform;
             var canvas = this.RootScene().GetComponent<GlobalReferenceComponent>().UICanvas;
             destroyPoolContent.SetParent(canvas.transform);

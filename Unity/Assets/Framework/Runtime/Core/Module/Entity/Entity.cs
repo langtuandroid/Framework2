@@ -822,6 +822,16 @@ namespace Framework
             return entity;
         }
 
+        public Entity AddChild(Type entityType,bool isFromPool = false)
+        {
+            Entity child = Create(entityType, isFromPool);
+            child.Id = IdGenerator.Instance.GenerateId();
+            child.Parent = this;
+
+            EventSystem.Instance.Awake(child);
+            return child;
+        }
+
         public T AddChild<T>(bool isFromPool = false) where T : Entity, IAwakeSystem
         {
             Type type = typeof(T);

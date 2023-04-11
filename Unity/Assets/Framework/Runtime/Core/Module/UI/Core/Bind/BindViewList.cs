@@ -18,13 +18,9 @@ namespace Framework
             _views = new List<View>();
             _content = root;
             _list = list;
+            viewType = typeof(TView);
             InitEvent();
             InitCpntValue(); 
-        }
-
-        public void SetViewType(Type type)
-        {
-            viewType = type;
         }
 
         private void InitCpntValue()
@@ -43,11 +39,7 @@ namespace Framework
 
         protected override void OnReset()
         {
-            foreach (var wrapper in _wrappers)
-            {
-                wrapper.ClearView();
-                _list.RemoveListener(((IBindList<ViewModel>)wrapper).GetBindListFunc());
-            }
+            _list.RemoveListener(BindListFunc);
         }
         
         private void BindListFunc
@@ -74,25 +66,27 @@ namespace Framework
 
         private void AddItem(int index, ViewModel vm)
         {
-            var view = Activator.CreateInstance(_item.GetType()) as View;
-            var go = Object.Instantiate(_template, _content);
+            var view = UIComponent.Instance.AddChild(viewType) as View;
+            var go = UIComponent.Instance.CreateViewGameObject(viewType);
+            go.transform.SetParent(_content);
             go.transform.SetSiblingIndex(index + 1);
             go.ActiveShow();
             view.SetGameObject(go);
             view.SetVm(vm);
             view.Show();
-            existViews.Insert(index, view);
+            _views.Insert(index, view);
         }
 
         private void RemoveItem(int index)
         {
-            Object.DestroyImmediate(_content.GetChild(index + 1).gameObject);
-            existViews.RemoveAt(index);
+            var view = _views[index];
+            _views.RemoveAt(index);
+            view.Dispose();
         }
 
         private void ReplaceItem(int index, ViewModel vm)
         {
-            existViews[index].SetVm(vm);
+            _views[index].SetVm(vm);
         }
 
         private void Clear(int itemCount)

@@ -1,51 +1,86 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class BindList<TComponent,TVm> : BaseBind where TComponent : UnityEngine.Object
+    public class BindList<TComponent,TVm> : BaseBind where TComponent : Component
     {
         private TComponent _component;
         private ObservableList<TVm> _list;
-        private IBindList<TVm> _bindList;
+        private List<TComponent> _allObj = new List<TComponent>();
+        private Action<NotifyCollectionChangedAction, TVm, int> bindListFunc;
+        private Action<TComponent, TVm> onCreate;
+        private Action<TComponent, TVm> onDestroy;
+        private PrefabPool<TComponent> _prefabPool;
 
         public void Reset(TComponent component, ObservableList<TVm> list, Action<TComponent, TVm> onCreate,
             Action<TComponent, TVm> onDestroy)
         {
             _component = component;
             this._list = list;
-            InitEvent(onCreate, onDestroy);
+            this.onCreate = onCreate;
+            this.onDestroy = onDestroy;
+            _prefabPool = new PrefabPool<TComponent>(component, parent: component.transform.parent);
+            InitEvent();
             InitCpntValue();
         }
 
         private void InitCpntValue()
         {
-            _bindList.GetBindListFunc()(NotifyCollectionChangedAction.Reset, default, -1);
             for (var i = 0; i < _list.Count; i++)
             {
-                _bindList.GetBindListFunc()(NotifyCollectionChangedAction.Add, _list[i], i);
+                bindListFunc(NotifyCollectionChangedAction.Add, _list[i], i);
             }
         }
 
-        private void InitEvent(Action<TComponent, TVm> onCreate, Action<TComponent, TVm> onDestroy)
+        private void InitEvent()
         {
-            _bindList = _bindList ?? _component as IBindList<TVm> ??
-                DefaultBindList<Component, TVm>.Create(_component, onCreate, onDestroy);
-            Log.Assert(_bindList != null, $"can not find IBindList of {_component}");
-            _list.AddListener(_bindList.GetBindListFunc());
+            var bindList = _component as IBindList<TVm>;
+            bindListFunc = bindList == null ? DefaultBindListFunc : bindList.GetBindListFunc();
+            _list.AddListener(bindListFunc);
+        }
+        
+        private void DefaultBindListFunc
+            (NotifyCollectionChangedAction type, TVm obj, int index)
+        {
+            switch (type)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    var gen = _prefabPool.Allocate();
+                    onCreate?.Invoke(gen, obj);
+                    _allObj.Add(gen);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    onDestroy?.Invoke(_allObj[index], obj);
+                    _prefabPool.Free(_allObj[index]);
+                    _allObj.RemoveAt(index);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    Log.Warning("default bind list not support replace");
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    _allObj.ForEach(com => _prefabPool.Free(com));
+                    _allObj.Clear();
+                    break;
+                case NotifyCollectionChangedAction.Move: break;
+                default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         protected override void OnReset()
         {
-            _list.RemoveListener(_bindList.GetBindListFunc());
+            _list.RemoveListener(bindListFunc);
+            _prefabPool.Dispose();
         }
 
         protected override void OnClear()
         {
             _component = default;
             _list = default;
-            _bindList = default;
+            _prefabPool = null;
         }
     }
 }

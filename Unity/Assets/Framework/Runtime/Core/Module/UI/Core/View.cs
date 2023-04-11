@@ -17,11 +17,12 @@ namespace Framework
         Toast,
         Guide,
         FullScreen,
+
         //这个放到最下边
         Max,
     }
-    
-    public abstract class View : Entity , IAwakeSystem, IDestroySystem
+
+    public abstract class View : Entity, IAwakeSystem, IDestroySystem
     {
         private List<View> _subViews;
         private CanvasGroup _canvasGroup;
@@ -58,7 +59,6 @@ namespace Framework
 
         protected virtual void Start()
         {
-            
         }
 
         public void Show()
@@ -102,7 +102,7 @@ namespace Framework
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
-        
+
         public IProgressResult<float, View> AddSubView(Type type, ViewModel viewModel = null)
         {
             var progressResult = this.RootScene().GetComponent<UIComponent>().CreateViewAsync(type, viewModel);
@@ -114,7 +114,7 @@ namespace Framework
         {
             _subViews.TryRemove(view);
         }
-        
+
         public void AddSubView(View view)
         {
             view.Go.transform.SetParent(Go.transform, false);
@@ -128,16 +128,19 @@ namespace Framework
                 if (subView is T view)
                     return view;
             }
+
             return null;
         }
 
         protected void Close()
         {
             this.RootScene().GetComponent<UIComponent>().Close(this);
-            
         }
 
-        public void Dispose()
+        protected abstract void OnVmChange();
+        public virtual UILevel UILevel { get; } = UILevel.Common;
+
+        public void OnDestroy()
         {
             Binding.Clear();
             OnClose();
@@ -151,13 +154,6 @@ namespace Framework
             {
                 this.RootScene().GetComponent<UIComponent>().FreeViewGameObject(this);
             }
-        }
-
-        protected abstract void OnVmChange();
-        public virtual UILevel UILevel { get; } = UILevel.Common;
-        public void OnDestroy()
-        {
-            
         }
     }
 }

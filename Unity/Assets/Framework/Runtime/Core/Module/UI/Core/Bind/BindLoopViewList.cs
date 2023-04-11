@@ -12,14 +12,10 @@ namespace Framework
         private LoopScrollRect loopScrollRect;
         private Type viewType;
         
-        public void SetViewType(Type type)
-        {
-            viewType = type;
-        }
-        
         public void Reset(ObservableList<TVm> items, LoopScrollRect loopScrollRect)
         {
             itemsVm = items;
+            viewType = typeof(TView);
             this.loopScrollRect = loopScrollRect;
             items.AddListener(OnListChanged);
             loopScrollRect.totalCount = items.Count;
@@ -30,7 +26,7 @@ namespace Framework
         {
             if (!itemTrans2View.TryGetValue(itemTrans, out var item))
             {
-                item = Activator.CreateInstance(viewType) as View;
+                item = UIComponent.Instance.AddChild(viewType) as View;
                 itemTrans2View[itemTrans] = item;
                 item.SetGameObject(itemTrans.gameObject);
             }
@@ -49,6 +45,7 @@ namespace Framework
         
         IEnumerator DelayRefreshList()
         {
+            yield return null;
             yield return null;
             loopScrollRect.totalCount = itemsVm.Count;
             loopScrollRect.RefillCells();
