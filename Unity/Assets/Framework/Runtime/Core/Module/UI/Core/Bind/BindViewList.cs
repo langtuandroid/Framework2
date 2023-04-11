@@ -144,7 +144,7 @@ namespace Framework
                 var child = root.GetChild(i);
                 if (regex.IsMatch(child.name))
                 {
-                    var view = Activator.CreateInstance(viewType) as View;
+                    var view = UIComponent.Instance.AddChild(viewType) as View;
                     view.SetGameObject(child.gameObject);
                     _views.Add(view);
                 }

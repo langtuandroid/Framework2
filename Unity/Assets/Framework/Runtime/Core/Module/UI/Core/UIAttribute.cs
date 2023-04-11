@@ -11,12 +11,17 @@ namespace Framework
         /// 是否会隐藏其下所有ui
         /// </summary>
         public bool IsMaskBottomView { get; }
+        /// <summary>
+        /// 是否使用对象池
+        /// </summary>
+        public bool IsPool { get; }
 
-        public UIAttribute(string path, bool isSingle, bool isMaskBottomView)
+        public UIAttribute(string path, bool isSingle, bool isMaskBottomView, bool isPool = true)
         {
             Path = path;
             IsSingle = isSingle;
             IsMaskBottomView = isMaskBottomView;
+            IsPool = isPool;
         }
     }
 }

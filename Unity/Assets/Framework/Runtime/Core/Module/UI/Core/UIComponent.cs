@@ -84,7 +84,7 @@ namespace Framework
             }
             else
             {
-                view = Activator.CreateInstance(type) as View;
+                view = AddChild(type) as View;
                 Executors.RunOnCoroutineNoReturn(CreateViewGo(promise, view, attribute.Path, viewModel));
             }
         }
@@ -92,7 +92,7 @@ namespace Framework
         internal IProgressResult<float, View> CreateViewAsync(Type type, ViewModel vm)
         {
             ProgressResult<float, View> progressResult = new();
-            var view = Activator.CreateInstance(type) as View;
+            var view = AddChild(type) as View;
                 Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, viewType2Attribute[type].Path, vm));
             return progressResult;
         }
@@ -103,23 +103,21 @@ namespace Framework
         {
             var type = typeof(T);
 
-            var request = _res.LoadAssetAsync<GameObject>(path);
+            var request = CreateViewGameObjectAsync<T>();
             while (!request.IsDone)
             {
                 promise.UpdateProgress(request.Progress);
                 yield return null;
             }
 
-            GameObject viewTemplateGo = request.Result;
-            if (viewTemplateGo == null)
+            var go = request.Result;
+            if (go == null)
             {
                 promise.UpdateProgress(1f);
                 Log.Error($"Not found the window path = \"{path}\".");
                 promise.SetException(new FileNotFoundException(path));
                 yield break;
             }
-
-            var go = Object.Instantiate(viewTemplateGo);
 
             view.SetGameObject(go);
             go.name = type.Name;
@@ -159,9 +157,8 @@ namespace Framework
 
         private View CreateView(Type type, ViewModel viewModel)
         {
-            var path = viewType2Attribute[type].Path;
-            var go = _res.Instantiate(path);
-            View view = Activator.CreateInstance(type) as View;
+            var go = CreateViewGameObject(type);
+            View view = AddChild(type) as View;
             view.SetGameObject(go);
             view.SetVm(viewModel);
             return view;
@@ -224,13 +221,13 @@ namespace Framework
             }
         }
 
-        public IAsyncResult<GameObject> CreateViewGameObjectAsync(Type type)
+        public IProgressResult<float,GameObject> CreateViewGameObjectAsync(Type type)
         {
-            IAsyncResult<GameObject> result;
+            IProgressResult<float,GameObject> result;
             var gos = GetDelayDestroyGoes(type);
-            if (gos.Count > 0)
+            if (gos?.Count > 0)
             {
-                var asyncResult = new AsyncResult<GameObject>();
+                var asyncResult = new ProgressResult<float, GameObject>();
                 asyncResult.SetResult(gos.RemoveLast().Go);
                 result = asyncResult;
             }
@@ -243,7 +240,7 @@ namespace Framework
             return result;
         }
 
-        public IAsyncResult<GameObject> CreateViewGameObjectAsync<T>()
+        public IProgressResult<float,GameObject> CreateViewGameObjectAsync<T>()
         {
             return CreateViewGameObjectAsync(typeof(T));
         }
@@ -251,7 +248,7 @@ namespace Framework
         public GameObject CreateViewGameObject(Type type)
         {
             var gos = GetDelayDestroyGoes(type);
-            if (gos.Count > 0)
+            if (gos?.Count > 0)
             {
                 return gos.RemoveLast().Go;
             }
@@ -269,6 +266,7 @@ namespace Framework
         {
             if(view.Go == null) return;
             var gos = GetDelayDestroyGoes(view.GetType());
+            if (gos == null) return;
             var delayDestroyGo = ReferencePool.Allocate<DelayDestroyGo>();
             // 5s后销毁
             delayDestroyGo.DestroyTime = TimeInfo.Instance.ClientNow() + 5000;
@@ -279,6 +277,7 @@ namespace Framework
 
         private List<DelayDestroyGo> GetDelayDestroyGoes(Type type)
         {
+            if (!viewType2Attribute[type].IsPool) return null;
             if (!delayDestroyViewDic.TryGetValue(type, out var result))
             {
                 result = new List<DelayDestroyGo>();
