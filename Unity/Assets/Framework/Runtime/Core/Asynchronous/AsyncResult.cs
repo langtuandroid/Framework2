@@ -35,7 +35,7 @@ namespace Framework
         private Exception _exception;
 
         private bool _cancelled;
-        protected readonly bool Cancelable;
+        protected bool Cancelable;
         protected bool CancellationRequested;
 
         protected readonly object Lock = new object();
@@ -196,7 +196,6 @@ namespace Framework
             }
             return voidResult;
         }
-
     }
 
     public class AsyncResult<TResult> : AsyncResult, IAsyncResult<TResult>, IPromise<TResult>

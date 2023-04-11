@@ -51,7 +51,7 @@ namespace Framework
             return idUnits.Values.ToArray();
         }
 
-        public void OnDestroy(Entity o)
+        public void OnDestroy()
         {
             throw new System.NotImplementedException();
         }

@@ -181,7 +181,7 @@ namespace Framework
             CachedNodes.Remove(type);
         }
 
-        public void OnDestroy(Entity o)
+        public void OnDestroy()
         {
 
             AllEvents.Clear();

@@ -4,6 +4,6 @@ namespace Framework
 {
     public interface IDestroySystem : ISystemType
     {
-        void OnDestroy(Entity o);
+        void OnDestroy();
     }
 }

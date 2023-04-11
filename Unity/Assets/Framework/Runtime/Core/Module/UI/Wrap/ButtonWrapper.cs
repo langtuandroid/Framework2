@@ -24,6 +24,7 @@ namespace Framework
 
         public override void Clear()
         {
+            base.Clear();
             text = null;
             tmpText = null;
         }

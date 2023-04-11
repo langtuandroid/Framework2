@@ -147,7 +147,7 @@ namespace Framework
         }
 
 
-        public void OnDestroy(Entity o)
+        public void OnDestroy()
         {
             foreach (object v in tcss.Values.ToArray())
             {

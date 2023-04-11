@@ -27,7 +27,7 @@ public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
             () => { GetParent<Unit>()?.RemoveComponent<DeadComponent>(); });
     }
 
-    public void OnDestroy(Entity o)
+    public void OnDestroy()
     {
         Unit unit = GetParent<Unit>();
 

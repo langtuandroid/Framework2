@@ -7,22 +7,38 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class UIManager : Entity, IAwakeSystem
+    public class UIComponent : Entity, IAwakeSystem
     {
         private IRes _res;
-        public Canvas Canvas { get; private set; }
         private Transform destroyPoolContent;
         private readonly Dictionary<Type, UIAttribute> viewType2Attribute = new();
         private readonly Dictionary<Type, View> openedSingleViews = new();
         private readonly Dictionary<Type, IProgressResult<float, View>> loadingView = new();
         private readonly Dictionary<UILevel, List<View>> uiLevel2View = new();
+        private readonly Dictionary<Type, List<DelayDestroyGo>> delayDestroyViewDic = new();
+
+        private class DelayDestroyGo : IReference
+        {
+            public float DestroyTime;
+            public GameObject Go;
+            
+            public void Clear()
+            {
+                DestroyTime = 0;
+                Go = null;
+            }
+        }
 
         public void Awake()
         {
-            Canvas = Resources.Load<GameObject>("UIRoot").GetComponent<Canvas>();
             destroyPoolContent = new GameObject("DestroyPool").transform;
-            destroyPoolContent.SetParent(UnityEngine.EventSystems.EventSystem.current.transform);
-            Object.DontDestroyOnLoad(Canvas);
+            var canvas = this.RootScene().GetComponent<GlobalReferenceComponent>().UICanvas;
+            destroyPoolContent.SetParent(canvas.transform);
+            var canvasGroup = destroyPoolContent.gameObject.AddComponent<CanvasGroup>();
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = true;
+            Object.DontDestroyOnLoad(canvas.gameObject);
             _res = Res.Create();
             foreach (var tuple in EventSystem.Instance.GetTypesAndAttribute(typeof(UIAttribute)))
             {
@@ -206,6 +222,70 @@ namespace Framework
             }
         }
 
+        public IAsyncResult<GameObject> CreateViewGameObjectAsync(Type type)
+        {
+            IAsyncResult<GameObject> result;
+            var gos = GetDelayDestroyGoes(type);
+            if (gos.Count > 0)
+            {
+                var asyncResult = new AsyncResult<GameObject>();
+                asyncResult.SetResult(gos.RemoveLast().Go);
+                result = asyncResult;
+            }
+            else
+            {
+                var path = viewType2Attribute[type].Path;
+                result = _res.InstantiateAsync<GameObject>(path);
+            }
+
+            return result;
+        }
+
+        public IAsyncResult<GameObject> CreateViewGameObjectAsync<T>()
+        {
+            return CreateViewGameObjectAsync(typeof(T));
+        }
+
+        public GameObject CreateViewGameObject(Type type)
+        {
+            var gos = GetDelayDestroyGoes(type);
+            if (gos.Count > 0)
+            {
+                return gos.RemoveLast().Go;
+            }
+            var path = viewType2Attribute[type].Path;
+            var go = _res.Instantiate(path);
+            return go;
+        }
+
+        public GameObject CreateViewGameObject<T>()
+        {
+            return CreateViewGameObject(typeof(T));
+        }
+
+        public void FreeViewGameObject<T>(T view) where T : View
+        {
+            if(view.Go == null) return;
+            var gos = GetDelayDestroyGoes(view.GetType());
+            var delayDestroyGo = ReferencePool.Allocate<DelayDestroyGo>();
+            // 5s后销毁
+            delayDestroyGo.DestroyTime = TimeInfo.Instance.ClientNow() + 5000;
+            delayDestroyGo.Go = view.Go;
+            view.Go.transform.SetParent(destroyPoolContent);
+            gos.Add(delayDestroyGo);
+        }
+
+        private List<DelayDestroyGo> GetDelayDestroyGoes(Type type)
+        {
+            if (!delayDestroyViewDic.TryGetValue(type, out var result))
+            {
+                result = new List<DelayDestroyGo>();
+                delayDestroyViewDic[type] = result;
+            }
+
+            return result;
+        }
+
         private void Sort(View view)
         {
             var viewTransform = view.Go.transform;
@@ -222,7 +302,7 @@ namespace Framework
                 }
             }
 
-            viewTransform.SetParent(Canvas.transform, false);
+            viewTransform.SetParent(this.RootScene().GetComponent<GlobalReferenceComponent>().UICanvas.transform, false);
             if (lastTrans == null)
                 viewTransform.SetAsLastSibling();
             else

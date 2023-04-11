@@ -353,7 +353,7 @@ namespace Framework
             {
                 try
                 {
-                    iDestroySystem.OnDestroy(component);
+                    iDestroySystem.OnDestroy();
                 }
                 catch (Exception e)
                 {

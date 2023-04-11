@@ -398,7 +398,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
     }
 
 
-    public void OnDestroy(Entity o)
+    public void OnDestroy()
     {
         Clear();
     }

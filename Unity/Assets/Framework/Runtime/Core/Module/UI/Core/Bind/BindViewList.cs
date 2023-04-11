@@ -11,7 +11,6 @@ namespace Framework
         private Transform _content;
         private List<View> _views;
         private ObservableList<TVm> _list;
-        private List<ViewWrapper> _wrappers;
         private Type viewType;
 
         public void Reset(ObservableList<TVm> list, Transform root)
@@ -33,17 +32,13 @@ namespace Framework
             for (var i = 0; i < _list.Count; i++)
             {
                 var vm = _list[i];
-                _wrappers.ForEach((wrapper) =>
-                    ((IBindList<ViewModel>) wrapper).GetBindListFunc()(NotifyCollectionChangedAction.Add, vm, i));
+                BindListFunc(NotifyCollectionChangedAction.Add, vm, i);
             }
         }
 
         private void InitEvent()
         {
-            var view = Activator.CreateInstance(viewType) as View;
-            var wrapper = new ViewWrapper(view, _content);
-            _list.AddListener(((IBindList<ViewModel>)wrapper).GetBindListFunc());
-            _wrappers.Add(wrapper);
+            _list.AddListener(BindListFunc);
         }
 
         protected override void OnReset()
@@ -54,13 +49,67 @@ namespace Framework
                 _list.RemoveListener(((IBindList<ViewModel>)wrapper).GetBindListFunc());
             }
         }
+        
+        private void BindListFunc
+            (NotifyCollectionChangedAction type, ViewModel newViewModel, int index)
+        {
+            switch (type)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddItem(index, newViewModel);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveItem(index);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    ReplaceItem(index, newViewModel);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    Clear(index);
+                    break;
+                case NotifyCollectionChangedAction.Move: break;
+                default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void AddItem(int index, ViewModel vm)
+        {
+            var view = Activator.CreateInstance(_item.GetType()) as View;
+            var go = Object.Instantiate(_template, _content);
+            go.transform.SetSiblingIndex(index + 1);
+            go.ActiveShow();
+            view.SetGameObject(go);
+            view.SetVm(vm);
+            view.Show();
+            existViews.Insert(index, view);
+        }
+
+        private void RemoveItem(int index)
+        {
+            Object.DestroyImmediate(_content.GetChild(index + 1).gameObject);
+            existViews.RemoveAt(index);
+        }
+
+        private void ReplaceItem(int index, ViewModel vm)
+        {
+            existViews[index].SetVm(vm);
+        }
+
+        private void Clear(int itemCount)
+        {
+            while (itemCount > 0)
+            {
+                RemoveItem(--itemCount);
+            }
+
+            _list.RemoveListener(BindListFunc);
+        }
 
         protected override void OnClear()
         {
             _content = default;
             _views = default;
             _list = default;
-            _wrappers = default;
             viewType = default;
         }
     }

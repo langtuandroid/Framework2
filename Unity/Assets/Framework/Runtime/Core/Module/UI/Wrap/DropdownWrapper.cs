@@ -39,16 +39,11 @@ namespace Framework
                     Component.options[index] = data;
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    Clear();
+                    Component.options.Clear();
                     break;
                 case NotifyCollectionChangedAction.Move: break;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-        }
-
-        private void Clear()
-        {
-            Component.options.Clear();
         }
     }
 }

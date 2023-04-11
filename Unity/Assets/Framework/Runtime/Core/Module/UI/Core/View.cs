@@ -21,15 +21,15 @@ namespace Framework
         Max,
     }
     
-    public abstract class View : Entity
+    public abstract class View : Entity , IAwakeSystem, IDestroySystem
     {
         private List<View> _subViews;
         private CanvasGroup _canvasGroup;
         public GameObject Go { get; private set; }
         public ViewModel ViewModel { get; private set; }
-        protected readonly UIBindFactory Binding;
+        protected UIBindFactory Binding;
 
-        public View()
+        public void Awake()
         {
             _subViews = new List<View>();
             Binding = ReferencePool.Allocate<UIBindFactory>();
@@ -98,14 +98,14 @@ namespace Framework
 
         public IProgressResult<float, View> AddSubView<T>(ViewModel viewModel = null) where T : View
         {
-            var progressResult = this.RootScene().GetComponent<UIManager>().CreateViewAsync(typeof(T), viewModel);
+            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateViewAsync(typeof(T), viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
         
         public IProgressResult<float, View> AddSubView(Type type, ViewModel viewModel = null)
         {
-            var progressResult = this.RootScene().GetComponent<UIManager>().CreateViewAsync(type, viewModel);
+            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateViewAsync(type, viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
@@ -133,24 +133,31 @@ namespace Framework
 
         protected void Close()
         {
-            this.RootScene().GetComponent<UIManager>().Close(this);
+            this.RootScene().GetComponent<UIComponent>().Close(this);
+            
+        }
+
+        public void Dispose()
+        {
+            Binding.Clear();
             OnClose();
             for (int i = 0; i < _subViews.Count; i++)
             {
                 _subViews[i].OnClose();
             }
-            ViewModel?.OnViewDestroy();
-        }
 
-        public void Dispose()
-        {
-            Close();
-            Binding.Clear();
-            if(Go != null)
-                Object.Destroy(Go);
+            ViewModel?.OnViewDestroy();
+            if (Go != null)
+            {
+                this.RootScene().GetComponent<UIComponent>().FreeViewGameObject(this);
+            }
         }
 
         protected abstract void OnVmChange();
         public virtual UILevel UILevel { get; } = UILevel.Common;
+        public void OnDestroy()
+        {
+            
+        }
     }
 }

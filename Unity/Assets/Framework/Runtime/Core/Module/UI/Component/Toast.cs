@@ -16,11 +16,11 @@ namespace Framework
         {
             if (toastContent == null)
             {
-                toastContent = await Root.Instance.Scene.GetComponent<UIManager>().OpenAsync<ToastContent>() as ToastContent;
+                toastContent = await Root.Instance.Scene.GetComponent<UIComponent>().OpenAsync<ToastContent>() as ToastContent;
             }
             else if (toastContent.Go == null)
             {
-                toastContent = await Root.Instance.Scene.GetComponent<UIManager>().OpenAsync<ToastContent>() as ToastContent;
+                toastContent = await Root.Instance.Scene.GetComponent<UIComponent>().OpenAsync<ToastContent>() as ToastContent;
             }
             var result = toastContent.AddSubView<ToastView>();
             result.Callbackable().OnCallback(progressResult =>
