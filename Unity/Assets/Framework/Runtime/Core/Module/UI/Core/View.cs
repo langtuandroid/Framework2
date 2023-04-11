@@ -21,7 +21,7 @@ namespace Framework
         Max,
     }
     
-    public abstract class View
+    public abstract class View : Entity
     {
         private List<View> _subViews;
         private CanvasGroup _canvasGroup;
@@ -98,14 +98,14 @@ namespace Framework
 
         public IProgressResult<float, View> AddSubView<T>(ViewModel viewModel = null) where T : View
         {
-            var progressResult = UIManager.Instance.CreateViewAsync(typeof(T), viewModel);
+            var progressResult = this.RootScene().GetComponent<UIManager>().CreateViewAsync(typeof(T), viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
         
         public IProgressResult<float, View> AddSubView(Type type, ViewModel viewModel = null)
         {
-            var progressResult = UIManager.Instance.CreateViewAsync(type, viewModel);
+            var progressResult = this.RootScene().GetComponent<UIManager>().CreateViewAsync(type, viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
@@ -133,7 +133,7 @@ namespace Framework
 
         protected void Close()
         {
-            UIManager.Instance.Close(this);
+            this.RootScene().GetComponent<UIManager>().Close(this);
             OnClose();
             for (int i = 0; i < _subViews.Count; i++)
             {

@@ -27,9 +27,10 @@ public class Init : MonoBehaviour
         Game.AddSingleton<EventSystem>();
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<CoroutineLockComponent>();
-        Game.AddSingleton<Root>();
+        var root = Game.AddSingleton<Root>();
         Game.AddSingleton<ResComponent>();
         Game.AddSingleton<ConfigComponent>();
+        root.Scene.AddComponent<GlobalReferenceComponent>();
 
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Game).Assembly));
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Init).Assembly));

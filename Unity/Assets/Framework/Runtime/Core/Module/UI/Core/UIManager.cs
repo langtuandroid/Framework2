@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class UIManager : Singleton<UIManager>, ISingletonAwake
+    public class UIManager : Entity, IAwakeSystem
     {
         private IRes _res;
         public Canvas Canvas { get; private set; }

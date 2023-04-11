@@ -108,7 +108,7 @@ namespace Framework
             viewModel.CanceledOnTouchOutside.Value = canceledOnTouchOutside;
             viewModel.Click = clickCallback;
 
-            AlertDialogView window = (await UIManager.Instance.OpenAsync<AlertDialogView>()) as AlertDialogView;
+            AlertDialogView window = (await Root.Instance.Scene.GetComponent<UIManager>().OpenAsync<AlertDialogView>()) as AlertDialogView;
             AlertDialog dialog = new AlertDialog(window, contentView, viewModel);
             dialog.Show();
             return window;
@@ -126,7 +126,7 @@ namespace Framework
             AlertDialogView view = null;
             try
             {
-                view = await UIManager.Instance.OpenAsync<AlertDialogView>() as AlertDialogView;
+                view = await Root.Instance.Scene.GetComponent<UIManager>().OpenAsync<AlertDialogView>() as AlertDialogView;
                 AlertDialog dialog = new AlertDialog(view, null, viewModel);
                 dialog.Show();
                 return dialog;
@@ -134,7 +134,7 @@ namespace Framework
             catch (Exception e)
             {
                 if (view != null)
-                    UIManager.Instance.Close(view);
+                    Root.Instance.Scene.GetComponent<UIManager>().Close(view);
                 Log.Error(e);
                 throw;
             }

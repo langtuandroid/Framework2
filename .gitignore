@@ -65,3 +65,4 @@ crashlytics-build.properties
 /Unity/Library
 /Unity/Logs
 /Unity/obj
+/Unity/UserSettings

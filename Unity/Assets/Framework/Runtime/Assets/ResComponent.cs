@@ -22,7 +22,6 @@ namespace Framework
             set => res.HostServerURL = value;
         }
 
-
         public string FallbackHostServerURL
         {
             get => res.FallbackHostServerURL;
