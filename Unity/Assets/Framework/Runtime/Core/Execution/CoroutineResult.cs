@@ -30,7 +30,7 @@ namespace Framework
 {
     public class CoroutineResult : AsyncResult, ICoroutinePromise
     {
-        protected List<Coroutine> Coroutines;
+        protected List<Coroutine> Coroutines = new List<Coroutine>();
 
         private CoroutineResult()
         {

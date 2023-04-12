@@ -8,26 +8,38 @@ public class Test : MonoBehaviour
 {
 
     [Button]
-    private async void Start()
+    IEnumerator Start()
     {
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<ObjectPool>();
-        print(11);
-        await Load();
-        print(2222222);
-        await TimerComponent.Instance.WaitFrameAsync();
-        print(333);
-        ProgressResult<float> result = ProgressResult<float>.Create();
-        StartCoroutine(Wait(result));
-        await result;
-        print(444);
+        yield return new WaitForSeconds(0.5f);
+        new Test2().AA();
     }
 
     private void Update()
     {
+        //print($"update " + Time.frameCount);
         TimerComponent.Instance.Update(Time.deltaTime);
     }
 
+
+}
+
+public class Test2
+{
+    public async void AA()
+    {
+        Debug.Log(Time.frameCount);
+        await Load();
+        Debug.Log(Time.frameCount);
+        await TimerComponent.Instance.WaitFrameAsync();
+        Debug.Log(Time.frameCount);
+        ProgressResult<float> result = ProgressResult<float>.Create();
+        Executors.RunOnCoroutineNoReturn(Wait(result));
+        await result;
+        Debug.Log(Time.frameCount); 
+    }
+    
     IProgressResult<float> Load()
     {
         ProgressResult<float> result = ProgressResult<float>.Create();
