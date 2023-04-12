@@ -29,7 +29,7 @@ namespace Framework
     /// <summary>
     /// IAsyncResult
     /// </summary>
-    public interface IAsyncResult
+    public interface IAsyncResult : IReference , IDisposable
     {
         /// <summary>
         /// Gets the result of the asynchronous operation.

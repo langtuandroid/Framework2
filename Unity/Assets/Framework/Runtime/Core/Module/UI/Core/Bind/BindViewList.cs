@@ -13,6 +13,10 @@ namespace Framework
         private ObservableList<TVm> _list;
         private Type viewType;
 
+        private BindViewList()
+        {
+        }
+
         public void Reset(ObservableList<TVm> list, Transform root)
         {
             _views = new List<View>();
@@ -113,6 +117,10 @@ namespace Framework
         private ObservableList<TVm> _list;
         private List<View> _views;
         private Type viewType;
+
+        private BindIpairsViewList()
+        {
+        }
 
         public void SetViewType(Type type)
         {

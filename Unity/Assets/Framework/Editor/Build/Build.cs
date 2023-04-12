@@ -84,7 +84,6 @@ namespace Framework.Editor
                 "Build", IsUpVersion, ExportAab);
             List<IBuildTask> buildTasks = new List<IBuildTask>()
             {
-                new BuildIlrNode(),
                 new BuildAbNode(),
                 new BuildPlayerNode()
             };
@@ -109,7 +108,6 @@ namespace Framework.Editor
                     incrementalBuild: Incremental);
                 List<IBuildTask> buildTasks = new List<IBuildTask>()
                 {
-                    new BuildIlrNode(),
                     new BuildAbNode(),
                 };
                 foreach (var buildTask in buildTasks)
@@ -129,15 +127,6 @@ namespace Framework.Editor
 
         #region Jenkins
 
-        public static void JenkinsBuildCode()
-        {
-            var result = new BuildIlrNode().Run(new BuildContext(BuildTarget.StandaloneWindows));
-            if (!string.IsNullOrEmpty(result))
-            {
-                throw new BuildException(result);
-            }
-        }
-        
         public static void JenkinsBuildCodeAndAb()
         {
             BuildTarget buildTarget =
@@ -147,7 +136,6 @@ namespace Framework.Editor
             var context = new BuildContext(buildTarget, buildPath: outPath, incrementalBuild: incremental);
             List<IBuildTask> buildTasks = new List<IBuildTask>()
             {
-                new BuildIlrNode(),
                 new BuildAbNode(),
             };
             foreach (var buildTask in buildTasks)
@@ -173,7 +161,6 @@ namespace Framework.Editor
                 false);
             List<IBuildTask> buildTasks = new List<IBuildTask>()
             {
-                new BuildIlrNode(),
                 new BuildAbNode(),
                 new BuildPlayerNode()
             };

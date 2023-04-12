@@ -12,6 +12,10 @@ namespace Framework
         protected Queue<BaseBind> CacheBinds = new Queue<BaseBind>();
         protected object Container;
 
+        protected BindFactory()
+        {
+        }
+
         public virtual void Init(object container)
         {
             Container = container;

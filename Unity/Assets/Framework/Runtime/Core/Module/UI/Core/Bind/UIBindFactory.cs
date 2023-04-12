@@ -6,6 +6,9 @@ namespace Framework
 {
     public class UIBindFactory : BindFactory
     {
+        protected UIBindFactory()
+        {
+        }
 
         public void BindViewList<TItemVm, TItemView>
             (ObservableList<TItemVm> list,Transform root) where TItemVm : ViewModel

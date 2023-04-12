@@ -27,7 +27,7 @@ using System.Threading;
 
 namespace Framework
 {
-    public interface ISynchronizable
+    public interface ISynchronizable : IReference
     {
         /// <summary>
         ///  Wait for done,will block the current thread.
@@ -77,14 +77,20 @@ namespace Framework
 
     internal class Synchronizable : ISynchronizable
     {
-        private readonly IAsyncResult _result;
-        private readonly object _lock;
+        private IAsyncResult _result;
+        private object _lock;
 
-        public Synchronizable(IAsyncResult result, object @lock)
+        private Synchronizable()
         {
-            this._result = result;
-            this._lock = @lock;
         }
+
+        public static Synchronizable Create(IAsyncResult result, object @lock)
+        {
+            var value = ReferencePool.Allocate<Synchronizable>();
+            value._result = result;
+            value._lock = @lock;
+            return value;
+        } 
 
         /// <summary>
         /// Wait for done,will block the current thread.
@@ -174,19 +180,31 @@ namespace Framework
 
             return _result.Result;
         }
+
+        public void Clear()
+        {
+            _result = null;
+            _lock = null;
+        }
     }
 
     internal class Synchronizable<TResult> : ISynchronizable<TResult>
     {
         //private static readonly ILog log = LogManager.GetLogger(typeof(Synchronizable<TResult>));
 
-        private readonly IAsyncResult<TResult> _result;
-        private readonly object _lock;
+        private IAsyncResult<TResult> _result;
+        private object _lock;
 
-        public Synchronizable(IAsyncResult<TResult> result, object @lock)
+        private Synchronizable()
         {
-            this._result = result;
-            this._lock = @lock;
+        }
+
+        public static Synchronizable<TResult> Create(IAsyncResult<TResult> result, object @lock)
+        {
+            var value = ReferencePool.Allocate<Synchronizable<TResult>>();
+            value._result = result;
+            value._lock = @lock;
+            return value;
         }
 
         /// <summary>
@@ -286,6 +304,12 @@ namespace Framework
         object ISynchronizable.WaitForResult(TimeSpan timeout)
         {
             return WaitForResult(timeout);
+        }
+
+        public void Clear()
+        {
+            _result = null;
+            _lock = null;
         }
     }
 }

@@ -4,23 +4,26 @@ using System.Collections.Generic;
 namespace Framework
 {
 
-    public class RecyclableDic<TKey,TValue> : Dictionary<TKey, TValue> , IDisposable
+    public class RecyclableDic<TKey,TValue> : Dictionary<TKey, TValue> , IDisposable , IReference
     {
-        private bool disposed = false;
-
-        public static  RecyclableDic<TKey,TValue> Create()
+        private RecyclableDic()
         {
-            var result = ObjectPool.Instance.Fetch(typeof( RecyclableDic<TKey,TValue>)) as  RecyclableDic<TKey,TValue>;
-            result.disposed = false;
+        }
+
+        public static RecyclableDic<TKey,TValue> Create()
+        {
+            var result = ReferencePool.Allocate<RecyclableDic<TKey,TValue>>();
             return result;
         }
-        
+
+        void IReference.Clear()
+        {
+            this.Clear();
+        }
+
         public void Dispose()
         {
-            if(disposed) return;
-            disposed = true;
-            this.Clear();
-            ObjectPool.Instance.Recycle(this);
-        } 
+            ReferencePool.Free(this);
+        }
     }
 }

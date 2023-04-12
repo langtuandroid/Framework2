@@ -26,7 +26,7 @@ using System;
 
 namespace Framework
 {
-    public interface ICallbackable
+    public interface ICallbackable : IReference
     {
         /// <summary>
         /// Called when the task is finished.
@@ -35,7 +35,7 @@ namespace Framework
         void OnCallback(Action<IAsyncResult> callback);
     }
 
-    public interface ICallbackable<TResult>
+    public interface ICallbackable<TResult> : IReference
     {
         /// <summary>
         /// Called when the task is finished.
@@ -44,7 +44,7 @@ namespace Framework
         void OnCallback(Action<IAsyncResult<TResult>> callback);
     }
 
-    public interface IProgressCallbackable<TProgress>
+    public interface IProgressCallbackable<TProgress> : IReference
     {
         /// <summary>
         /// Called when the task is finished.
@@ -59,7 +59,7 @@ namespace Framework
         void OnProgressCallback(Action<TProgress> callback);
     }
 
-    public interface IProgressCallbackable<TProgress, TResult>
+    public interface IProgressCallbackable<TProgress, TResult> : IReference
     {
         /// <summary>
         /// Called when the task is finished.
@@ -77,14 +77,20 @@ namespace Framework
     internal class Callbackable : ICallbackable
     {
 
-        private readonly IAsyncResult _result;
-        private readonly object _lock = new object();
+        private IAsyncResult _result;
+        private object _lock = new object();
         private Action<IAsyncResult> _callback;
 
-        public Callbackable(IAsyncResult result)
+        private Callbackable()
         {
-            this._result = result;
         }
+        
+        public static Callbackable Create(IAsyncResult result)
+        {
+            var val = ReferencePool.Allocate<Callbackable>();
+            val._result = result;
+            return val;
+        } 
 
         public void RaiseOnCallback()
         {
@@ -142,6 +148,12 @@ namespace Framework
                 this._callback += callback;
             }
         }
+
+        public void Clear()
+        {
+            _result = null;
+            _callback = null;
+        }
     }
 
     internal class Callbackable<TResult> : ICallbackable<TResult>
@@ -151,9 +163,15 @@ namespace Framework
         private readonly object _lock = new object();
         private Action<IAsyncResult<TResult>> callback;
 
-        public Callbackable(IAsyncResult<TResult> result)
+        private Callbackable()
         {
-            this.result = result;
+        }
+
+        public static Callbackable<TResult> Create(IAsyncResult<TResult> result)
+        {
+            var val = new Callbackable<TResult>();
+            val.result = result;
+            return val;
         }
 
         public void RaiseOnCallback()
@@ -212,19 +230,31 @@ namespace Framework
                 this.callback += callback;
             }
         }
+
+        public void Clear()
+        {
+            result = null;
+            callback = null;
+        }
     }
 
     internal class ProgressCallbackable<TProgress> : IProgressCallbackable<TProgress>
     {
 
-        private readonly IProgressResult<TProgress> _result;
-        private readonly object _lock = new object();
+        private IProgressResult<TProgress> _result;
+        private object _lock = new object();
         private Action<IProgressResult<TProgress>> _callback;
         private Action<TProgress> _progressCallback;
 
-        public ProgressCallbackable(IProgressResult<TProgress> result)
+        private ProgressCallbackable()
         {
-            this._result = result;
+        }
+        
+        public static ProgressCallbackable<TProgress> Create(IProgressResult<TProgress> result)
+        {
+            var val = ReferencePool.Allocate<ProgressCallbackable<TProgress>>();
+            val._result = result;
+            return val;
         }
 
         public void RaiseOnCallback()
@@ -342,19 +372,32 @@ namespace Framework
                 this._progressCallback += callback;
             }
         }
+
+        public void Clear()
+        {
+            _result = null;
+            _progressCallback = null;
+            _callback = null;
+        }
     }
 
     internal class ProgressCallbackable<TProgress, TResult> : IProgressCallbackable<TProgress, TResult>
     {
 
-        private readonly IProgressResult<TProgress, TResult> _result;
-        private readonly object _lock = new object();
+        private IProgressResult<TProgress, TResult> _result;
+        private object _lock = new object();
         private Action<IProgressResult<TProgress, TResult>> _callback;
         private Action<TProgress> _progressCallback;
 
-        public ProgressCallbackable(IProgressResult<TProgress, TResult> result)
+        public static ProgressCallbackable<TProgress, TResult> Create(IProgressResult<TProgress, TResult> result)
         {
-            this._result = result;
+            var val = ReferencePool.Allocate<ProgressCallbackable<TProgress, TResult>>();
+            val._result = result;
+            return val;
+        }
+
+        private ProgressCallbackable()
+        {
         }
 
         public void RaiseOnCallback()
@@ -473,6 +516,13 @@ namespace Framework
 
                 this._progressCallback += callback;
             }
+        }
+
+        public void Clear()
+        {
+            _result = null;
+            _callback = null;
+            _progressCallback = null;
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Framework
                 }
             }
 
-            public T Allocate<T>() where T : class, IReference, new()
+            public T Allocate<T>() where T : class, IReference
             {
                 if (typeof(T) != m_ReferenceType)
                 {
@@ -107,7 +107,7 @@ namespace Framework
                 }
 
                 m_AddReferenceCount++;
-                return new T();
+                return Activator.CreateInstance(m_ReferenceType, nonPublic: true) as T;
             }
 
             public IReference Allocate()
@@ -123,7 +123,7 @@ namespace Framework
                 }
 
                 m_AddReferenceCount++;
-                return (IReference)Activator.CreateInstance(m_ReferenceType);
+                return (IReference)Activator.CreateInstance(m_ReferenceType, nonPublic: true);
             }
 
             public void Free(IReference reference)
@@ -131,12 +131,13 @@ namespace Framework
                 reference.Clear();
                 lock (m_References)
                 {
-                    if (m_EnableStrictCheck && m_References.Contains(reference))
+                    if (!m_References.Contains(reference))
                     {
-                        Log.Error("The reference has been released.");
+                        m_References.Enqueue(reference);
+                    }else if (m_EnableStrictCheck)
+                    {
+                        Log.Warning("The reference has been released.");
                     }
-
-                    m_References.Enqueue(reference);
                 }
 
                 m_ReleaseReferenceCount++;
@@ -167,7 +168,7 @@ namespace Framework
                     m_AddReferenceCount += count;
                     while (count-- > 0)
                     {
-                        m_References.Enqueue((IReference)Activator.CreateInstance(m_ReferenceType));
+                        m_References.Enqueue((IReference)Activator.CreateInstance(m_ReferenceType, nonPublic: true));
                     }
                 }
             }

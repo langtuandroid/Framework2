@@ -22,7 +22,11 @@ namespace Framework
         {
             public float DestroyTime;
             public GameObject Go;
-            
+
+            private DelayDestroyGo()
+            {
+            }
+
             public void Clear()
             {
                 DestroyTime = 0;
@@ -53,7 +57,7 @@ namespace Framework
             var type = typeof(T);
             if (viewType2Attribute[type].IsSingle && loadingView.TryGetValue(type, out var result))
                 return result;
-            ProgressResult<float, View> result1 = new();
+            ProgressResult<float, View> result1 = ProgressResult<float, View>.Create(); 
             InternalOpenAsync<T>(type, result1, viewModel);
             return result1;
         }
@@ -91,7 +95,7 @@ namespace Framework
 
         internal IProgressResult<float, View> CreateViewAsync(Type type, ViewModel vm)
         {
-            ProgressResult<float, View> progressResult = new();
+            ProgressResult<float, View> progressResult = ProgressResult<float, View>.Create();
             var view = AddChild(type) as View;
                 Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, viewType2Attribute[type].Path, vm));
             return progressResult;
@@ -227,7 +231,7 @@ namespace Framework
             var gos = GetDelayDestroyGoes(type);
             if (gos?.Count > 0)
             {
-                var asyncResult = new ProgressResult<float, GameObject>();
+                var asyncResult = ProgressResult<float, GameObject>.Create();
                 asyncResult.SetResult(gos.RemoveLast().Go);
                 result = asyncResult;
             }

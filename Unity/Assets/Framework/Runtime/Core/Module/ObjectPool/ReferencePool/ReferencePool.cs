@@ -86,7 +86,7 @@ namespace Framework
         /// </summary>
         /// <typeparam name="T">引用类型。</typeparam>
         /// <returns>引用。</returns>
-        public static T Allocate<T>() where T : class, IReference, new()
+        public static T Allocate<T>() where T : class, IReference
         {
             return GetReferenceCollection(typeof(T)).Allocate<T>();
         }
@@ -110,7 +110,7 @@ namespace Framework
         {
             if (reference == null)
             {
-                Log.Error("Reference is invalid.");
+                return;
             }
 
             Type referenceType = reference.GetType();

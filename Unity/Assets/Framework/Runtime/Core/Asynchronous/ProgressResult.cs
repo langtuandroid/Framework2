@@ -28,12 +28,16 @@ namespace Framework
     {
         private ProgressCallbackable<TProgress> _callbackable;
 
-        public ProgressResult() : this(true)
+        protected ProgressResult()
         {
         }
 
-        public ProgressResult(bool cancelable) : base(cancelable)
+        public new static ProgressResult<TProgress> Create(bool isFromPool = true, bool cancelable = true)
         {
+            var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress>>() : new ProgressResult<TProgress>();
+            result.Cancelable = cancelable;
+            result.isFromPool = isFromPool;
+            return result;
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._callbackable ?? (this._callbackable = new ProgressCallbackable<TProgress>(this));
+                return this._callbackable ??= ProgressCallbackable<TProgress>.Create(this);
             }
         }
 
@@ -65,7 +69,15 @@ namespace Framework
             Progress = progress;
             RaiseOnProgressCallback(progress);
         }
-        
+
+        public override void Clear()
+        {
+            base.Clear();
+            ReferencePool.Free(_callbackable);
+            _callbackable = null;
+            Progress = default;
+        }
+
         private static IProgressResult<TProgress> voidResult;
         
         /// <summary>
@@ -91,12 +103,16 @@ namespace Framework
         private ProgressCallbackable<TProgress, TResult> _progressCallbackable;
         private Synchronizable<TResult> _synchronizable;
 
-        public ProgressResult() : this(true)
+        protected ProgressResult()
         {
         }
 
-        public ProgressResult(bool cancelable) : base(cancelable)
+        public new static ProgressResult<TProgress, TResult> Create(bool isFromPool = true,bool cancelable = true)
         {
+            var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress, TResult>>() : new ProgressResult<TProgress, TResult>();
+            result.Cancelable = cancelable;
+            result.isFromPool = isFromPool;
+            return result;
         }
 
         /// <summary>
@@ -133,8 +149,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._progressCallbackable ??
-                       (this._progressCallbackable = new ProgressCallbackable<TProgress, TResult>(this));
+                return this._progressCallbackable ??= ProgressCallbackable<TProgress, TResult>.Create(this);
             }
         }
 
@@ -142,7 +157,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._synchronizable ?? (this._synchronizable = new Synchronizable<TResult>(this, this.Lock));
+                return this._synchronizable ??= Synchronizable<TResult>.Create(this, this.Lock);
             }
         }
 
@@ -150,10 +165,21 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._callbackable ?? (this._callbackable = new Callbackable<TResult>(this));
+                return this._callbackable ??= Callbackable<TResult>.Create(this);
             }
         }
-        
+
+        public override void Clear()
+        {
+            base.Clear();
+            ReferencePool.Free(_callbackable);
+            _callbackable = null;
+            ReferencePool.Free(_synchronizable);
+            _synchronizable = null;
+            ReferencePool.Free(_progressCallbackable);
+            _progressCallbackable = null;
+        }
+
         private static IProgressResult<TProgress, TResult> voidResult;
         
         /// <summary>

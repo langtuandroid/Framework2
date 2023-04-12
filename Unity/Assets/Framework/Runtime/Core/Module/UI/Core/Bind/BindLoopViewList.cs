@@ -5,13 +5,17 @@ using UnityEngine;
 
 namespace Framework
 {
-    public class BindLoopViewList<TVm, TView> : BaseBind where TVm : ViewModel where TView : View , new()
+    public class BindLoopViewList<TVm, TView> : BaseBind where TVm : ViewModel where TView : View
     {
         private Dictionary<Transform, View> itemTrans2View = new();
         private ObservableList<TVm> itemsVm;
         private LoopScrollRect loopScrollRect;
         private Type viewType;
-        
+
+        private BindLoopViewList()
+        {
+        }
+
         public void Reset(ObservableList<TVm> items, LoopScrollRect loopScrollRect)
         {
             itemsVm = items;

@@ -37,19 +37,23 @@ namespace Framework
         private bool _cancelled;
         protected bool Cancelable;
         protected bool CancellationRequested;
+        protected bool isFromPool;
 
         protected readonly object Lock = new object();
 
         private Synchronizable _synchronizable;
         private Callbackable _callbackable;
 
-        public AsyncResult() : this(true)
+        protected AsyncResult()
         {
         }
 
-        public AsyncResult(bool cancelable)
+        public static AsyncResult Create(bool isFromPool = true, bool cancelable = true)
         {
-            this.Cancelable = cancelable;
+             var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
+             result.Cancelable = cancelable;
+             result.isFromPool = isFromPool;
+             return result;
         }
 
         /// <summary>
@@ -96,6 +100,11 @@ namespace Framework
             }
 
             this.RaiseOnCallback();
+            
+            if (isFromPool)
+            {
+                DelayDispose();
+            } 
         }
 
         public virtual void SetResult(object result = null)
@@ -111,6 +120,11 @@ namespace Framework
             }
             
             this.RaiseOnCallback();
+
+            if (isFromPool)
+            {
+                DelayDispose();
+            }
         }
 
         public virtual void SetCancelled()
@@ -127,6 +141,17 @@ namespace Framework
             }
 
             this.RaiseOnCallback();
+            
+            if (isFromPool)
+            {
+                DelayDispose();
+            } 
+        }
+
+        protected async void DelayDispose()
+        {
+            await TimerComponent.Instance.WaitFrameAsync();
+            Dispose();
         }
 
         /// <summary>
@@ -160,7 +185,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._callbackable ?? (this._callbackable = new Callbackable(this));
+                return this._callbackable ??= Framework.Callbackable.Create(this);
             }
         }
 
@@ -168,7 +193,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._synchronizable ?? (this._synchronizable = new Synchronizable(this, this.Lock));
+                return this._synchronizable ??= Synchronizable.Create(this, this.Lock);
             }
         }
 
@@ -196,6 +221,25 @@ namespace Framework
             }
             return voidResult;
         }
+
+        public virtual void Clear()
+        {
+            _done = false;
+            _result = null;
+            _exception = null;
+            _cancelled = false;
+            Cancelable = false;
+            CancellationRequested = false;
+            ReferencePool.Free(_synchronizable);
+            _synchronizable = null;
+            ReferencePool.Free(_callbackable);
+            _callbackable = null;
+        }
+
+        public void Dispose()
+        {
+            ReferencePool.Free(this);
+        }
     }
 
     public class AsyncResult<TResult> : AsyncResult, IAsyncResult<TResult>, IPromise<TResult>
@@ -205,13 +249,17 @@ namespace Framework
         private Synchronizable<TResult> _synchronizable;
         private Callbackable<TResult> _callbackable;
 
-        public AsyncResult() : this(false)
+        protected AsyncResult()
         {
         }
-
-        public AsyncResult(bool cancelable) : base(cancelable)
+        
+        public new static AsyncResult<TResult> Create(bool isFromPool = true, bool cancelable = true)
         {
-        }
+            var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
+            result.Cancelable = cancelable;
+            result.isFromPool = isFromPool;
+            return result;
+        } 
 
         /// <summary>
         /// The execution result
@@ -240,7 +288,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._callbackable ?? (this._callbackable = new Callbackable<TResult>(this));
+                return this._callbackable ??= Callbackable<TResult>.Create(this);
             }
         }
 
@@ -248,7 +296,7 @@ namespace Framework
         {
             lock (Lock)
             {
-                return this._synchronizable ?? (this._synchronizable = new Synchronizable<TResult>(this, this.Lock));
+                return this._synchronizable ??= Synchronizable<TResult>.Create(this, this.Lock);
             }
         }
         
@@ -267,6 +315,15 @@ namespace Framework
                 voidResult = result;
             }
             return voidResult;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            ReferencePool.Free(_synchronizable);
+            _synchronizable = null;
+            ReferencePool.Free(_callbackable);
+            _callbackable = null;
         }
     }
 }

@@ -11,39 +11,29 @@ namespace Framework
         float Total { get; }
     }
     
-    public class MulAsyncResult : AsyncResult
+    public class MulAsyncResult : ProgressResult<float>
     {
-        public float Progress { get; private set;}
-        private Callbackable _callbackable;
-        private List<IAsyncResult> _allProgress = new List<IAsyncResult>();
-        private bool alreadyDone;
-        public override bool IsDone
-        {
-            get
-            {
-                if (alreadyDone)
-                {
-                    RaiseOnCallback();
-                    alreadyDone = false;
-                }
-                return _allProgress.Count <= 0 || base.IsDone;
-            }
-        }
+        private RecyclableList<IAsyncResult> _allProgress;
+        public override bool IsDone => _allProgress.Count <= 0 || base.IsDone;
 
-        public MulAsyncResult(params IAsyncResult[] allProgress) : this(false, allProgress)
+        private MulAsyncResult()
         {
         }
 
-        public MulAsyncResult(bool cancelable, params IAsyncResult[] allProgress) : base(cancelable)
+        public static MulAsyncResult Create(bool cancelable = true, bool isFromPool = true, params IAsyncResult[] allProgress)
         {
-            AddAsyncResult(allProgress);
-        }
+            var result = isFromPool ? ReferencePool.Allocate<MulAsyncResult>() : new MulAsyncResult();
+            result._allProgress = RecyclableList<IAsyncResult>.Create();
+            result.Cancelable = cancelable;
+            result.isFromPool = isFromPool;
+            result.AddAsyncResult(allProgress);
+            return result;
+        } 
 
         public void AddAsyncResult(IAsyncResult progressResult)
         {
             if (progressResult == null) return;
             _allProgress.Add(progressResult);
-            alreadyDone = CheckAllFinish();
             SetSubProgressCb(progressResult);
         }
 
@@ -63,10 +53,12 @@ namespace Framework
 
         private bool CheckAllFinish()
         {
-            foreach (var progressResult in _allProgress)
+            for (var index = 0; index < _allProgress.Count; index++)
             {
-                if(!progressResult.IsDone) return false;
+                var progressResult = _allProgress[index];
+                if (!progressResult.IsDone) return false;
             }
+
             return true;
         }
         
@@ -74,7 +66,7 @@ namespace Framework
         {
             UpdateProgress();
             //延迟一帧 否则会比子任务提前完成
-            if (Progress >= 1)
+            if (CheckAllFinish())
             {
                 await TimerComponent.Instance.WaitFrameAsync();
                 SetResult();
@@ -84,162 +76,53 @@ namespace Framework
         private void UpdateProgress()
         {
             float totalProgress = 0;
-            foreach (var progressResult in _allProgress)
+            for (var index = 0; index < _allProgress.Count; index++)
             {
+                var progressResult = _allProgress[index];
                 if (progressResult.IsDone)
                 {
                     totalProgress += 1;
                 }
             }
+
             Progress = totalProgress / _allProgress.Count;
         }
-    }
-    
-    public class MulProgressResult<TProgress> : ProgressResult<float> where TProgress : IMulProgress
-    {
-        private List<IProgressResult<TProgress>> _allProgress = new List<IProgressResult<TProgress>>();
-        
-        private bool alreadyDone;
-        public override bool IsDone
+
+        public override void Clear()
         {
-            get
+            base.Clear();
+            foreach (var asyncResult in _allProgress)
             {
-                if (alreadyDone)
-                {
-                    RaiseFinish();
-                    alreadyDone = false;
-                }
-                return _allProgress.Count <= 0 || base.IsDone;
+                ReferencePool.Free(asyncResult);
             }
-        }
-
-        public MulProgressResult(params IProgressResult<TProgress>[] allProgress) : this(false, allProgress)
-        {
-        }
-
-        public MulProgressResult(bool cancelable, params IProgressResult<TProgress>[] allProgress) : base(cancelable)
-        {
-            AddAsyncResult(allProgress);
-        }
-
-        public void AddAsyncResult(IProgressResult<TProgress> progressResult)
-        {
-            if (progressResult == null) return;
-            _allProgress.Add(progressResult);
-            //检查一下是否传入的任务全部都完成，在await的时候自动setResult
-            alreadyDone = CheckAllFinish();
-            SetSubProgressCb(progressResult);
-        }
-
-        public void AddAsyncResult(IEnumerable<IProgressResult<TProgress>> progressResults)
-        {
-            foreach (var progressResult in progressResults)
-            {
-                AddAsyncResult(progressResult);
-            }
-        }
-
-        private void SetSubProgressCb(IProgressResult<TProgress> progressResult)
-        {
-            if (progressResult.IsDone) return;
-            progressResult.Callbackable().OnProgressCallback((progress => RaiseOnProgressCallback(0)));
-            progressResult.Callbackable().OnCallback(progress =>
-            {
-                if(CheckAllFinish()) RaiseFinish();
-            });
-        }
-
-        protected override void RaiseOnProgressCallback(float progress)
-        {
-            UpdateProgress();
-            base.RaiseOnProgressCallback(Progress);
-        }
-        
-        private bool CheckAllFinish()
-        {
-            foreach (var progressResult in _allProgress)
-            {
-                if(!progressResult.IsDone) return false;
-            }
-            return true;
-        }
-
-        private async void RaiseFinish()
-        {
-            RaiseOnProgressCallback(0);
-            StringBuilder sb = null;
-            foreach (var progressResult in _allProgress)
-            {
-                if (progressResult.Exception == null) continue;
-                if (sb == null) sb = new StringBuilder();
-                sb.AppendLine(progressResult.Exception.ToString());
-            }
-
-            //延迟一帧 否则会比子任务提前完成
-            await TimerComponent.Instance.WaitFrameAsync();
-            if (sb != null)
-            {
-                SetException(sb.ToString());
-            }
-            else
-            {
-                SetResult();
-            }
-        }
-
-        private void UpdateProgress()
-        {
-            float totalProgress = 0;
-            float current = 0;
-            foreach (var progressResult in _allProgress)
-            {
-                totalProgress += progressResult.Progress.Total;
-                if (progressResult.IsDone)
-                {
-                    current += progressResult.Progress.Total;
-                }
-                else
-                {
-                    current += progressResult.Progress.Current;
-                }
-            }
-            Progress = current / totalProgress;
+            ReferencePool.Free(_allProgress);
+            _allProgress = null;
         }
     }
     
     public class MulProgressResult : ProgressResult<float>
     {
-        private List<IProgressResult<float>> _allProgress = new List<IProgressResult<float>>();
-        public string Name;
-        private bool alreadyDone;
-        public override bool IsDone
-        {
-            get
-            {
-                if (alreadyDone)
-                {
-                    RaiseFinish();
-                    alreadyDone = false;
-                }
-                return _allProgress.Count <= 0 || base.IsDone;
-            }
-        }
+        private RecyclableList<IProgressResult<float>> _allProgress;
+        public override bool IsDone => _allProgress.Count <= 0 || base.IsDone;
 
-        public MulProgressResult(params IProgressResult<float>[] allProgress) : this(false, allProgress)
+        private MulProgressResult()
         {
         }
 
-        public MulProgressResult(bool cancelable, params IProgressResult<float>[] allProgress) : base(cancelable)
+        public static MulProgressResult Create(bool cancelable = true,bool isFromPool = true, params IProgressResult<float>[] allProgress)
         {
-            AddAsyncResult(allProgress);
+            var result = isFromPool ? ReferencePool.Allocate<MulProgressResult>() : new MulProgressResult();
+            result._allProgress = RecyclableList<IProgressResult<float>>.Create();
+            result.Cancelable = cancelable;
+            result.isFromPool = isFromPool;
+            result.AddAsyncResult(allProgress);
+            return result;
         }
 
         public void AddAsyncResult(IProgressResult<float> progressResult)
         {
             if (progressResult == null) return;
             _allProgress.Add(progressResult);
-            //检查一下是否传入的任务全部都完成，在await的时候自动setResult
-            alreadyDone = CheckAllFinish();
             SetSubProgressCb(progressResult);
         }
 
@@ -254,10 +137,13 @@ namespace Framework
         private void SetSubProgressCb(IProgressResult<float> progressResult)
         {
             if (progressResult.IsDone) return;
-            progressResult.Callbackable().OnProgressCallback((progress => RaiseOnProgressCallback(0)));
-            progressResult.Callbackable().OnCallback(progress =>
+            progressResult.Callbackable().OnProgressCallback((_ => RaiseOnProgressCallback(0)));
+            progressResult.Callbackable().OnCallback(_ =>
             {
-                RaiseOnProgressCallback(0);
+                if (CheckAllFinish())
+                {
+                    RaiseFinish();
+                }
             });
         }
 
@@ -265,12 +151,8 @@ namespace Framework
         {
             UpdateProgress();
             base.RaiseOnProgressCallback(Progress);
-            if (Progress >= 1)
-            {
-                if(CheckAllFinish()) RaiseFinish();
-            }
         }
-
+        
         private bool CheckAllFinish()
         {
             foreach (var progressResult in _allProgress)
@@ -317,6 +199,17 @@ namespace Framework
                 }
             }
             Progress = totalProgress / _allProgress.Count;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            foreach (var asyncResult in _allProgress)
+            {
+                ReferencePool.Free(asyncResult);
+            }
+            ReferencePool.Free(_allProgress);
+            _allProgress = null; 
         }
     }
 }

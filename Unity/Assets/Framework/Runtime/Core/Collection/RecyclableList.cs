@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 namespace Framework
 {
-    public class RecyclableList<T> : List<T>, IDisposable
+    public class RecyclableList<T> : List<T>, IDisposable , IReference
     {
-        private bool disposed = false;
+        private RecyclableList()
+        {
+        }
 
         public static RecyclableList<T> Create()
         {
-            var result = ObjectPool.Instance.Fetch(typeof(RecyclableList<T>)) as RecyclableList<T>;
-            result.disposed = false;
+            var result = ReferencePool.Allocate<RecyclableList<T>>();
             return result;
         }
 
@@ -25,11 +26,14 @@ namespace Framework
         {
             return $"[ {string.Join(" | ", this)} ]";
         }
+        
+        void IReference.Clear()
+        {
+            this.Clear();
+        }
 
         public void Dispose()
         {
-            if(disposed) return;
-            disposed = true;
             this.Clear();
             ObjectPool.Instance.Recycle(this);
         }

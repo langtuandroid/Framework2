@@ -107,7 +107,7 @@ namespace Framework
 
             if (waitForExecution)
             {
-                AsyncResult result = new AsyncResult();
+                AsyncResult result = AsyncResult.Create();
                 RunOnMainThread(action, result);
                 result.Synchronized().WaitForResult();
                 return;
@@ -127,7 +127,7 @@ namespace Framework
             if (disposed)
                 return default;
 
-            AsyncResult<TResult> result = new AsyncResult<TResult>();
+            AsyncResult<TResult> result = AsyncResult<TResult>.Create();
             RunOnMainThread(func, result);
             return result.Synchronized().WaitForResult();
         }
@@ -255,7 +255,7 @@ namespace Framework
                 return executor.StartCoroutine(routine);
             }
 
-            AsyncResult<Coroutine> result = new AsyncResult<Coroutine>();
+            AsyncResult<Coroutine> result = AsyncResult<Coroutine>.Create();
             executor.Execute(() =>
             {
                 try
@@ -323,21 +323,21 @@ namespace Framework
 
         public static IAsyncResult RunOnCoroutine(IEnumerator routine)
         {
-            CoroutineResult result = new CoroutineResult();
+            CoroutineResult result = CoroutineResult.Create();
             DoRunOnCoroutine(routine, result);
             return result;
         }
 
         public static IAsyncResult RunOnCoroutine(Func<IPromise, IEnumerator> func)
         {
-            CoroutineResult result = new CoroutineResult();
+            CoroutineResult result = CoroutineResult.Create();
             DoRunOnCoroutine(func(result), result);
             return result;
         }
 
         public static IAsyncResult<TResult> RunOnCoroutine<TResult>(Func<IPromise<TResult>, IEnumerator> func)
         {
-            CoroutineResult<TResult> result = new CoroutineResult<TResult>();
+            CoroutineResult<TResult> result = CoroutineResult<TResult>.Create();
             DoRunOnCoroutine(func(result), result);
             return result;
         }
@@ -345,7 +345,7 @@ namespace Framework
         public static IProgressResult<TProgress> RunOnCoroutine<TProgress>(
             Func<IProgressPromise<TProgress>, IEnumerator> func)
         {
-            CoroutineProgressResult<TProgress> result = new CoroutineProgressResult<TProgress>();
+            CoroutineProgressResult<TProgress> result = CoroutineProgressResult<TProgress>.Create();
             DoRunOnCoroutine(func(result), result);
             return result;
         }
@@ -353,7 +353,7 @@ namespace Framework
         public static IProgressResult<TProgress, TResult> RunOnCoroutine<TProgress, TResult>(
             Func<IProgressPromise<TProgress, TResult>, IEnumerator> func)
         {
-            CoroutineProgressResult<TProgress, TResult> result = new CoroutineProgressResult<TProgress, TResult>();
+            CoroutineProgressResult<TProgress, TResult> result = CoroutineProgressResult<TProgress, TResult>.Create();
             DoRunOnCoroutine(func(result), result);
             return result;
         }
@@ -393,7 +393,7 @@ namespace Framework
 
         public static IAsyncResult RunAsync(Action action)
         {
-            AsyncResult result = new AsyncResult();
+            AsyncResult result = AsyncResult.Create();
             DoRunAsync(() =>
             {
                 try
@@ -412,7 +412,7 @@ namespace Framework
 
         public static IAsyncResult<TResult> RunAsync<TResult>(Func<TResult> func)
         {
-            AsyncResult<TResult> result = new AsyncResult<TResult>();
+            AsyncResult<TResult> result = AsyncResult<TResult>.Create();
             DoRunAsync(() =>
             {
                 try
@@ -431,7 +431,7 @@ namespace Framework
 
         public static IAsyncResult RunAsync(Action<IPromise> action)
         {
-            AsyncResult result = new AsyncResult();
+            AsyncResult result = AsyncResult.Create();
             DoRunAsync(() =>
             {
                 try
@@ -452,7 +452,7 @@ namespace Framework
 
         public static IProgressResult<TProgress> RunAsync<TProgress>(Action<IProgressPromise<TProgress>> action)
         {
-            ProgressResult<TProgress> result = new ProgressResult<TProgress>();
+            ProgressResult<TProgress> result = ProgressResult<TProgress>.Create();
             DoRunAsync(() =>
             {
                 try
@@ -473,7 +473,7 @@ namespace Framework
 
         public static IAsyncResult<TResult> RunAsync<TResult>(Action<IPromise<TResult>> action)
         {
-            AsyncResult<TResult> result = new AsyncResult<TResult>();
+            AsyncResult<TResult> result = AsyncResult<TResult>.Create();
             DoRunAsync(() =>
             {
                 try
@@ -495,7 +495,7 @@ namespace Framework
         public static IProgressResult<TProgress, TResult> RunAsync<TProgress, TResult>(
             Action<IProgressPromise<TProgress, TResult>> action)
         {
-            ProgressResult<TProgress, TResult> result = new ProgressResult<TProgress, TResult>();
+            ProgressResult<TProgress, TResult> result = ProgressResult<TProgress, TResult>.Create();
             DoRunAsync(() =>
             {
                 try

@@ -29,6 +29,10 @@ namespace Framework
         public SkillDamageTypes SkillDamageTypes;
         public int DamageValue;
 
+        private DamageData()
+        {
+        }
+
         public DamageData InitData(SkillDamageTypes skillDamageTypes, int damageValue, Unit attackCaster, Unit attackReceiver)
         {
             SkillDamageTypes = skillDamageTypes;

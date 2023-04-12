@@ -51,14 +51,14 @@ namespace Framework
         
         public IProgressResult<float,string> LoadScene(string path, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
         {
-            ProgressResult<float,string> progressResult = new ProgressResult<float, string>();
+            ProgressResult<float,string> progressResult = ProgressResult<float, string>.Create();
             Executors.RunOnCoroutineReturn(LoadScene(progressResult, path, loadSceneMode, allowSceneActivation));
             return progressResult;
         }
         
         public IProgressResult<float, T> LoadAssetAsync<T>(string key) where T : Object
         {
-            ProgressResult<float, T> progressResult = new ProgressResult<float, T>(true);
+            ProgressResult<float, T> progressResult = ProgressResult<float, T>.Create();
             Executors.RunOnCoroutineReturn(loadAssetAsync(key, progressResult));
             return progressResult;
         }
@@ -67,7 +67,7 @@ namespace Framework
             bool instantiateInWorldSpace = false)
         {
             var progress = InstantiateAsync(key, parent, instantiateInWorldSpace);
-            ProgressResult<float, T> result = new ProgressResult<float, T>(true);
+            ProgressResult<float, T> result = ProgressResult<float, T>.Create(true);
             progress.Callbackable().OnProgressCallback(result.UpdateProgress);
             progress.Callbackable().OnCallback(progressResult =>
             {
@@ -87,7 +87,7 @@ namespace Framework
             Transform parent = null)
         {
             var progress = InstantiateAsync(key, localPosition, localRotation, parent);
-            ProgressResult<float, T> result = new ProgressResult<float, T>(true);
+            ProgressResult<float, T> result = ProgressResult<float, T>.Create();
             result.Callbackable().OnCallback((progressResult =>
             {
                 if (progressResult.IsCancelled)
@@ -113,8 +113,8 @@ namespace Framework
         public IProgressResult<float, GameObject> InstantiateAsync(string key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
-            ProgressResult<float, GameObject> loadProgress = new ProgressResult<float, GameObject>(true);
-            ProgressResult<float, GameObject> resultProgress = new ProgressResult<float, GameObject>(true);
+            ProgressResult<float, GameObject> loadProgress = ProgressResult<float, GameObject>.Create();
+            ProgressResult<float, GameObject> resultProgress = ProgressResult<float, GameObject>.Create();
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;
@@ -131,8 +131,8 @@ namespace Framework
             Quaternion localRotation,
             Transform parent = null)
         {
-            ProgressResult<float, GameObject> loadProgress = new ProgressResult<float, GameObject>(true);
-            ProgressResult<float, GameObject> resultProgress = new ProgressResult<float, GameObject>(true);
+            ProgressResult<float, GameObject> loadProgress = ProgressResult<float, GameObject>.Create();
+            ProgressResult<float, GameObject> resultProgress = ProgressResult<float, GameObject>.Create();
             loadProgress.Callbackable().OnCallback((result =>
             {
                 if(resultProgress.IsCancelled) return;

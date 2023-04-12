@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace Framework
 {
-    public class RecyclableHashSet<T> : HashSet<T>, IDisposable
+    public class RecyclableHashSet<T> : HashSet<T>, IDisposable ,IReference
     {
-        private bool disposed = false;
-        
+        private RecyclableHashSet(){}
         public static RecyclableHashSet<T> Create()
         {
-            var result = ObjectPool.Instance.Fetch(typeof(RecyclableHashSet<T>)) as RecyclableHashSet<T>;
-            result.disposed = false;
+            var result = ReferencePool.Allocate<RecyclableHashSet<T>>();
             return result;
+        }
+
+        void IReference.Clear()
+        {
+            Clear();
         }
 
         public void Dispose()
         {
-            if(disposed) return;
-            disposed = true;
-            this.Clear();
-            ObjectPool.Instance.Recycle(this);
+            ReferencePool.Free(this);
         }
     }
 }

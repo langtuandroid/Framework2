@@ -70,7 +70,7 @@ namespace Framework
 
         public IProgressResult<float> LoadAsync()
         {
-            ProgressResult<float> result = new ProgressResult<float>();
+            ProgressResult<float> result = ProgressResult<float>.Create();
             InternalLoadAsync(result);
             return result;
         }

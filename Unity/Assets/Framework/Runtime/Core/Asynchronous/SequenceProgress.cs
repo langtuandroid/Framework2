@@ -5,32 +5,28 @@ namespace Framework
 {
     public class SequenceProgress : ProgressResult<float>
     {
-        protected Queue<Func<IProgressResult<float>>> progressQueue = new Queue<Func<IProgressResult<float>>>();
+        private RecyclableList<Func<IProgressResult<float>>> progressQueue;
+        private int index = 0;
         private IProgressResult<float> currentProgress;
-        private int finishProgress;
 
         public override bool IsDone => currentProgress == null || base.IsDone;
 
-        public SequenceProgress(params Func<IProgressResult<float>>[] allProgress) : this(false, allProgress)
+        private SequenceProgress()
         {
         }
 
-        public SequenceProgress(IProgressResult<float> progress, params Func<IProgressResult<float>>[] allProgress) : this(false, allProgress)
+        public static SequenceProgress Create(bool isFromPool = true, params Func<IProgressResult<float>>[] allProgress)
         {
-            currentProgress = progress;
-            SetSubProgressCb(currentProgress);
-            AddAsyncResult(allProgress);
-        }
-
-        public SequenceProgress(bool cancelable, params Func<IProgressResult<float>>[] allProgress) : base(cancelable)
-        {
-            AddAsyncResult(allProgress);
+            var result = isFromPool ? ReferencePool.Allocate<SequenceProgress>() : new SequenceProgress();
+            result.AddAsyncResult(allProgress);
+            result.isFromPool = isFromPool;
+            return result;
         }
 
         public void AddAsyncResult(Func<IProgressResult<float>> progressResult)
         {
             if(progressResult == null) return;
-            progressQueue.Enqueue(progressResult);
+            progressQueue.Add(progressResult);
             if (currentProgress == null)
             {
                 SetNextProgress();
@@ -39,14 +35,16 @@ namespace Framework
 
         private void SetNextProgress()
         {
-            if (progressQueue.Count > 0)
+            if (index < progressQueue.Count)
             {
-                currentProgress = progressQueue.Dequeue().Invoke();
+                currentProgress = progressQueue[index].Invoke();
+                index++;
                 SetSubProgressCb(currentProgress);
             }
             else
             {
                 currentProgress = null;
+                RaiseFinish();
             }
         }
 
@@ -60,14 +58,10 @@ namespace Framework
 
         private void SetSubProgressCb(IProgressResult<float> progressResult)
         {
-            progressResult.Callbackable().OnProgressCallback((progress => RaiseOnProgressCallback(0)));
-            progressResult.Callbackable().OnCallback(progress =>
+            progressResult.Callbackable().OnProgressCallback((_ => RaiseOnProgressCallback(0)));
+            progressResult.Callbackable().OnCallback(_ =>
             {
-                finishProgress++;
-                if (! CheckAllFinish())
-                {
                     SetNextProgress();
-                }
             });
         }
 
@@ -77,23 +71,24 @@ namespace Framework
             base.RaiseOnProgressCallback(Progress);
         }
 
-        private bool CheckAllFinish()
+        private async void RaiseFinish()
         {
-            RaiseOnProgressCallback(0);
-            if (currentProgress.IsDone && progressQueue.Count <= 0)
-            {
-                //延迟一帧 否则会比子任务提前完成
-                TimerComponent.Instance.NewFrameTimer(() => SetResult());
-                return true;
-            }
-            return false;
+            await TimerComponent.Instance.WaitFrameAsync();
+            SetResult();
         }
 
         private void UpdateProgress()
         {
-            float totalProgress = finishProgress + currentProgress.Progress;
+            float totalProgress = index + currentProgress.Progress;
             // 1 是当前正在执行的progress
-            Progress = totalProgress / (finishProgress + progressQueue.Count + 1);
+            Progress = totalProgress / progressQueue.Count;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            ReferencePool.Free(progressQueue);
+            index = 0;
         }
     }
 }

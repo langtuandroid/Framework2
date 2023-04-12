@@ -36,7 +36,7 @@ namespace Framework
     {
         public override IProgressResult<ProgressInfo, FileInfo> DownloadFileAsync(string path, FileInfo fileInfo, float overtimeTime = 50)
         {
-            ProgressResult<ProgressInfo, FileInfo> result = new ProgressResult<ProgressInfo, FileInfo>();
+            ProgressResult<ProgressInfo, FileInfo> result = ProgressResult<ProgressInfo, FileInfo>.Create();
             DoDownloadFileAsync(path, fileInfo, result, overtimeTime);
             return result;
         }
@@ -100,7 +100,7 @@ namespace Framework
 
         public override IProgressResult<ProgressInfo, ResourceInfo[]> DownloadFileAsync(ResourceInfo[] infos)
         {
-            ProgressResult<ProgressInfo, ResourceInfo[]> result = new ProgressResult<ProgressInfo, ResourceInfo[]>();
+            ProgressResult<ProgressInfo, ResourceInfo[]> result = ProgressResult<ProgressInfo, ResourceInfo[]>.Create();
             DoDownloadFileAsync(infos, result);
             return result;
         }

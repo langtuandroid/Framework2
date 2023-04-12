@@ -12,6 +12,10 @@ namespace Framework
         private object _defaultWrapper;
         private Func<Action, Action> _wrapFunc;
 
+        private BindCommand()
+        {
+        }
+
         public void Reset(TComponent component, Action command, UnityEvent componentEvent,
             Func<Action, Action> wrapFunc)
         {
@@ -69,6 +73,10 @@ namespace Framework
         private Func<Action<TData>, Action<TData>> _wrapFunc;
         private UnityEvent<TData> _componentEvent;
         private object _defaultWrapper;
+
+        private BindCommandWithPara()
+        {
+        }
 
         public void Reset(TComponent component, Action<TData> command, UnityEvent<TData> componentEvent,
             Func<Action<TData>, Action<TData>> wrapFunc)

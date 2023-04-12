@@ -29,7 +29,7 @@ namespace Framework
     /// <summary>
     /// 
     /// </summary>
-    public interface IPromise
+    public interface IPromise : IReference , IDisposable
     {
         /// <summary>
         /// The execution result

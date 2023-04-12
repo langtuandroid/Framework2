@@ -30,10 +30,17 @@ namespace Framework
 {
     public class CoroutineResult : AsyncResult, ICoroutinePromise
     {
-        protected readonly List<Coroutine> Coroutines = new List<Coroutine>();
+        protected List<Coroutine> Coroutines;
 
-        public CoroutineResult() : base(true)
+        private CoroutineResult()
         {
+        }
+
+        public new static CoroutineResult Create(bool cancelable = true)
+        {
+            CoroutineResult result = ReferencePool.Allocate<CoroutineResult>();
+            result.Cancelable = cancelable;
+            return result;
         }
 
         public override bool Cancel()
@@ -55,14 +62,27 @@ namespace Framework
         {
             this.Coroutines.Add(coroutine);
         }
+
+        public override void Clear()
+        {
+            base.Clear();
+            Coroutines.Clear();
+        }
     }
 
     public class CoroutineResult<TResult> : AsyncResult<TResult>, ICoroutinePromise<TResult>
     {
         protected List<Coroutine> coroutines = new List<Coroutine>();
 
-        public CoroutineResult() : base(true)
+        private CoroutineResult()
         {
+        }
+        
+        public new static CoroutineResult<TResult> Create(bool cancelable = true)
+        {
+            var result = ReferencePool.Allocate<CoroutineResult<TResult>>();
+            result.Cancelable = cancelable;
+            return result;
         }
 
         public override bool Cancel()
@@ -84,15 +104,28 @@ namespace Framework
         {
             this.coroutines.Add(coroutine);
         }
+
+        public override void Clear()
+        {
+            base.Clear();
+            coroutines.Clear();
+        }
     }
 
     public class CoroutineProgressResult<TProgress> : ProgressResult<TProgress>, ICoroutineProgressPromise<TProgress>
     {
         protected readonly List<Coroutine> Coroutines = new List<Coroutine>();
 
-        public CoroutineProgressResult() : base(true)
+        private CoroutineProgressResult()
         {
         }
+        
+        public new static CoroutineProgressResult<TProgress> Create(bool cancelable = true)
+        {
+            var result = ReferencePool.Allocate<CoroutineProgressResult<TProgress>>();
+            result.Cancelable = cancelable;
+            return result;
+        } 
 
         public override bool Cancel()
         {
@@ -112,17 +145,30 @@ namespace Framework
         public void AddCoroutine(Coroutine coroutine)
         {
             this.Coroutines.Add(coroutine);
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            Coroutines.Clear();
         }
     }
 
     public class CoroutineProgressResult<TProgress, TResult> : ProgressResult<TProgress, TResult>,
         ICoroutineProgressPromise<TProgress, TResult>
     {
-        protected readonly List<Coroutine> Coroutines = new List<Coroutine>();
+        protected List<Coroutine> Coroutines = new List<Coroutine>();
 
-        public CoroutineProgressResult() : base(true)
+        private CoroutineProgressResult()
         {
         }
+        
+        public new static CoroutineProgressResult<TProgress, TResult> Create(bool cancelable = true)
+        {
+            var result = ReferencePool.Allocate<CoroutineProgressResult<TProgress, TResult>>();
+            result.Cancelable = cancelable;
+            return result;
+        }  
 
         public override bool Cancel()
         {
@@ -142,6 +188,12 @@ namespace Framework
         public void AddCoroutine(Coroutine coroutine)
         {
             this.Coroutines.Add(coroutine);
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            Coroutines.Clear();
         }
     }
 }
