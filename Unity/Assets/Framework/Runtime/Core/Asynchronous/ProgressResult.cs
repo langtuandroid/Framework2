@@ -32,11 +32,10 @@ namespace Framework
         {
         }
 
-        public new static ProgressResult<TProgress> Create(bool isFromPool = true, bool cancelable = true)
+        public new static ProgressResult<TProgress> Create(bool isFromPool = true, bool cancelable = true, bool needDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress>>() : new ProgressResult<TProgress>();
-            result.Cancelable = cancelable;
-            result.IsFromPool = isFromPool;
+            result.OnCreate(cancelable, isFromPool, needDelayFreePool);
             return result;
         }
 
@@ -107,11 +106,10 @@ namespace Framework
         {
         }
 
-        public new static ProgressResult<TProgress, TResult> Create(bool isFromPool = true,bool cancelable = true)
+        public new static ProgressResult<TProgress, TResult> Create(bool isFromPool = true,bool cancelable = true, bool needDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress, TResult>>() : new ProgressResult<TProgress, TResult>();
-            result.Cancelable = cancelable;
-            result.IsFromPool = isFromPool;
+            result.OnCreate(cancelable, isFromPool, needDelayFreePool);
             return result;
         }
 

@@ -37,7 +37,8 @@ namespace Framework
         private bool _cancelled;
         protected bool Cancelable;
         protected bool CancellationRequested;
-        protected bool IsFromPool;
+        private bool isFromPool;
+        private bool isNeedDelayFreePool;
 
         protected readonly object Lock = new object();
 
@@ -48,12 +49,18 @@ namespace Framework
         {
         }
 
-        public static AsyncResult Create(bool isFromPool = true, bool cancelable = true)
+        public static AsyncResult Create(bool isFromPool = true, bool cancelable = true, bool isNeedDelayFreePool = false)
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
-             result.Cancelable = cancelable;
-             result.IsFromPool = isFromPool;
+             result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
              return result;
+        }
+
+        protected virtual void OnCreate(bool cancelable, bool isFromPool, bool isNeedDelayFreePool)
+        {
+            this.Cancelable = cancelable;
+            this.isFromPool = isFromPool;
+            this.isNeedDelayFreePool = isNeedDelayFreePool;
         }
 
         /// <summary>
@@ -101,10 +108,7 @@ namespace Framework
 
             this.RaiseOnCallback();
             
-            if (IsFromPool)
-            {
-                Dispose();
-            } 
+            FreeFormPool();
         }
 
         public virtual void SetResult(object result = null)
@@ -121,10 +125,7 @@ namespace Framework
             
             this.RaiseOnCallback();
 
-            if (IsFromPool)
-            {
-                Dispose();
-            }
+            FreeFormPool();
         }
 
         public virtual void SetCancelled()
@@ -142,10 +143,7 @@ namespace Framework
 
             this.RaiseOnCallback();
             
-            if (IsFromPool)
-            {
-                Dispose();
-            } 
+            FreeFormPool();
         }
 
         /// <summary>
@@ -202,6 +200,20 @@ namespace Framework
         {
             return Executors.WaitWhile(() => !IsDone);
         }
+
+        private async void FreeFormPool()
+        {
+            if (!isFromPool) return;
+            if (isNeedDelayFreePool)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+                Dispose();
+            }
+            else
+            {
+                Dispose();
+            }
+        }
         
         private static IAsyncResult voidResult;
         
@@ -247,11 +259,10 @@ namespace Framework
         {
         }
         
-        public new static AsyncResult<TResult> Create(bool isFromPool = true, bool cancelable = true)
+        public new static AsyncResult<TResult> Create(bool isFromPool = true, bool cancelable = true, bool isNeedDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
-            result.Cancelable = cancelable;
-            result.IsFromPool = isFromPool;
+            result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
             return result;
         } 
 
