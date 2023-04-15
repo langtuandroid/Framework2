@@ -36,7 +36,7 @@ namespace Framework
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress>>() : new ProgressResult<TProgress>();
             result.Cancelable = cancelable;
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             return result;
         }
 
@@ -111,7 +111,7 @@ namespace Framework
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress, TResult>>() : new ProgressResult<TProgress, TResult>();
             result.Cancelable = cancelable;
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             return result;
         }
 

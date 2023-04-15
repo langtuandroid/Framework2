@@ -37,7 +37,7 @@ namespace Framework
         private bool _cancelled;
         protected bool Cancelable;
         protected bool CancellationRequested;
-        protected bool isFromPool;
+        protected bool IsFromPool;
 
         protected readonly object Lock = new object();
 
@@ -52,7 +52,7 @@ namespace Framework
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
              result.Cancelable = cancelable;
-             result.isFromPool = isFromPool;
+             result.IsFromPool = isFromPool;
              return result;
         }
 
@@ -101,9 +101,9 @@ namespace Framework
 
             this.RaiseOnCallback();
             
-            if (isFromPool)
+            if (IsFromPool)
             {
-                DelayDispose();
+                Dispose();
             } 
         }
 
@@ -121,9 +121,9 @@ namespace Framework
             
             this.RaiseOnCallback();
 
-            if (isFromPool)
+            if (IsFromPool)
             {
-                DelayDispose();
+                Dispose();
             }
         }
 
@@ -142,16 +142,10 @@ namespace Framework
 
             this.RaiseOnCallback();
             
-            if (isFromPool)
+            if (IsFromPool)
             {
-                DelayDispose();
+                Dispose();
             } 
-        }
-
-        protected async void DelayDispose()
-        {
-            await TimerComponent.Instance.WaitFrameAsync();
-            Dispose();
         }
 
         /// <summary>
@@ -257,7 +251,7 @@ namespace Framework
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
             result.Cancelable = cancelable;
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             return result;
         } 
 

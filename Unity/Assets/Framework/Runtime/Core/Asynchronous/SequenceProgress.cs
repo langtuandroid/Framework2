@@ -19,7 +19,7 @@ namespace Framework
         {
             var result = isFromPool ? ReferencePool.Allocate<SequenceProgress>() : new SequenceProgress();
             result.AddAsyncResult(allProgress);
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             return result;
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
-
-namespace Framework
+﻿namespace Framework
 {
     public static class AsyncResultAwaiterExtensions
     {

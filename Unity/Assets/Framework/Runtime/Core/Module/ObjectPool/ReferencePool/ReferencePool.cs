@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Framework
 {
@@ -113,6 +114,7 @@ namespace Framework
                 return;
             }
 
+            Log.Msg("Free", Time.frameCount);
             Type referenceType = reference.GetType();
             InternalCheckReferenceType(referenceType);
             GetReferenceCollection(referenceType).Free(reference);
@@ -202,7 +204,7 @@ namespace Framework
             }
         }
 
-        private static ReferenceCollection GetReferenceCollection(Type referenceType)
+        public static ReferenceCollection GetReferenceCollection(Type referenceType)
         {
             if (referenceType == null)
             {

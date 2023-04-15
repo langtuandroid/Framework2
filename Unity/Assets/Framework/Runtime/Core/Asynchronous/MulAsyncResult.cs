@@ -25,10 +25,10 @@ namespace Framework
             var result = isFromPool ? ReferencePool.Allocate<MulAsyncResult>() : new MulAsyncResult();
             result._allProgress = RecyclableList<IAsyncResult>.Create();
             result.Cancelable = cancelable;
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             result.AddAsyncResult(allProgress);
             return result;
-        } 
+        }
 
         public void AddAsyncResult(IAsyncResult progressResult)
         {
@@ -114,7 +114,7 @@ namespace Framework
             var result = isFromPool ? ReferencePool.Allocate<MulProgressResult>() : new MulProgressResult();
             result._allProgress = RecyclableList<IProgressResult<float>>.Create();
             result.Cancelable = cancelable;
-            result.isFromPool = isFromPool;
+            result.IsFromPool = isFromPool;
             result.AddAsyncResult(allProgress);
             return result;
         }

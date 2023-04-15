@@ -12,7 +12,7 @@ namespace Framework
 {
     public static partial class ReferencePool
     {
-        private sealed class ReferenceCollection
+        public sealed class ReferenceCollection
         {
             private readonly Queue<IReference> m_References;
             private readonly Type m_ReferenceType;
