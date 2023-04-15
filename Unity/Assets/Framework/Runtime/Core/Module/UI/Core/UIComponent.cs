@@ -105,9 +105,9 @@ namespace Framework
             ViewModel viewModel)
             where T : View
         {
-            var type = typeof(T);
+            var type = view.GetType();
 
-            var request = CreateViewGameObjectAsync<T>();
+            var request = CreateViewGameObjectAsync(type);
             while (!request.IsDone)
             {
                 promise.UpdateProgress(request.Progress);
@@ -238,7 +238,7 @@ namespace Framework
             else
             {
                 var path = viewType2Attribute[type].Path;
-                result = _res.InstantiateAsync<GameObject>(path);
+                result = _res.InstantiateAsync(path);
             }
 
             return result;
