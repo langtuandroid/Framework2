@@ -9,7 +9,7 @@ namespace Framework
     /// <typeparam name="T"></typeparam>
     public interface IDeserializeSystem : ISystemType
     {
-        void OnDeserialize(Entity o);
+        void OnDeserialize();
     }
 
 }

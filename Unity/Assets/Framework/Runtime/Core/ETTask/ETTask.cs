@@ -106,7 +106,7 @@ namespace Framework
             this.UnsafeOnCompleted(action);
         }
 
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public void GetResult()
         {
             switch (this.state)
@@ -142,7 +142,7 @@ namespace Framework
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public void SetException(Exception e)
         {
             if (this.state != AwaiterStatus.Pending)

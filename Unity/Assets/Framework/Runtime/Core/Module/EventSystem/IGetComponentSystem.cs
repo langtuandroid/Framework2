@@ -8,6 +8,6 @@ namespace Framework
     // 再比如传送也可以做此类优化
     public interface IGetComponentSystem : ISystemType
     {
-        void OnGetComponent(Entity o, Entity component);
+        void OnGetComponent(Entity component);
     }
 }

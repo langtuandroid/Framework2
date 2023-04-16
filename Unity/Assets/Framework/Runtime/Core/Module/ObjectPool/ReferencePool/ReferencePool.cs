@@ -114,7 +114,6 @@ namespace Framework
                 return;
             }
 
-            Log.Msg("Free", Time.frameCount);
             Type referenceType = reference.GetType();
             InternalCheckReferenceType(referenceType);
             GetReferenceCollection(referenceType).Free(reference);

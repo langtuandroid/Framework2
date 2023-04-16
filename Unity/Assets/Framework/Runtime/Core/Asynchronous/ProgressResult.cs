@@ -87,7 +87,7 @@ namespace Framework
         {
             if (voidResult == null)
             {
-                var result = new ProgressResult<TProgress>();
+                var result = Create(isFromPool: false);
                 result.SetResult();
                 voidResult = result;
             }
@@ -188,7 +188,7 @@ namespace Framework
         {
             if (voidResult == null)
             {
-                var result = new ProgressResult<TProgress, TResult>();
+                var result = Create(isFromPool: false);
                 result.SetResult();
                 voidResult = result;
             }

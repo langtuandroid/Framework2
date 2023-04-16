@@ -40,6 +40,7 @@ namespace Framework
         public void SetGameObject(GameObject obj)
         {
             Go = obj;
+            AddComponent<UIAnimationComponent, GameObject>(Go);
             _canvasGroup = Go.GetOrAddComponent<CanvasGroup>();
             Start();
         }
@@ -64,11 +65,13 @@ namespace Framework
         public void Show()
         {
             Visible(true);
+            GetComponent<UIAnimationComponent>().PlayShowAnimation();
             OnShow();
         }
 
-        public void Hide()
+        public async ETTask Hide()
         {
+            await GetComponent<UIAnimationComponent>().PlayHideAnimation();
             Visible(false);
             ViewModel?.OnViewHide();
             OnHide();
@@ -98,20 +101,21 @@ namespace Framework
 
         public IProgressResult<float, View> AddSubView<T>(ViewModel viewModel = null) where T : View
         {
-            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateViewAsync(typeof(T), viewModel);
+            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateSubViewAsync(typeof(T), viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
 
         public IProgressResult<float, View> AddSubView(Type type, ViewModel viewModel = null)
         {
-            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateViewAsync(type, viewModel);
+            var progressResult = this.RootScene().GetComponent<UIComponent>().CreateSubViewAsync(type, viewModel);
             progressResult.Callbackable().OnCallback((result => AddSubView(result.Result)));
             return progressResult;
         }
 
-        protected void RemoveSubView(View view)
+        protected async void CloseSubView(View view)
         {
+            await Hide();
             _subViews.TryRemove(view);
         }
 
@@ -132,15 +136,16 @@ namespace Framework
             return null;
         }
 
-        protected void Close()
+        protected async void Close()
         {
+            await Hide();
             this.RootScene().GetComponent<UIComponent>().Close(this);
         }
 
         protected abstract void OnVmChange();
         public virtual UILevel UILevel { get; } = UILevel.Common;
 
-        public void OnDestroy()
+        public async void OnDestroy()
         {
             Binding.Clear();
             OnClose();

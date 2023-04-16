@@ -19,22 +19,21 @@ public class Init : MonoBehaviour
         AppDomain.CurrentDomain.UnhandledException += (sender, e) => { Log.Error(e.ExceptionObject.ToString()); };
         Game.Close();
 
+        Game.AddSingleton<EventSystem>();
+        EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Game).Assembly));
+        EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Init).Assembly));
+        EventSystem.Instance.InitType();
         Game.AddSingleton<MainThreadSynchronizationContext>();
-
         Game.AddSingleton<TimeInfo>();
         Game.AddSingleton<ObjectPool>();
         Game.AddSingleton<IdGenerator>();
-        Game.AddSingleton<EventSystem>();
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<CoroutineLockComponent>();
         var root = Game.AddSingleton<Root>();
         Game.AddSingleton<ResComponent>();
         Game.AddSingleton<ConfigComponent>();
         root.Scene.AddComponent<GlobalReferenceComponent>();
-
-        EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Game).Assembly));
-        EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Init).Assembly));
-        EventSystem.Instance.InitType();
+        root.Scene.AddComponent<UIComponent>();
         await ResComponent.Instance.Init();
         await ConfigComponent.Instance.LoadAsync();
         ETTask.ExceptionHandler += e => Log.Error(e);

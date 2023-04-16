@@ -2,6 +2,6 @@
 {
     public interface ILateUpdateSystem : ISystemType
     {
-        void LateUpdate(Entity o);
+        void LateUpdate();
     }
 }

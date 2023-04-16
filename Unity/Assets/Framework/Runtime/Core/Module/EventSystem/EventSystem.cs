@@ -228,7 +228,7 @@ namespace Framework
             {
                 try
                 {
-                    deserializeSystem.OnDeserialize(component);
+                    deserializeSystem.OnDeserialize();
                 }
                 catch (Exception e)
                 {
@@ -244,7 +244,7 @@ namespace Framework
             {
                 try
                 {
-                    getSystem.OnGetComponent(entity, component);
+                    getSystem.OnGetComponent(component);
                 }
                 catch (Exception e)
                 {
@@ -420,7 +420,7 @@ namespace Framework
                 {
                     try
                     {
-                        iUpdateSystem.RenderUpdate(component, deltaTime);
+                        iUpdateSystem.RenderUpdate(deltaTime);
                     }
                     catch (Exception e)
                     {
@@ -455,7 +455,7 @@ namespace Framework
                 {
                     try
                     {
-                        iLateUpdateSystem.LateUpdate(component);
+                        iLateUpdateSystem.LateUpdate();
                     }
                     catch (Exception e)
                     {

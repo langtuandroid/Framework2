@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 namespace Framework
 {
-    public class UIComponent : Entity, IAwakeSystem
+    public class UIComponent : Entity, IAwakeSystem , IUpdateSystem
     {
         private IRes _res;
         private Transform destroyPoolContent;
@@ -20,7 +20,7 @@ namespace Framework
 
         private class DelayDestroyGo : IReference
         {
-            public float DestroyTime;
+            public long DestroyTime;
             public GameObject Go;
 
             private DelayDestroyGo()
@@ -58,13 +58,14 @@ namespace Framework
             if (viewType2Attribute[type].IsSingle && loadingView.TryGetValue(type, out var result))
                 return result;
             ProgressResult<float, View> result1 = ProgressResult<float, View>.Create(); 
-            InternalOpenAsync<T>(type, result1, viewModel);
+            InternalOpenAsync<T>(result1, viewModel);
             return result1;
         }
 
-        private void InternalOpenAsync<T>(Type type, ProgressResult<float, View> promise, ViewModel viewModel)
+        private void InternalOpenAsync<T>(ProgressResult<float, View> promise, ViewModel viewModel)
             where T : View
         {
+            var type = typeof(T);
             var attribute = viewType2Attribute[type];
             loadingView[type] = promise;
             promise.Callbackable().OnCallback(progressResult =>
@@ -89,19 +90,19 @@ namespace Framework
             else
             {
                 view = AddChild(type) as View;
-                Executors.RunOnCoroutineNoReturn(CreateViewGo(promise, view, attribute.Path, viewModel));
+                SetViewGmeObjectAndVM(promise, view, attribute.Path, viewModel);
             }
         }
 
-        internal IProgressResult<float, View> CreateViewAsync(Type type, ViewModel vm)
+        internal IProgressResult<float, View> CreateSubViewAsync(Type type, ViewModel vm)
         {
             ProgressResult<float, View> progressResult = ProgressResult<float, View>.Create();
             var view = AddChild(type) as View;
-                Executors.RunOnCoroutineNoReturn(CreateViewGo(progressResult, view, viewType2Attribute[type].Path, vm));
+            SetViewGmeObjectAndVM(progressResult, view, viewType2Attribute[type].Path, vm);
             return progressResult;
         }
 
-        private IEnumerator CreateViewGo<T>(IProgressPromise<float, T> promise, View view, string path,
+        private async void SetViewGmeObjectAndVM<T>(IProgressPromise<float, T> promise, View view, string path,
             ViewModel viewModel)
             where T : View
         {
@@ -111,7 +112,7 @@ namespace Framework
             while (!request.IsDone)
             {
                 promise.UpdateProgress(request.Progress);
-                yield return null;
+                await TimerComponent.Instance.WaitFrameAsync();
             }
 
             var go = request.Result;
@@ -120,7 +121,7 @@ namespace Framework
                 promise.UpdateProgress(1f);
                 Log.Error($"Not found the window path = \"{path}\".");
                 promise.SetException(new FileNotFoundException(path));
-                yield break;
+                return;
             }
 
             view.SetGameObject(go);
@@ -132,10 +133,12 @@ namespace Framework
         public T Open<T>(ViewModel viewModel = null) where T : View
         {
             var type = typeof(T);
-                View view = CreateView(type, viewModel) as T;
+            var go = CreateViewGameObject(type);
+            View view = AddChild(type) as View;
+            view.SetGameObject(go);
+            view.SetVm(viewModel);
             Sort(view);
             AddOpenView(view);
-
             return (T)view;
         }
 
@@ -159,15 +162,6 @@ namespace Framework
             }
         }
 
-        private View CreateView(Type type, ViewModel viewModel)
-        {
-            var go = CreateViewGameObject(type);
-            View view = AddChild(type) as View;
-            view.SetGameObject(go);
-            view.SetVm(viewModel);
-            return view;
-        }
-
         /// <summary>
         /// close isSingle=true的窗口
         /// </summary>
@@ -186,7 +180,7 @@ namespace Framework
 
             uiLevel2View[view.UILevel].Remove(view);
             view.Dispose();
-            MaskViews(view, true);
+            MaskViews(view, false);
         }
 
         public void Close(Type type)
@@ -196,7 +190,7 @@ namespace Framework
             openedSingleViews.Remove(type);
             uiLevel2View[view.UILevel].Remove(view);
             view.Dispose();
-            MaskViews(view, true);
+            MaskViews(view, false);
         }
 
         public T Get<T>() where T : View
@@ -231,7 +225,7 @@ namespace Framework
             var gos = GetDelayDestroyGoes(type);
             if (gos?.Count > 0)
             {
-                var asyncResult = ProgressResult<float, GameObject>.Create();
+                var asyncResult = ProgressResult<float, GameObject>.Create(needDelayFreePool: true);
                 asyncResult.SetResult(gos.RemoveLast().Go);
                 result = asyncResult;
             }
@@ -351,6 +345,23 @@ namespace Framework
                             return;
                         }
                     }
+                }
+            }
+        }
+
+        public void Update(float deltaTime)
+        {
+            long curTime = TimeInfo.Instance.ClientNow();
+            foreach (var delayDestroyGos in delayDestroyViewDic.Values)
+            {
+                for (int i = 0; i < delayDestroyGos.Count; i++)
+                {
+                        var val = delayDestroyGos[i];
+                        if (val.DestroyTime < curTime) continue;
+                        Object.Destroy(val.Go);
+                        ReferencePool.Free(val);
+                        delayDestroyGos.RemoveAt(i);
+                        i--;
                 }
             }
         }

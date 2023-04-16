@@ -50,6 +50,19 @@ public class UI_UnitInfoComponent
             }
         }
 
+        private Framework.CustomButton close;
+        public Framework.CustomButton Close
+        {
+            get
+            {
+                if (close == null)
+                {
+                    close = go.transform.Find("Close").GetComponent<Framework.CustomButton>();
+                }
+                return close;
+            }
+        }
+
 #endregion 
 }
 
@@ -68,6 +81,7 @@ public class UI_UnitInfo : View
     protected override void OnVmChange()
     {
         vm = ViewModel as UI_UnitInfoVM;
+        Binding.BindCommand(components.Close, Close);
     }
      
     public override UILevel UILevel { get; } = UILevel.Common;

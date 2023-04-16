@@ -204,7 +204,7 @@ namespace Framework
         private async void FreeFormPool()
         {
             if (!isFromPool) return;
-            if (isNeedDelayFreePool)
+            if (true)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
                 Dispose();
@@ -221,7 +221,7 @@ namespace Framework
         {
             if (voidResult == null)
             {
-                var result = new AsyncResult();
+                var result = Create(isFromPool: false);
                 result.SetResult();
                 voidResult = result;
             }
@@ -315,7 +315,7 @@ namespace Framework
         {
             if (voidResult == null)
             {
-                var result = new AsyncResult<TResult>();
+                var result = Create(isFromPool: false);
                 result.SetResult();
                 voidResult = result;
             }

@@ -3,11 +3,10 @@ using Framework;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem
+public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRendererUpdateSystem
 {
     public void Awake()
     {
-        Log.Msg(this.DomainScene().Name);
         InstanceQueueMap.InstanceQueueMapDic[typeof(IBattleUpdateSystem)] = InstanceQueueIndex.BattleUpdate;
         this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
         var unitComponent = this.DomainScene().AddComponent<UnitComponent>();
@@ -23,6 +22,8 @@ public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem
         long nPDataId = 105926695190565;
         var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
         tree.Start();
+
+        UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM());
     }
 
     public void Update(float deltaTime)
@@ -56,5 +57,9 @@ public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem
                 }
             }
         }
+    }
+
+    public void RenderUpdate(float deltaTime)
+    {
     }
 }
