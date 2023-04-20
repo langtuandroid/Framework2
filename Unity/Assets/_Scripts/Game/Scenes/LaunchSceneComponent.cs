@@ -23,7 +23,7 @@ public class LaunchSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
         var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
         tree.Start();
 
-        UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM());
+        // UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM());
     }
 
     public void Update(float deltaTime)

@@ -1,5 +1,15 @@
 ﻿using ET;
+using ET.Battle;
 using Framework;
+
+[Invoke(BattleTimerType.ResurrectionTimer)]
+public class ResurrectionTimer : ATimer<DeadComponent>
+{
+    protected override void Run(DeadComponent self)
+    {
+        self.GetParent<Unit>()?.RemoveComponent<DeadComponent>();
+    }
+}
 
 /// <summary>
 /// 添加此组件代表Unit已死亡，一些其他组件逻辑将暂时失灵
@@ -24,7 +34,7 @@ public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
         unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = false;
 
         DeadTimerId = TimerComponent.Instance.NewOnceTimer(TimeHelper.ClientNow() + ResurrectionTime,
-            () => { GetParent<Unit>()?.RemoveComponent<DeadComponent>(); });
+            BattleTimerType.ResurrectionTimer, this);
     }
 
     public void OnDestroy()

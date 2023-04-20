@@ -2,7 +2,8 @@ using Framework;
 
 public class UI_UnitInfoVM : ViewModel
 {
-    public UI_UnitInfoVM()
+    
+    public UI_UnitInfoVM(Unit unit)
     {
 
     }

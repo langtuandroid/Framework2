@@ -26,14 +26,13 @@ namespace Framework
             return timerAction;
         }
 
-        public static TimerAction Create(long id, TimerClass timerClass, long startTime, long time, Action action)
+        public static TimerAction Create(long id, TimerClass timerClass, long startTime, long time)
         {
             TimerAction timerAction = ObjectPool.Instance.Fetch<TimerAction>();
             timerAction.Id = id;
             timerAction.TimerClass = timerClass;
             timerAction.StartTime = startTime;
             timerAction.Time = time;
-            timerAction.Action = action;
             return timerAction;
         }
 
@@ -42,8 +41,6 @@ namespace Framework
         public TimerClass TimerClass;
 
         public object Object;
-
-        public Action Action;
 
         public long StartTime;
 
@@ -59,7 +56,6 @@ namespace Framework
             this.Time = 0;
             this.TimerClass = TimerClass.None;
             this.Type = 0;
-            Action = null;
             ObjectPool.Instance.Recycle(this);
         }
     }
@@ -155,16 +151,8 @@ namespace Framework
             {
                 case TimerClass.OnceTimer:
                 {
-                    if (timerAction.Action == null)
-                    {
-                        EventSystem.Instance.Invoke(timerAction.Type,
-                            new TimerCallback() { Args = timerAction.Object });
-                    }
-                    else
-                    {
-                        timerAction.Action();
-                    }
-
+                    EventSystem.Instance.Invoke(timerAction.Type,
+                        new TimerCallback() { Args = timerAction.Object });
                     timerAction.Recycle();
                     break;
                 }
@@ -284,17 +272,10 @@ namespace Framework
             }
         }
 
-        public ETCancellationToken NewOnceTimerAsync(long duration, Action action)
-        {
-            ETCancellationToken cancellationToken = new ETCancellationToken();
-            WaitSync(duration, action, cancellationToken);
-            return cancellationToken;
-        }
-
         public ETCancellationToken NewFrameTimerAsync(Action action)
         {
             ETCancellationToken cancellationToken = new ETCancellationToken();
-            WaitSync(5, action, cancellationToken);
+            WaitSync(1, action, cancellationToken);
             return cancellationToken;
         }
 
@@ -335,19 +316,6 @@ namespace Framework
             // 每帧执行的不用加到timerId中，防止遍历
             this.AddTimer(timer);
             return timer.Id;
-        }
-
-        public long NewOnceTimer(long duration, Action action)
-        {
-            TimerAction timer = TimerAction.Create(GetId(), TimerClass.OnceTimer, TimeInfo.Instance.ClientNow(),
-                duration, action);
-            this.AddTimer(timer);
-            return timer.Id;
-        }
-
-        public long NewFrameTimer(Action action)
-        {
-            return NewOnceTimer(0, action);
         }
 
         public long NewRepeatedTimer(long time, int type, object args)
