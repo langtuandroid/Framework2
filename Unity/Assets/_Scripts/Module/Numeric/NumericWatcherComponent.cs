@@ -57,7 +57,7 @@ namespace Framework
             }
         }
 
-        public void Run(Unit unit, EventType.NumbericChange args)
+        public void Run(Unit unit, NumericChange args)
         {
             List<NumericWatcherInfo> list;
             if (!allWatchers.TryGetValue(args.NumericType, out list))

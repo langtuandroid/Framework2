@@ -2,15 +2,12 @@
 
 namespace Framework
 {
-    namespace EventType
+    public struct NumericChange
     {
-        public struct NumbericChange
-        {
-            public Unit Unit;
-            public int NumericType;
-            public int Old;
-            public int New;
-        }
+        public Unit Unit;
+        public int NumericType;
+        public int Old;
+        public int New;
     }
 
     public class NumericComponent : Entity, IAwakeSystem
@@ -77,7 +74,7 @@ namespace Framework
             if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(this.DomainScene(),
-                    new EventType.NumbericChange()
+                    new NumericChange()
                         { Unit = GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
             }
         }
@@ -89,7 +86,7 @@ namespace Framework
             return value;
         }
 
-        public void Update(int numericType, bool isPublicEvent)
+        private void Update(int numericType, bool isPublicEvent)
         {
             int final = (int)numericType / 10;
             int bas = final * 10 + 1;
@@ -109,6 +106,9 @@ namespace Framework
 
         public void Awake()
         {
+            Set(NumericType.MaxHp, 10f);
+            Set(NumericType.Hp, 10f);
+            Set(NumericType.Speed, 1f);
         }
     }
 }

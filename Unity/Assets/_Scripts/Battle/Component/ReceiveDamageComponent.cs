@@ -39,8 +39,8 @@ public class ReceiveDamageComponent : Unit
             return;
         }
 
-        float currentHp = GetParent<Unit>().GetComponent<NumericComponent>().GetByKey(NumericType.Hp);
-        float finalHp = currentHp - damageData.DamageValue;
+        int currentHp = GetParent<Unit>().GetComponent<NumericComponent>().GetByKey(NumericType.Hp);
+        int finalHp = currentHp - damageData.DamageValue;
 
         if (finalHp <= 0)
         {

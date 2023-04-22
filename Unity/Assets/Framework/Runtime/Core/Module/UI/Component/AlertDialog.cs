@@ -309,36 +309,36 @@ namespace Framework
         /// <summary>
         /// The title of the dialog box. This may be null.
         /// </summary>
-        public ObservableProperty<string> Title = new ObservableProperty<string>();
+        public ObservableProperty<string> Title;
 
         /// <summary>
         /// The message to be shown to the user.
         /// </summary>
-        public ObservableProperty<string> Message = new ObservableProperty<string>();
+        public ObservableProperty<string> Message;
 
         /// <summary>
         /// The text shown in the "confirm" button in the dialog box. 
         /// If left null, the button will be invisible.
         /// </summary>
-        public ObservableProperty<string> ConfirmButtonText = new ObservableProperty<string>();
+        public ObservableProperty<string> ConfirmButtonText;
 
         /// <summary>
         /// The text shown in the "neutral" button in the dialog box. 
         /// If left null, the button will be invisible.
         /// </summary>
-        public ObservableProperty<string> NeutralButtonText = new ObservableProperty<string>();
+        public ObservableProperty<string> NeutralButtonText;
 
         /// <summary>
         /// The text shown in the "cancel" button in the dialog box. 
         /// If left null, the button will be invisible.
         /// </summary>
-        public ObservableProperty<string> CancelButtonText = new ObservableProperty<string>();
+        public ObservableProperty<string> CancelButtonText;
 
         /// <summary>
         /// Whether the dialog box is canceled when 
         /// touched outside the window's bounds. 
         /// </summary>
-        public ObservableProperty<bool> CanceledOnTouchOutside = new ObservableProperty<bool>();
+        public ObservableProperty<bool> CanceledOnTouchOutside;
 
         /// <summary>
         /// A callback that should be executed after
@@ -351,7 +351,18 @@ namespace Framework
         /// <summary>
         /// The dialog box has been closed.
         /// </summary>
-        public ObservableProperty<bool> Closed = new ObservableProperty<bool>();
+        public ObservableProperty<bool> Closed;
+
+        public AlertDialogVM()
+        {
+            Closed = AllocateObservable<ObservableProperty<bool>>();
+            CanceledOnTouchOutside = AllocateObservable<ObservableProperty<bool>>();
+            CancelButtonText = AllocateObservable<ObservableProperty<string>>();
+            ConfirmButtonText = AllocateObservable<ObservableProperty<string>>();
+            NeutralButtonText = AllocateObservable<ObservableProperty<string>>();
+            Message = AllocateObservable<ObservableProperty<string>>();
+            Title = AllocateObservable<ObservableProperty<string>>();
+        }
 
         /// <summary>
         /// result

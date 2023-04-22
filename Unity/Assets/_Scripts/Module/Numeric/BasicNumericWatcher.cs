@@ -5,7 +5,7 @@ namespace Framework
     [NumericWatcher(SceneType.Battle, NumericType.Spdef)]
     public class SpackReduceWatcher : INumericWatcher
     {
-        public void Run(Unit unit, NumbericChange args)
+        public void Run(Unit unit, NumericChange args)
         {
             var numeric = unit.GetComponent<NumericComponent>();
             var spdef = numeric.GetAsFloat(args.NumericType);
@@ -18,7 +18,7 @@ namespace Framework
     [NumericWatcher(SceneType.Battle, NumericType.Armor)]
     public class AckReduceWatcher : INumericWatcher
     {
-        public void Run(Unit unit, NumbericChange args)
+        public void Run(Unit unit, NumericChange args)
         {
             var numeric = unit.GetComponent<NumericComponent>();
             var spdef = numeric.GetAsFloat(args.NumericType);

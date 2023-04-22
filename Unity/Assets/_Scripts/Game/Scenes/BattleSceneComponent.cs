@@ -11,7 +11,7 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
         this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
         var unitComponent = this.DomainScene().AddComponent<UnitComponent>();
         Unit unit = unitComponent.AddChild<Unit>();
-        unit.AddComponent<NumericComponent>().Set(NumericType.Speed, 1000);
+        unit.AddComponent<NumericComponent>();
         unit.AddComponent<BuffManagerComponent>();
         unit.AddComponent<CastDamageComponent>();
         unit.AddComponent<ReceiveDamageComponent>();
@@ -24,7 +24,7 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
         var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
         tree.Start();
 
-        // UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM());
+        UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM(unit));
     }
 
     public void Update(float deltaTime)

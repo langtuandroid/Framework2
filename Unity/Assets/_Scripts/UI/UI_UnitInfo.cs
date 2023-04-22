@@ -11,16 +11,16 @@ public class UI_UnitInfoComponent
    
     #region component
 
-        private UnityEngine.RectTransform infoContent;
-        public UnityEngine.RectTransform InfoContent
+        private Framework.CustomTextMeshPro textHp;
+        public Framework.CustomTextMeshPro TextHp
         {
             get
             {
-                if (infoContent == null)
+                if (textHp == null)
                 {
-                    infoContent = go.transform.Find("Scroll View/Viewport/Content").GetComponent<UnityEngine.RectTransform>();
+                    textHp = go.transform.Find("Image/TextHp").GetComponent<Framework.CustomTextMeshPro>();
                 }
-                return infoContent;
+                return textHp;
             }
         }
 
@@ -82,6 +82,10 @@ public class UI_UnitInfo : View
     {
         vm = ViewModel as UI_UnitInfoVM;
         Binding.BindCommand(components.Close, Close);
+        Binding.BindData(vm.MaxHp, vm.CurHp, (max, cur) =>
+        {
+            components.TextHp.text = $"HP:{cur}/{max}";
+        } );
     }
      
     public override UILevel UILevel { get; } = UILevel.Common;

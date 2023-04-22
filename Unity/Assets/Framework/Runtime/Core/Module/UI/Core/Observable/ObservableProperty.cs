@@ -4,14 +4,15 @@ namespace Framework
 {
     public class ObservableProperty<T> :  IObservable, IReference , IResetBind
     {
-        public ObservableProperty(T value)
+        private ObservableProperty()
         {
-            this._value = value;
         }
-
-        public ObservableProperty()
+        
+        public static ObservableProperty<T> Create(T value)
         {
-            _value = default;
+            var res = ReferencePool.Allocate<ObservableProperty<T>>();
+            res._value = value;
+            return res;
         }
 
         private event Action<T> OnValueChanged;

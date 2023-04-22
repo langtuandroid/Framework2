@@ -303,7 +303,7 @@ MonoBehaviour:
       Data: 0
     - Name: BasicValue
       Entry: 3
-      Data: 10
+      Data: 1000
     - Name: AdditionValue
       Entry: 7
       Data: 12|System.Collections.Generic.Dictionary`2[[BuffAdditionTypes, Game.Runtime],[System.Single,
