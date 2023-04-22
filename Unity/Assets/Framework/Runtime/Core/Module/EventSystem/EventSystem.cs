@@ -60,10 +60,12 @@ namespace Framework
         private class EventInfo
         {
             public IEvent IEvent { get; }
+            public SceneType SceneType { get; }
 
             public EventInfo(IEvent iEvent, SceneType sceneType)
             {
                 this.IEvent = iEvent;
+                this.SceneType = sceneType;
             }
         }
 
@@ -508,6 +510,7 @@ namespace Framework
             SceneType sceneType = scene.SceneType;
             foreach (EventInfo eventInfo in iEvents)
             {
+                if(eventInfo.SceneType != sceneType) continue;
                 if (!(eventInfo.IEvent is AEvent<T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");

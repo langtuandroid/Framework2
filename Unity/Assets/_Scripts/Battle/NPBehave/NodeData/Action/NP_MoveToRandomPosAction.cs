@@ -29,7 +29,7 @@
         {
             Vector3 randomTarget = new Vector3(RandomHelper.RandomNumber(this.XMin, this.XMax), 0, RandomHelper.RandomNumber(this.YMin, this.YMax));
 
-            var speed = this.BelongToUnit.GetComponent<NumericComponent>()[NumericType.Speed] / 100f;
+            var speed = this.BelongToUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Speed);
 
             this.BelongToUnit.GetComponent<MoveComponent>().MoveTo(randomTarget, speed);
         }

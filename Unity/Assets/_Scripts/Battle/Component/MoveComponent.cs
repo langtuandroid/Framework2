@@ -1,92 +1,109 @@
 ﻿using System;
 using System.Collections.Generic;
 using Framework;
+using Unity.Mathematics;
 using UnityEngine;
+
+[Invoke(BattleTimerType.MoveTimer)]
+public class MoveTimer : ATimer<MoveComponent>
+{
+    protected override void Run(MoveComponent self)
+    {
+        try
+        {
+           self.MoveForward(true);
+        }
+        catch (Exception e)
+        {
+            Log.Error($"move timer error: {self.Id}\n{e}");
+        }
+    }
+}
 
 public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 {
-    public Vector3 PreTarget
+    public float3 PreTarget
     {
-        get { return this.Targets[this.NextPointIndex - 1]; }
+        get
+        {
+            return this.Targets[this.N - 1];
+        }
     }
 
-    public Vector3 NextTarget
+    public float3 NextTarget
     {
-        get { return this.Targets[this.NextPointIndex]; }
+        get
+        {
+            return this.Targets[this.N];
+        }
     }
 
-    // 开启一次移动协程的时间点
+    // 开启移动协程的时间
     public long BeginTime;
 
-    /// <summary>
-    /// 两点之间寻路的累加计时器
-    /// </summary>
-    public long AccumulateTime;
-
-    /// <summary>
-    /// 目标的范围
-    /// </summary>
-    public float TargetRange = 0;
-
-    // 每个点的开始移动的时间点
+    // 每个点的开始时间
     public long StartTime { get; set; }
 
-    // 开启移动时的Unit的位置
-    public Vector3 StartPos;
+    // 开启移动协程的Unit的位置
+    public float3 StartPos;
+
+    public float3 RealPos
+    {
+        get
+        {
+            return this.Targets[0];
+        }
+    }
 
     private long needTime;
 
     public long NeedTime
     {
-        get { return this.needTime; }
-        set { this.needTime = value; }
-    }
-
-    public float Speed; // m/s
-
-    public Action<bool> Callback;
-
-    public List<Vector3> Targets = new List<Vector3>();
-
-    public Vector3 FinalTarget
-    {
         get
         {
-            if (this.Targets.Count > 0)
-            {
-                return this.Targets[this.Targets.Count - 1];
-            }
-
-            return Vector3.zero;
+            return this.needTime;
+        }
+        set
+        {
+            this.needTime = value;
         }
     }
 
-    public bool ShouldMove = false;
-    public bool StartMoveCurrentFrame = false;
+    public long MoveTimer;
 
-    /// <summary>
-    /// 下一个路径点的索引值
-    /// </summary>
-    public int NextPointIndex;
+    public float Speed; // m/s
+
+    public ETTask<bool> tcs;
+
+    public List<float3> Targets = new List<float3>();
+
+    public float3 FinalTarget
+    {
+        get
+        {
+            return this.Targets[this.Targets.Count - 1];
+        }
+    }
+
+    public int N;
 
     public int TurnTime;
 
     public bool IsTurnHorizontal;
 
-    public Quaternion From;
+    public quaternion From;
 
-    public Quaternion To;
-
-
+    public quaternion To;
     public void Awake()
     {
         StartTime = 0;
-        StartPos = Vector3.zero;
+        StartPos = float3.zero;
         NeedTime = 0;
-        Callback = null;
+        MoveTimer = 0;
+        tcs = null;
         Targets.Clear();
         Speed = 0;
-        NextPointIndex = 0;
+        N = 0;
         TurnTime = 0;
     }
 
@@ -106,30 +123,28 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         {
             return false;
         }
-
+            
         Unit unit = GetParent<Unit>();
-        using (RecyclableList<Vector3> path = RecyclableList<Vector3>.Create())
+
+        using RecyclableList<float3> path = RecyclableList<float3>.Create();
+            
+        MoveForward(false);
+                
+        path.Add(unit.Position); // 第一个是Unit的pos
+        for (int i = N; i < Targets.Count; ++i)
         {
-            path.Add(unit.Position); // 第一个是Unit的pos
-            for (int i = NextPointIndex; i < Targets.Count; ++i)
-            {
-                path.Add(Targets[i]);
-            }
-
-            Stop();
-            MoveToAsync(path, speed).Coroutine();
+            path.Add(Targets[i]);
         }
-
+        MoveToAsync(path, speed).Coroutine();
         return true;
     }
 
-    public async ETTask<bool> MoveToAsync(List<Vector3> target, float speed,
-        int turnTime = 100, float targetRange = 0, ETCancellationToken cancellationToken = null)
+    // 该方法不需要用cancelToken的方式取消，因为即使不传入cancelToken，多次调用该方法也要取消之前的移动协程,上层可以stop取消
+    public async ETTask<bool> MoveToAsync(List<float3> target, float speed, int turnTime = 100)
     {
-        Stop();
-        TargetRange = targetRange;
+        Stop(false);
 
-        foreach (Vector3 v in target)
+        foreach (float3 v in target)
         {
             Targets.Add(v);
         }
@@ -137,35 +152,21 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         IsTurnHorizontal = true;
         TurnTime = turnTime;
         Speed = speed;
-        ETTask<bool> tcs = ETTask<bool>.Create(true);
-        Callback = (ret) => { tcs.SetResult(ret); };
+        tcs = ETTask<bool>.Create(true);
 
         StartMove();
-
-        void CancelAction()
-        {
-            Stop();
-        }
-
-        bool moveRet;
-        try
-        {
-            cancellationToken?.Add(CancelAction);
-            moveRet = await tcs;
-        }
-        finally
-        {
-            cancellationToken?.Remove(CancelAction);
-        }
+            
+        bool moveRet = await tcs;
 
         return moveRet;
     }
 
-    public void MoveForward(long deltaTime, bool needCancel)
+    public void MoveForward(bool ret)
     {
         Unit unit = GetParent<Unit>();
 
-        long moveTime = AccumulateTime += deltaTime;
+        long timeNow = TimeHelper.ClientNow();
+        long moveTime = timeNow - StartTime;
 
         while (true)
         {
@@ -189,7 +190,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
                 float amount = moveTime * 1f / NeedTime;
                 if (amount > 0)
                 {
-                    Vector3 newPos = Vector3.Lerp(StartPos, NextTarget, amount);
+                    float3 newPos = math.lerp(StartPos, NextTarget, amount);
                     unit.Position = newPos;
                 }
 
@@ -197,25 +198,17 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
                 if (TurnTime > 0)
                 {
                     amount = moveTime * 1f / TurnTime;
-                    Quaternion q = Quaternion.Slerp(From, To, amount);
+                    if (amount > 1)
+                    {
+                        amount = 1f;
+                    }
+
+                    quaternion q = math.slerp(From, To, amount);
                     unit.Rotation = q;
                 }
             }
 
             moveTime -= NeedTime;
-
-            // 如果抵达了目标范围，强行让客户端停止
-            if (Vector3.Distance(unit.Position, FinalTarget) - TargetRange <= 0.0001f)
-            {
-                unit.Rotation = To;
-
-                Action<bool> callback = Callback;
-                Callback = null;
-
-                Clear();
-                callback?.Invoke(true);
-                return;
-            }
 
             // 表示这个点还没走完，等下一帧再来
             if (moveTime < 0)
@@ -223,17 +216,15 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
                 return;
             }
 
+            // 到这里说明这个点已经走完
+
             // 如果是最后一个点
-            if (NextPointIndex >= Targets.Count - 1)
+            if (N >= Targets.Count - 1)
             {
                 unit.Position = NextTarget;
                 unit.Rotation = To;
 
-                Action<bool> callback = Callback;
-                Callback = null;
-
-                Clear();
-                callback?.Invoke(!needCancel);
+                MoveFinish(ret);
                 return;
             }
 
@@ -246,39 +237,37 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         BeginTime = TimeHelper.ClientNow();
         StartTime = BeginTime;
         SetNextTarget();
-        ShouldMove = true;
+        MoveTimer = TimerComponent.Instance.NewFrameTimer(BattleTimerType.MoveTimer, this);
     }
 
     private void SetNextTarget()
     {
+
         Unit unit = GetParent<Unit>();
 
-        ++NextPointIndex;
+        ++N;
 
         // 时间计算用服务端的位置, 但是移动要用客户端的位置来插值
-        Vector3 v = GetFaceV();
-        float distance = v.magnitude;
-
+        float3 v = GetFaceV();
+        float distance = math.length(v);
+            
         // 插值的起始点要以unit的真实位置来算
         StartPos = unit.Position;
 
-        AccumulateTime = 0;
         StartTime += NeedTime;
-
-        NeedTime = (long)(distance / Speed * 1000);
-
-
+            
+        NeedTime = (long) (distance / Speed * 1000);
+            
         if (TurnTime > 0)
         {
             // 要用unit的位置
-            Vector3 faceV = GetFaceV();
-            if (faceV.sqrMagnitude < 0.0001f)
+            float3 faceV = GetFaceV();
+            if (math.lengthsq(faceV) < 0.0001f)
             {
                 return;
             }
-
             From = unit.Rotation;
-
+                
             if (IsTurnHorizontal)
             {
                 faceV.y = 0;
@@ -286,15 +275,15 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
             if (Math.Abs(faceV.x) > 0.01 || Math.Abs(faceV.z) > 0.01)
             {
-                To = Quaternion.LookRotation(faceV, Vector3.up);
+                To = quaternion.LookRotation(faceV, math.up());
             }
 
             return;
         }
-
+            
         if (TurnTime == 0) // turn time == 0 立即转向
         {
-            Vector3 faceV = GetFaceV();
+            float3 faceV = GetFaceV();
             if (IsTurnHorizontal)
             {
                 faceV.y = 0;
@@ -302,22 +291,59 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
             if (Math.Abs(faceV.x) > 0.01 || Math.Abs(faceV.z) > 0.01)
             {
-                To = Quaternion.LookRotation(faceV, Vector3.up);
+                To = quaternion.LookRotation(faceV, math.up());
                 unit.Rotation = To;
             }
         }
     }
 
-    private Vector3 GetFaceV()
+    private float3 GetFaceV()
     {
         return NextTarget - PreTarget;
     }
 
-    public bool FlashTo(Vector3 target)
+    public bool FlashTo(float3 target)
     {
         Unit unit = GetParent<Unit>();
         unit.Position = target;
         return true;
+    }
+
+    // ret: 停止的时候，移动协程的返回值
+    public void Stop(bool ret)
+    {
+        if (Targets.Count > 0)
+        {
+            MoveForward(ret);
+        }
+
+        MoveFinish(ret);
+    }
+
+    private void MoveFinish(bool ret)
+    {
+        if (StartTime == 0)
+        {
+            return;
+        }
+            
+        StartTime = 0;
+        StartPos = float3.zero;
+        BeginTime = 0;
+        NeedTime = 0;
+        TimerComponent.Instance?.Remove(ref MoveTimer);
+        Targets.Clear();
+        Speed = 0;
+        N = 0;
+        TurnTime = 0;
+        IsTurnHorizontal = false;
+
+        if (tcs != null)
+        {
+            var tcs = this.tcs;
+            this.tcs = null;
+            tcs.SetResult(ret);
+        }
     }
 
     public bool MoveTo(Vector3 target, float speed, int turnTime = 0,
@@ -329,7 +355,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
             return false;
         }
 
-        Stop();
+        Stop(false);
 
         IsTurnHorizontal = isTurnHorizontal;
         TurnTime = turnTime;
@@ -354,7 +380,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
             return false;
         }
 
-        Stop();
+        Stop(false);
 
         foreach (Vector3 v in target)
         {
@@ -370,36 +396,8 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         return true;
     }
 
-    public void Stop(bool result = false)
-    {
-        Clear(result);
-    }
-
-    public void Clear(bool result = false)
-    {
-        StartTime = 0;
-        StartPos = Vector3.zero;
-        BeginTime = 0;
-        NeedTime = 0;
-        AccumulateTime = 0;
-        Targets.Clear();
-        Speed = 0;
-        NextPointIndex = 0;
-        TurnTime = 0;
-        IsTurnHorizontal = false;
-        ShouldMove = false;
-
-        if (Callback != null)
-        {
-            Action<bool> callback = Callback;
-            Callback = null;
-            callback.Invoke(result);
-        }
-    }
-
-
     public void OnDestroy()
     {
-        Clear();
+        MoveFinish(true);
     }
 }

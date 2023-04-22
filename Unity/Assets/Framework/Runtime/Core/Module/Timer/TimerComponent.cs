@@ -184,8 +184,15 @@ namespace Framework
                 this.minTime = tillTime;
             }
         }
+        
+        public bool Remove(ref long id)
+        {
+            long i = id;
+            id = 0;
+            return this.Remove(i);
+        } 
 
-        public bool Remove(long id)
+        private bool Remove(long id)
         {
             if (id == 0)
             {

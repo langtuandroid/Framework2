@@ -1,5 +1,4 @@
 ﻿using ET;
-using ET.Battle;
 using Framework;
 
 [Invoke(BattleTimerType.ResurrectionTimer)]
@@ -46,6 +45,6 @@ public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
             unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = true;
         }
 
-        TimerComponent.Instance.Remove(DeadTimerId);
+        TimerComponent.Instance.Remove(ref DeadTimerId);
     }
 }

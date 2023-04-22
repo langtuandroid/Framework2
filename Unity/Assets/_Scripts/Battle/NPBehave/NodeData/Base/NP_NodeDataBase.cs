@@ -56,7 +56,12 @@ public abstract class NP_NodeDataBase
     public virtual Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {
         return null;
-    } 
+    }
+
+    public override string ToString()
+    {
+        return GetType().ToString();
+    }
 }
 
 public enum NodeType

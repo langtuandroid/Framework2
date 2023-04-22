@@ -17,6 +17,7 @@ namespace ET
                     Scene.AddComponent<LaunchSceneComponent>();
                     break;
                 case SceneType.Battle:
+                    Scene.AddComponent<BattleSceneComponent>();
                     break;
             }
         }
