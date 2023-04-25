@@ -27,24 +27,12 @@ public class DeadComponent : Entity, IAwakeSystem<long>, IDestroySystem
     {
         ResurrectionTime = resurrectionTime;
 
-        Unit unit = GetParent<Unit>();
-
-        // 休眠刚体，不再会产生碰撞
-        unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = false;
-
         DeadTimerId = TimerComponent.Instance.NewOnceTimer(TimeHelper.ClientNow() + ResurrectionTime,
             BattleTimerType.ResurrectionTimer, this);
     }
 
     public void OnDestroy()
     {
-        Unit unit = GetParent<Unit>();
-
-        if (!(unit.GetComponent<B2S_ColliderComponent>().Body is null))
-        {
-            unit.GetComponent<B2S_ColliderComponent>().Body.IsAwake = true;
-        }
-
         TimerComponent.Instance.Remove(ref DeadTimerId);
     }
 }
