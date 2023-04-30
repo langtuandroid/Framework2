@@ -22,8 +22,5 @@ namespace ET
         [LabelText("y轴方向上的一半长度")]
         [DisableInEditorMode]
         public float hy;
-
-        [LabelText("旋转角度")]
-        public float Angle;
     }
 }

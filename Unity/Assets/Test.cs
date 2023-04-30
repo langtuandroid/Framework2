@@ -11,6 +11,7 @@ public class Test : MonoBehaviour
     [Button]
     async void Start()
     {
+        print(11);
     }
 
     private void Update()

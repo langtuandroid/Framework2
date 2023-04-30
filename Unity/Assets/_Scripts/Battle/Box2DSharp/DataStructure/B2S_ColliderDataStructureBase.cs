@@ -6,6 +6,7 @@
 
 using System.Numerics;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -32,7 +33,6 @@ namespace ET
         [LabelText("Box2D碰撞体类型")]
         public B2S_ColliderType b2SColliderType;
 
-        [LabelText("碰撞体偏移信息")]
-        public System.Numerics.Vector2 finalOffset = new System.Numerics.Vector2(0, 0);
+        [LabelText("碰撞体偏移信息")] public float2 finalOffset = new float2(0, 0);
     }
 }
