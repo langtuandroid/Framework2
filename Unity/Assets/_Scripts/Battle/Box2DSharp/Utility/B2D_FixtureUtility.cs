@@ -1,9 +1,3 @@
-//------------------------------------------------------------
-// Author: 烟雨迷离半世殇
-// Mail: 1778139321@qq.com
-// Data: 2019年7月20日 18:45:40
-//------------------------------------------------------------
-
 using System.Collections.Generic;
 using System.Numerics;
 using Box2DSharp.Collision.Shapes;
@@ -26,10 +20,10 @@ namespace ET
         /// <param name="angle">角度</param>
         /// <param name="isSensor">是否为触发器</param>
         /// <param name="userData">用户自定义信息</param>
-        public static void CreateBoxFixture(this Body self, float hx, float hy, Vector2 offset, float angle, bool isSensor, object userData)
+        public static void CreateBoxFixture(this Body self, float hx, float hy, UnityEngine.Vector2 offset, float angle, bool isSensor, object userData)
         {
             PolygonShape m_BoxShape = new PolygonShape();
-            m_BoxShape.SetAsBox(hx, hy, offset, angle);
+            m_BoxShape.SetAsBox(hx, hy, new Vector2(offset.x, offset.y), angle);
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.IsSensor = isSensor;
             fixtureDef.Shape = m_BoxShape;
@@ -45,11 +39,11 @@ namespace ET
         /// <param name="offset">偏移量</param>
         /// <param name="isSensor">是否为触发器</param>
         /// <param name="userData">用户自定义信息</param>
-        public static void CreateCircleFixture(this Body self, float radius, Vector2 offset, bool isSensor, object userData)
+        public static void CreateCircleFixture(this Body self, float radius,UnityEngine.Vector2 offset, bool isSensor, object userData)
         {
             CircleShape m_CircleShape = new CircleShape();
             m_CircleShape.Radius = radius;
-            m_CircleShape.Position = offset;
+            m_CircleShape.Position = new Vector2(offset.x, offset.y);
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.IsSensor = isSensor;
             fixtureDef.Shape = m_CircleShape;

@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2D_CircleColliderDataStructure.b2DColliderType = B2D_ColliderType.CircleCollider;
+            this.MB2D_CircleColliderDataStructure.B2D_ColliderType = B2D_ColliderType.CircleCollider;
         }
 
         [Button("重新绘制圆形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -99,7 +99,7 @@ namespace ET
                     b2DCircleColliderDataStructure.finalOffset.x = MB2D_CircleColliderDataStructure.finalOffset.x;
                     b2DCircleColliderDataStructure.finalOffset.y = MB2D_CircleColliderDataStructure.finalOffset.y;
                     b2DCircleColliderDataStructure.isSensor = MB2D_CircleColliderDataStructure.isSensor;
-                    b2DCircleColliderDataStructure.b2DColliderType = MB2D_CircleColliderDataStructure.b2DColliderType;
+                    b2DCircleColliderDataStructure.B2D_ColliderType = MB2D_CircleColliderDataStructure.B2D_ColliderType;
                     b2DCircleColliderDataStructure.radius = MB2D_CircleColliderDataStructure.radius;
                     this.MColliderDataSupporter.colliderDataDic.Add(this.MB2D_CircleColliderDataStructure.id,
                         b2DCircleColliderDataStructure);
@@ -115,7 +115,7 @@ namespace ET
             {
                 using (FileStream file =
                        File.Create(
-                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/{B2D_BattleColliderExportPathDefine.ColliderDataFileName}.bytes"))
+                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
                 {
                     BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderDataSupporter);
                 }

@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2D_PolygonColliderDataStructure.b2DColliderType = B2D_ColliderType.PolygonCollider;
+            this.MB2D_PolygonColliderDataStructure.B2D_ColliderType = B2D_ColliderType.PolygonCollider;
         }
 
         [Button("重新绘制多边形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -151,7 +151,7 @@ namespace ET
                     temp.finalOffset.x = MB2D_PolygonColliderDataStructure.finalOffset.x;
                     temp.finalOffset.y = MB2D_PolygonColliderDataStructure.finalOffset.y;
                     temp.isSensor = MB2D_PolygonColliderDataStructure.isSensor;
-                    temp.b2DColliderType = MB2D_PolygonColliderDataStructure.b2DColliderType;
+                    temp.B2D_ColliderType = MB2D_PolygonColliderDataStructure.B2D_ColliderType;
                     for (int i = 0; i < this.MB2D_PolygonColliderDataStructure.finalPoints.Count; i++)
                     {
                         temp.finalPoints.Add(new List<Vector2>());
@@ -179,7 +179,7 @@ namespace ET
             {
                 using (FileStream file =
                        File.Create(
-                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/{B2D_BattleColliderExportPathDefine.ColliderDataFileName}.bytes"))
+                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
                 {
                     BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderDataSupporter);
                 }

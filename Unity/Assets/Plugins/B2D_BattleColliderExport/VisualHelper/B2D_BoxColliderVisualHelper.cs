@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2D_BoxColliderDataStructure.b2DColliderType = B2D_ColliderType.BoxColllider;
+            this.MB2D_BoxColliderDataStructure.B2D_ColliderType = B2D_ColliderType.BoxColllider;
         }
 
         [Button("重新绘制矩形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -107,7 +107,7 @@ namespace ET
                     b2DBoxColliderDataStructure.finalOffset.x = MB2D_BoxColliderDataStructure.finalOffset.x;
                     b2DBoxColliderDataStructure.finalOffset.y = MB2D_BoxColliderDataStructure.finalOffset.y;
                     b2DBoxColliderDataStructure.isSensor = MB2D_BoxColliderDataStructure.isSensor;
-                    b2DBoxColliderDataStructure.b2DColliderType = MB2D_BoxColliderDataStructure.b2DColliderType;
+                    b2DBoxColliderDataStructure.B2D_ColliderType = MB2D_BoxColliderDataStructure.B2D_ColliderType;
                     b2DBoxColliderDataStructure.hx = MB2D_BoxColliderDataStructure.hx;
                     b2DBoxColliderDataStructure.hy = this.MB2D_BoxColliderDataStructure.hy;
                     this.MColliderDataSupporter.colliderDataDic.Add(this.MB2D_BoxColliderDataStructure.id,
@@ -124,7 +124,7 @@ namespace ET
             {
                 using (FileStream file =
                        File.Create(
-                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/{B2D_BattleColliderExportPathDefine.ColliderDataFileName}.bytes"))
+                           $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
                 {
                     BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderDataSupporter);
                 }

@@ -3,6 +3,7 @@ using Box2DSharp.Common;
 using Box2DSharp.Dynamics;
 using ET;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 using Color = Box2DSharp.Common.Color;
 using Random = UnityEngine.Random;
@@ -18,7 +19,7 @@ public class Test : MonoBehaviour
         world = new World(new Vector2(0,-1));
         world.SetDebugDrawer(new Box2DDrawer());
         var body =world.CreateBody(new BodyDef() { BodyType = BodyType.StaticBody });
-        body.CreateBoxFixture(10,1, Vector2.Zero,0,false,null);
+        body.CreateBoxFixture(10,1, new float2(0),0,false,null);
         body.SetTransform(new Vector2(0, 0), 0);
         body.SetMassData(new MassData() { Center = body.GetPosition(), Mass = 1 });
     }
@@ -28,7 +29,7 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             var body = world.CreateBody(new BodyDef() { AllowSleep = false, BodyType = Random.Range(1,11) > 5 ? BodyType.StaticBody : BodyType.DynamicBody});
-            body.CreateCircleFixture(1, Vector2.Zero, false, null);
+            body.CreateCircleFixture(1, new float2(0), false, null);
             body.SetTransform(new Vector2(Random.Range(1,10), Random.Range(1,10)), 0);
             body.SetMassData(new MassData(){Center = body.GetPosition(), Mass = 1});
         }

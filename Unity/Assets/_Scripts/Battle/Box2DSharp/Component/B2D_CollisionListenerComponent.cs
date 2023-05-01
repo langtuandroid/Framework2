@@ -1,13 +1,5 @@
-//------------------------------------------------------------
-// Author: 烟雨迷离半世殇
-// Mail: 1778139321@qq.com
-// Data: 2019年7月20日 20:09:20
-//------------------------------------------------------------
-
-using System;
 using System.Collections.Generic;
 using Box2DSharp.Collision.Collider;
-using Box2DSharp.Collision.Shapes;
 using Box2DSharp.Dynamics;
 using Box2DSharp.Dynamics.Contacts;
 using Framework;
@@ -18,7 +10,7 @@ namespace ET
     /// <summary>
     /// 某一物理世界所有碰撞的监听者，负责碰撞事件的分发
     /// </summary>
-    public class B2D_CollisionListenerComponent : Entity, IContactListener ,IAwakeSystem
+    public class B2D_CollisionListenerComponent : Entity, IContactListener ,IAwakeSystem, IUpdateSystem
     {
         public B2D_WorldColliderManagerComponent B2DWorldColliderManagerComponent;
 
@@ -69,7 +61,24 @@ namespace ET
         {
         }
 
-        public void FixedUpdate()
+        public override void Dispose()
+        {
+            base.Dispose();
+            if (this.IsDisposed)
+                return;
+            m_ToBeRemovedCollisionData.Clear();
+            this.m_CollisionRecorder.Clear();
+        }
+
+        public void Awake()
+        {
+            //绑定指定的物理世界，正常来说一个房间一个物理世界,这里是Demo，直接获取了
+            Parent.GetComponent<B2D_WorldComponent>().GetWorld().SetContactListener(this);
+            //self.TestCollision();
+            B2DWorldColliderManagerComponent = Parent.GetComponent<B2D_WorldColliderManagerComponent>();
+        }
+
+        public void Update(float deltaTime)
         {
             foreach (var tobeRemovedData in m_ToBeRemovedCollisionData)
             {
@@ -94,44 +103,6 @@ namespace ET
                 B2D_CollisionDispatcherComponent.Instance.HandleCollisionSustain(unitA, unitB);
                 B2D_CollisionDispatcherComponent.Instance.HandleCollisionSustain(unitB, unitA);
             }
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            if (this.IsDisposed)
-                return;
-            m_ToBeRemovedCollisionData.Clear();
-            this.m_CollisionRecorder.Clear();
-        }
-
-        /// <summary>
-        /// 测试碰撞
-        /// </summary>
-        public void TestCollision()
-        {
-            BodyDef bodyDef = new BodyDef {BodyType = BodyType.DynamicBody};
-            Body m_Body = this.parent.GetComponent<B2D_WorldComponent>().GetWorld().CreateBody(bodyDef);
-            CircleShape m_CircleShape = new CircleShape();
-            m_CircleShape.Radius = 5;
-            m_Body.CreateFixture(m_CircleShape, 5);
-
-            BodyDef bodyDef1 = new BodyDef {BodyType = BodyType.DynamicBody};
-            Body m_Body1 = this.parent.GetComponent<B2D_WorldComponent>().GetWorld().CreateBody(bodyDef1);
-            CircleShape m_CircleShape1 = new CircleShape();
-            m_CircleShape1.Radius = 5;
-            m_Body1.CreateFixture(m_CircleShape1, 5);
-
-            Log.Msg("创建完成");
-        }
-
-        public void Awake()
-        {
-        
-            //绑定指定的物理世界，正常来说一个房间一个物理世界,这里是Demo，直接获取了
-            Parent.GetComponent<B2D_WorldComponent>().GetWorld().SetContactListener(this);
-            //self.TestCollision();
-            B2DWorldColliderManagerComponent = Parent.GetComponent<B2D_WorldColliderManagerComponent>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using ET;
 using Framework;
 using Unity.Mathematics;
 using UnityEngine;
@@ -8,8 +9,15 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
     public void Awake()
     {
         InstanceQueueMap.InstanceQueueMapDic[typeof(IBattleUpdateSystem)] = InstanceQueueIndex.BattleUpdate;
-        this.DomainScene().AddComponent<NP_TreeDataRepositoryComponent>();
-        var unitComponent = this.DomainScene().AddComponent<UnitComponent>();
+
+        Scene battleScene = this.DomainScene();
+        battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
+        battleScene.AddComponent<B2D_ColliderDataRepositoryComponent>();
+        battleScene.AddComponent<B2D_CollisionListenerComponent>();
+        battleScene.AddComponent<B2D_WorldColliderManagerComponent>();
+        battleScene.AddComponent<B2D_WorldComponent>();
+        
+        var unitComponent = battleScene.AddComponent<UnitComponent>();
         Unit unit = unitComponent.AddChild<Unit>();
         unit.AddComponent<NumericComponent>();
         unit.AddComponent<BuffManagerComponent>();

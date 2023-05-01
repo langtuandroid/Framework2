@@ -21,7 +21,7 @@ namespace ET
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        public abstract void HandleCollisionSustain(Unit a, Unit b);
+        public abstract void HandleCollisionStay(Unit a, Unit b);
 
         /// <summary>
         /// a是碰撞者自身，b是碰撞到的目标

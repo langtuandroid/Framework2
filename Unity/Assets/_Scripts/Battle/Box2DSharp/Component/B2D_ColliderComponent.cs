@@ -20,11 +20,6 @@ namespace ET
         public int B2D_CollisionRelationConfigId;
         
         /// <summary>
-        /// 碰撞体数据表中的Id (Excel中的Id)
-        /// </summary>
-        public int B2D_ColliderDataConfigId;
-
-        /// <summary>
         /// 碰撞处理者名称
         /// </summary>
         public string CollisionHandlerName;

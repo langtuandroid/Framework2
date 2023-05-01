@@ -31,7 +31,7 @@ namespace ET
         public bool isSensor;
 
         [LabelText("Box2D碰撞体类型")]
-        public B2D_ColliderType b2DColliderType;
+        public B2D_ColliderType B2D_ColliderType;
 
         [LabelText("碰撞体偏移信息")] public float2 finalOffset = new float2(0, 0);
     }

@@ -5,7 +5,7 @@
         /// <summary>
         /// 名称ID保存地址
         /// </summary>
-        public const string ColliderNameAndIdInflectSavePath = "Assets/Plugins/B2D_BattleColliderExport/Saves";
+        public const string ColliderNameAndIdInflectSavePath = "Assets/Plugins/B2D_BattleColliderExport/Saves/ColliderNameAndIdInflect.bytes";
         
         /// <summary>
         /// 存碰撞体的预制体的地方
@@ -15,10 +15,6 @@
         /// <summary>
         /// 名称ID保存地址
         /// </summary>
-        public const string ClientColliderDataSavePath = "Assets/Res/Configs/OtherConfigs";
-        
-        public const string NameAndIdInflectFileName = "ColliderNameAndIdInflect";
-
-        public const string ColliderDataFileName = "ColliderData"; 
+        public const string ClientColliderDataSavePath = "Assets/Res/Configs/OtherConfigs/ColliderData.bytes";
     }
 }

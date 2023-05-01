@@ -110,7 +110,7 @@ namespace ET
             }
 
             using (FileStream file =
-                   File.Create($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}/{B2D_BattleColliderExportPathDefine.NameAndIdInflectFileName}.bytes"))
+                   File.Create($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
             {
                 BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderNameAndIdInflectSupporter);
             }
@@ -162,14 +162,14 @@ namespace ET
             theObjectWillBeEdited = null;
             using (FileStream file =
                    File.Create(
-                       $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}/{B2D_BattleColliderExportPathDefine.NameAndIdInflectFileName}.bytes"))
+                       $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
             {
                 BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderNameAndIdInflectSupporter);
             }
 
             using (FileStream file =
                    File.Create(
-                       $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/{B2D_BattleColliderExportPathDefine.ColliderDataFileName}.bytes"))
+                       $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
             {
                 BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderDataSupporter);
             }

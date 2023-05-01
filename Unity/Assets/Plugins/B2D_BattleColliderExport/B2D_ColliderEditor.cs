@@ -28,14 +28,10 @@ namespace ET
         [HideLabel] [ShowIf("@curColliderName == \"MB2DBoxColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
         public B2D_BoxColliderVisualHelper MB2DBoxColliderVisualHelper;
 
-        [HideLabel]
-        [ShowIf("@curColliderName == \"MB2DCircleColliderVisualHelper\"")]
-        [TabGroup("Special", "编辑")]
+        [HideLabel] [ShowIf("@curColliderName == \"MB2DCircleColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
         public B2D_CircleColliderVisualHelper MB2DCircleColliderVisualHelper;
 
-        [HideLabel]
-        [ShowIf("@curColliderName == \"MB2DPolygonColliderVisualHelper\"")]
-        [TabGroup("Special", "编辑")]
+        [HideLabel] [ShowIf("@curColliderName == \"MB2DPolygonColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
         public B2D_PolygonColliderVisualHelper MB2DPolygonColliderVisualHelper;
 
         [HideInInspector] public ColliderNameAndIdInflectSupporter ColliderNameAndIdInflectSupporter =
@@ -105,11 +101,10 @@ namespace ET
         private void ReadcolliderNameAndIdInflect()
         {
             if (File.Exists(
-                    $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}/ColliderNameAndIdInflect.bytes"))
+                    $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
             {
                 byte[] mfile0 =
-                    File.ReadAllBytes(
-                        $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}/ColliderNameAndIdInflect.bytes");
+                    File.ReadAllBytes($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}");
                 //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
                 if (mfile0.Length > 0)
                     this.ColliderNameAndIdInflectSupporter =
@@ -123,7 +118,8 @@ namespace ET
             {
                 curColliderName = String.Empty;
                 return;
-            } 
+            }
+
             if (MenuTree.ContainsName(ColliderObj.name))
             {
                 ShowTips("名字重复！！");
@@ -131,6 +127,7 @@ namespace ET
                 curColliderName = String.Empty;
                 return;
             }
+
             RefreshCollider();
         }
 
@@ -141,6 +138,7 @@ namespace ET
                 curColliderName = String.Empty;
                 return;
             }
+
             var box = ColliderObj.GetComponent<BoxCollider2D>();
             if (box != null)
             {
@@ -194,12 +192,11 @@ namespace ET
             }
 
             if (File.Exists(
-                    $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/ColliderData.bytes"))
+                    $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
             {
                 byte[] mfile0 =
                     File.ReadAllBytes(
-                        $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}/ColliderData.bytes");
-                //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
+                        $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}");
                 if (mfile0.Length > 0)
                     this.ColliderDataSupporter =
                         BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
