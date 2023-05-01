@@ -10,7 +10,7 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    public enum B2S_ColliderType
+    public enum B2D_ColliderType
     {
         [LabelText("矩形碰撞体")]
         BoxColllider,
@@ -31,7 +31,7 @@ namespace ET
         public bool isSensor;
 
         [LabelText("Box2D碰撞体类型")]
-        public B2S_ColliderType b2SColliderType;
+        public B2D_ColliderType b2DColliderType;
 
         [LabelText("碰撞体偏移信息")] public float2 finalOffset = new float2(0, 0);
     }

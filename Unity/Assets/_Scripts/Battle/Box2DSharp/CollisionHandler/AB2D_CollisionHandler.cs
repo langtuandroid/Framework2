@@ -2,11 +2,11 @@
 
 namespace ET
 {
-    public class B2S_CollisionHandlerAttribute : BaseAttribute
+    public class B2D_CollisionHandlerAttribute : BaseAttribute
     {
     }
 
-    [B2S_CollisionHandler]
+    [B2D_CollisionHandler]
     public abstract class AB2D_CollisionHandler
     {
         /// <summary>

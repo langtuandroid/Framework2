@@ -33,7 +33,7 @@ namespace ET
         private void ReadcolliderData()
         {
             // byte[] mfile0 = XAssetLoader
-            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[0]))?.bytes;
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2DColliderConfigPath(this.colliderDataName[0]))?.bytes;
             // //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
             // if (mfile0 != null && mfile0.Length > 0)
             // {
@@ -43,7 +43,7 @@ namespace ET
             // }
             //
             // byte[] mfile1 = XAssetLoader
-            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[1]))?.bytes;
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2DColliderConfigPath(this.colliderDataName[1]))?.bytes;
             // if (mfile1 != null && mfile1.Length > 0)
             // {
             //     this.CircleColliderDatas =
@@ -53,7 +53,7 @@ namespace ET
             //
             //
             // byte[] mfile2 = XAssetLoader
-            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2SColliderConfigPath(this.colliderDataName[2]))?.bytes;
+            //     .LoadAsset<TextAsset>(XAssetPathUtilities.GetB2DColliderConfigPath(this.colliderDataName[2]))?.bytes;
             // if (mfile2 != null && mfile2.Length > 0)
             // {
             //     this.PolygonColliderDatas =

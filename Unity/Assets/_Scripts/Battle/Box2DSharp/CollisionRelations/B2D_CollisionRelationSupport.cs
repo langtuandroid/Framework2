@@ -9,11 +9,11 @@ using Sirenix.OdinInspector;
 
 namespace ET
 {
-    public class B2S_CollisionsRelationSupport
+    public class B2D_CollisionsRelationSupport
     {
         [LabelText("此数据载体ID")]
         public long SupportId;
 
-        public Dictionary<long, B2D_CollisionInstance> B2S_CollisionsRelationDic = new Dictionary<long, B2D_CollisionInstance>();
+        public Dictionary<long, B2D_CollisionInstance> B2D_CollisionsRelationDic = new Dictionary<long, B2D_CollisionInstance>();
     }
 }

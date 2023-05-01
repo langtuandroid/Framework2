@@ -11,7 +11,7 @@ namespace ET
     {
         public static B2D_CollisionDispatcherComponent Instance;
 
-        public Dictionary<string, AB2D_CollisionHandler> B2SCollisionHandlers =
+        public Dictionary<string, AB2D_CollisionHandler> B2DCollisionHandlers =
             new Dictionary<string, AB2D_CollisionHandler>();
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace ET
         /// </summary>
         public void HandleCollisionStart(Unit a, Unit b)
         {
-            if (B2SCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionStart(a, b);
@@ -31,7 +31,7 @@ namespace ET
         /// </summary>
         public void HandleCollisionSustain(Unit a, Unit b)
         {
-            if (B2SCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionSustain(a, b);
@@ -43,7 +43,7 @@ namespace ET
         /// </summary>
         public void HandleCollsionEnd(Unit a, Unit b)
         {
-            if (B2SCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionEnd(a, b);

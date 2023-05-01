@@ -30,7 +30,7 @@ namespace ET
 
         [LabelText("碰撞体数据")]
         [ShowInInspector]
-        public B2D_CircleColliderDataStructure MB2S_CircleColliderDataStructure
+        public B2D_CircleColliderDataStructure MB2D_CircleColliderDataStructure
         {
             get => dataStructureBase as B2D_CircleColliderDataStructure;
             set => dataStructureBase = value;
@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2S_CircleColliderDataStructure.b2SColliderType = B2S_ColliderType.CircleCollider;
+            this.MB2D_CircleColliderDataStructure.b2DColliderType = B2D_ColliderType.CircleCollider;
         }
 
         [Button("重新绘制圆形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -54,17 +54,17 @@ namespace ET
             var step = Mathf.RoundToInt(360f / Segments);
 
             Vector3 startPoint = new Vector3(
-                MB2S_CircleColliderDataStructure.radius *
-                Mathf.Cos(0 * Mathf.Deg2Rad) + MB2S_CircleColliderDataStructure.finalOffset.x, 0,
-                MB2S_CircleColliderDataStructure.radius *
-                Mathf.Sin(0 * Mathf.Deg2Rad) + MB2S_CircleColliderDataStructure.finalOffset.y);
+                MB2D_CircleColliderDataStructure.radius *
+                Mathf.Cos(0 * Mathf.Deg2Rad) + MB2D_CircleColliderDataStructure.finalOffset.x, 0,
+                MB2D_CircleColliderDataStructure.radius *
+                Mathf.Sin(0 * Mathf.Deg2Rad) + MB2D_CircleColliderDataStructure.finalOffset.y);
             for (int i = step; i <= 360; i += step)
             {
                 var nextPoint = new Vector3(
-                    MB2S_CircleColliderDataStructure.radius *
-                    Mathf.Cos(i * 1.0f * Mathf.Deg2Rad) + MB2S_CircleColliderDataStructure.finalOffset.x, 0,
-                    MB2S_CircleColliderDataStructure.radius *
-                    Mathf.Sin(i * 1.0f * Mathf.Deg2Rad) + MB2S_CircleColliderDataStructure.finalOffset.y);
+                    MB2D_CircleColliderDataStructure.radius *
+                    Mathf.Cos(i * 1.0f * Mathf.Deg2Rad) + MB2D_CircleColliderDataStructure.finalOffset.x, 0,
+                    MB2D_CircleColliderDataStructure.radius *
+                    Mathf.Sin(i * 1.0f * Mathf.Deg2Rad) + MB2D_CircleColliderDataStructure.finalOffset.y);
                 Gizmos.DrawLine(startPoint, nextPoint);
                 startPoint = nextPoint;
             }
@@ -73,9 +73,9 @@ namespace ET
         public override void FillDataStructure()
         {
             if(mCollider2D == null) return;
-            MB2S_CircleColliderDataStructure.radius = mCollider2D.radius;
-            MB2S_CircleColliderDataStructure.finalOffset = mCollider2D.offset;
-            MB2S_CircleColliderDataStructure.isSensor = mCollider2D.isTrigger;
+            MB2D_CircleColliderDataStructure.radius = mCollider2D.radius;
+            MB2D_CircleColliderDataStructure.finalOffset = mCollider2D.offset;
+            MB2D_CircleColliderDataStructure.isSensor = mCollider2D.isTrigger;
         }
 
         [Button("保存圆形碰撞体信息", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -89,25 +89,25 @@ namespace ET
                 return;
             } 
             SavePrefab();
-            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2S_CircleColliderDataStructure.id != 0)
+            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2D_CircleColliderDataStructure.id != 0)
             {
-                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_CircleColliderDataStructure.id))
+                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_CircleColliderDataStructure.id))
                 {
                     B2D_CircleColliderDataStructure b2DCircleColliderDataStructure =
                         new B2D_CircleColliderDataStructure();
-                    b2DCircleColliderDataStructure.id = MB2S_CircleColliderDataStructure.id;
-                    b2DCircleColliderDataStructure.finalOffset.x = MB2S_CircleColliderDataStructure.finalOffset.x;
-                    b2DCircleColliderDataStructure.finalOffset.y = MB2S_CircleColliderDataStructure.finalOffset.y;
-                    b2DCircleColliderDataStructure.isSensor = MB2S_CircleColliderDataStructure.isSensor;
-                    b2DCircleColliderDataStructure.b2SColliderType = MB2S_CircleColliderDataStructure.b2SColliderType;
-                    b2DCircleColliderDataStructure.radius = MB2S_CircleColliderDataStructure.radius;
-                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2S_CircleColliderDataStructure.id,
+                    b2DCircleColliderDataStructure.id = MB2D_CircleColliderDataStructure.id;
+                    b2DCircleColliderDataStructure.finalOffset.x = MB2D_CircleColliderDataStructure.finalOffset.x;
+                    b2DCircleColliderDataStructure.finalOffset.y = MB2D_CircleColliderDataStructure.finalOffset.y;
+                    b2DCircleColliderDataStructure.isSensor = MB2D_CircleColliderDataStructure.isSensor;
+                    b2DCircleColliderDataStructure.b2DColliderType = MB2D_CircleColliderDataStructure.b2DColliderType;
+                    b2DCircleColliderDataStructure.radius = MB2D_CircleColliderDataStructure.radius;
+                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2D_CircleColliderDataStructure.id,
                         b2DCircleColliderDataStructure);
                 }
                 else
                 {
-                    this.MColliderDataSupporter.colliderDataDic[this.MB2S_CircleColliderDataStructure.id] =
-                        this.MB2S_CircleColliderDataStructure;
+                    this.MColliderDataSupporter.colliderDataDic[this.MB2D_CircleColliderDataStructure.id] =
+                        this.MB2D_CircleColliderDataStructure;
                 }
             }
 
@@ -150,20 +150,20 @@ namespace ET
                 return;
             }
 
-            if (this.MB2S_CircleColliderDataStructure.id == 0)
+            if (this.MB2D_CircleColliderDataStructure.id == 0)
             {
                 if (this.MColliderNameAndIdInflectSupporter.colliderNameAndIdInflectDic.TryGetValue(
                     this.theObjectWillBeEdited.name,
-                    out this.MB2S_CircleColliderDataStructure.id))
+                    out this.MB2D_CircleColliderDataStructure.id))
                 {
-                    Debug.Log($"自动设置圆形碰撞体ID成功，ID为{MB2S_CircleColliderDataStructure.id}");
+                    Debug.Log($"自动设置圆形碰撞体ID成功，ID为{MB2D_CircleColliderDataStructure.id}");
                 }
 
-                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_CircleColliderDataStructure.id))
+                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_CircleColliderDataStructure.id))
                 {
-                    this.MB2S_CircleColliderDataStructure =
+                    this.MB2D_CircleColliderDataStructure =
                         (B2D_CircleColliderDataStructure) this.MColliderDataSupporter.colliderDataDic[
-                            this.MB2S_CircleColliderDataStructure.id];
+                            this.MB2D_CircleColliderDataStructure.id];
                 }
             }
 
@@ -182,10 +182,10 @@ namespace ET
         {
             mCollider2D = null;
             this.canDraw = false;
-            this.MB2S_CircleColliderDataStructure.id = 0;
-            this.MB2S_CircleColliderDataStructure.radius = 0;
-            MB2S_CircleColliderDataStructure.finalOffset = new float2(0);
-            this.MB2S_CircleColliderDataStructure.isSensor = false;
+            this.MB2D_CircleColliderDataStructure.id = 0;
+            this.MB2D_CircleColliderDataStructure.radius = 0;
+            MB2D_CircleColliderDataStructure.finalOffset = new float2(0);
+            this.MB2D_CircleColliderDataStructure.isSensor = false;
         }
 
         public B2D_CircleColliderVisualHelper(B2D_ColliderEditor colliderEditor) : base(colliderEditor)

@@ -30,7 +30,7 @@ namespace ET
 
         [LabelText("碰撞体数据")]
         [ShowInInspector]
-        public B2D_BoxColliderDataStructure MB2S_BoxColliderDataStructure
+        public B2D_BoxColliderDataStructure MB2D_BoxColliderDataStructure
         {
             get => dataStructureBase as B2D_BoxColliderDataStructure;
             set => dataStructureBase = value;
@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2S_BoxColliderDataStructure.b2SColliderType = B2S_ColliderType.BoxColllider;
+            this.MB2D_BoxColliderDataStructure.b2DColliderType = B2D_ColliderType.BoxColllider;
         }
 
         [Button("重新绘制矩形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -48,24 +48,24 @@ namespace ET
         {
             BoxCollider2D tempBox2D = this.mCollider2D;
             // 这里不需要再去根据Go的缩放计算了，因为Unity已经帮我们计算好了
-            this.MB2S_BoxColliderDataStructure.hx = tempBox2D.bounds.size.x / 2;
-            this.MB2S_BoxColliderDataStructure.hy = tempBox2D.bounds.size.y / 2;
+            this.MB2D_BoxColliderDataStructure.hx = tempBox2D.bounds.size.x / 2;
+            this.MB2D_BoxColliderDataStructure.hy = tempBox2D.bounds.size.y / 2;
 
-            MB2S_BoxColliderDataStructure.finalOffset = mCollider2D.offset;
+            MB2D_BoxColliderDataStructure.finalOffset = mCollider2D.offset;
 
             // 从左上角开始顺时针计算顶点
             Points[0] = new Vector3(
-                -MB2S_BoxColliderDataStructure.hx + MB2S_BoxColliderDataStructure.finalOffset.x, 0,
-                MB2S_BoxColliderDataStructure.hy + MB2S_BoxColliderDataStructure.finalOffset.y);
+                -MB2D_BoxColliderDataStructure.hx + MB2D_BoxColliderDataStructure.finalOffset.x, 0,
+                MB2D_BoxColliderDataStructure.hy + MB2D_BoxColliderDataStructure.finalOffset.y);
             Points[1] = new Vector3(
-                MB2S_BoxColliderDataStructure.hx + MB2S_BoxColliderDataStructure.finalOffset.x, 0,
-                MB2S_BoxColliderDataStructure.hy + MB2S_BoxColliderDataStructure.finalOffset.y);
+                MB2D_BoxColliderDataStructure.hx + MB2D_BoxColliderDataStructure.finalOffset.x, 0,
+                MB2D_BoxColliderDataStructure.hy + MB2D_BoxColliderDataStructure.finalOffset.y);
             Points[2] = new Vector3(
-                MB2S_BoxColliderDataStructure.hx + MB2S_BoxColliderDataStructure.finalOffset.x, 0,
-                -MB2S_BoxColliderDataStructure.hy + MB2S_BoxColliderDataStructure.finalOffset.y);
+                MB2D_BoxColliderDataStructure.hx + MB2D_BoxColliderDataStructure.finalOffset.x, 0,
+                -MB2D_BoxColliderDataStructure.hy + MB2D_BoxColliderDataStructure.finalOffset.y);
             Points[3] = new Vector3(
-                -MB2S_BoxColliderDataStructure.hx + MB2S_BoxColliderDataStructure.finalOffset.x, 0,
-                -MB2S_BoxColliderDataStructure.hy + MB2S_BoxColliderDataStructure.finalOffset.y);
+                -MB2D_BoxColliderDataStructure.hx + MB2D_BoxColliderDataStructure.finalOffset.x, 0,
+                -MB2D_BoxColliderDataStructure.hy + MB2D_BoxColliderDataStructure.finalOffset.y);
 
             this.canDraw = true;
         }
@@ -81,10 +81,10 @@ namespace ET
         public override void FillDataStructure()
         {
             if (mCollider2D == null) return;
-            this.MB2S_BoxColliderDataStructure.hx = mCollider2D.bounds.size.x / 2;
-            this.MB2S_BoxColliderDataStructure.hy = mCollider2D.bounds.size.y / 2;
-            MB2S_BoxColliderDataStructure.finalOffset = mCollider2D.offset;
-            MB2S_BoxColliderDataStructure.isSensor = mCollider2D.isTrigger;
+            this.MB2D_BoxColliderDataStructure.hx = mCollider2D.bounds.size.x / 2;
+            this.MB2D_BoxColliderDataStructure.hy = mCollider2D.bounds.size.y / 2;
+            MB2D_BoxColliderDataStructure.finalOffset = mCollider2D.offset;
+            MB2D_BoxColliderDataStructure.isSensor = mCollider2D.isTrigger;
         }
 
         [Button("保存矩形碰撞体信息", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -98,25 +98,25 @@ namespace ET
                 return;
             }
             SavePrefab();
-            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2S_BoxColliderDataStructure.id != 0)
+            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2D_BoxColliderDataStructure.id != 0)
             {
-                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_BoxColliderDataStructure.id))
+                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_BoxColliderDataStructure.id))
                 {
                     B2D_BoxColliderDataStructure b2DBoxColliderDataStructure = new B2D_BoxColliderDataStructure();
-                    b2DBoxColliderDataStructure.id = MB2S_BoxColliderDataStructure.id;
-                    b2DBoxColliderDataStructure.finalOffset.x = MB2S_BoxColliderDataStructure.finalOffset.x;
-                    b2DBoxColliderDataStructure.finalOffset.y = MB2S_BoxColliderDataStructure.finalOffset.y;
-                    b2DBoxColliderDataStructure.isSensor = MB2S_BoxColliderDataStructure.isSensor;
-                    b2DBoxColliderDataStructure.b2SColliderType = MB2S_BoxColliderDataStructure.b2SColliderType;
-                    b2DBoxColliderDataStructure.hx = MB2S_BoxColliderDataStructure.hx;
-                    b2DBoxColliderDataStructure.hy = this.MB2S_BoxColliderDataStructure.hy;
-                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2S_BoxColliderDataStructure.id,
+                    b2DBoxColliderDataStructure.id = MB2D_BoxColliderDataStructure.id;
+                    b2DBoxColliderDataStructure.finalOffset.x = MB2D_BoxColliderDataStructure.finalOffset.x;
+                    b2DBoxColliderDataStructure.finalOffset.y = MB2D_BoxColliderDataStructure.finalOffset.y;
+                    b2DBoxColliderDataStructure.isSensor = MB2D_BoxColliderDataStructure.isSensor;
+                    b2DBoxColliderDataStructure.b2DColliderType = MB2D_BoxColliderDataStructure.b2DColliderType;
+                    b2DBoxColliderDataStructure.hx = MB2D_BoxColliderDataStructure.hx;
+                    b2DBoxColliderDataStructure.hy = this.MB2D_BoxColliderDataStructure.hy;
+                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2D_BoxColliderDataStructure.id,
                         b2DBoxColliderDataStructure);
                 }
                 else
                 {
-                    this.MColliderDataSupporter.colliderDataDic[this.MB2S_BoxColliderDataStructure.id] =
-                        this.MB2S_BoxColliderDataStructure;
+                    this.MColliderDataSupporter.colliderDataDic[this.MB2D_BoxColliderDataStructure.id] =
+                        this.MB2D_BoxColliderDataStructure;
                 }
             }
 
@@ -169,16 +169,16 @@ namespace ET
             }
             FillDataStructure();
 
-            if (this.MB2S_BoxColliderDataStructure.id == 0)
+            if (this.MB2D_BoxColliderDataStructure.id == 0)
             {
                 this.MColliderNameAndIdInflectSupporter.colliderNameAndIdInflectDic.TryGetValue(
                     this.theObjectWillBeEdited.name,
-                    out this.MB2S_BoxColliderDataStructure.id);
-                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_BoxColliderDataStructure.id))
+                    out this.MB2D_BoxColliderDataStructure.id);
+                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_BoxColliderDataStructure.id))
                 {
-                    this.MB2S_BoxColliderDataStructure =
+                    this.MB2D_BoxColliderDataStructure =
                         (B2D_BoxColliderDataStructure)this.MColliderDataSupporter.colliderDataDic[
-                            this.MB2S_BoxColliderDataStructure.id];
+                            this.MB2D_BoxColliderDataStructure.id];
                 }
             }
         }
@@ -187,9 +187,9 @@ namespace ET
         {
             mCollider2D = null;
             this.canDraw = false;
-            this.MB2S_BoxColliderDataStructure.id = 0;
-            this.MB2S_BoxColliderDataStructure.isSensor = false;
-            MB2S_BoxColliderDataStructure.finalOffset = new float2(0);
+            this.MB2D_BoxColliderDataStructure.id = 0;
+            this.MB2D_BoxColliderDataStructure.isSensor = false;
+            MB2D_BoxColliderDataStructure.finalOffset = new float2(0);
         }
 
 

@@ -8,7 +8,7 @@ namespace ET
 {
     /// <summary>
     /// 一个碰撞体Component,包含一个碰撞实例所有信息，直接挂载到碰撞体Unit上
-    /// 比如诺手Q技能碰撞体UnitA，那么这个B2S_ColliderComponent的Entity就是UnitA，而其中的BelongToUnit就是诺手
+    /// 比如诺手Q技能碰撞体UnitA，那么这个B2D_ColliderComponent的Entity就是UnitA，而其中的BelongToUnit就是诺手
     /// </summary>
     public class B2D_ColliderComponent: Entity
     {
@@ -17,12 +17,12 @@ namespace ET
         /// <summary>
         /// 碰撞关系表中的Id (Excel中的Id)
         /// </summary>
-        public int B2S_CollisionRelationConfigId;
+        public int B2D_CollisionRelationConfigId;
         
         /// <summary>
         /// 碰撞体数据表中的Id (Excel中的Id)
         /// </summary>
-        public int B2S_ColliderDataConfigId;
+        public int B2D_ColliderDataConfigId;
 
         /// <summary>
         /// 碰撞处理者名称

@@ -18,25 +18,25 @@ namespace ET
         [TabGroup("Special", "管理")] public B2D_MenuTree MenuTree;
 
         [LabelText("画线管理者")] [TabGroup("Special", "编辑")]
-        public B2D_DebuggerHandler MB2SDebuggerHandler;
+        public B2D_DebuggerHandler MB2DDebuggerHandler;
 
         [TabGroup("Special", "编辑")] [OnValueChanged("OnSelectedObjChanged")]
         public GameObject ColliderObj;
 
         private string curColliderName;
 
-        [HideLabel] [ShowIf("@curColliderName == \"MB2SBoxColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
-        public B2D_BoxColliderVisualHelper MB2SBoxColliderVisualHelper;
+        [HideLabel] [ShowIf("@curColliderName == \"MB2DBoxColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
+        public B2D_BoxColliderVisualHelper MB2DBoxColliderVisualHelper;
 
         [HideLabel]
-        [ShowIf("@curColliderName == \"MB2SCircleColliderVisualHelper\"")]
+        [ShowIf("@curColliderName == \"MB2DCircleColliderVisualHelper\"")]
         [TabGroup("Special", "编辑")]
-        public B2D_CircleColliderVisualHelper MB2SCircleColliderVisualHelper;
+        public B2D_CircleColliderVisualHelper MB2DCircleColliderVisualHelper;
 
         [HideLabel]
-        [ShowIf("@curColliderName == \"MB2SPolygonColliderVisualHelper\"")]
+        [ShowIf("@curColliderName == \"MB2DPolygonColliderVisualHelper\"")]
         [TabGroup("Special", "编辑")]
-        public B2D_PolygonColliderVisualHelper MB2SPolygonColliderVisualHelper;
+        public B2D_PolygonColliderVisualHelper MB2DPolygonColliderVisualHelper;
 
         [HideInInspector] public ColliderNameAndIdInflectSupporter ColliderNameAndIdInflectSupporter =
             new ColliderNameAndIdInflectSupporter();
@@ -56,39 +56,39 @@ namespace ET
         {
             this.ReadcolliderNameAndIdInflect();
             this.ReadcolliderData();
-            this.MB2SDebuggerHandler = new GameObject("Box2DDebuggerHandler").AddComponent<B2D_DebuggerHandler>();
+            this.MB2DDebuggerHandler = new GameObject("Box2DDebuggerHandler").AddComponent<B2D_DebuggerHandler>();
 
             MenuTree = new B2D_MenuTree(ColliderNameAndIdInflectSupporter, LoadOneData);
-            this.MB2SBoxColliderVisualHelper =
+            this.MB2DBoxColliderVisualHelper =
                 new B2D_BoxColliderVisualHelper(this);
-            this.MB2SCircleColliderVisualHelper =
+            this.MB2DCircleColliderVisualHelper =
                 new B2D_CircleColliderVisualHelper(this);
-            this.MB2SPolygonColliderVisualHelper =
+            this.MB2DPolygonColliderVisualHelper =
                 new B2D_PolygonColliderVisualHelper(this);
 
-            this.MB2SBoxColliderVisualHelper.InitColliderBaseInfo();
-            this.MB2SCircleColliderVisualHelper.InitColliderBaseInfo();
-            this.MB2SPolygonColliderVisualHelper.InitColliderBaseInfo();
+            this.MB2DBoxColliderVisualHelper.InitColliderBaseInfo();
+            this.MB2DCircleColliderVisualHelper.InitColliderBaseInfo();
+            this.MB2DPolygonColliderVisualHelper.InitColliderBaseInfo();
 
-            this.MB2SDebuggerHandler.MB2SColliderVisualHelpers.Add(this.MB2SBoxColliderVisualHelper);
-            this.MB2SDebuggerHandler.MB2SColliderVisualHelpers.Add(this.MB2SCircleColliderVisualHelper);
-            this.MB2SDebuggerHandler.MB2SColliderVisualHelpers.Add(this.MB2SPolygonColliderVisualHelper);
-            EditorApplication.update += this.MB2SDebuggerHandler.OnUpdate;
+            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DBoxColliderVisualHelper);
+            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DCircleColliderVisualHelper);
+            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DPolygonColliderVisualHelper);
+            EditorApplication.update += this.MB2DDebuggerHandler.OnUpdate;
         }
 
         private void OnDisable()
         {
-            EditorApplication.update -= this.MB2SDebuggerHandler.OnUpdate;
-            MB2SDebuggerHandler.CleanCollider();
-            if (MB2SDebuggerHandler != null)
+            EditorApplication.update -= this.MB2DDebuggerHandler.OnUpdate;
+            MB2DDebuggerHandler.CleanCollider();
+            if (MB2DDebuggerHandler != null)
             {
-                UnityEngine.Object.DestroyImmediate(MB2SDebuggerHandler.gameObject);
+                UnityEngine.Object.DestroyImmediate(MB2DDebuggerHandler.gameObject);
             }
 
-            this.MB2SDebuggerHandler = null;
-            this.MB2SBoxColliderVisualHelper = null;
-            this.MB2SCircleColliderVisualHelper = null;
-            this.MB2SPolygonColliderVisualHelper = null;
+            this.MB2DDebuggerHandler = null;
+            this.MB2DBoxColliderVisualHelper = null;
+            this.MB2DCircleColliderVisualHelper = null;
+            this.MB2DPolygonColliderVisualHelper = null;
         }
 
         private void LoadOneData(string name)
@@ -144,24 +144,24 @@ namespace ET
             var box = ColliderObj.GetComponent<BoxCollider2D>();
             if (box != null)
             {
-                MB2SBoxColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2SBoxColliderVisualHelper);
+                MB2DBoxColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+                curColliderName = nameof(MB2DBoxColliderVisualHelper);
                 return;
             }
 
             var circle = ColliderObj.GetComponent<CircleCollider2D>();
             if (circle != null)
             {
-                MB2SCircleColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2SCircleColliderVisualHelper);
+                MB2DCircleColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+                curColliderName = nameof(MB2DCircleColliderVisualHelper);
                 return;
             }
 
             var pol = ColliderObj.GetComponent<PolygonCollider2D>();
             if (pol != null)
             {
-                MB2SPolygonColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2SPolygonColliderVisualHelper);
+                MB2DPolygonColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+                curColliderName = nameof(MB2DPolygonColliderVisualHelper);
             }
         }
 

@@ -32,7 +32,7 @@ namespace ET
 
         [LabelText("碰撞体数据")]
         [ShowInInspector]
-        public B2D_PolygonColliderDataStructure MB2S_PolygonColliderDataStructure
+        public B2D_PolygonColliderDataStructure MB2D_PolygonColliderDataStructure
         {
             get => dataStructureBase as B2D_PolygonColliderDataStructure;
             set => dataStructureBase = value;
@@ -40,7 +40,7 @@ namespace ET
 
         public override void InitColliderBaseInfo()
         {
-            this.MB2S_PolygonColliderDataStructure.b2SColliderType = B2S_ColliderType.PolygonCollider;
+            this.MB2D_PolygonColliderDataStructure.b2DColliderType = B2D_ColliderType.PolygonCollider;
         }
 
         [Button("重新绘制多边形碰撞体", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -52,7 +52,7 @@ namespace ET
 
         public override void DrawCollider()
         {
-            foreach (var b2sColliderPoints in this.MB2S_PolygonColliderDataStructure.finalPoints)
+            foreach (var b2sColliderPoints in this.MB2D_PolygonColliderDataStructure.finalPoints)
             {
                 for (int i = 0; i < b2sColliderPoints.Count; i++)
                 {
@@ -82,14 +82,14 @@ namespace ET
         {
             if (mCollider2D == null) return;
             InitBox2dPolygonFromUnityCollider();
-            MB2S_PolygonColliderDataStructure.finalOffset = mCollider2D.offset;
-            MB2S_PolygonColliderDataStructure.isSensor = mCollider2D.isTrigger;
+            MB2D_PolygonColliderDataStructure.finalOffset = mCollider2D.offset;
+            MB2D_PolygonColliderDataStructure.isSensor = mCollider2D.isTrigger;
         }
 
         private void InitBox2dPolygonFromUnityCollider()
         {
-            MB2S_PolygonColliderDataStructure.pointCount = 0;
-            this.MB2S_PolygonColliderDataStructure.finalPoints.Clear();
+            MB2D_PolygonColliderDataStructure.pointCount = 0;
+            this.MB2D_PolygonColliderDataStructure.finalPoints.Clear();
 
             //对多边形进行分割操作
             List<Vector2> tempPoints = new List<Vector2>();
@@ -111,24 +111,24 @@ namespace ET
             }
 
             // 因为Box2d的多边形默认不提供偏移设置，所以这里在存储的时候直接将偏移累加到顶点位置上
-            MB2S_PolygonColliderDataStructure.finalOffset = 0;
+            MB2D_PolygonColliderDataStructure.finalOffset = 0;
             
             List<List<Vector2>> FinalPolygons = Separator.SplitPolygonUntilLessX(this.MaxPointLimit, tempFinalPolygons);
 
             int pointCount = 0;
             for (int i = 0; i < FinalPolygons.Count; i++)
             {
-                this.MB2S_PolygonColliderDataStructure.finalPoints.Add(new List<Vector2>());
+                this.MB2D_PolygonColliderDataStructure.finalPoints.Add(new List<Vector2>());
                 for (int j = 0; j < FinalPolygons[i].Count; j++, pointCount++)
                 {
                     // 因为Box2d的多边形默认不提供偏移设置，所以这里在存储的时候直接将偏移累加到顶点位置上
                     Vector3 finalPint = new Vector3(FinalPolygons[i][j].X + mCollider2D.offset.x, 0,
                         FinalPolygons[i][j].Y + mCollider2D.offset.y);
-                    this.MB2S_PolygonColliderDataStructure.finalPoints[i].Add(new Vector2(finalPint.x, finalPint.z));
+                    this.MB2D_PolygonColliderDataStructure.finalPoints[i].Add(new Vector2(finalPint.x, finalPint.z));
                 }
             }
 
-            MB2S_PolygonColliderDataStructure.pointCount = pointCount;
+            MB2D_PolygonColliderDataStructure.pointCount = pointCount;
         }
 
         [Button("保存多边形碰撞体信息", 25), GUIColor(0.2f, 0.9f, 1.0f)]
@@ -142,36 +142,36 @@ namespace ET
                 return;
             } 
             SavePrefab();
-            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2S_PolygonColliderDataStructure.id != 0)
+            if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2D_PolygonColliderDataStructure.id != 0)
             {
-                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_PolygonColliderDataStructure.id))
+                if (!this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_PolygonColliderDataStructure.id))
                 {
                     B2D_PolygonColliderDataStructure temp = new B2D_PolygonColliderDataStructure();
-                    temp.id = MB2S_PolygonColliderDataStructure.id;
-                    temp.finalOffset.x = MB2S_PolygonColliderDataStructure.finalOffset.x;
-                    temp.finalOffset.y = MB2S_PolygonColliderDataStructure.finalOffset.y;
-                    temp.isSensor = MB2S_PolygonColliderDataStructure.isSensor;
-                    temp.b2SColliderType = MB2S_PolygonColliderDataStructure.b2SColliderType;
-                    for (int i = 0; i < this.MB2S_PolygonColliderDataStructure.finalPoints.Count; i++)
+                    temp.id = MB2D_PolygonColliderDataStructure.id;
+                    temp.finalOffset.x = MB2D_PolygonColliderDataStructure.finalOffset.x;
+                    temp.finalOffset.y = MB2D_PolygonColliderDataStructure.finalOffset.y;
+                    temp.isSensor = MB2D_PolygonColliderDataStructure.isSensor;
+                    temp.b2DColliderType = MB2D_PolygonColliderDataStructure.b2DColliderType;
+                    for (int i = 0; i < this.MB2D_PolygonColliderDataStructure.finalPoints.Count; i++)
                     {
                         temp.finalPoints.Add(new List<Vector2>());
-                        for (int j = 0; j < this.MB2S_PolygonColliderDataStructure.finalPoints[i].Count; j++)
+                        for (int j = 0; j < this.MB2D_PolygonColliderDataStructure.finalPoints[i].Count; j++)
                         {
                             Vector2 costumVector2 = new Vector2(
-                                this.MB2S_PolygonColliderDataStructure.finalPoints[i][j].X,
-                                this.MB2S_PolygonColliderDataStructure.finalPoints[i][j].Y);
+                                this.MB2D_PolygonColliderDataStructure.finalPoints[i][j].X,
+                                this.MB2D_PolygonColliderDataStructure.finalPoints[i][j].Y);
                             temp.finalPoints[i].Add(costumVector2);
                         }
                     }
 
-                    temp.pointCount = this.MB2S_PolygonColliderDataStructure.pointCount;
-                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2S_PolygonColliderDataStructure.id,
+                    temp.pointCount = this.MB2D_PolygonColliderDataStructure.pointCount;
+                    this.MColliderDataSupporter.colliderDataDic.Add(this.MB2D_PolygonColliderDataStructure.id,
                         temp);
                 }
                 else
                 {
-                    this.MColliderDataSupporter.colliderDataDic[this.MB2S_PolygonColliderDataStructure.id] =
-                        this.MB2S_PolygonColliderDataStructure;
+                    this.MColliderDataSupporter.colliderDataDic[this.MB2D_PolygonColliderDataStructure.id] =
+                        this.MB2D_PolygonColliderDataStructure;
                 }
             }
 
@@ -225,17 +225,17 @@ namespace ET
             }
             FillDataStructure();
 
-            if (this.MB2S_PolygonColliderDataStructure.id == 0)
+            if (this.MB2D_PolygonColliderDataStructure.id == 0)
             {
                 this.MColliderNameAndIdInflectSupporter.colliderNameAndIdInflectDic.TryGetValue(
                     this.theObjectWillBeEdited.name,
-                    out this.MB2S_PolygonColliderDataStructure.id);
+                    out this.MB2D_PolygonColliderDataStructure.id);
 
-                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2S_PolygonColliderDataStructure.id))
+                if (this.MColliderDataSupporter.colliderDataDic.ContainsKey(this.MB2D_PolygonColliderDataStructure.id))
                 {
-                    this.MB2S_PolygonColliderDataStructure =
+                    this.MB2D_PolygonColliderDataStructure =
                         (B2D_PolygonColliderDataStructure) this.MColliderDataSupporter.colliderDataDic[
-                            this.MB2S_PolygonColliderDataStructure.id];
+                            this.MB2D_PolygonColliderDataStructure.id];
                 }
             }
         }
@@ -244,9 +244,9 @@ namespace ET
         {
             mCollider2D = null;
             this.canDraw = false;
-            this.MB2S_PolygonColliderDataStructure.id = 0;
-            this.MB2S_PolygonColliderDataStructure.isSensor = false;
-            this.MB2S_PolygonColliderDataStructure.finalOffset = 0;
+            this.MB2D_PolygonColliderDataStructure.id = 0;
+            this.MB2D_PolygonColliderDataStructure.isSensor = false;
+            this.MB2D_PolygonColliderDataStructure.finalOffset = 0;
         }
 
         public B2D_PolygonColliderVisualHelper(B2D_ColliderEditor colliderEditor) : base(colliderEditor)
