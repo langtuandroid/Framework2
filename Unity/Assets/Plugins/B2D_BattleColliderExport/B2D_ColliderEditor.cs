@@ -8,204 +8,201 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace ET
+/// <summary>
+/// 需要注意的是，每个带有UnityCollider2D的UnityGo本身Transform的X,Z不能有偏移, 因为对于Offset我们读取的是UnityCollider2D Offset，而不是Go的
+/// </summary>
+public class B2D_ColliderEditor : OdinEditorWindow
 {
-    /// <summary>
-    /// 需要注意的是，每个带有UnityCollider2D的UnityGo本身Transform的X,Z不能有偏移, 因为对于Offset我们读取的是UnityCollider2D Offset，而不是Go的
-    /// </summary>
-    public class B2D_ColliderEditor : OdinEditorWindow
+    [TabGroup("Special", "管理")] public B2D_MenuTree MenuTree;
+
+    [LabelText("画线管理者")] [TabGroup("Special", "编辑")]
+    public B2D_DebuggerHandler MB2DDebuggerHandler;
+
+    [TabGroup("Special", "编辑")] [OnValueChanged("OnSelectedObjChanged")]
+    public GameObject ColliderObj;
+
+    private string curColliderName;
+
+    [HideLabel] [ShowIf("@curColliderName == \"MB2DBoxColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
+    public B2D_BoxColliderVisualHelper MB2DBoxColliderVisualHelper;
+
+    [HideLabel] [ShowIf("@curColliderName == \"MB2DCircleColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
+    public B2D_CircleColliderVisualHelper MB2DCircleColliderVisualHelper;
+
+    [HideLabel] [ShowIf("@curColliderName == \"MB2DPolygonColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
+    public B2D_PolygonColliderVisualHelper MB2DPolygonColliderVisualHelper;
+
+    [HideInInspector] public ColliderNameAndIdInflectSupporter ColliderNameAndIdInflectSupporter =
+        new ColliderNameAndIdInflectSupporter();
+
+    [HideInInspector] public ColliderDataSupporter ColliderDataSupporter = new ColliderDataSupporter();
+
+    [MenuItem("Tools/Box2D")]
+    private static void OpenWindowCCC()
     {
-        [TabGroup("Special", "管理")] public B2D_MenuTree MenuTree;
+        var window = GetWindow<B2D_ColliderEditor>();
 
-        [LabelText("画线管理者")] [TabGroup("Special", "编辑")]
-        public B2D_DebuggerHandler MB2DDebuggerHandler;
+        window.position = GUIHelper.GetEditorWindowRect().AlignCenter(600, 600);
+        window.titleContent = new GUIContent("Box2D可视化编辑器");
+    }
 
-        [TabGroup("Special", "编辑")] [OnValueChanged("OnSelectedObjChanged")]
-        public GameObject ColliderObj;
+    private void OnEnable()
+    {
+        this.ReadcolliderNameAndIdInflect();
+        this.ReadcolliderData();
+        this.MB2DDebuggerHandler = new GameObject("Box2DDebuggerHandler").AddComponent<B2D_DebuggerHandler>();
 
-        private string curColliderName;
+        MenuTree = new B2D_MenuTree(ColliderNameAndIdInflectSupporter, LoadOneData);
+        this.MB2DBoxColliderVisualHelper =
+            new B2D_BoxColliderVisualHelper(this);
+        this.MB2DCircleColliderVisualHelper =
+            new B2D_CircleColliderVisualHelper(this);
+        this.MB2DPolygonColliderVisualHelper =
+            new B2D_PolygonColliderVisualHelper(this);
 
-        [HideLabel] [ShowIf("@curColliderName == \"MB2DBoxColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
-        public B2D_BoxColliderVisualHelper MB2DBoxColliderVisualHelper;
+        this.MB2DBoxColliderVisualHelper.InitColliderBaseInfo();
+        this.MB2DCircleColliderVisualHelper.InitColliderBaseInfo();
+        this.MB2DPolygonColliderVisualHelper.InitColliderBaseInfo();
 
-        [HideLabel] [ShowIf("@curColliderName == \"MB2DCircleColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
-        public B2D_CircleColliderVisualHelper MB2DCircleColliderVisualHelper;
+        this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DBoxColliderVisualHelper);
+        this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DCircleColliderVisualHelper);
+        this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DPolygonColliderVisualHelper);
+        EditorApplication.update += this.MB2DDebuggerHandler.OnUpdate;
+    }
 
-        [HideLabel] [ShowIf("@curColliderName == \"MB2DPolygonColliderVisualHelper\"")] [TabGroup("Special", "编辑")]
-        public B2D_PolygonColliderVisualHelper MB2DPolygonColliderVisualHelper;
-
-        [HideInInspector] public ColliderNameAndIdInflectSupporter ColliderNameAndIdInflectSupporter =
-            new ColliderNameAndIdInflectSupporter();
-
-        [HideInInspector] public ColliderDataSupporter ColliderDataSupporter = new ColliderDataSupporter();
-
-        [MenuItem("Tools/Box2D")]
-        private static void OpenWindowCCC()
+    private void OnDisable()
+    {
+        EditorApplication.update -= this.MB2DDebuggerHandler.OnUpdate;
+        MB2DDebuggerHandler.CleanCollider();
+        if (MB2DDebuggerHandler != null)
         {
-            var window = GetWindow<B2D_ColliderEditor>();
-
-            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(600, 600);
-            window.titleContent = new GUIContent("Box2D可视化编辑器");
+            UnityEngine.Object.DestroyImmediate(MB2DDebuggerHandler.gameObject);
         }
 
-        private void OnEnable()
+        this.MB2DDebuggerHandler = null;
+        this.MB2DBoxColliderVisualHelper = null;
+        this.MB2DCircleColliderVisualHelper = null;
+        this.MB2DPolygonColliderVisualHelper = null;
+    }
+
+    private void LoadOneData(string name)
+    {
+        var go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{B2D_BattleColliderExportPathDefine.ColliderPrefabSavePath}/{name}.prefab")) as GameObject;
+        ColliderObj = go;
+        RefreshCollider();
+    }
+
+    /// <summary>
+    /// 读取碰撞名称和ID映射表
+    /// </summary>
+    private void ReadcolliderNameAndIdInflect()
+    {
+        if (File.Exists(
+                $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
         {
-            this.ReadcolliderNameAndIdInflect();
-            this.ReadcolliderData();
-            this.MB2DDebuggerHandler = new GameObject("Box2DDebuggerHandler").AddComponent<B2D_DebuggerHandler>();
+            byte[] mfile0 =
+                File.ReadAllBytes($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}");
+            //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
+            if (mfile0.Length > 0)
+                this.ColliderNameAndIdInflectSupporter =
+                    BsonSerializer.Deserialize<ColliderNameAndIdInflectSupporter>(mfile0);
+        }
+    }
 
-            MenuTree = new B2D_MenuTree(ColliderNameAndIdInflectSupporter, LoadOneData);
-            this.MB2DBoxColliderVisualHelper =
-                new B2D_BoxColliderVisualHelper(this);
-            this.MB2DCircleColliderVisualHelper =
-                new B2D_CircleColliderVisualHelper(this);
-            this.MB2DPolygonColliderVisualHelper =
-                new B2D_PolygonColliderVisualHelper(this);
-
-            this.MB2DBoxColliderVisualHelper.InitColliderBaseInfo();
-            this.MB2DCircleColliderVisualHelper.InitColliderBaseInfo();
-            this.MB2DPolygonColliderVisualHelper.InitColliderBaseInfo();
-
-            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DBoxColliderVisualHelper);
-            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DCircleColliderVisualHelper);
-            this.MB2DDebuggerHandler.MB2DColliderVisualHelpers.Add(this.MB2DPolygonColliderVisualHelper);
-            EditorApplication.update += this.MB2DDebuggerHandler.OnUpdate;
+    private void OnSelectedObjChanged()
+    {
+        if (ColliderObj == null)
+        {
+            curColliderName = String.Empty;
+            return;
         }
 
-        private void OnDisable()
+        if (MenuTree.ContainsName(ColliderObj.name))
         {
-            EditorApplication.update -= this.MB2DDebuggerHandler.OnUpdate;
-            MB2DDebuggerHandler.CleanCollider();
-            if (MB2DDebuggerHandler != null)
-            {
-                UnityEngine.Object.DestroyImmediate(MB2DDebuggerHandler.gameObject);
-            }
-
-            this.MB2DDebuggerHandler = null;
-            this.MB2DBoxColliderVisualHelper = null;
-            this.MB2DCircleColliderVisualHelper = null;
-            this.MB2DPolygonColliderVisualHelper = null;
-        }
-
-        private void LoadOneData(string name)
-        {
-            var go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(
-                $"{B2D_BattleColliderExportPathDefine.ColliderPrefabSavePath}/{name}.prefab")) as GameObject;
-            ColliderObj = go;
-            RefreshCollider();
-        }
-
-        /// <summary>
-        /// 读取碰撞名称和ID映射表
-        /// </summary>
-        private void ReadcolliderNameAndIdInflect()
-        {
-            if (File.Exists(
-                    $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
-            {
-                byte[] mfile0 =
-                    File.ReadAllBytes($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}");
-                //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
-                if (mfile0.Length > 0)
-                    this.ColliderNameAndIdInflectSupporter =
-                        BsonSerializer.Deserialize<ColliderNameAndIdInflectSupporter>(mfile0);
-            }
-        }
-
-        private void OnSelectedObjChanged()
-        {
-            if (ColliderObj == null)
-            {
-                curColliderName = String.Empty;
-                return;
-            }
-
-            if (MenuTree.ContainsName(ColliderObj.name))
-            {
-                ShowTips("名字重复！！");
-                ColliderObj = null;
-                curColliderName = String.Empty;
-                return;
-            }
-
-            RefreshCollider();
-        }
-
-        private void RefreshCollider()
-        {
-            if (ColliderObj == null)
-            {
-                curColliderName = String.Empty;
-                return;
-            }
-
-            var box = ColliderObj.GetComponent<BoxCollider2D>();
-            if (box != null)
-            {
-                MB2DBoxColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2DBoxColliderVisualHelper);
-                return;
-            }
-
-            var circle = ColliderObj.GetComponent<CircleCollider2D>();
-            if (circle != null)
-            {
-                MB2DCircleColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2DCircleColliderVisualHelper);
-                return;
-            }
-
-            var pol = ColliderObj.GetComponent<PolygonCollider2D>();
-            if (pol != null)
-            {
-                MB2DPolygonColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
-                curColliderName = nameof(MB2DPolygonColliderVisualHelper);
-            }
-        }
-
-        public void OnDeleteColliderData(long id)
-        {
+            ShowTips("名字重复！！");
             ColliderObj = null;
-            RefreshCollider();
-            MenuTree.RemoveId(id);
+            curColliderName = String.Empty;
+            return;
         }
 
-        public void OnSaveColliderData(long id)
+        RefreshCollider();
+    }
+
+    private void RefreshCollider()
+    {
+        if (ColliderObj == null)
         {
-            MenuTree.RefreshData();
+            curColliderName = String.Empty;
+            return;
         }
 
-        /// <summary>
-        /// 读取所有碰撞数据
-        /// </summary>
-        private void ReadcolliderData()
+        var box = ColliderObj.GetComponent<BoxCollider2D>();
+        if (box != null)
         {
-            Type[] types = typeof(ColliderDataSupporter).Assembly.GetTypes();
-            foreach (Type type in types)
+            MB2DBoxColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+            curColliderName = nameof(MB2DBoxColliderVisualHelper);
+            return;
+        }
+
+        var circle = ColliderObj.GetComponent<CircleCollider2D>();
+        if (circle != null)
+        {
+            MB2DCircleColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+            curColliderName = nameof(MB2DCircleColliderVisualHelper);
+            return;
+        }
+
+        var pol = ColliderObj.GetComponent<PolygonCollider2D>();
+        if (pol != null)
+        {
+            MB2DPolygonColliderVisualHelper.theObjectWillBeEdited = ColliderObj;
+            curColliderName = nameof(MB2DPolygonColliderVisualHelper);
+        }
+    }
+
+    public void OnDeleteColliderData(long id)
+    {
+        ColliderObj = null;
+        RefreshCollider();
+        MenuTree.RemoveId(id);
+    }
+
+    public void OnSaveColliderData(long id)
+    {
+        MenuTree.RefreshData();
+    }
+
+    /// <summary>
+    /// 读取所有碰撞数据
+    /// </summary>
+    private void ReadcolliderData()
+    {
+        Type[] types = typeof(ColliderDataSupporter).Assembly.GetTypes();
+        foreach (Type type in types)
+        {
+            if (!type.IsSubclassOf(typeof(B2D_ColliderDataStructureBase)))
             {
-                if (!type.IsSubclassOf(typeof(B2D_ColliderDataStructureBase)))
-                {
-                    continue;
-                }
-
-                BsonClassMap.LookupClassMap(type);
+                continue;
             }
 
-            if (File.Exists(
-                    $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
-            {
-                byte[] mfile0 =
-                    File.ReadAllBytes(
-                        $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}");
-                if (mfile0.Length > 0)
-                    this.ColliderDataSupporter =
-                        BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
-            }
+            BsonClassMap.LookupClassMap(type);
         }
 
-        public void ShowTips(string msg)
+        if (File.Exists(
+                $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
         {
-            ShowNotification(new GUIContent(msg));
+            byte[] mfile0 =
+                File.ReadAllBytes(
+                    $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}");
+            if (mfile0.Length > 0)
+                this.ColliderDataSupporter =
+                    BsonSerializer.Deserialize<ColliderDataSupporter>(mfile0);
         }
+    }
+
+    public void ShowTips(string msg)
+    {
+        ShowNotification(new GUIContent(msg));
     }
 }

@@ -1,5 +1,4 @@
-﻿using ET;
-using Framework;
+﻿using Framework;
 
 [Invoke(BattleTimerType.ResurrectionTimer)]
 public class ResurrectionTimer : ATimer<DeadComponent>

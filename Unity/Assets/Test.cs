@@ -1,7 +1,6 @@
 ﻿using Box2DSharp.Collision.Shapes;
 using Box2DSharp.Common;
 using Box2DSharp.Dynamics;
-using ET;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;

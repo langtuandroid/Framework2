@@ -1,5 +1,4 @@
-﻿using ET;
-using Framework;
+﻿using Framework;
 
 public class LaunchSceneComponent : Entity, IAwakeSystem
 {

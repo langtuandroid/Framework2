@@ -1,6 +1,4 @@
-﻿using ET;
-
-namespace Framework
+﻿namespace Framework
 {
     /// <summary>
     /// 持续伤害，一般描述为X秒内造成Y伤害，或者每X秒造成Y伤害

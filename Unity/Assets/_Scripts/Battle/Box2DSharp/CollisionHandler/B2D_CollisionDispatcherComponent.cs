@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Framework;
 
-namespace ET
-{
     /// <summary>
     /// 类似AIDispatcher，是全局的，整个进程只有一个，因为其本身就是一个无状态函数封装
     /// </summary>
@@ -70,4 +68,3 @@ namespace ET
             }
         }
     }
-}
