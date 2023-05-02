@@ -123,14 +123,8 @@ public class B2D_PolygonColliderVisualHelper : B2D_ColliderVisualHelperBase
     [Button("保存多边形碰撞体信息", 25), GUIColor(0.2f, 0.9f, 1.0f)]
     public override void SaveColliderData()
     {
-        var objTrans = theObjectWillBeEdited.transform;
-        if (objTrans.position != Vector3.zero || objTrans.eulerAngles != Vector3.zero ||
-            objTrans.localScale != Vector3.one)
-        {
-            colliderEditor.ShowTips("物体的旋转位移缩放不是默认值");
-            return;
-        }
-
+        if (!SaveCheck()) return;
+        
         SavePrefab();
         if (this.theObjectWillBeEdited != null && this.mCollider2D != null && MB2D_PolygonColliderDataStructure.id != 0)
         {
@@ -165,18 +159,7 @@ public class B2D_PolygonColliderVisualHelper : B2D_ColliderVisualHelperBase
             }
         }
 
-        if (SavecolliderNameAndIdInflect())
-        {
-            using (FileStream file =
-                   File.Create(
-                       $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
-            {
-                BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderDataSupporter);
-            }
-
-            colliderEditor.OnSaveColliderData(dataStructureBase.id);
-            colliderEditor.ShowTips("保存成功");
-        }
+        base.SaveColliderData();
     }
 
     [Button("清除此多边形碰撞体信息", 25), GUIColor(1.0f, 20 / 255f, 147 / 255f)]

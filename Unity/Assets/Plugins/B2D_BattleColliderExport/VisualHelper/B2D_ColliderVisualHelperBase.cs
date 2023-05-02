@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using System.IO;
+using Framework;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
@@ -57,10 +58,7 @@ public abstract class B2D_ColliderVisualHelperBase
     /// </summary>
     public abstract void DrawCollider();
 
-    /// <summary>
-    /// 保存名称Id映射信息
-    /// </summary>
-    public bool SavecolliderNameAndIdInflect()
+    protected bool SaveCheck()
     {
         var objTrans = theObjectWillBeEdited.transform;
         if (objTrans.position != Vector3.zero || objTrans.eulerAngles != Vector3.zero ||
@@ -87,7 +85,19 @@ public abstract class B2D_ColliderVisualHelperBase
                     return false;
                 }
             }
+        }
 
+        return true;
+    }
+
+    /// <summary>
+    /// 保存名称Id映射信息
+    /// </summary>
+    private void SaveColliderNameAndIdInflect()
+    {
+        if (!this.MColliderNameAndIdInflectSupporter.colliderNameAndIdInflectDic.ContainsKey(
+                this.theObjectWillBeEdited.name))
+        {
             MColliderNameAndIdInflectSupporter.colliderNameAndIdInflectDic.Add(this.theObjectWillBeEdited.name,
                 this.dataStructureBase.id);
         }
@@ -102,13 +112,8 @@ public abstract class B2D_ColliderVisualHelperBase
             }
         }
 
-        using (FileStream file =
-               File.Create($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
-        {
-            BsonSerializer.Serialize(new BsonBinaryWriter(file), this.MColliderNameAndIdInflectSupporter);
-        }
-
-        return true;
+        File.WriteAllText(B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath,
+            MColliderNameAndIdInflectSupporter.ToJson());
     }
 
     public abstract void FillDataStructure();
@@ -116,7 +121,14 @@ public abstract class B2D_ColliderVisualHelperBase
     /// <summary>
     /// 保存碰撞体信息
     /// </summary>
-    public abstract void SaveColliderData();
+    public virtual void SaveColliderData()
+    {
+        SaveColliderNameAndIdInflect();
+        File.WriteAllText(B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath,
+            MColliderDataSupporter.ToJson());
+        colliderEditor.OnSaveColliderData(dataStructureBase.id);
+        colliderEditor.ShowTips("保存成功");
+    }
 
     protected void SavePrefab()
     {
