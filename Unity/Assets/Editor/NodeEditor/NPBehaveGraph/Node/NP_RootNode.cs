@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using Framework;
+using GraphProcessor;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,6 +9,25 @@ using UnityEngine;
 public class NP_RootNode : NP_NodeBase
 {
     public override Color color => Color.cyan;
+
+    [LabelText("行为树根节点id")]
+    [Sirenix.OdinInspector.ShowInInspector]
+    public long Id
+    {
+        get => MRootNodeData.id;
+        set
+        {
+        }
+    }
+
+    protected override void Enable()
+    {
+        base.Enable();
+        if (MRootNodeData.id == 0)
+        {
+            MRootNodeData.id = IdGenerator.Instance.GenerateId();
+        }
+    }
 
     public override string name { get; } = "行为树根节点";
 

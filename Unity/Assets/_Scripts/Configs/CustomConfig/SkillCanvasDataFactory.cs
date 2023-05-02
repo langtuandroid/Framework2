@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Framework;
 
 public partial class SkillCanvasDataFactory
 {
@@ -18,7 +18,7 @@ public partial class SkillCanvasDataFactory
 
         if (SkillCanvasData == null)
         {
-            throw new Exception($"配置找不到，配置表名: {nameof(SkillCanvasData)}，配置id: {npDataId}");
+            Log.Error($"配置找不到，配置表名: {nameof(SkillCanvasData)}，配置id: {npDataId}");
         }
 
         return SkillCanvasData;

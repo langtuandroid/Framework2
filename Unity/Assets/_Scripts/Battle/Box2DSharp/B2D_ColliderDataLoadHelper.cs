@@ -14,11 +14,11 @@ public static class B2D_ColliderDataLoadHelper
         B2D_ColliderDataRepositoryComponent B2DColliderDataRepositoryComponent =
             self.DomainScene().GetComponent<B2D_ColliderDataRepositoryComponent>();
 
-        self.B2DColliderDataStructureBase =
+        self.B2D_ColliderDataStructureBase =
             B2DColliderDataRepositoryComponent.GetDataByColliderId(self.B2D_CollisionRelationConfigId);
         self.Body = self.WorldComponent.CreateDynamicBody();
 
-        ApplyFixture(self.B2DColliderDataStructureBase, self.Body, self.GetParent<Unit>());
+        ApplyFixture(self.B2D_ColliderDataStructureBase, self.Body, self.GetParent<Unit>());
     }
 
     public static void ApplyFixture(B2D_ColliderDataStructureBase B2DColliderDataStructureBase, Body body,

@@ -1,1 +1,0 @@
-{ "_t" : "B2DCollisionRelationConfigFactory", "list" : [{ "ID" : 10001, "B2S_ColliderConfigId" : 10001, "B2S_ColliderHandlerName" : "Darius_Q_CollisionHandler", "FriendlyHero" : false, "FriendlySoldier" : false, "EnemyHero" : true, "EnemySoldier" : true }] }

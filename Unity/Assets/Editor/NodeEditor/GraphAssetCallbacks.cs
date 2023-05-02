@@ -41,13 +41,16 @@ public class GraphAssetCallbacks
         switch (baseGraph)
         {
             case SkillGraph skillGraph:
-                EditorWindow.GetWindow<SkillGraphWindow>().InitializeGraph(skillGraph);
+                NodeGraphWindowHelper.GetAndShowNodeGraphWindow<SkillGraphWindow>(skillGraph)
+                    .InitializeGraph(skillGraph);
                 break;
             case NPBehaveGraph npBehaveGraph:
-                EditorWindow.GetWindow<NPBehaveGraphWindow>().InitializeGraph(npBehaveGraph);
+                NodeGraphWindowHelper.GetAndShowNodeGraphWindow<NPBehaveGraphWindow>(npBehaveGraph)
+                    .InitializeGraph(npBehaveGraph);
                 break;
             default:
-                EditorWindow.GetWindow<FallbackGraphWindow>().InitializeGraph(baseGraph);
+                NodeGraphWindowHelper.GetAndShowNodeGraphWindow<FallbackGraphWindow>(baseGraph)
+                    .InitializeGraph(baseGraph);
                 break;
         }
 

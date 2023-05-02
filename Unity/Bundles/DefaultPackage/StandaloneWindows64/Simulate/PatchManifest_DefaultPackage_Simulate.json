@@ -7,28 +7,28 @@
     "AssetList": [
         {
             "Address": "",
+            "AssetPath": "Assets/Res/Configs/AICanvasConfig.json",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/Configs/B2D_CollisionRelationConfig.json",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/Configs/HeroConfig.json",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
             "AssetPath": "Assets/Res/Configs/LanguageData.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Res/Configs/MapData.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Res/Configs/ModelData.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Res/Configs/NodeData.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
@@ -42,23 +42,23 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SkinData.json",
+            "AssetPath": "Assets/Res/Configs/SoldierConfig.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SongList.json",
+            "AssetPath": "Assets/Res/Configs/OtherConfigs/Collider.bytes",
             "AssetTags": [],
-            "BundleID": 0,
+            "BundleID": 1,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/TrailData.json",
+            "AssetPath": "Assets/Res/Configs/OtherConfigs/ColliderData.bytes",
             "AssetTags": [],
-            "BundleID": 0,
+            "BundleID": 1,
             "DependIDs": []
         },
         {

@@ -1,6 +1,6 @@
 ﻿using Framework;
 
-public class ReceiveDamageComponent : Unit
+public class ReceiveDamageComponent : Entity
 {
     /// <summary>
     /// 洗礼这个伤害值

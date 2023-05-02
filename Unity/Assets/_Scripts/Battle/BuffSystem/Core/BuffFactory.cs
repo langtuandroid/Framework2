@@ -63,7 +63,7 @@ namespace Framework
             NP_RuntimeTree theSkillCanvasBelongTo)
         {
             return AcquireBuff(
-                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNP_TreeData(dataId)
+                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNP_SkillTreeData(dataId)
                     .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
                 theUnitFrom, theUnitBelongTo, theSkillCanvasBelongTo);
         } 

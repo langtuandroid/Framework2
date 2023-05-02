@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Framework;
-using Newtonsoft.Json;
 using NPBehave;
 using UnityEngine;
 
@@ -9,30 +8,20 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
     /// <summary>
     /// 运行时的行为树仓库，注意，一定不能对这些数据做修改
     /// </summary>
-    public Dictionary<long, NP_DataSupportor> NpRuntimeTreesDatas = new Dictionary<long, NP_DataSupportor>();
+    public Dictionary<long, NP_DataSupportor> NpRuntimeSkillTreesDatas = new Dictionary<long, NP_DataSupportor>();
 
-    private NP_DataSupportor GetOrLoadTreeData(long id)
+    public NP_DataSupportor GetNP_SkillTreeData(long id)
     {
-        if (NpRuntimeTreesDatas.TryGetValue(id, out var dataSupportor)) return dataSupportor;
+        if (NpRuntimeSkillTreesDatas.TryGetValue(id, out var dataSupportor)) return dataSupportor;
         var skillCanvasConfig = SkillCanvasDataFactory.Instance.GetByNpDataId(id);
         TextAsset textAsset =
-            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.SkillConfigName);
+            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.SkillConfigPath);
 
         if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
 
-        dataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.bytes);
-        NpRuntimeTreesDatas[id] = dataSupportor;
+        dataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.text);
+        NpRuntimeSkillTreesDatas[id] = dataSupportor;
         return dataSupportor;
-    }
-
-    /// <summary>
-    /// 获取一棵树的所有数据（默认形式）
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public NP_DataSupportor GetNP_TreeData(long id)
-    {
-        return GetOrLoadTreeData(id);
     }
 
     /// <summary>
@@ -40,10 +29,10 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public NP_DataSupportor GetNPTreeDataDeepCopyBBValuesOnly(long id)
+    public NP_DataSupportor GetNPSkillTreeDataDeepCopyBBValuesOnly(long id)
     {
         NP_DataSupportor result = new NP_DataSupportor();
-        var source = GetOrLoadTreeData(id);
+        var source = GetNP_SkillTreeData(id);
         result.BuffNodeDataDic = source.BuffNodeDataDic;
         result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
         result.NP_DataSupportorDic = source.NP_DataSupportorDic;
@@ -55,44 +44,48 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
 
         return result;
     }
+    
+    /// <summary>
+    /// 运行时的行为树仓库，注意，一定不能对这些数据做修改
+    /// </summary>
+    public Dictionary<long, NP_DataSupportor> NpRuntimeTreesDatas = new Dictionary<long, NP_DataSupportor>();
+
+    public NP_DataSupportor GetNP_TreeData(long id)
+    {
+        if (NpRuntimeTreesDatas.TryGetValue(id, out var dataSupportor)) return dataSupportor;
+        var skillCanvasConfig = AICanvasConfigFactory.Instance.GetByNpDataId(id);
+        TextAsset textAsset =
+            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.ConfigPath);
+
+        if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
+
+        dataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.bytes);
+        NpRuntimeTreesDatas[id] = dataSupportor;
+        return dataSupportor;
+    }
 
     /// <summary>
-    /// 获取一棵树的所有数据（通过深拷贝形式）
+    /// 获取一棵树的所有数据（仅深拷贝黑板数据内容，而忽略例如BuffNodeDataDic的数据内容）
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public NP_DataSupportor GetNP_TreeData_DeepCopy(long id)
+    public NP_DataSupportor GetNPTreeDataDeepCopyBBValuesOnly(long id)
     {
-        if (NpRuntimeTreesDatas.ContainsKey(id))
+        NP_DataSupportor result = new NP_DataSupportor();
+        var source = GetNP_TreeData(id);
+        result.BuffNodeDataDic = source.BuffNodeDataDic;
+        result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
+        result.NP_DataSupportorDic = source.NP_DataSupportorDic;
+        result.NP_BBValueManager = new Dictionary<string, ANP_BBValue>();
+        foreach (KeyValuePair<string, ANP_BBValue> valuePair in source.NP_BBValueManager)
         {
-            return NpRuntimeTreesDatas[id].DeepCopy();
+            result.NP_BBValueManager[valuePair.Key] = valuePair.Value.DeepCopy();
         }
 
-        Log.Error($"请求的行为树id不存在，id为{id}");
-        return null;
-    }
+        return result;
+    } 
 
     public void Awake()
     {
-        foreach (var skillCanvasConfig in SkillCanvasDataFactory.Instance.GetAll())
-        {
-            TextAsset textAsset =
-                ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.Value.SkillConfigName);
-
-            if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
-            try
-            {
-                var MnNpDataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.text);
-
-                Log.Msg($"反序列化行为树:{skillCanvasConfig.Value.SkillConfigName}完成");
-
-                NpRuntimeTreesDatas.Add(MnNpDataSupportor.NPBehaveTreeDataId, MnNpDataSupportor);
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
-                throw;
-            }
-        }
     }
 }

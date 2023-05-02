@@ -59,6 +59,8 @@ namespace GraphProcessor
             //注意，一定不能在EditorWindow的OnEnable中进行一些序列化相关的操作，因为执行完OnEnable后Unity内部就会进行GC（依照Unity的规则）
             //所以这里GraphView相关数据的操作就统一放到OnEnable之后去执行，防止一些数据刚组装好，就直接GC了
             reloadWorkaround = true;
+            
+			NodeGraphWindowHelper.AddNodeGraphWindow(this.graph, this);
         }
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace GraphProcessor
                 graphView.SaveGraphToDisk();
                 // Unload the graph
                 graphUnloaded?.Invoke(graph);
+				NodeGraphWindowHelper.RemoveNodeGraphWindow(this.graph);
             }
         }
 

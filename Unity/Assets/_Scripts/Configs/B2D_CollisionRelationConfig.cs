@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Framework;
 
-public partial class B2DCollisionRelationConfig : BaseConfig
+public partial class B2D_CollisionRelationConfig : BaseConfig
 {
     /// <summary> ID </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
 /// <summary> 对应碰撞数据配置Id </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public int B2S_ColliderConfigId { get; private set; }
+	public int ColliderConfigId { get; private set; }
 /// <summary> 对应碰撞处理者名称 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public string B2S_ColliderHandlerName { get; private set; }
+	public string ColliderHandlerName { get; private set; }
 /// <summary> 友方英雄碰撞 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public bool FriendlyHero { get; private set; }
@@ -29,22 +29,22 @@ public partial class B2DCollisionRelationConfig : BaseConfig
 
 }
 
-[Config("Assets/Res/Configs/B2DCollisionRelationConfig.json")]
-public partial class B2DCollisionRelationConfigFactory : ConfigSingleton<B2DCollisionRelationConfigFactory>
+[Config("Assets/Res/Configs/B2D_CollisionRelationConfig.json")]
+public partial class B2D_CollisionRelationConfigFactory : ConfigSingleton<B2D_CollisionRelationConfigFactory>
 {
-    private Dictionary<int, B2DCollisionRelationConfig> dict = new Dictionary<int, B2DCollisionRelationConfig>();
+    private Dictionary<int, B2D_CollisionRelationConfig> dict = new Dictionary<int, B2D_CollisionRelationConfig>();
 
     [MongoDB.Bson.Serialization.Attributes.BsonElement]
-    private List<B2DCollisionRelationConfig> list = new List<B2DCollisionRelationConfig>();
+    private List<B2D_CollisionRelationConfig> list = new List<B2D_CollisionRelationConfig>();
 
-    public void Merge(B2DCollisionRelationConfigFactory o)
+    public void Merge(B2D_CollisionRelationConfigFactory o)
     {
         this.list.AddRange(o.list);
     }
 
     public override void EndInit()
     {
-        foreach (B2DCollisionRelationConfig config in list)
+        foreach (B2D_CollisionRelationConfig config in list)
         {
             this.dict.Add(config.ID, config);
         }
@@ -56,16 +56,16 @@ public partial class B2DCollisionRelationConfigFactory : ConfigSingleton<B2DColl
 	
     partial void AfterEndInit();
 
-    public B2DCollisionRelationConfig Get(int id)
+    public B2D_CollisionRelationConfig Get(int id)
     {
-        this.dict.TryGetValue(id, out B2DCollisionRelationConfig B2DCollisionRelationConfig);
+        this.dict.TryGetValue(id, out B2D_CollisionRelationConfig B2D_CollisionRelationConfig);
 
-        if (B2DCollisionRelationConfig == null)
+        if (B2D_CollisionRelationConfig == null)
         {
-            throw new Exception($"配置找不到，配置表名: {nameof(B2DCollisionRelationConfig)}，配置id: {id}");
+            Log.Error($"配置找不到，配置表名: {nameof(B2D_CollisionRelationConfig)}，配置id: {id}");
         }
 
-        return B2DCollisionRelationConfig;
+        return B2D_CollisionRelationConfig;
     }
 
     public bool Contain(int id)
@@ -73,12 +73,12 @@ public partial class B2DCollisionRelationConfigFactory : ConfigSingleton<B2DColl
         return this.dict.ContainsKey(id);
     }
 
-    public IReadOnlyDictionary<int, B2DCollisionRelationConfig> GetAll()
+    public IReadOnlyDictionary<int, B2D_CollisionRelationConfig> GetAll()
     {
         return this.dict;
     }
 
-    public B2DCollisionRelationConfig GetOne()
+    public B2D_CollisionRelationConfig GetOne()
     {
         if (this.dict == null || this.dict.Count <= 0)
         {

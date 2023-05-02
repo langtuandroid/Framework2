@@ -9,14 +9,13 @@ public class B2D_ColliderDataRepositoryComponent : Entity, IAwakeSystem
 {
     public ColliderDataSupporter ColliderDatas = new ColliderDataSupporter();
 
-    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// 读取所有碰撞数据
     /// </summary>
     private void ReadcolliderData()
     {
-        byte[] bytes = ResComponent.Instance
-            .LoadAsset<TextAsset>(B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath).bytes;
+        var bytes = ResComponent.Instance
+            .LoadAsset<TextAsset>(B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath).text;
         if (bytes.Length > 0)
             ColliderDatas = BsonSerializer.Deserialize<ColliderDataSupporter>(bytes);
     }

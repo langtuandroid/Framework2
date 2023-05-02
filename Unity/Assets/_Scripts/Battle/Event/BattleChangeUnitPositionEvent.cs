@@ -7,7 +7,7 @@ public class BattleChangeUnitPositionEvent : AEvent<ChangePosition>
     protected override async ETTask Run(Scene scene, ChangePosition a)
     {
         var gameObjectC = a.Unit.GetComponent<GameObjectComponent>();
-        if (gameObjectC != null)
+        if (gameObjectC != null && gameObjectC.GameObject != null)
         {
             gameObjectC.GameObject.transform.position = a.Unit.Position;
         }

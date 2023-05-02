@@ -1,8 +1,14 @@
  using System;
+ using System.Collections.Generic;
  using System.IO;
+ using System.Linq;
+ using System.Reflection;
  using Framework;
  using MongoDB.Bson;
+ using Plugins.NodeEditor;
  using Sirenix.OdinInspector;
+ using UnityEditor;
+ using UnityEngine;
 
  public class SkillGraph : NPBehaveGraph
  {
@@ -18,8 +24,8 @@
          }
 
          AutoSetCanvasDatas();
+         AutoSetSkillData_NodeData(NpDataSupportor_Client);
          File.WriteAllText($"{SavePathClient}/{this.Name}.bytes", NpDataSupportor_Client.ToJson());
-
          Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
      }
 
@@ -39,31 +45,94 @@
          }
      }
 
-     protected override void AutoSetCanvasDatas()
-     {
-         base.AutoSetCanvasDatas();
-         AutoSetSkillData_NodeData(NpDataSupportor_Client);
-     }
-     
      private void AutoSetSkillData_NodeData(NP_DataSupportor npDataSupportor)
      {
          if (npDataSupportor.BuffNodeDataDic == null) return;
          npDataSupportor.BuffNodeDataDic.Clear();
 
-         foreach (var node in this.nodes)
+         if (npDataSupportor == null)
          {
-             if (node is BuffNodeBase mNode)
-             {
-                 mNode.AutoAddLinkedBuffs();
-                 BuffNodeDataBase buffNodeDataBase = mNode.GetBuffNodeData();
-                 // if (buffNodeDataBase is NormalBuffNodeData normalBuffNodeData)
-                 // {
-                 //     normalBuffNodeData.BuffData.BelongToBuffDataSupportorId =
-                 //         npDataSupportor.NpDataSupportorBase.NPBehaveTreeDataId;
-                 // }
+             return;
+         }
 
+         npDataSupportor.NPBehaveTreeDataId = 0;
+         npDataSupportor.NP_DataSupportorDic.Clear();
+
+         //当前Canvas所有NP_Node
+         List<NP_NodeBase> m_ValidNodes = new List<NP_NodeBase>();
+
+         foreach (var node in m_AllNodes)
+         {
+             if (node is NP_NodeBase mNode)
+             {
+                 m_ValidNodes.Add(mNode);
+             }
+         }
+         
+         foreach (var node in nodes)
+         {
+             if (node is BuffNodeBase buffNodeBase)
+             {
+                 buffNodeBase.AutoAddLinkedBuffs();
+                 BuffNodeDataBase buffNodeDataBase = buffNodeBase.GetBuffNodeData();
                  npDataSupportor.BuffNodeDataDic.Add(buffNodeDataBase.NodeId.Value, buffNodeDataBase);
              }
+         }
+
+         var configPath =
+             (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+             .Path;
+         var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
+         SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
+         var skillCanvasData = factory.Get(IdInConfig);
+         if (skillCanvasData != null)
+         {
+             npDataSupportor.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
+         }
+
+         if (npDataSupportor.NPBehaveTreeDataId == 0)
+         {
+             //设置为根结点Id
+             npDataSupportor.NPBehaveTreeDataId = m_ValidNodes[m_ValidNodes.Count - 1].NP_GetNodeData().id;
+         }
+         else
+         {
+             m_ValidNodes[m_ValidNodes.Count - 1].NP_GetNodeData().id = npDataSupportor.NPBehaveTreeDataId;
+         }
+
+         foreach (var node in m_ValidNodes)
+         {
+             //获取结点对应的NPData
+             NP_NodeDataBase mNodeData = node.NP_GetNodeData();
+             if (mNodeData.LinkedIds == null)
+             {
+                 mNodeData.LinkedIds = new List<long>();
+             }
+
+             mNodeData.LinkedIds.Clear();
+
+             //出结点连接的Nodes
+             List<NP_NodeBase> theNodesConnectedToOutNode = new List<NP_NodeBase>();
+
+             foreach (var outputNode in node.GetOutputNodes())
+             {
+                 if (m_ValidNodes.Contains(outputNode))
+                 {
+                     theNodesConnectedToOutNode.Add(outputNode as NP_NodeBase);
+                 }
+             }
+
+             //对所连接的节点们进行排序
+             theNodesConnectedToOutNode.Sort((x, y) => x.position.x.CompareTo(y.position.x));
+
+             //配置连接的Id，运行时实时构建行为树
+             foreach (var npNodeBase in theNodesConnectedToOutNode)
+             {
+                 mNodeData.LinkedIds.Add(npNodeBase.NP_GetNodeData().id);
+             }
+
+             //将此结点数据写入字典
+             npDataSupportor.NP_DataSupportorDic.Add(mNodeData.id, mNodeData);
          }
      }
  }

@@ -11,27 +11,24 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
 
         Scene battleScene = this.DomainScene();
         battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
+        battleScene.AddComponent<B2D_WorldComponent>();
         battleScene.AddComponent<B2D_ColliderDataRepositoryComponent>();
         battleScene.AddComponent<B2D_CollisionListenerComponent>();
         battleScene.AddComponent<B2D_WorldColliderManagerComponent>();
-        battleScene.AddComponent<B2D_WorldComponent>();
+        battleScene.AddComponent<UnitComponent>();
         
-        var unitComponent = battleScene.AddComponent<UnitComponent>();
-        Unit unit = unitComponent.AddChild<Unit>();
-        unit.AddComponent<NumericComponent>();
-        unit.AddComponent<BuffManagerComponent>();
-        unit.AddComponent<CastDamageComponent>();
-        unit.AddComponent<ReceiveDamageComponent>();
+        Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);
+        unit2.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        unit2.Position = new float3(3, 0, 3);
+
+        Unit unit = UnitFactory.CreateHero(battleScene, RoleCamp.red, 1);
         unit.Forward = new float3(0, 0, 1);
-        unit.AddComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        unitComponent.Add(unit);
-        unit.AddComponent<NP_RuntimeTreeManager>();
-        unit.AddComponent<MoveComponent>();
+        unit.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         long nPDataId = 105926695190565;
         var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
         tree.Start();
-
         UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM(unit));
+        
     }
 
     public void Update(float deltaTime)

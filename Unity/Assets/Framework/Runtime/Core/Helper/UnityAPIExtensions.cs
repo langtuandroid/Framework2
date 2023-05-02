@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Framework;
+using Unity.Mathematics;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -1302,6 +1304,36 @@ public static class Vector3Extension
     {
         return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y) && self.z.NearlyEqual(other.z);
     }
+    
+    public static float2 ToFloat2(this System.Numerics.Vector2 vector2)
+    {
+        return new float2(vector2.X, vector2.Y);
+    } 
+    
+    public static float2 ToFloat2(this Vector2 vector2)
+    {
+        return new float2(vector2.x, vector2.y);
+    }
+
+    public static System.Numerics.Vector2 ToVector2(this Vector2 vector2)
+    {
+        return new System.Numerics.Vector2(vector2.x, vector2.y);
+    }
+
+    public static float3 ToFloat3(this System.Numerics.Vector3 vector)
+    {
+        return new float3(vector.X, vector.Y, vector.Z);
+    } 
+    
+    public static float3 ToFloat3(this Vector3 vector)
+    {
+        return new float3(vector.x, vector.y, vector.z);
+    }  
+    
+    public static System.Numerics.Vector3 ToVector3(this Vector3 vector3)
+    {
+        return new System.Numerics.Vector3(vector3.x, vector3.y, vector3.z);
+    } 
 
     public static Vector3 SetX(this Vector3 self, float xValue)
     {

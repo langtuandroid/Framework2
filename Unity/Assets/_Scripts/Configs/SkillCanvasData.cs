@@ -16,7 +16,7 @@ public partial class SkillCanvasData : BaseConfig
 	public long BelongToSkillId { get; private set; }
 /// <summary> 资源名 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public string SkillConfigName { get; private set; }
+	public string SkillConfigPath { get; private set; }
 
 }
 
@@ -53,7 +53,7 @@ public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFac
 
         if (SkillCanvasData == null)
         {
-            throw new Exception($"配置找不到，配置表名: {nameof(SkillCanvasData)}，配置id: {id}");
+            Log.Error($"配置找不到，配置表名: {nameof(SkillCanvasData)}，配置id: {id}");
         }
 
         return SkillCanvasData;

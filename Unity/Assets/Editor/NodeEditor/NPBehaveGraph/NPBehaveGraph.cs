@@ -8,7 +8,6 @@ using GraphProcessor;
 using MongoDB.Bson;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,8 +19,8 @@ public class NPBehaveGraph : BaseGraph
     [BoxGroup("本Canvas所有数据整理部分")] [LabelText("配置表中的Id"), GUIColor(0.9f, 0.7f, 1)]
     public int IdInConfig;
 
-    [BoxGroup("本Canvas所有数据整理部分")] [LabelText("保存路径(客户端)"), GUIColor(0.1f, 0.7f, 1)] [FolderPath]
-    public string SavePathClient;
+    [BoxGroup("本Canvas所有数据整理部分")] [LabelText("保存路径"), GUIColor(0.1f, 0.7f, 1)] [FolderPath]
+    public string SavePathClient = "Assets/Res/Configs/OtherConfigs";
 
     [BoxGroup("此行为树数据载体(客户端)")] [DisableInEditorMode]
     public NP_DataSupportor NpDataSupportor_Client = new NP_DataSupportor();
@@ -35,7 +34,7 @@ public class NPBehaveGraph : BaseGraph
     [HideInInspector] public NP_BlackBoardDataManager NpBlackBoardDataManager = new NP_BlackBoardDataManager();
 
     //当前Canvas所有NP_Node
-    private List<NP_NodeBase> m_AllNodes = new List<NP_NodeBase>();
+    protected List<NP_NodeBase> m_AllNodes = new List<NP_NodeBase>();
 
     /// <summary>
     /// 自动配置当前图所有数据（结点，黑板）
@@ -52,7 +51,6 @@ public class NPBehaveGraph : BaseGraph
         NP_BlackBoardHelper.SetCurrentBlackBoardDataManager(this);
 
         PrepareAllNodeData();
-        this.AutoSetNP_NodeData(this.NpDataSupportor_Client);
         this.AutoSetNP_BBDatas(this.NpDataSupportor_Client);
     }
 
@@ -90,6 +88,7 @@ public class NPBehaveGraph : BaseGraph
         }
 
         AutoSetCanvasDatas();
+        AutoSetNP_NodeData(this.NpDataSupportor_Client);
         File.WriteAllText($"{SavePathClient}/{this.Name}.bytes",NpDataSupportor_Client.ToJson());
 
         Log.Msg($"保存 {SavePathClient}/{this.Name}.bytes 成功");
@@ -137,10 +136,10 @@ public class NPBehaveGraph : BaseGraph
             }
         }
 
-        var configPath = (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+        var configPath = (typeof(AICanvasConfigFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
             .Path;
         var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
-        SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
+        AICanvasConfigFactory factory = SerializeHelper.Deserialize<AICanvasConfigFactory>(bytes);
         var skillCanvasData = factory.Get(IdInConfig);
         if (skillCanvasData != null)
         {

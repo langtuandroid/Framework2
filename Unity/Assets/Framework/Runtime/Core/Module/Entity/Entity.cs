@@ -888,7 +888,7 @@ namespace Framework
             return component;
         }
 
-        public T AddChildWithId<T>(long id, bool isFromPool = false) where T : Entity, IAwakeSystem, new()
+        public T AddChildWithId<T>(long id, bool isFromPool = false) where T : Entity, new()
         {
             Type type = typeof(T);
             T component = Entity.Create(type, isFromPool) as T;

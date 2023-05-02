@@ -16,7 +16,7 @@ namespace Framework
         public static NP_RuntimeTree CreateNpRuntimeTree(Unit unit, long nPDataId)
         {
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
-                .GetNPTreeDataDeepCopyBBValuesOnly(nPDataId);
+                .GetNPSkillTreeDataDeepCopyBBValuesOnly(nPDataId);
 
             NP_RuntimeTreeManager npRuntimeTreeManager = unit.GetComponent<NP_RuntimeTreeManager>();
             long rootId = npDataSupportor.NPBehaveTreeDataId;
@@ -103,12 +103,12 @@ namespace Framework
         /// <param name="nPDataId">行为树数据id</param>
         /// <param name="belongToSkillId">归属的SkillId,一般来说需要从excel表中读取</param>
         /// <returns></returns>
-        // public static NP_RuntimeTree CreateSkillNpRuntimeTree(Unit unit, long nPDataId, long belongToSkillId)
-        // {
-        //     NP_RuntimeTree result = CreateNpRuntimeTree(unit, nPDataId);
-        //     unit.GetComponent<SkillCanvasManagerComponent>()
-        //         .AddSkillCanvas(belongToSkillId, result);
-        //     return result;
-        // }
+        public static NP_RuntimeTree CreateSkillNpRuntimeTree(Unit unit, long nPDataId, long belongToSkillId)
+        {
+            NP_RuntimeTree result = CreateNpRuntimeTree(unit, nPDataId);
+            unit.GetComponent<SkillCanvasManagerComponent>()
+                .AddSkillCanvas(belongToSkillId, result);
+            return result;
+        }
     }
 }

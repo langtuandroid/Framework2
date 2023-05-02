@@ -3,8 +3,7 @@ using Unity.Mathematics;
 
 namespace Framework
 {
-    [DebuggerDisplay("ViewName,nq")]
-    public class Unit : Entity, IAwakeSystem
+    public sealed class Unit : Entity, IAwakeSystem
     {
     
         public void Awake()

@@ -21,24 +21,14 @@ public enum RoleCast
 [System.Flags]
 public enum RoleCamp
 {
-    TianZai = 0b0000001,
-    HuiYue = 0b0000010,
-    red = 0b0000100,
-    bule = 0b0001000,
-    yellow = 0b0010000,
-    green = 0b0100000,
-    JunHeng = 0b1000000
+    red = 1 << 1,
+    bule = 1 << 2,
 }
 
 public enum RoleTag
 {
-    Sprite,
-    AttackRange,
-    NoCollision,
     Hero,
-    Map,
-    Creeps,
-    SkillCollision,
+    Soldier,
 }
 
 public class B2D_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
@@ -71,14 +61,7 @@ public class B2D_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
 
         if (roleCamp != this.RoleCamp)
         {
-            if (roleCamp == RoleCamp.JunHeng || this.RoleCamp == RoleCamp.JunHeng)
-            {
-                return RoleCast.Neutral;
-            }
-            else
-            {
-                return RoleCast.Adverse;
-            }
+            return RoleCast.Adverse;
         }
 
         return RoleCast.Friendly;

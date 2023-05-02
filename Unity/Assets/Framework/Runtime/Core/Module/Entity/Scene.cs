@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-
-namespace Framework
+﻿namespace Framework
 {
-    [DebuggerDisplay("ViewName,nq")]
     public sealed class Scene : Entity
     {
         public int Zone { get; }
