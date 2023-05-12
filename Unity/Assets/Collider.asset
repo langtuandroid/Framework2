@@ -40,7 +40,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 9
+      Data: 7
     - Name: 
       Entry: 7
       Data: 2|NP_RootNode, NodeGraphEditor
@@ -145,13 +145,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 141.600037
+      Data: 198
     - Name: 
       Entry: 4
-      Data: 619.550049
+      Data: 606
     - Name: 
       Entry: 4
-      Data: 111
+      Data: 110
     - Name: 
       Entry: 4
       Data: 76
@@ -328,13 +328,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 252.600021
+      Data: 309
     - Name: 
       Entry: 4
-      Data: 474.550049
+      Data: 461
     - Name: 
       Entry: 4
-      Data: 111
+      Data: 110
     - Name: 
       Entry: 4
       Data: 84
@@ -409,10 +409,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 287.600037
+      Data: 344
     - Name: 
       Entry: 4
-      Data: 619.550049
+      Data: 606
     - Name: 
       Entry: 4
       Data: 214
@@ -592,7 +592,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 25|NP_AddBuffToSpecifiedUnitActionNode, NodeGraphEditor
+      Data: 25|NP_MacroActionNode, NodeGraphEditor
     - Name: computeOrder
       Entry: 3
       Data: 6
@@ -604,7 +604,7 @@ MonoBehaviour:
       Data: false
     - Name: GUID
       Entry: 1
-      Data: 820bccfa-1eb3-4660-996e-e91ea24f989f
+      Data: d3e2411d-a544-4693-8916-e1c22d07d66a
     - Name: nodeCustomName
       Entry: 6
       Data: 
@@ -616,13 +616,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 583.450134
+      Data: 740
     - Name: 
       Entry: 4
-      Data: 629.050049
+      Data: 595
     - Name: 
       Entry: 4
-      Data: 157
+      Data: 122
     - Name: 
       Entry: 4
       Data: 76
@@ -640,7 +640,7 @@ MonoBehaviour:
       Data: 26|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1807618350382055425
+      Data: 1807618350382055426
     - Name: LinkedIds
       Entry: 7
       Data: 27|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -658,7 +658,215 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 28|NP_AddBuffToSpecifiedUnitAction, Game.Runtime
+      Data: 28|NP_MacroAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: Action
+      Entry: 6
+      Data: 
+    - Name: Func1
+      Entry: 6
+      Data: 
+    - Name: Func2
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreActions
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[NP_ClassForStoreAction, Game.Runtime]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 30|NP_ChangeBlackValueAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: Action
+      Entry: 6
+      Data: 
+    - Name: Func1
+      Entry: 6
+      Data: 
+    - Name: Func2
+      Entry: 6
+      Data: 
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 31|NP_BlackBoardRelationData, Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: IsHitUnit
+    - Name: NP_BBValueType
+      Entry: 1
+      Data: System.Boolean
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: true
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 32|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 33|NP_ChangeBlackValueAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: Action
+      Entry: 6
+      Data: 
+    - Name: Func1
+      Entry: 6
+      Data: 
+    - Name: Func2
+      Entry: 6
+      Data: 
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 34|NP_BlackBoardRelationData, Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: HitUnitIds
+    - Name: NP_BBValueType
+      Entry: 1
+      Data: System.Collections.Generic.List`1[System.Int64]
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: true
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 35|Framework.NP_BBValue_List_Long, Game.Runtime
+    - Name: Value
+      Entry: 7
+      Data: 36|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NpDataSupportor_Client
+      Entry: 7
+      Data: 37|NP_DataSupportor, Game.Runtime
+    - Name: BuffNodeDataDic
+      Entry: 7
+      Data: 38|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 39|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NPBehaveTreeDataId
+      Entry: 3
+      Data: 1807319661176422408
+    - Name: NP_DataSupportorDic
+      Entry: 7
+      Data: 40|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 39
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807618350382055425
+    - Name: $v
+      Entry: 7
+      Data: 41|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807618350382055425
+    - Name: LinkedIds
+      Entry: 7
+      Data: 42|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 43|NP_AddBuffToSpecifiedUnitAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -676,7 +884,7 @@ MonoBehaviour:
       Data: 
     - Name: BuffDataInfo
       Entry: 7
-      Data: 29|Framework.VTD_BuffInfo, Game.Runtime
+      Data: 44|Framework.VTD_BuffInfo, Game.Runtime
     - Name: BuffNodeId
       Entry: 7
       Data: Framework.VTD_Id, Game.Runtime
@@ -700,7 +908,7 @@ MonoBehaviour:
       Data: 1
     - Name: LayersThatDetermindByBBValue
       Entry: 7
-      Data: 30|NP_BlackBoardRelationData, Game.Runtime
+      Data: 45|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 6
       Data: 
@@ -721,7 +929,7 @@ MonoBehaviour:
       Data: 
     - Name: NPBalckBoardRelationData
       Entry: 7
-      Data: 31|NP_BlackBoardRelationData, Game.Runtime
+      Data: 46|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: HitUnitIds
@@ -733,7 +941,7 @@ MonoBehaviour:
       Data: false
     - Name: NP_BBValue
       Entry: 7
-      Data: 32|Framework.NP_BBValue_List_Long, Game.Runtime
+      Data: 47|Framework.NP_BBValue_List_Long, Game.Runtime
     - Name: Value
       Entry: 6
       Data: 
@@ -754,263 +962,31 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 33|NP_MacroActionNode, NodeGraphEditor
-    - Name: computeOrder
-      Entry: 3
-      Data: 7
-    - Name: debug
-      Entry: 5
-      Data: false
-    - Name: expanded
-      Entry: 5
-      Data: false
-    - Name: GUID
-      Entry: 1
-      Data: d3e2411d-a544-4693-8916-e1c22d07d66a
-    - Name: nodeCustomName
-      Entry: 6
       Data: 
-    - Name: nodeLock
-      Entry: 5
-      Data: false
-    - Name: position
-      Entry: 7
-      Data: UnityEngine.Rect, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 791.450134
-    - Name: 
-      Entry: 4
-      Data: 629.050049
-    - Name: 
-      Entry: 4
-      Data: 123
-    - Name: 
-      Entry: 4
-      Data: 76
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Level
-      Entry: 3
-      Data: 0
-    - Name: PrevNode
-      Entry: 6
-      Data: 
-    - Name: NP_ActionNodeData
-      Entry: 7
-      Data: 34|NP_ActionNodeData, Game.Runtime
-    - Name: id
+    - Name: $k
       Entry: 3
       Data: 1807618350382055426
-    - Name: LinkedIds
-      Entry: 7
-      Data: 35|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: NodeDes
-      Entry: 6
-      Data: 
-    - Name: NpClassForStoreAction
-      Entry: 7
-      Data: 36|NP_MacroAction, Game.Runtime
-    - Name: BelongToUnit
-      Entry: 6
-      Data: 
-    - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
-    - Name: NpClassForStoreActions
-      Entry: 7
-      Data: 37|System.Collections.Generic.List`1[[NP_ClassForStoreAction, Game.Runtime]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 38|NP_ChangeBlackValueAction, Game.Runtime
-    - Name: BelongToUnit
-      Entry: 6
-      Data: 
-    - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
-    - Name: NPBalckBoardRelationData
-      Entry: 7
-      Data: 39|NP_BlackBoardRelationData, Game.Runtime
-    - Name: BBKey
-      Entry: 1
-      Data: IsHitUnit
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Boolean
-    - Name: WriteOrCompareToBB
-      Entry: 5
-      Data: true
-    - Name: NP_BBValue
-      Entry: 7
-      Data: 40|Framework.NP_BBValue_Bool, Game.Runtime
-    - Name: Value
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    - Name: $v
+      Entry: 9
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 41|NP_ChangeBlackValueAction, Game.Runtime
-    - Name: BelongToUnit
-      Entry: 6
       Data: 
-    - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
-    - Name: NPBalckBoardRelationData
-      Entry: 7
-      Data: 42|NP_BlackBoardRelationData, Game.Runtime
-    - Name: BBKey
-      Entry: 1
-      Data: HitUnitIds
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Collections.Generic.List`1[System.Int64]
-    - Name: WriteOrCompareToBB
-      Entry: 5
-      Data: true
-    - Name: NP_BBValue
-      Entry: 7
-      Data: 43|Framework.NP_BBValue_List_Long, Game.Runtime
-    - Name: Value
-      Entry: 7
-      Data: 44|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 45|NP_LogActionNode, NodeGraphEditor
-    - Name: computeOrder
+    - Name: $k
       Entry: 3
-      Data: 8
-    - Name: debug
-      Entry: 5
-      Data: false
-    - Name: expanded
-      Entry: 5
-      Data: false
-    - Name: GUID
-      Entry: 1
-      Data: 9f818c37-cb85-44a7-9334-3ffe40a0fde1
-    - Name: nodeCustomName
-      Entry: 6
-      Data: 
-    - Name: nodeLock
-      Entry: 5
-      Data: false
-    - Name: position
+      Data: 1807618350382055427
+    - Name: $v
       Entry: 7
-      Data: UnityEngine.Rect, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 983.450134
-    - Name: 
-      Entry: 4
-      Data: 629.050049
-    - Name: 
-      Entry: 4
-      Data: 108
-    - Name: 
-      Entry: 4
-      Data: 76
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Level
-      Entry: 3
-      Data: 0
-    - Name: PrevNode
-      Entry: 6
-      Data: 
-    - Name: NP_ActionNodeData
-      Entry: 7
-      Data: 46|NP_ActionNodeData, Game.Runtime
+      Data: 48|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807618350382055427
     - Name: LinkedIds
       Entry: 7
-      Data: 47|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 49|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1025,7 +1001,7 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 48|NP_LogAction, Game.Runtime
+      Data: 50|NP_LogAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1050,84 +1026,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: NpDataSupportor_Client
-      Entry: 7
-      Data: 49|NP_DataSupportor, Game.Runtime
-    - Name: BuffNodeDataDic
-      Entry: 7
-      Data: 50|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
-        Game.Runtime]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 51|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: NPBehaveTreeDataId
-      Entry: 3
-      Data: 1807319661176422408
-    - Name: NP_DataSupportorDic
-      Entry: 7
-      Data: 52|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
-        Game.Runtime]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 51
-    - Name: 
-      Entry: 12
-      Data: 9
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1807618350382055425
-    - Name: $v
-      Entry: 9
-      Data: 26
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1807618350382055426
-    - Name: $v
-      Entry: 9
-      Data: 34
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1807618350382055427
-    - Name: $v
-      Entry: 9
-      Data: 46
     - Name: 
       Entry: 8
       Data: 
@@ -1211,11 +1109,11 @@ MonoBehaviour:
       Data: 
     - Name: NP_BBValueManager
       Entry: 7
-      Data: 53|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 51|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 54|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 52|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -1231,7 +1129,7 @@ MonoBehaviour:
       Data: Duration
     - Name: $v
       Entry: 7
-      Data: 55|Framework.NP_BBValue_Float, Game.Runtime
+      Data: 53|Framework.NP_BBValue_Float, Game.Runtime
     - Name: Value
       Entry: 4
       Data: 10
@@ -1249,7 +1147,7 @@ MonoBehaviour:
       Data: IsHitUnit
     - Name: $v
       Entry: 7
-      Data: 56|Framework.NP_BBValue_Bool, Game.Runtime
+      Data: 54|Framework.NP_BBValue_Bool, Game.Runtime
     - Name: Value
       Entry: 5
       Data: false
@@ -1267,10 +1165,10 @@ MonoBehaviour:
       Data: HitUnitIds
     - Name: $v
       Entry: 7
-      Data: 57|Framework.NP_BBValue_List_Long, Game.Runtime
+      Data: 55|Framework.NP_BBValue_List_Long, Game.Runtime
     - Name: Value
       Entry: 7
-      Data: 58|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 56|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1297,14 +1195,14 @@ MonoBehaviour:
       Data: 
     - Name: NpDataSupportor_Client_Des
       Entry: 7
-      Data: 59|NP_DataSupportor, Game.Runtime
+      Data: 57|NP_DataSupportor, Game.Runtime
     - Name: BuffNodeDataDic
       Entry: 7
-      Data: 60|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
+      Data: 58|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
+      Data: 59|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -1323,11 +1221,11 @@ MonoBehaviour:
       Data: 1807319661176422408
     - Name: NP_DataSupportorDic
       Entry: 7
-      Data: 62|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
+      Data: 60|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 61
+      Data: 59
     - Name: 
       Entry: 12
       Data: 9
@@ -1339,13 +1237,13 @@ MonoBehaviour:
       Data: 1807327254678601728
     - Name: $v
       Entry: 7
-      Data: 63|NP_ActionNodeData, Game.Runtime
+      Data: 61|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601728
     - Name: LinkedIds
       Entry: 7
-      Data: 64|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 62|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1360,7 +1258,7 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 65|NP_AddBuffToSpecifiedUnitAction, Game.Runtime
+      Data: 63|NP_AddBuffToSpecifiedUnitAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1378,7 +1276,7 @@ MonoBehaviour:
       Data: 
     - Name: BuffDataInfo
       Entry: 7
-      Data: 66|Framework.VTD_BuffInfo, Game.Runtime
+      Data: 64|Framework.VTD_BuffInfo, Game.Runtime
     - Name: BuffNodeId
       Entry: 7
       Data: Framework.VTD_Id, Game.Runtime
@@ -1402,7 +1300,7 @@ MonoBehaviour:
       Data: 1
     - Name: LayersThatDetermindByBBValue
       Entry: 7
-      Data: 67|NP_BlackBoardRelationData, Game.Runtime
+      Data: 65|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 6
       Data: 
@@ -1423,7 +1321,7 @@ MonoBehaviour:
       Data: 
     - Name: NPBalckBoardRelationData
       Entry: 7
-      Data: 68|NP_BlackBoardRelationData, Game.Runtime
+      Data: 66|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: HitUnitIds
@@ -1435,7 +1333,7 @@ MonoBehaviour:
       Data: false
     - Name: NP_BBValue
       Entry: 7
-      Data: 69|Framework.NP_BBValue_List_Long, Game.Runtime
+      Data: 67|Framework.NP_BBValue_List_Long, Game.Runtime
     - Name: Value
       Entry: 6
       Data: 
@@ -1462,13 +1360,13 @@ MonoBehaviour:
       Data: 1807327254678601729
     - Name: $v
       Entry: 7
-      Data: 70|NP_ActionNodeData, Game.Runtime
+      Data: 68|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601729
     - Name: LinkedIds
       Entry: 7
-      Data: 71|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 69|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1483,7 +1381,7 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 72|NP_MacroAction, Game.Runtime
+      Data: 70|NP_MacroAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1501,14 +1399,14 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreActions
       Entry: 7
-      Data: 73|System.Collections.Generic.List`1[[NP_ClassForStoreAction, Game.Runtime]],
+      Data: 71|System.Collections.Generic.List`1[[NP_ClassForStoreAction, Game.Runtime]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 74|NP_ChangeBlackValueAction, Game.Runtime
+      Data: 72|NP_ChangeBlackValueAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1526,7 +1424,7 @@ MonoBehaviour:
       Data: 
     - Name: NPBalckBoardRelationData
       Entry: 7
-      Data: 75|NP_BlackBoardRelationData, Game.Runtime
+      Data: 73|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: IsHitUnit
@@ -1538,7 +1436,7 @@ MonoBehaviour:
       Data: true
     - Name: NP_BBValue
       Entry: 7
-      Data: 76|Framework.NP_BBValue_Bool, Game.Runtime
+      Data: 74|Framework.NP_BBValue_Bool, Game.Runtime
     - Name: Value
       Entry: 5
       Data: false
@@ -1553,7 +1451,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 77|NP_ChangeBlackValueAction, Game.Runtime
+      Data: 75|NP_ChangeBlackValueAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1571,7 +1469,7 @@ MonoBehaviour:
       Data: 
     - Name: NPBalckBoardRelationData
       Entry: 7
-      Data: 78|NP_BlackBoardRelationData, Game.Runtime
+      Data: 76|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: HitUnitIds
@@ -1583,10 +1481,10 @@ MonoBehaviour:
       Data: true
     - Name: NP_BBValue
       Entry: 7
-      Data: 79|Framework.NP_BBValue_List_Long, Game.Runtime
+      Data: 77|Framework.NP_BBValue_List_Long, Game.Runtime
     - Name: Value
       Entry: 7
-      Data: 80|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 78|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1628,13 +1526,13 @@ MonoBehaviour:
       Data: 1807327254678601730
     - Name: $v
       Entry: 7
-      Data: 81|NP_ActionNodeData, Game.Runtime
+      Data: 79|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601730
     - Name: LinkedIds
       Entry: 7
-      Data: 82|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 80|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1649,7 +1547,7 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 83|NP_LogAction, Game.Runtime
+      Data: 81|NP_LogAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1685,13 +1583,13 @@ MonoBehaviour:
       Data: 1807327254678601731
     - Name: $v
       Entry: 7
-      Data: 84|NP_WaitNodeData, Game.Runtime
+      Data: 82|NP_WaitNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601731
     - Name: LinkedIds
       Entry: 7
-      Data: 85|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 83|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1706,7 +1604,7 @@ MonoBehaviour:
       Data: 
     - Name: NPBlackBoardRelationData
       Entry: 7
-      Data: 86|NP_BlackBoardRelationData, Game.Runtime
+      Data: 84|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: Duration
@@ -1718,7 +1616,7 @@ MonoBehaviour:
       Data: false
     - Name: NP_BBValue
       Entry: 7
-      Data: 87|Framework.NP_BBValue_Float, Game.Runtime
+      Data: 85|Framework.NP_BBValue_Float, Game.Runtime
     - Name: Value
       Entry: 4
       Data: 0.1
@@ -1742,13 +1640,13 @@ MonoBehaviour:
       Data: 1807327254678601732
     - Name: $v
       Entry: 7
-      Data: 88|NP_ActionNodeData, Game.Runtime
+      Data: 86|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601732
     - Name: LinkedIds
       Entry: 7
-      Data: 89|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 87|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1763,7 +1661,7 @@ MonoBehaviour:
       Data: 
     - Name: NpClassForStoreAction
       Entry: 7
-      Data: 90|NP_DestroySelfAndRelativeCollidersAction, Game.Runtime
+      Data: 88|NP_DestroySelfAndRelativeCollidersAction, Game.Runtime
     - Name: BelongToUnit
       Entry: 6
       Data: 
@@ -1796,13 +1694,13 @@ MonoBehaviour:
       Data: 1807327254678601733
     - Name: $v
       Entry: 7
-      Data: 91|NP_SequenceNodeData, Game.Runtime
+      Data: 89|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601733
     - Name: LinkedIds
       Entry: 7
-      Data: 92|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 90|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -1835,13 +1733,13 @@ MonoBehaviour:
       Data: 1807327254678601734
     - Name: $v
       Entry: 7
-      Data: 93|NP_BlackboardConditionNodeData, Game.Runtime
+      Data: 91|NP_BlackboardConditionNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601734
     - Name: LinkedIds
       Entry: 7
-      Data: 94|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 92|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -1871,7 +1769,7 @@ MonoBehaviour:
       Data: 4
     - Name: NPBalckBoardRelationData
       Entry: 7
-      Data: 95|NP_BlackBoardRelationData, Game.Runtime
+      Data: 93|NP_BlackBoardRelationData, Game.Runtime
     - Name: BBKey
       Entry: 1
       Data: IsHitUnit
@@ -1883,7 +1781,7 @@ MonoBehaviour:
       Data: false
     - Name: NP_BBValue
       Entry: 7
-      Data: 96|Framework.NP_BBValue_Bool, Game.Runtime
+      Data: 94|Framework.NP_BBValue_Bool, Game.Runtime
     - Name: Value
       Entry: 5
       Data: false
@@ -1907,13 +1805,13 @@ MonoBehaviour:
       Data: 1807327254678601735
     - Name: $v
       Entry: 7
-      Data: 97|NP_ParallelNodeData, Game.Runtime
+      Data: 95|NP_ParallelNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807327254678601735
     - Name: LinkedIds
       Entry: 7
-      Data: 98|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 96|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -1952,13 +1850,13 @@ MonoBehaviour:
       Data: 1807319661176422408
     - Name: $v
       Entry: 7
-      Data: 99|NP_RootNodeData, Game.Runtime
+      Data: 97|NP_RootNodeData, Game.Runtime
     - Name: id
       Entry: 3
       Data: 1807319661176422408
     - Name: LinkedIds
       Entry: 7
-      Data: 100|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 98|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -1991,11 +1889,11 @@ MonoBehaviour:
       Data: 
     - Name: NP_BBValueManager
       Entry: 7
-      Data: 101|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 99|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 102|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 100|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -2011,7 +1909,7 @@ MonoBehaviour:
       Data: Duration
     - Name: $v
       Entry: 7
-      Data: 103|Framework.NP_BBValue_Float, Game.Runtime
+      Data: 101|Framework.NP_BBValue_Float, Game.Runtime
     - Name: Value
       Entry: 4
       Data: 0.1
@@ -2029,7 +1927,7 @@ MonoBehaviour:
       Data: IsHitUnit
     - Name: $v
       Entry: 7
-      Data: 104|Framework.NP_BBValue_Bool, Game.Runtime
+      Data: 102|Framework.NP_BBValue_Bool, Game.Runtime
     - Name: Value
       Entry: 5
       Data: false
@@ -2047,10 +1945,10 @@ MonoBehaviour:
       Data: HitUnitIds
     - Name: $v
       Entry: 7
-      Data: 105|Framework.NP_BBValue_List_Long, Game.Runtime
+      Data: 103|Framework.NP_BBValue_List_Long, Game.Runtime
     - Name: Value
       Entry: 7
-      Data: 106|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+      Data: 104|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -2077,14 +1975,14 @@ MonoBehaviour:
       Data: 
     - Name: NpBlackBoardDataManager
       Entry: 7
-      Data: 107|NP_BlackBoardDataManager, Game.Runtime
+      Data: 105|NP_BlackBoardDataManager, Game.Runtime
     - Name: BBValues
       Entry: 7
-      Data: 108|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 106|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 54
+      Data: 52
     - Name: 
       Entry: 12
       Data: 3
@@ -2096,7 +1994,7 @@ MonoBehaviour:
       Data: Duration
     - Name: $v
       Entry: 9
-      Data: 55
+      Data: 53
     - Name: 
       Entry: 8
       Data: 
@@ -2108,7 +2006,7 @@ MonoBehaviour:
       Data: IsHitUnit
     - Name: $v
       Entry: 9
-      Data: 56
+      Data: 54
     - Name: 
       Entry: 8
       Data: 
@@ -2120,7 +2018,7 @@ MonoBehaviour:
       Data: HitUnitIds
     - Name: $v
       Entry: 9
-      Data: 57
+      Data: 55
     - Name: 
       Entry: 8
       Data: 
@@ -2132,7 +2030,7 @@ MonoBehaviour:
       Data: 
     - Name: EventValues
       Entry: 7
-      Data: 109|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 107|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -2144,26 +2042,14 @@ MonoBehaviour:
       Data: 
     - Name: Ids
       Entry: 7
-      Data: 110|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int64,
+      Data: 108|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int64,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 54
+      Data: 52
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Attack
-    - Name: $v
-      Entry: 3
-      Data: 10001
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -2214,25 +2100,9 @@ MonoBehaviour:
     outputFieldName: NextNode
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 32a4fcf3-6215-4726-a9b2-5088a065c12c
-    owner: {fileID: 11400000}
-    inputNodeGUID: 820bccfa-1eb3-4660-996e-e91ea24f989f
-    outputNodeGUID: 3fd7f637-7519-4d70-b246-43844cf708c9
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 8d318a96-7c6d-42a1-882f-71e260d467d5
     owner: {fileID: 11400000}
     inputNodeGUID: d3e2411d-a544-4693-8916-e1c22d07d66a
-    outputNodeGUID: 3fd7f637-7519-4d70-b246-43844cf708c9
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 207f8be5-58c2-4e0f-96d1-24e339bad050
-    owner: {fileID: 11400000}
-    inputNodeGUID: 9f818c37-cb85-44a7-9334-3ffe40a0fde1
     outputNodeGUID: 3fd7f637-7519-4d70-b246-43844cf708c9
     inputFieldName: PrevNode
     outputFieldName: NextNode
@@ -2253,8 +2123,8 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 0, y: -33, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: -83, y: -101, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   Name: Collider
   IdInConfig: 10002
   SavePathClient: Assets/Res/Configs/OtherConfigs

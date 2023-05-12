@@ -20,7 +20,7 @@ public class NP_MoveToRandomPosAction : NP_ClassForStoreAction
         return this.Action;
     }
 
-    public void MoveToRandomPos()
+    private void MoveToRandomPos()
     {
         Vector3 randomTarget = new Vector3(RandomHelper.RandomNumber(this.XMin, this.XMax), 0,
             RandomHelper.RandomNumber(this.YMin, this.YMax));
