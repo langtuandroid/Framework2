@@ -4,18 +4,26 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Title("添加默认碰撞", TitleAlignment = TitleAlignments.Centered)]
-public class NP_AddDefaultColliderAction : NP_ClassForStoreAction
+public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
 {
 
     [LabelText("碰撞体id")] public int ColliderId;
 
     [LabelText("持续时间")] public float Duration;
     
-    [LabelText("生成点")] public string HangPoint; 
+    [LabelText("生成点")] public string HangPoint;
 
-    [LabelText("Pos是否跟随释放的Unit")] public bool FollowUnitPos;
+    [LabelText("碰撞的标签")] public RoleTag RoleTag = RoleTag.Hero | RoleTag.Soldier;
+    
+    [LabelText("碰撞的阵营")] public RoleCast RoleCast = RoleCast.Adverse;
 
-    [LabelText("Rot是否跟随释放的Unit")] public bool FollowUnitRot;
+    [LabelText("是否碰撞到的字典key")] public NP_BlackBoardRelationData HasHitKey = new NP_BlackBoardRelationData();
+    
+    [LabelText("碰撞到的所有物体字典key")] public NP_BlackBoardRelationData HitUnitsKey = new NP_BlackBoardRelationData();
+
+    [LabelText("Pos是否跟随释放的Unit")] public bool FollowUnitPos = true;
+
+    [LabelText("Rot是否跟随释放的Unit")] public bool FollowUnitRot = true;
     
     /// <summary>
     /// 只在跟随Unit时有效，因为不跟随Unit说明是世界空间的碰撞体，
@@ -35,10 +43,11 @@ public class NP_AddDefaultColliderAction : NP_ClassForStoreAction
 
     private void CreateColliderData()
     {
+        Log.Msg("创建了碰撞体");
         // BelongtoRuntimeTree.BelongNP_DataSupportor.
         UnitFactory.CreateDefaultColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, ColliderId,
-            10001, BelongtoRuntimeTree.BelongNP_DataSupportor.NPBehaveTreeDataId,
+            10001,10000, 
             BelongtoRuntimeTree.BelongNP_DataSupportor.ExcelId, HangPoint, FollowUnitPos, FollowUnitRot,
-            Offset, Angle, Duration);
+            Offset, Angle, Duration, new DefaultColliderData(BelongtoRuntimeTree.BelongNP_DataSupportor.ExcelId, RoleTag, RoleCast, HitUnitsKey.BBKey, HasHitKey.BBKey));
     }
 }

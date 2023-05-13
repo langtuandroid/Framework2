@@ -104,7 +104,7 @@ public class UnitFactory
             {
                 belongToUnit = belongToUnit, collisionRelationDataConfigId = collisionRelationDataConfigId,
                 FollowUnitPos = followUnitPos, FollowUnitRot = followUnitRot, offset = offset,
-                HangPointPath = hangPoint, angle = angle, belongToSkillConfigId = skillCanvasData.BelongToSkillId
+                HangPointPath = hangPoint, angle = angle
             });
         b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
         b2sColliderEntity.AddComponent<SkillCanvasManagerComponent>();
@@ -127,13 +127,14 @@ public class UnitFactory
     /// <param name="colliderNPBehaveTreeIdInExcel">碰撞体的行为树Id</param>
     /// <returns></returns>
     public static Unit CreateDefaultColliderUnit(Scene room, long belongToUnitId, long selfId,
-        int collisionRelationDataConfigId, long npbehaveId, int skillId,string hangPoint, bool followUnitPos,
+        int collisionRelationDataConfigId, int colliderNPBehaveTreeIdInExcel, int skillId,string hangPoint, bool followUnitPos,
         bool followUnitRot, Vector3 offset,
-        float angle, float duration)
+        float angle, float duration, DefaultColliderData defaultColliderData)
     {
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(room);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
+        SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
 
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
         b2sColliderEntity.AddComponent<B2D_ColliderComponent, CreateSkillColliderArgs>(
@@ -141,14 +142,15 @@ public class UnitFactory
             {
                 belongToUnit = belongToUnit, collisionRelationDataConfigId = collisionRelationDataConfigId,
                 FollowUnitPos = followUnitPos, FollowUnitRot = followUnitRot, offset = offset,
-                HangPointPath = hangPoint, angle = angle, belongToSkillConfigId =  skillId
+                HangPointPath = hangPoint, angle = angle, DefaultColliderData =  defaultColliderData
             });
         b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
         b2sColliderEntity.AddComponent<SkillCanvasManagerComponent>();
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
-        var behave = NP_RuntimeTreeFactory.CreateSkillNpRuntimeTree(b2sColliderEntity, npbehaveId, skillId);
+        var behave = NP_RuntimeTreeFactory.CreateSkillNpRuntimeTree(b2sColliderEntity, skillCanvasData.NPBehaveId, skillId);
         behave.GetBlackboard().Set("Duration", duration);
+        behave.Start();
 
         return b2sColliderEntity;
     } 
@@ -165,7 +167,7 @@ public class UnitFactory
     {
         public Unit belongToUnit;
         public int collisionRelationDataConfigId;
-        public long belongToSkillConfigId;
+        public DefaultColliderData DefaultColliderData;
         public string HangPointPath;
         public bool FollowUnitPos;
         public bool FollowUnitRot;

@@ -128,6 +128,7 @@ public abstract class B2D_ColliderVisualHelperBase
             MColliderDataSupporter.ToJson());
         colliderEditor.OnSaveColliderData(dataStructureBase.id);
         colliderEditor.ShowTips("保存成功");
+        AssetDatabase.Refresh();
     }
 
     protected void SavePrefab()

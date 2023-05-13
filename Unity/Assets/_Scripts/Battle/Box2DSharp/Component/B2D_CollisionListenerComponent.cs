@@ -95,7 +95,8 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
             id2UserData.TryGetValue(cachedCollisionData.Item1, out var unitA);
             id2UserData.TryGetValue(cachedCollisionData.Item2, out var unitB);
 
-            if (unitA == null || unitB == null || unitA.IsDisposed || unitB.IsDisposed)
+            if (unitA == null || unitB == null || unitA.IsDisposed || unitB.IsDisposed ||
+                unitA.Id != cachedCollisionData.Item1 || unitB.Id != cachedCollisionData.Item2)
             {
                 // Id不分顺序，防止移除失败
                 this.m_ToBeRemovedCollisionData.Add((cachedCollisionData.Item1, cachedCollisionData.Item2));

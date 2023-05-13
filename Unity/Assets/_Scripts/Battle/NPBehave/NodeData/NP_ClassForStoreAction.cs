@@ -2,6 +2,7 @@
 
 using Framework;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Action = System.Action;
 
 [BoxGroup("用于包含Action的数据类"), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
@@ -11,18 +12,18 @@ public class NP_ClassForStoreAction
     /// <summary>
     /// 归属的UnitID
     /// </summary>
-    [HideInEditorMode] public Unit BelongToUnit;
+    [HideInInspector] public Unit BelongToUnit;
 
     /// <summary>
     /// 归属的运行时行为树实例
     /// </summary>
-    [HideInEditorMode] public NP_RuntimeTree BelongtoRuntimeTree;
+    [HideInInspector] public NP_RuntimeTree BelongtoRuntimeTree;
 
-    [HideInEditorMode] public Action Action;
+    [HideInInspector] public Action Action;
 
-    [HideInEditorMode] public Func<bool> Func1;
+    [HideInInspector] public Func<bool> Func1;
 
-    [HideInEditorMode] public Func<bool, NPBehave.Action.Result> Func2;
+    [HideInInspector] public Func<bool, NPBehave.Action.Result> Func2;
 
     /// <summary>
     /// 获取将要执行的委托函数，也可以在这里面做一些初始化操作

@@ -14,5 +14,5 @@
     /// <summary>
     /// 名称ID保存地址
     /// </summary>
-    public const string ClientColliderDataSavePath = "Assets/Res/Configs/OtherConfigs/ColliderData.bytes";
+    public const string ClientColliderDataSavePath = "Assets/Res/Configs/ColliderConfig/ColliderData.bytes";
 }

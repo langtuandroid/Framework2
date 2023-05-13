@@ -816,12 +816,6 @@ namespace Framework
             return component as K;
         }
 
-        public Entity AddChild(Entity entity)
-        {
-            entity.Parent = this;
-            return entity;
-        }
-
         public Entity AddChild(Type entityType,bool isFromPool = false)
         {
             Entity child = Create(entityType, isFromPool);

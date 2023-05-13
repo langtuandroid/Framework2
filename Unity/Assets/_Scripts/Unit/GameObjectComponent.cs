@@ -7,6 +7,10 @@ public class GameObjectComponent: Entity, IDestroySystem
 
     public Transform Find(string path)
     {
+        if (string.IsNullOrEmpty(path))
+        {
+            return GameObject.transform;
+        }
         return GameObject.transform.Find(path);
     }
 

@@ -49,51 +49,51 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/OtherConfigs/Collider.bytes",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/DefaultColliderBehave.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/OtherConfigs/ColliderData.bytes",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/SkillBehave.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/OtherConfigs/Skill.bytes",
+            "AssetPath": "Assets/Res/Configs/ColliderConfig/ColliderData.bytes",
             "AssetTags": [],
-            "BundleID": 1,
+            "BundleID": 2,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/Item_Buff.prefab",
             "AssetTags": [],
-            "BundleID": 2,
+            "BundleID": 3,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/Item_Info.prefab",
             "AssetTags": [],
-            "BundleID": 2,
+            "BundleID": 3,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/Item_Skill.prefab",
             "AssetTags": [],
-            "BundleID": 2,
+            "BundleID": 3,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/UI_UnitInfo.prefab",
             "AssetTags": [],
-            "BundleID": 2,
+            "BundleID": 3,
             "DependIDs": []
         }
     ],
@@ -109,7 +109,17 @@
             "ReferenceIDs": []
         },
         {
-            "BundleName": "assets_res_configs_otherconfigs.bundle",
+            "BundleName": "assets_res_configs_behaveconfigs.bundle",
+            "FileHash": "00000000000000000000000000000000",
+            "FileCRC": "00000000",
+            "FileSize": 0,
+            "IsRawFile": false,
+            "LoadMethod": 0,
+            "Tags": [],
+            "ReferenceIDs": []
+        },
+        {
+            "BundleName": "assets_res_configs_colliderconfig.bundle",
             "FileHash": "00000000000000000000000000000000",
             "FileCRC": "00000000",
             "FileSize": 0,

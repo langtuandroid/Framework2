@@ -1,34 +1,41 @@
+using System;
 using Framework;
+using Sirenix.OdinInspector;
 
+[Flags]
 public enum RoleCast
 {
     /// <summary>
     /// 友善的
     /// </summary>
-    Friendly,
+    [LabelText("友方")]
+    Friendly = 1 << 1,
 
     /// <summary>
     /// 敌对的
     /// </summary>
-    Adverse,
+    [LabelText("敌对的")]
+    Adverse = 1 << 2,
 
     /// <summary>
     /// 中立的
     /// </summary>
-    Neutral
+    [LabelText("中立的")]
+    Neutral = 1 << 3
 }
 
-[System.Flags]
+[Flags]
 public enum RoleCamp
 {
     red = 1 << 1,
     bule = 1 << 2,
 }
 
+[Flags]
 public enum RoleTag
 {
-    Hero,
-    Soldier,
+    Hero = 1 << 1,
+    Soldier = 1 << 2,
 }
 
 public class B2D_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>

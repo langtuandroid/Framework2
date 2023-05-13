@@ -1,1 +1,1 @@
-{ "_t" : "ColliderNameAndIdInflectSupporter", "colliderNameAndIdInflectDic" : { "TestCollider" : NumberLong(10001) } }
+{ "_t" : "ColliderNameAndIdInflectSupporter", "colliderNameAndIdInflectDic" : { "GameObject" : NumberLong(10001) } }

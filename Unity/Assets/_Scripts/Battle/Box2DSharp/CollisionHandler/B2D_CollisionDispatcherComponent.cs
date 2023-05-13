@@ -17,7 +17,7 @@ using Framework;
         /// </summary>
         public void HandleCollisionStart(ColliderUserData a, ColliderUserData b)
         {
-            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.Unit.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionStart(a, b);
@@ -29,7 +29,7 @@ using Framework;
         /// </summary>
         public void HandleCollisionSustain(ColliderUserData a, ColliderUserData b)
         {
-            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.Unit.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionStay(a, b);
@@ -41,7 +41,7 @@ using Framework;
         /// </summary>
         public void HandleCollsionEnd(ColliderUserData a, ColliderUserData b)
         {
-            if (B2DCollisionHandlers.TryGetValue(a.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
+            if (B2DCollisionHandlers.TryGetValue(a.Unit.GetComponent<B2D_ColliderComponent>().CollisionHandlerName,
                 out var collisionHandler))
             {
                 collisionHandler.HandleCollisionEnd(a, b);

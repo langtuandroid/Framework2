@@ -48,8 +48,8 @@ public class B2D_ColliderEditor : OdinEditorWindow
 
     private void OnEnable()
     {
-        this.ReadcolliderNameAndIdInflect();
-        this.ReadcolliderData();
+        this.ReadColliderNameAndIdInflect();
+        this.ReadColliderData();
         this.MB2DDebuggerHandler = new GameObject("Box2DDebuggerHandler").AddComponent<B2D_DebuggerHandler>();
 
         MenuTree = new B2D_MenuTree(ColliderNameAndIdInflectSupporter, LoadOneData);
@@ -96,14 +96,13 @@ public class B2D_ColliderEditor : OdinEditorWindow
     /// <summary>
     /// 读取碰撞名称和ID映射表
     /// </summary>
-    private void ReadcolliderNameAndIdInflect()
+    private void ReadColliderNameAndIdInflect()
     {
         if (File.Exists(
                 $"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}"))
         {
-            byte[] mfile0 =
-                File.ReadAllBytes($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}");
-            //这里不进行长度判断会报错，正在试图访问一个已经关闭的流，咱也不懂，咱也不敢问
+            var mfile0 =
+                File.ReadAllText($"{B2D_BattleColliderExportPathDefine.ColliderNameAndIdInflectSavePath}");
             if (mfile0.Length > 0)
                 this.ColliderNameAndIdInflectSupporter =
                     BsonSerializer.Deserialize<ColliderNameAndIdInflectSupporter>(mfile0);
@@ -176,7 +175,7 @@ public class B2D_ColliderEditor : OdinEditorWindow
     /// <summary>
     /// 读取所有碰撞数据
     /// </summary>
-    private void ReadcolliderData()
+    private void ReadColliderData()
     {
         Type[] types = typeof(ColliderDataSupporter).Assembly.GetTypes();
         foreach (Type type in types)
@@ -192,8 +191,8 @@ public class B2D_ColliderEditor : OdinEditorWindow
         if (File.Exists(
                 $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}"))
         {
-            byte[] mfile0 =
-                File.ReadAllBytes(
+            var mfile0 =
+                File.ReadAllText(
                     $"{B2D_BattleColliderExportPathDefine.ClientColliderDataSavePath}");
             if (mfile0.Length > 0)
                 this.ColliderDataSupporter =

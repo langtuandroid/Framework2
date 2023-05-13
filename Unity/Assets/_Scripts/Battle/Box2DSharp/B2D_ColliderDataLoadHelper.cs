@@ -19,7 +19,7 @@ public static class B2D_ColliderDataLoadHelper
         self.Body = self.WorldComponent.CreateDynamicBody();
 
         ApplyFixture(self.B2D_ColliderDataStructureBase, self.Body,
-            self.AddChild<ColliderUserData, Unit, long>(self.GetParent<Unit>(), self.BelongToSkillConfigId, true));
+            self.AddChild<ColliderUserData, Unit, DefaultColliderData>(self.GetParent<Unit>(), self.DefaultColliderData));
     }
 
     public static void ApplyFixture(B2D_ColliderDataStructureBase B2DColliderDataStructureBase, Body body,
@@ -79,13 +79,32 @@ public static class B2D_ColliderDataLoadHelper
     }
 }
 
-public class ColliderUserData : Entity, IAwakeSystem<Unit,long>
+public class ColliderUserData : Entity, IAwakeSystem<Unit,DefaultColliderData>
 {
     public Unit Unit;
-    public long BelongSkillConfigId;
-    public void Awake(Unit a, long b)
+    public DefaultColliderData DefaultColliderData;
+
+    public void Awake(Unit a, DefaultColliderData b)
     {
         Unit = a;
-        BelongSkillConfigId = b;
+        DefaultColliderData = b;
+    }
+}
+
+public class DefaultColliderData
+{
+    public long BelongSkillConfigId;
+    public RoleTag RoleTag;
+    public RoleCast RoleCast;
+    public string IsHitBlackboardKey;
+    public string HitUnitsBlackboardKey;
+
+    public DefaultColliderData(long belongSkillConfigId, RoleTag roleTag, RoleCast roleCast, string hitUnitsBlackboardKey, string isHitBlackboardKey)
+    {
+        BelongSkillConfigId = belongSkillConfigId;
+        RoleTag = roleTag;
+        RoleCast = roleCast;
+        HitUnitsBlackboardKey = hitUnitsBlackboardKey;
+        IsHitBlackboardKey = isHitBlackboardKey;
     }
 }
