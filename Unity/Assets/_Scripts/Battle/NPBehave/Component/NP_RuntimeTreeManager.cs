@@ -7,7 +7,7 @@ namespace Framework
         public Dictionary<long, NP_RuntimeTree> RuntimeTrees = new Dictionary<long, NP_RuntimeTree>();
 
         /// <summary>
-        /// 已经添加过的行为树，第一个id为配置id，第二个id为运行时id
+        /// 已经添加过的行为树，第一个id为root id，第二个id为运行时id
         /// </summary>
         private Dictionary<long, long> m_HasAddedTrees = new Dictionary<long, long>();
 
@@ -26,32 +26,32 @@ namespace Framework
         /// <summary>
         /// 通过运行时ID请求行为树
         /// </summary>
-        /// <param name="runTimeid">运行时ID</param>
+        /// <param name="runtimeid">运行时ID</param>
         /// <returns></returns>
-        public NP_RuntimeTree GetTreeByRuntimeID(long runTimeid)
+        public NP_RuntimeTree GetTreeByRuntimeID(long runtimeid)
         {
-            if (RuntimeTrees.ContainsKey(runTimeid))
+            if (RuntimeTrees.TryGetValue(runtimeid, out var id))
             {
-                return RuntimeTrees[runTimeid];
+                return id;
             }
 
-            Log.Error($"通过运行时ID请求行为树请求的ID不存在，id是{runTimeid}");
+            Log.Error($"通过运行时ID请求行为树请求的ID不存在，id是{runtimeid}");
             return null;
         }
 
         /// <summary>
-        /// 通过预制id请求行为树(将要废弃)
+        /// 通过root id请求行为树
         /// </summary>
-        /// <param name="prefabid">预制id</param>
+        /// <param name="rootId">预制id</param>
         /// <returns></returns>
-        public NP_RuntimeTree GetTreeByPrefabID(long prefabid)
+        public NP_RuntimeTree GetTreeByPrefabID(long rootId)
         {
-            if (this.m_HasAddedTrees.ContainsKey(prefabid))
+            if (this.m_HasAddedTrees.TryGetValue(rootId, out var tree))
             {
-                return RuntimeTrees[this.m_HasAddedTrees[prefabid]];
+                return RuntimeTrees[tree];
             }
 
-            Log.Error($"通过预制id请求行为树,请求的ID不存在，id是{prefabid}");
+            Log.Error($"通过预制id请求行为树,请求的ID不存在，id是{rootId}");
             return null;
         }
 

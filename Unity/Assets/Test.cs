@@ -1,4 +1,5 @@
-﻿using Box2DSharp.Collision.Shapes;
+﻿using System.Collections.Generic;
+using Box2DSharp.Collision.Shapes;
 using Box2DSharp.Common;
 using Box2DSharp.Dynamics;
 using Sirenix.OdinInspector;
@@ -13,9 +14,8 @@ public class Test : MonoBehaviour
 {
     private World world;
     [Button]
-    async void Start()
+    void Start()
     {
-        int a = 1;
     }
 
     private void Update()

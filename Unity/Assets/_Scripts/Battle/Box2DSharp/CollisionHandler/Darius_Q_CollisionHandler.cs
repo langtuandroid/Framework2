@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Darius_Q_CollisionHandler : AB2D_CollisionHandler
 {
-    public override void HandleCollisionStart(Unit a, Unit b)
+    public override void HandleCollisionStart(ColliderUserData a, ColliderUserData b)
     {
         B2D_ColliderComponent aColliderComponent = a.GetComponent<B2D_ColliderComponent>();
         B2D_RoleCastComponent aRole = aColliderComponent.BelongToUnit.GetComponent<B2D_RoleCastComponent>();
@@ -77,11 +77,11 @@ public class Darius_Q_CollisionHandler : AB2D_CollisionHandler
         }
     }
 
-    public override void HandleCollisionStay(Unit a, Unit b)
+    public override void HandleCollisionStay(ColliderUserData a, ColliderUserData b)
     {
     }
 
-    public override void HandleCollisionEnd(Unit a, Unit b)
+    public override void HandleCollisionEnd(ColliderUserData a, ColliderUserData b)
     {
     }
 }

@@ -4,7 +4,6 @@ using Box2DSharp.Dynamics;
 using Box2DSharp.Dynamics.Contacts;
 using Framework;
 
-
 /// <summary>
 /// 某一物理世界所有碰撞的监听者，负责碰撞事件的分发
 /// </summary>
@@ -13,14 +12,14 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
     public B2D_WorldColliderManagerComponent B2DWorldColliderManagerComponent;
 
     private List<(long, long)> m_CollisionRecorder = new List<(long, long)>();
-
     private List<(long, long)> m_ToBeRemovedCollisionData = new List<(long, long)>();
+    private Dictionary<long,ColliderUserData> id2UserData = new();
 
     public void BeginContact(Contact contact)
     {
         //这里获取的是碰撞实体，比如诺克Q技能的碰撞体Unit，这里获取的就是它
-        Unit unitA = (Unit)contact.FixtureA.UserData;
-        Unit unitB = (Unit)contact.FixtureB.UserData;
+        ColliderUserData unitA = (ColliderUserData)contact.FixtureA.UserData;
+        ColliderUserData unitB = (ColliderUserData)contact.FixtureB.UserData;
 
         if (unitA.IsDisposed || unitB.IsDisposed)
         {
@@ -28,6 +27,8 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
         }
 
         m_CollisionRecorder.Add((unitA.Id, unitB.Id));
+        id2UserData[unitA.Id] = unitA;
+        id2UserData[unitB.Id] = unitB;
 
         B2D_CollisionDispatcherComponent.Instance.HandleCollisionStart(unitA, unitB);
         B2D_CollisionDispatcherComponent.Instance.HandleCollisionStart(unitB, unitA);
@@ -35,12 +36,14 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
 
     public void EndContact(Contact contact)
     {
-        Unit unitA = (Unit)contact.FixtureA.UserData;
-        Unit unitB = (Unit)contact.FixtureB.UserData;
+        ColliderUserData unitA = (ColliderUserData)contact.FixtureA.UserData;
+        ColliderUserData unitB = (ColliderUserData)contact.FixtureB.UserData;
 
         // Id不分顺序，防止移除失败
         this.m_ToBeRemovedCollisionData.Add((unitA.Id, unitB.Id));
         this.m_ToBeRemovedCollisionData.Add((unitB.Id, unitA.Id));
+        id2UserData.Remove(unitA.Id);
+        id2UserData.Remove(unitB.Id);
 
         if (unitA.IsDisposed || unitB.IsDisposed)
         {
@@ -80,6 +83,8 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
     {
         foreach (var tobeRemovedData in m_ToBeRemovedCollisionData)
         {
+            id2UserData.Remove(tobeRemovedData.Item1);
+            id2UserData.Remove(tobeRemovedData.Item2);
             this.m_CollisionRecorder.Remove(tobeRemovedData);
         }
 
@@ -87,8 +92,8 @@ public class B2D_CollisionListenerComponent : Entity, IContactListener, IAwakeSy
 
         foreach (var cachedCollisionData in this.m_CollisionRecorder)
         {
-            Unit unitA = this.DomainScene().GetComponent<UnitComponent>().Get(cachedCollisionData.Item1);
-            Unit unitB = this.DomainScene().GetComponent<UnitComponent>().Get(cachedCollisionData.Item2);
+            id2UserData.TryGetValue(cachedCollisionData.Item1, out var unitA);
+            id2UserData.TryGetValue(cachedCollisionData.Item2, out var unitB);
 
             if (unitA == null || unitB == null || unitA.IsDisposed || unitB.IsDisposed)
             {

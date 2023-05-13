@@ -16,6 +16,8 @@ public class NP_DataSupportor
 
     [LabelText("此行为树Id，也是根节点Id")] public long NPBehaveTreeDataId;
 
+    [LabelText("此行为树所属技能或行为的配置表Id")] public int ExcelId;
+
     [LabelText("单个行为树所有结点")]
     [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<long, NP_NodeDataBase> NP_DataSupportorDic = new Dictionary<long, NP_NodeDataBase>();

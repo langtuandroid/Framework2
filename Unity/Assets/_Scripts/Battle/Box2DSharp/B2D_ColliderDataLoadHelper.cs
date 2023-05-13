@@ -18,11 +18,12 @@ public static class B2D_ColliderDataLoadHelper
             B2DColliderDataRepositoryComponent.GetDataByColliderId(self.B2D_CollisionRelationConfigId);
         self.Body = self.WorldComponent.CreateDynamicBody();
 
-        ApplyFixture(self.B2D_ColliderDataStructureBase, self.Body, self.GetParent<Unit>());
+        ApplyFixture(self.B2D_ColliderDataStructureBase, self.Body,
+            self.AddChild<ColliderUserData, Unit, long>(self.GetParent<Unit>(), self.BelongToSkillConfigId, true));
     }
 
     public static void ApplyFixture(B2D_ColliderDataStructureBase B2DColliderDataStructureBase, Body body,
-        Unit unit)
+        ColliderUserData userData)
     {
         switch (B2DColliderDataStructureBase.B2D_ColliderType)
         {
@@ -30,7 +31,7 @@ public static class B2D_ColliderDataLoadHelper
                 B2D_BoxColliderDataStructure B2DBoxColliderDataStructure =
                     (B2D_BoxColliderDataStructure)B2DColliderDataStructureBase;
                 body.CreateBoxFixture(B2DBoxColliderDataStructure.hx, B2DBoxColliderDataStructure.hy,
-                    B2DBoxColliderDataStructure.finalOffset, 0, B2DBoxColliderDataStructure.isSensor, unit);
+                    B2DBoxColliderDataStructure.finalOffset, 0, B2DBoxColliderDataStructure.isSensor, userData);
                 break;
             case B2D_ColliderType.CircleCollider:
                 B2D_CircleColliderDataStructure B2DCircleColliderDataStructure =
@@ -38,7 +39,7 @@ public static class B2D_ColliderDataLoadHelper
                 body.CreateCircleFixture(B2DCircleColliderDataStructure.radius,
                     B2DCircleColliderDataStructure.finalOffset,
                     B2DCircleColliderDataStructure.isSensor,
-                    unit);
+                    userData);
                 break;
             case B2D_ColliderType.PolygonCollider:
                 B2D_PolygonColliderDataStructure B2DPolygonColliderDataStructure =
@@ -46,7 +47,7 @@ public static class B2D_ColliderDataLoadHelper
                 foreach (var verxtPoint in B2DPolygonColliderDataStructure.finalPoints)
                 {
                     body.CreatePolygonFixture(verxtPoint, B2DPolygonColliderDataStructure.isSensor,
-                        unit);
+                        userData);
                 }
 
                 break;
@@ -75,5 +76,16 @@ public static class B2D_ColliderDataLoadHelper
 
                 break;
         }
+    }
+}
+
+public class ColliderUserData : Entity, IAwakeSystem<Unit,long>
+{
+    public Unit Unit;
+    public long BelongSkillConfigId;
+    public void Awake(Unit a, long b)
+    {
+        Unit = a;
+        BelongSkillConfigId = b;
     }
 }

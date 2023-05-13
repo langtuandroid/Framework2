@@ -1,5 +1,5 @@
-﻿    
-using System;
+﻿using System;
+using Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,7 +10,13 @@ public class NP_AddDefaultColliderAction : NP_ClassForStoreAction
     [LabelText("碰撞体id")] public int ColliderId;
 
     [LabelText("持续时间")] public float Duration;
+    
+    [LabelText("生成点")] public string HangPoint; 
 
+    [LabelText("Pos是否跟随释放的Unit")] public bool FollowUnitPos;
+
+    [LabelText("Rot是否跟随释放的Unit")] public bool FollowUnitRot;
+    
     /// <summary>
     /// 只在跟随Unit时有效，因为不跟随Unit说明是世界空间的碰撞体，
     /// </summary>
@@ -29,6 +35,10 @@ public class NP_AddDefaultColliderAction : NP_ClassForStoreAction
 
     private void CreateColliderData()
     {
-
+        // BelongtoRuntimeTree.BelongNP_DataSupportor.
+        UnitFactory.CreateDefaultColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, ColliderId,
+            10001, BelongtoRuntimeTree.BelongNP_DataSupportor.NPBehaveTreeDataId,
+            BelongtoRuntimeTree.BelongNP_DataSupportor.ExcelId, HangPoint, FollowUnitPos, FollowUnitRot,
+            Offset, Angle, Duration);
     }
 }

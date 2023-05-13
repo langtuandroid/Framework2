@@ -144,6 +144,7 @@ public class NPBehaveGraph : BaseGraph
         if (skillCanvasData != null)
         {
             npDataSupportorBase.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
+            npDataSupportorBase.ExcelId = IdInConfig;
         }
 
         if (npDataSupportorBase.NPBehaveTreeDataId == 0)

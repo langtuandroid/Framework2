@@ -12,19 +12,19 @@ public abstract class AB2D_CollisionHandler
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public abstract void HandleCollisionStart(Unit a, Unit b);
+    public abstract void HandleCollisionStart(ColliderUserData a, ColliderUserData b);
 
     /// <summary>
     /// a是碰撞者自身，b是碰撞到的目标
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public abstract void HandleCollisionStay(Unit a, Unit b);
+    public abstract void HandleCollisionStay(ColliderUserData a, ColliderUserData b);
 
     /// <summary>
     /// a是碰撞者自身，b是碰撞到的目标
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public abstract void HandleCollisionEnd(Unit a, Unit b);
+    public abstract void HandleCollisionEnd(ColliderUserData a, ColliderUserData b);
 }

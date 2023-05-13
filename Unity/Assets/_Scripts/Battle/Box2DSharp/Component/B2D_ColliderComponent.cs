@@ -35,6 +35,11 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
     public Unit BelongToUnit;
 
     /// <summary>
+    ///比如诺克放一个Q，那么BelongToSkillConfigId就是技能的配置表id
+    /// </summary>
+    public long BelongToSkillConfigId;
+
+    /// <summary>
     /// 是否同步归属的UnitPos
     /// </summary>
     public bool SyncPosToBelongUnit;
@@ -57,12 +62,13 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
         string collisionHandlerName = serverB2SCollisionRelationConfig.ColliderHandlerName;
 
         WorldComponent = GetParent<Unit>().DomainScene().GetComponent<B2D_WorldComponent>();
-        BelongToUnit = createSkillColliderArgs.belontToUnit;
+        BelongToUnit = createSkillColliderArgs.belongToUnit;
         B2D_CollisionRelationConfigId = serverB2SCollisionRelationConfig.ID;
         CollisionHandlerName = collisionHandlerName ?? string.Empty;
 
         SyncPosToBelongUnit = createSkillColliderArgs.FollowUnitPos;
         SyncRotToBelongUnit = createSkillColliderArgs.FollowUnitRot;
+        BelongToSkillConfigId = createSkillColliderArgs.belongToSkillConfigId;
 
         Unit selfUnit = GetParent<Unit>();
         Transform hangPoint = BelongToUnit.GetComponent<GameObjectComponent>()
@@ -83,8 +89,7 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
         B2D_ColliderDataStructureBase = args.B2SColliderDataStructureBase;
         Body = WorldComponent.CreateDynamicBody();
 
-        B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body,
-            GetParent<Unit>());
+        B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body, AddChild<ColliderUserData,Unit,long>(GetParent<Unit>(),0, true));
         SyncBody();
     }
 

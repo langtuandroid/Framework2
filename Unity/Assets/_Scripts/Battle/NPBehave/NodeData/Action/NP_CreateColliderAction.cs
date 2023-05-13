@@ -28,15 +28,9 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
 
     [LabelText("Rot是否跟随释放的Unit")] public bool FollowUnitRot;
 
-    /// <summary>
-    /// 只在跟随Unit时有效，因为不跟随Unit说明是世界空间的碰撞体，
-    /// </summary>
     [LabelText("相对于释放者的偏移量")]
     public Vector3 Offset;
 
-    /// <summary>
-    /// 只在不跟随Unit时有效，跟随Unit代表使用BelongToUnit的Transform
-    /// </summary>
     [LabelText("相对于释放者的旋转角度")]
     public float Angle;
 
@@ -46,7 +40,7 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
         return this.Action;
     }
 
-    public void CreateColliderData()
+    private void CreateColliderData()
     {
         int colliderDataConfigId = B2D_CollisionRelationConfigFactory.Instance
             .Get(CollisionsRelationSupportIdInExcel.Value)
@@ -55,6 +49,5 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
        UnitFactory.CreateSpecialColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, colliderDataConfigId,
                 CollisionsRelationSupportIdInExcel.Value, ColliderNPBehaveTreeIdInExcel,HangPoint, FollowUnitPos, FollowUnitRot,
                 Offset, Angle);
-
     }
 }

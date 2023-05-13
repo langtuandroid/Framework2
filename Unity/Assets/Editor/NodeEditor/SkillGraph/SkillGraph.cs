@@ -88,6 +88,7 @@
          if (skillCanvasData != null)
          {
              npDataSupportor.NPBehaveTreeDataId = factory.Get(IdInConfig).NPBehaveId;
+             npDataSupportor.ExcelId = IdInConfig;
          }
 
          if (npDataSupportor.NPBehaveTreeDataId == 0)
