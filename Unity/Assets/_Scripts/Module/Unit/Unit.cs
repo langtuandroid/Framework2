@@ -56,9 +56,15 @@ namespace Framework
 
         protected override string ViewName
         {
-            get { return $"{this.GetType().Name} ({this.Id})"; }
+            get
+            {
+                return $"{this.GetType().Name} ({this.Id})";
+            }
         }
 
-
+        public override string ToString()
+        {
+            return $"{GetComponent<GameObjectComponent>()?.GameObject.name} {base.ToString()}";
+        }
     }
 }

@@ -59,6 +59,16 @@ public class Init : MonoBehaviour
         Game.FrameFinishUpdate();
     }
 
+    private void FixedUpdate()
+    {
+        Game.FixedUpdate(Time.fixedTime);
+    }
+
+    public void OnGUI()
+    {
+        
+    }
+
     private void OnApplicationQuit()
     {
         Game.Close();

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Framework
 {
-    public class EventSystem : Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate, ISingletonRendererUpdate
+    public class EventSystem : Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate, ISingletonRendererUpdate,
+        ISingletonFixedUpdate
     {
         private class OneTypeSystems
         {
@@ -72,7 +71,9 @@ namespace Framework
         private readonly Dictionary<string, Type> allTypes = new();
 
         private readonly UnOrderMultiMapSet<Type, Type> attribute2Types = new();
-        private readonly UnOrderMultiMapSet<Type, (BaseAttribute attribute, Type type)> attribute2TypesAndAttribute = new();
+
+        private readonly UnOrderMultiMapSet<Type, (BaseAttribute attribute, Type type)> attribute2TypesAndAttribute =
+            new();
 
         private readonly Dictionary<Type, List<EventInfo>> allEvents = new();
 
@@ -116,7 +117,7 @@ namespace Framework
         /// </summary>
         public void InitType()
         {
-            
+
             this.allEvents.Clear();
             foreach (Type type in attribute2Types[typeof(EventAttribute)])
             {
@@ -185,7 +186,7 @@ namespace Framework
 
             return result;
         }
-        
+
         public HashSet<(BaseAttribute attribute, Type type)> GetTypesAndAttribute(Type systemAttributeType)
         {
             if (!this.attribute2TypesAndAttribute.TryGetValue(systemAttributeType, out var result))
@@ -210,7 +211,7 @@ namespace Framework
         {
             Type type = component.GetType();
 
-            foreach (KeyValuePair<Type,InstanceQueueIndex> instanceQueueIndex in InstanceQueueMap.InstanceQueueMapDic)
+            foreach (KeyValuePair<Type, InstanceQueueIndex> instanceQueueIndex in InstanceQueueMap.InstanceQueueMapDic)
             {
                 if (instanceQueueIndex.Key.IsAssignableFrom(type))
                 {
@@ -226,7 +227,7 @@ namespace Framework
 
         public void Deserialize(Entity component)
         {
-            if(component is IDeserializeSystem deserializeSystem)
+            if (component is IDeserializeSystem deserializeSystem)
             {
                 try
                 {
@@ -242,7 +243,7 @@ namespace Framework
         // GetComponentSystem
         public void GetComponent(Entity entity, Entity component)
         {
-            if(entity is IGetComponentSystem getSystem)
+            if (entity is IGetComponentSystem getSystem)
             {
                 try
                 {
@@ -258,7 +259,7 @@ namespace Framework
         // AddComponentSystem
         public void AddComponent(Entity entity, Entity component)
         {
-            if(entity is IAddComponentSystem addComponentSystem)
+            if (entity is IAddComponentSystem addComponentSystem)
             {
                 try
                 {
@@ -273,7 +274,7 @@ namespace Framework
 
         public void Awake(Entity component)
         {
-            if(component is IAwakeSystem awakeSystem)
+            if (component is IAwakeSystem awakeSystem)
             {
                 try
                 {
@@ -289,7 +290,7 @@ namespace Framework
 
         public void Awake<P1>(Entity component, P1 p1)
         {
-            if(component is IAwakeSystem<P1> aAwakeSystem)
+            if (component is IAwakeSystem<P1> aAwakeSystem)
             {
                 try
                 {
@@ -349,7 +350,7 @@ namespace Framework
 
         public void Destroy(Entity component)
         {
-           
+
             if (component is IDestroySystem iDestroySystem)
             {
                 try
@@ -380,6 +381,7 @@ namespace Framework
                 {
                     continue;
                 }
+
                 queue.Enqueue(instanceId);
 
                 if (component is IUpdateSystem iUpdateSystem)
@@ -394,9 +396,43 @@ namespace Framework
                     }
                 }
             }
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            Queue<long> queue = this.queues[(int)InstanceQueueIndex.FixedUpdate];
+            int count = queue.Count;
+            while (count-- > 0)
+            {
+                long instanceId = queue.Dequeue();
+                Entity component = Root.Instance.Get(instanceId);
+                if (component == null)
+                {
+                    continue;
+                }
+
+                if (component.IsDisposed)
+                {
+                    continue;
+                }
+
+                queue.Enqueue(instanceId);
+
+                if (component is IFixedUpdateSystem iUpdateSystem)
+                {
+                    try
+                    {
+                        iUpdateSystem.FixedUpdate(deltaTime);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+            }
 
         }
-        
+
         public void RendererUpdate(float deltaTime)
         {
             long currentTime = TimeInfo.Instance.ClientNow();
@@ -466,7 +502,7 @@ namespace Framework
                 }
             }
         }
-        
+
 
         public async ETTask PublishAsync<T>(Scene scene, T a) where T : struct
         {
@@ -510,7 +546,7 @@ namespace Framework
             SceneType sceneType = scene.SceneType;
             foreach (EventInfo eventInfo in iEvents)
             {
-                if(eventInfo.SceneType != sceneType) continue;
+                if (eventInfo.SceneType != sceneType) continue;
                 if (!(eventInfo.IEvent is AEvent<T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");

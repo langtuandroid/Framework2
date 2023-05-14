@@ -8,6 +8,7 @@ namespace Framework
         None = -1,
         Update,
         LateUpdate,
+        FixedUpdate,
         RendererUpdate,
         BattleUpdate,
         Max,
@@ -21,6 +22,7 @@ namespace Framework
                 { typeof(IUpdateSystem), InstanceQueueIndex.Update },
                 { typeof(ILateUpdateSystem), InstanceQueueIndex.LateUpdate },
                 { typeof(IRendererUpdateSystem), InstanceQueueIndex.RendererUpdate },
+                { typeof(IFixedUpdateSystem), InstanceQueueIndex.FixedUpdate },
             };
     }
 }

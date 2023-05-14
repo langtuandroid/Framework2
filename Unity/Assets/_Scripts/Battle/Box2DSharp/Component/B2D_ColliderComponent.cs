@@ -8,7 +8,7 @@ using UnityEngine;
 /// 一个碰撞体Component,包含一个碰撞实例所有信息，直接挂载到碰撞体Unit上
 /// 比如诺手Q技能碰撞体UnitA，那么这个B2D_ColliderComponent的Entity就是UnitA，而其中的BelongToUnit就是诺手
 /// </summary>
-public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkillColliderArgs> , IAwakeSystem<UnitFactory.CreateHeroColliderArgs>, IUpdateSystem
+public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkillColliderArgs> , IAwakeSystem<UnitFactory.CreateHeroColliderArgs>, IUpdateSystem, IDestroySystem
 {
     public B2D_WorldComponent WorldComponent;
 
@@ -88,7 +88,8 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
         CollisionHandlerName = args.CollisionHandler ?? string.Empty;
         B2D_ColliderDataStructureBase = args.B2SColliderDataStructureBase;
         Body = WorldComponent.CreateDynamicBody();
-
+        SyncPosToBelongUnit = true;
+        SyncRotToBelongUnit = true;
         B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body,
             AddChild<ColliderUserData, Unit, DefaultColliderData>(GetParent<Unit>(), DefaultColliderData));
         SyncBody();
@@ -144,5 +145,10 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
         {
             SetColliderBodyPos(new Vector2(BelongToUnit.Position.x, BelongToUnit.Position.z));
         }
+    }
+
+    public void OnDestroy()
+    {
+        this.DomainScene().GetComponent<B2D_WorldComponent>().AddBodyTobeDestroyed(Body);
     }
 }

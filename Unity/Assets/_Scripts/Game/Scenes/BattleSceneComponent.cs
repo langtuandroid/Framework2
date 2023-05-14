@@ -68,4 +68,5 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
     public void RenderUpdate(float deltaTime)
     {
     }
+
 }

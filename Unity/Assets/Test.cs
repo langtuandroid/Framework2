@@ -2,6 +2,7 @@
 using Box2DSharp.Collision.Shapes;
 using Box2DSharp.Common;
 using Box2DSharp.Dynamics;
+using NPBehave;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
@@ -13,30 +14,15 @@ using Vector2 = System.Numerics.Vector2;
 public class Test : MonoBehaviour
 {
     private World world;
+    private Clock clock;
     [Button]
     void Start()
     {
+        clock = new Clock();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            var body = world.CreateBody(new BodyDef() { AllowSleep = false, BodyType = Random.Range(1,11) > 5 ? BodyType.StaticBody : BodyType.DynamicBody});
-            body.CreateCircleFixture(1, new float2(0), false, null);
-            body.SetTransform(new Vector2(Random.Range(1,10), Random.Range(1,10)), 0);
-            body.SetMassData(new MassData(){Center = body.GetPosition(), Mass = 1});
-        }
-    }
-
-    private void LateUpdate()
-    {
-        world.Step(Time.fixedDeltaTime,10,10);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (world == null) return;
-        world.DebugDraw();
+        clock.Update(Time.deltaTime);
     }
 }
