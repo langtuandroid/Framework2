@@ -3,6 +3,7 @@
 using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 /// <summary>
 /// 与黑板节点相关的数据
@@ -10,7 +11,7 @@ using Sirenix.OdinInspector;
 [BoxGroup("黑板数据配置"), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
 [HideLabel]
 [HideReferenceObjectPicker]
-public class NP_BlackBoardRelationData
+public class NP_BlackBoardRelationData<T>
 {
     [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnBBKeySelected")]
     public string BBKey;
@@ -21,15 +22,29 @@ public class NP_BlackBoardRelationData
 
     [ShowIf("WriteOrCompareToBB")] public ANP_BBValue NP_BBValue;
 
+
 #if UNITY_EDITOR
+    private List<string> keys;
+    
     private IEnumerable<string> GetBBKeys()
     {
+        if (keys == null)
+        {
+            keys = new();
+        }
+        keys.Clear();
         if (NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager != null)
         {
-            return NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues.Keys;
+            foreach (var item in NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues)
+            {
+                if (item.Value.NP_BBValueType == typeof(T) || item.Value.NP_BBValueType.IsSubclassOf(typeof(T)))
+                {
+                    keys.Add(item.Key);
+                }
+            }
         }
 
-        return null;
+        return keys;
     }
 
     private void OnBBKeySelected()

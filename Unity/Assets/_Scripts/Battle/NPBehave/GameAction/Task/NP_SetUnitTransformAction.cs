@@ -13,13 +13,13 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
     [LabelText("是否设置缩放")] public bool SetScale;
 
     [ShowIf(nameof(SetPos))] [LabelText("将要设置的位置")]
-    public NP_BlackBoardRelationData PosBlackBoardRelationData = new NP_BlackBoardRelationData();
+    public NP_BlackBoardRelationData<Vector3> PosBlackBoardRelationData = new ();
 
     [ShowIf(nameof(SetRot))] [LabelText("将要设置的旋转")]
-    public NP_BlackBoardRelationData RotBlackBoardRelationData = new NP_BlackBoardRelationData();
+    public NP_BlackBoardRelationData<Vector3> RotBlackBoardRelationData = new ();
     
     [ShowIf(nameof(SetScale))] [LabelText("将要设置的缩放")]
-    public NP_BlackBoardRelationData ScaleBlackBoardRelationData = new NP_BlackBoardRelationData();
+    public NP_BlackBoardRelationData<Vector3> ScaleBlackBoardRelationData = new ();
 
     public override Action GetActionToBeDone()
     {

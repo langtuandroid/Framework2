@@ -10,7 +10,7 @@ public class NP_WaitNodeData : NP_NodeDataBase
 
     public override NodeType BelongNodeType => NodeType.Task;
 
-    public NP_BlackBoardRelationData NPBlackBoardRelationData = new NP_BlackBoardRelationData();
+    public NP_BlackBoardRelationData<float> NPBlackBoardRelationData = new ();
 
     public override Task CreateTask(Unit unit,NP_RuntimeTree runtimeTree)
     {

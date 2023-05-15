@@ -16,7 +16,7 @@ namespace Framework
         public int Layers = 1;
 
         [ShowIf("LayersDetermindByBBValue")] [LabelText("操作Buff层数")]
-        public NP_BlackBoardRelationData LayersThatDetermindByBBValue;
+        public NP_BlackBoardRelationData<int> LayersThatDetermindByBBValue;
 
         public void AutoAddBuff(long dataId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
             NP_RuntimeTree theSkillCanvasBelongTo)

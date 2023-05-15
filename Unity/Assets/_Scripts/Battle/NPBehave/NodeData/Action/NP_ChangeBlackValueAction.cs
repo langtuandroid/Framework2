@@ -8,7 +8,7 @@ using Sirenix.OdinInspector;
 [Title("修改黑板值", TitleAlignment = TitleAlignments.Centered)]
 public class NP_ChangeBlackValueAction: NP_ClassForStoreAction
 {
-    public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData() { WriteOrCompareToBB = true };
+    public NP_BlackBoardRelationData<object> NPBalckBoardRelationData = new () { WriteOrCompareToBB = true };
 
     public override Action GetActionToBeDone()
     {

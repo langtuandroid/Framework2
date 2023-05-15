@@ -15,7 +15,7 @@ public class NP_AddBuffAction: NP_ClassForStoreAction
         return this.Action;
     }
 
-    public void AddBuff()
+    private void AddBuff()
     {
         BuffDataInfo.AutoAddBuff(BelongtoRuntimeTree.BelongNP_DataSupportor, this.BuffDataInfo.BuffNodeId.Value, BelongToUnit, BelongToUnit,
             BelongtoRuntimeTree);

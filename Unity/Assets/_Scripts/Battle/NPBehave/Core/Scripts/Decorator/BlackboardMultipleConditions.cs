@@ -25,7 +25,7 @@ namespace NPBehave
     /// </summary>
     public class MatchInfo
     {
-        public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData()
+        public NP_BlackBoardRelationData<object> NPBalckBoardRelationData = new ()
             { WriteOrCompareToBB = true };
 
         public Operator Operator = Operator.IS_EQUAL;

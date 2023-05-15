@@ -8,7 +8,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
 {
     [LabelText("要添加的Buff的信息")] public VTD_BuffInfo BuffDataInfo = new VTD_BuffInfo();
 
-    [LabelText("添加目标Id")] public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData();
+    [LabelText("添加目标Id")] public NP_BlackBoardRelationData<long> NPBalckBoardRelationData = new ();
 
     public override Action GetActionToBeDone()
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,9 +18,9 @@ public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
     
     [LabelText("碰撞的阵营")] public RoleCast RoleCast = RoleCast.Adverse;
 
-    [LabelText("是否碰撞到的字典key")] public NP_BlackBoardRelationData HasHitKey = new NP_BlackBoardRelationData();
+    [LabelText("是否碰撞到的字典key")] public NP_BlackBoardRelationData<bool> HasHitKey = new ();
     
-    [LabelText("碰撞到的所有物体字典key")] public NP_BlackBoardRelationData HitUnitsKey = new NP_BlackBoardRelationData();
+    [LabelText("碰撞到的所有物体字典key")] public NP_BlackBoardRelationData<List<long>> HitUnitsKey = new ();
 
     [LabelText("Pos是否跟随释放的Unit")] public bool FollowUnitPos = true;
 

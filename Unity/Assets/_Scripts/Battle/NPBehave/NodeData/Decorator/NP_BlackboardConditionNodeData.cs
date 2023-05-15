@@ -12,7 +12,7 @@ public class NP_BlackboardConditionNodeData : NP_NodeDataBase
 
     [LabelText("终止条件")] public Stops Stop = Stops.IMMEDIATE_RESTART;
 
-    public NP_BlackBoardRelationData NPBalckBoardRelationData = new NP_BlackBoardRelationData()
+    public NP_BlackBoardRelationData<object> NPBalckBoardRelationData = new ()
         { WriteOrCompareToBB = true };
 
     public override Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)
