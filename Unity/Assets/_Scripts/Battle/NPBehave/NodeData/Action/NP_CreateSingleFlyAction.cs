@@ -15,6 +15,9 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     [LabelText("飞行速度")]
     public float Speed;
+
+    [LabelText("碰撞体id")]
+    public VTD_ColliderId ColliderId;
     
     [ShowIf("@!IsFollowTarget || (IsFollowTarget && IsFlyTrigger)")]
     [LabelText("目标")]

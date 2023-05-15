@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [HideReferenceObjectPicker]
-public class VTD_CollisionId
+public struct VTD_ColliderReleationId
 {
     [ValueDropdown("GetEventId")] public int Value;
 

@@ -44,7 +44,6 @@ public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
 
     private void CreateColliderData()
     {
-        Log.Msg("创建了碰撞体");
         // BelongtoRuntimeTree.BelongNP_DataSupportor.
         UnitFactory.CreateDefaultColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, ColliderId,
             10001,10000, 

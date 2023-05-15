@@ -14,7 +14,7 @@ using UnityEngine;
 public class NP_CreateColliderAction : NP_ClassForStoreAction
 {
     [LabelText("碰撞关系配置Id")] [Tooltip("Excel配置表中Id")]
-    [Required] public VTD_CollisionId CollisionsRelationSupportIdInExcel = new VTD_CollisionId();
+    [Required] public VTD_ColliderReleationId ColliderReleationsRelationSupportIdInExcel = new VTD_ColliderReleationId();
     
     [LabelText("行为树配置表Id")] [Tooltip("Excel配置表中Id")]
     public int ColliderNPBehaveTreeIdInExcel; 
@@ -43,11 +43,11 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
     private void CreateColliderData()
     {
         int colliderDataConfigId = B2D_CollisionRelationConfigFactory.Instance
-            .Get(CollisionsRelationSupportIdInExcel.Value)
+            .Get(ColliderReleationsRelationSupportIdInExcel.Value)
             .ColliderConfigId;
 
        UnitFactory.CreateSpecialColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, colliderDataConfigId,
-                CollisionsRelationSupportIdInExcel.Value, ColliderNPBehaveTreeIdInExcel,HangPoint, FollowUnitPos, FollowUnitRot,
+                ColliderReleationsRelationSupportIdInExcel.Value, ColliderNPBehaveTreeIdInExcel,HangPoint, FollowUnitPos, FollowUnitRot,
                 Offset, Angle);
     }
 }

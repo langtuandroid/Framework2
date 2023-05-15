@@ -18,7 +18,6 @@ public class Test : MonoBehaviour
     [Button]
     void Start()
     {
-        clock = new Clock();
     }
 
     private void Update()
