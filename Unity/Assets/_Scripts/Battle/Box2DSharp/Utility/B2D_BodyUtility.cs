@@ -10,7 +10,6 @@ public static class B2D_BodyUtility
     /// </summary>
     public static Body CreateDynamicBody(this B2D_WorldComponent self)
     {
-        // 一定不准睡哦
         return self.GetWorld().CreateBody(new BodyDef() { BodyType = BodyType.DynamicBody, AllowSleep = false });
     }
 

@@ -12,7 +12,6 @@ public class DefaultCollisionHandler: AB2D_CollisionHandler
 
         B2D_ColliderComponent bColliderComponent = b.Unit.GetComponent<B2D_ColliderComponent>();
         B2D_RoleCastComponent bRole = bColliderComponent.BelongToUnit.GetComponent<B2D_RoleCastComponent>();
-        DefaultColliderData bColliderData = a.UserData as DefaultColliderData;
 
         RoleCast roleCast = aRole.GetRoleCastToTarget(bColliderComponent.BelongToUnit);
 

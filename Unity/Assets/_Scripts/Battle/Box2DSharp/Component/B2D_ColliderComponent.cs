@@ -34,7 +34,7 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<ColliderArgs> , IUpdat
     /// </summary>
     public bool SyncPosToBelongUnit;
 
-    public Vector3 Offset;
+    public float3 Offset;
 
     /// <summary>
     /// 是否同步归属的UnitRot
@@ -51,24 +51,35 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<ColliderArgs> , IUpdat
     private object userData;
 
     private Transform HangPoint;
+    private Unit selfUnit;
 
     
     public void Awake(ColliderArgs args)
     {
-        CollisionHandlerName = args.CollisionHandlerName;
+        CollisionHandlerName = args.CollisionHandlerName ?? string.Empty;
         BelongToUnit = args.BelongToUnit;
         SyncRotToBelongUnit = args.SyncRot;
         SyncPosToBelongUnit = args.SyncPos;
         B2D_ColliderDataStructureBase = args.ColliderDataStructureBase;
         userData = args.UserData;
         
-        Unit selfUnit = GetParent<Unit>();
-        HangPoint = BelongToUnit.GetComponent<GameObjectComponent>()
-            .Find(args.HangPoint);
+        selfUnit = GetParent<Unit>();
+        HangPoint = BelongToUnit.GetComponent<GameObjectComponent>()?.Find(args.HangPoint);
         Offset = args.Offset;
-        selfUnit.Position = HangPoint.position + args.Offset;
         Angle = args.Angle;
-        selfUnit.EulerAngle = new float3(0, HangPoint.eulerAngles.y + Angle, 0);
+        if (HangPoint != null)
+        {
+            selfUnit.Position = HangPoint.position.ToFloat3() + args.Offset;
+            selfUnit.EulerAngle = new float3(0, HangPoint.eulerAngles.y + Angle, 0);
+        }
+        else
+        {
+            selfUnit.Position = BelongToUnit.Position + args.Offset;
+            selfUnit.EulerAngle = new float3(0, BelongToUnit.EulerAngle.y + Angle, 0);
+        }
+
+        WorldComponent = this.DomainScene().GetComponent<B2D_WorldComponent>();
+
         Body = WorldComponent.CreateDynamicBody();
         B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body,
             AddChild<ColliderUserData, Unit, object>(GetParent<Unit>(), args.UserData));
@@ -82,30 +93,7 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<ColliderArgs> , IUpdat
     /// <param name="pos"></param>
     public void SyncBody()
     {
-        Unit selfUnit = GetParent<Unit>();
-        SetColliderBodyPos(new Vector2(selfUnit.Position.x, selfUnit.Position.z));
-        SetColliderBodyAngle(selfUnit.Rotation.value.y * Mathf.PI / 180);
-    }
-
-    /// <summary>
-    /// 设置刚体位置
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="pos"></param>
-    public void SetColliderBodyPos(Vector2 pos)
-    {
-        Body.SetTransform(pos.ToVector2(), Body.GetAngle());
-        //Log.Info($"位置为{Body.GetPosition()} 类型为{Body.IsSleepingAllowed}");
-    }
-
-    /// <summary>
-    /// 设置刚体角度
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="angle"></param>
-    public void SetColliderBodyAngle(float angle)
-    {
-        Body.SetTransform(Body.GetPosition(), angle);
+        Body.SetTransform(new System.Numerics.Vector2(selfUnit.Position.x, selfUnit.Position.z), Body.GetAngle());
     }
 
     /// <summary>
@@ -122,13 +110,31 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<ColliderArgs> , IUpdat
     {
         if (SyncPosToBelongUnit)
         {
-            var pos = HangPoint.GetPosition();
-            SetColliderBodyPos(new Vector2(pos.x, pos.z));
+            if (HangPoint == null)
+            {
+                selfUnit.Position = BelongToUnit.Position + Offset;
+            }
+            else
+            {
+                selfUnit.Position = HangPoint.position.ToFloat3() + Offset;
+            }
         }
 
         if (SyncPosToBelongUnit)
         {
-            SetColliderBodyAngle(HangPoint.eulerAngles.y + Angle);
+            if (HangPoint == null)
+            {
+                selfUnit.EulerAngle = BelongToUnit.EulerAngle + new float3(0, Angle, 0);
+            }
+            else
+            {
+                selfUnit.EulerAngle = HangPoint.eulerAngles.ToFloat3() + new float3(0, Angle, 0);
+            }
+        }
+
+        if (SyncPosToBelongUnit || SyncRotToBelongUnit)
+        {
+            SyncBody();
         }
     }
 
@@ -144,7 +150,7 @@ public class ColliderArgs : IReference
     public string CollisionHandlerName;
     public Unit BelongToUnit;
     public string HangPoint;
-    public Vector3 Offset;
+    public float3 Offset;
     public float Angle;
     public bool SyncPos;
     public bool SyncRot;
