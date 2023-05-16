@@ -36,13 +36,13 @@ public class UnitFactory
 
         var colliderRadius = HeroConfigFactory.Instance.Get(heroConfigId).ColliderRadius;
         var colliderUnit = CreateUnit(scene);
-        colliderUnit.AddComponent<B2D_ColliderComponent, CreateHeroColliderArgs>(new CreateHeroColliderArgs
-        {
-            B2SColliderDataStructureBase = new B2D_CircleColliderDataStructure()
-                { B2D_ColliderType = B2D_ColliderType.CircleCollider, isSensor = true, radius = colliderRadius },
-            FollowUnit = true, Unit = unit
-        });
-
+        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        colliderArgs.BelongToUnit = unit;
+        colliderArgs.SyncPos = true;
+        colliderArgs.SyncRot = true;
+        colliderArgs.ColliderDataStructureBase = new B2D_CircleColliderDataStructure()
+            { B2D_ColliderType = B2D_ColliderType.CircleCollider, isSensor = true, radius = colliderRadius };
+        colliderUnit.AddComponent<B2D_ColliderComponent, ColliderArgs>(colliderArgs); 
         return unit;
     }
     
@@ -69,13 +69,13 @@ public class UnitFactory
 
         var colliderRadius = SoldierConfigFactory.Instance.Get(heroConfigId).ColliderRadius;
         var colliderUnit = CreateUnit(scene);
-        colliderUnit.AddComponent<B2D_ColliderComponent, CreateHeroColliderArgs>(new CreateHeroColliderArgs
-        {
-            B2SColliderDataStructureBase = new B2D_CircleColliderDataStructure()
-                { B2D_ColliderType = B2D_ColliderType.CircleCollider, isSensor = true, radius = colliderRadius },
-            FollowUnit = true, Unit = unit
-        });
-
+        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        colliderArgs.BelongToUnit = unit;
+        colliderArgs.SyncPos = true;
+        colliderArgs.SyncRot = true;
+        colliderArgs.ColliderDataStructureBase = new B2D_CircleColliderDataStructure()
+            { B2D_ColliderType = B2D_ColliderType.CircleCollider, isSensor = true, radius = colliderRadius };
+        colliderUnit.AddComponent<B2D_ColliderComponent, ColliderArgs>(colliderArgs);
         return unit;
     }
 
@@ -97,15 +97,22 @@ public class UnitFactory
         Unit b2sColliderEntity = CreateUnit(room);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
         SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
-
+        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        B2D_CollisionRelationConfig serverB2SCollisionRelationConfig =
+            B2D_CollisionRelationConfigFactory.Instance.Get(collisionRelationDataConfigId);
+        colliderArgs.CollisionHandlerName = serverB2SCollisionRelationConfig.ColliderHandlerName;
+        colliderArgs.BelongToUnit = belongToUnit;
+        colliderArgs.SyncPos = followUnitPos;
+        colliderArgs.SyncRot = followUnitRot;
+        colliderArgs.HangPoint = hangPoint;
+        colliderArgs.Offset = offset;
+        colliderArgs.Angle = angle;
+        B2D_ColliderDataRepositoryComponent b2DColliderDataRepositoryComponent =
+            room.GetComponent<B2D_ColliderDataRepositoryComponent>();
+        colliderArgs.ColliderDataStructureBase =
+            b2DColliderDataRepositoryComponent.GetDataByColliderId(serverB2SCollisionRelationConfig.ID);
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
-        b2sColliderEntity.AddComponent<B2D_ColliderComponent, CreateSkillColliderArgs>(
-            new CreateSkillColliderArgs()
-            {
-                belongToUnit = belongToUnit, collisionRelationDataConfigId = collisionRelationDataConfigId,
-                FollowUnitPos = followUnitPos, FollowUnitRot = followUnitRot, offset = offset,
-                HangPointPath = hangPoint, angle = angle
-            });
+        b2sColliderEntity.AddComponent<B2D_ColliderComponent, ColliderArgs>(colliderArgs);
         b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
         b2sColliderEntity.AddComponent<SkillCanvasManagerComponent>();
 
@@ -120,30 +127,39 @@ public class UnitFactory
     /// <summary>
     /// 创建碰撞体
     /// </summary>
-    /// <param name="room">归属的房间</param>
+    /// <param name="scene">归属的房间</param>
     /// <param name="belongToUnit">归属的Unit</param>
     /// <param name="colliderDataConfigId">碰撞体数据表Id</param>
     /// <param name="collisionRelationDataConfigId">碰撞关系数据表Id</param>
     /// <param name="colliderNPBehaveTreeIdInExcel">碰撞体的行为树Id</param>
     /// <returns></returns>
-    public static Unit CreateDefaultColliderUnit(Scene room, long belongToUnitId, long selfId,
+    public static Unit CreateDefaultColliderUnit(Scene scene, long belongToUnitId, long selfId,
         int collisionRelationDataConfigId, int colliderNPBehaveTreeIdInExcel, int skillId,string hangPoint, bool followUnitPos,
         bool followUnitRot, Vector3 offset,
         float angle, float duration, DefaultColliderData defaultColliderData)
     {
         //为碰撞体新建一个Unit
-        Unit b2sColliderEntity = CreateUnit(room);
-        Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
+        Unit b2sColliderEntity = CreateUnit(scene);
+        Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
         SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
 
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
-        b2sColliderEntity.AddComponent<B2D_ColliderComponent, CreateSkillColliderArgs>(
-            new CreateSkillColliderArgs()
-            {
-                belongToUnit = belongToUnit, collisionRelationDataConfigId = collisionRelationDataConfigId,
-                FollowUnitPos = followUnitPos, FollowUnitRot = followUnitRot, offset = offset,
-                HangPointPath = hangPoint, angle = angle, DefaultColliderData =  defaultColliderData
-            });
+        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        B2D_CollisionRelationConfig serverB2SCollisionRelationConfig =
+            B2D_CollisionRelationConfigFactory.Instance.Get(collisionRelationDataConfigId);
+        colliderArgs.CollisionHandlerName = serverB2SCollisionRelationConfig.ColliderHandlerName;
+        colliderArgs.BelongToUnit = belongToUnit;
+        colliderArgs.SyncPos = followUnitPos;
+        colliderArgs.HangPoint = hangPoint;
+        colliderArgs.SyncRot = followUnitRot;
+        colliderArgs.Offset = offset;
+        colliderArgs.Angle = angle;
+        colliderArgs.UserData = defaultColliderData;
+        B2D_ColliderDataRepositoryComponent b2DColliderDataRepositoryComponent =
+            scene.GetComponent<B2D_ColliderDataRepositoryComponent>();
+        colliderArgs.ColliderDataStructureBase =
+            b2DColliderDataRepositoryComponent.GetDataByColliderId(serverB2SCollisionRelationConfig.ID);
+        b2sColliderEntity.AddComponent<B2D_ColliderComponent, ColliderArgs>(colliderArgs);
         b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
         b2sColliderEntity.AddComponent<SkillCanvasManagerComponent>();
 
@@ -151,7 +167,6 @@ public class UnitFactory
         var behave = NP_RuntimeTreeFactory.CreateSkillNpRuntimeTree(b2sColliderEntity, skillCanvasData.NPBehaveId, skillId);
         behave.GetBlackboard().Set("Duration", duration);
         behave.Start();
-
         return b2sColliderEntity;
     } 
 

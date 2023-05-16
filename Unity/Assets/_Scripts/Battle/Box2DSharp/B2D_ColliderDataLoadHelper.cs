@@ -5,23 +5,6 @@ using UnityEngine;
 
 public static class B2D_ColliderDataLoadHelper
 {
-    /// <summary>
-    /// 加载依赖数据，并且进行碰撞体的生成
-    /// </summary>
-    /// <param name="self"></param>
-    public static void CreateB2D_Collider(this B2D_ColliderComponent self)
-    {
-        B2D_ColliderDataRepositoryComponent B2DColliderDataRepositoryComponent =
-            self.DomainScene().GetComponent<B2D_ColliderDataRepositoryComponent>();
-
-        self.B2D_ColliderDataStructureBase =
-            B2DColliderDataRepositoryComponent.GetDataByColliderId(self.B2D_CollisionRelationConfigId);
-        self.Body = self.WorldComponent.CreateDynamicBody();
-
-        ApplyFixture(self.B2D_ColliderDataStructureBase, self.Body,
-            self.AddChild<ColliderUserData, Unit, DefaultColliderData>(self.GetParent<Unit>(), self.DefaultColliderData));
-    }
-
     public static void ApplyFixture(B2D_ColliderDataStructureBase B2DColliderDataStructureBase, Body body,
         ColliderUserData userData)
     {
@@ -79,15 +62,15 @@ public static class B2D_ColliderDataLoadHelper
     }
 }
 
-public class ColliderUserData : Entity, IAwakeSystem<Unit,DefaultColliderData>
+public class ColliderUserData : Entity, IAwakeSystem<Unit,object>
 {
     public Unit Unit;
-    public DefaultColliderData DefaultColliderData;
+    public object UserData;
 
-    public void Awake(Unit a, DefaultColliderData b)
+    public void Awake(Unit a, object b)
     {
         Unit = a;
-        DefaultColliderData = b;
+        UserData = b;
     }
 }
 

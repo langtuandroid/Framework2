@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Framework
 {
@@ -38,6 +39,21 @@ namespace Framework
             set
             {
                 this.rotation = value;
+                eulerAngle = rotation.EulerAngles();
+                EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
+            }
+        }
+
+        private float3 eulerAngle;
+
+        public float3 EulerAngle
+        {
+            get => eulerAngle;
+            set
+            {
+                if(eulerAngle.NearEqual(value)) return;
+                eulerAngle = value;
+                rotation = quaternion.Euler(eulerAngle, math.RotationOrder.XYZ);
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
             }
         }

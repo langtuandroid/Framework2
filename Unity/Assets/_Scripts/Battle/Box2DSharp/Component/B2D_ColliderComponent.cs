@@ -8,14 +8,9 @@ using UnityEngine;
 /// 一个碰撞体Component,包含一个碰撞实例所有信息，直接挂载到碰撞体Unit上
 /// 比如诺手Q技能碰撞体UnitA，那么这个B2D_ColliderComponent的Entity就是UnitA，而其中的BelongToUnit就是诺手
 /// </summary>
-public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkillColliderArgs> , IAwakeSystem<UnitFactory.CreateHeroColliderArgs>, IUpdateSystem, IDestroySystem
+public class B2D_ColliderComponent : Entity, IAwakeSystem<ColliderArgs> , IUpdateSystem, IDestroySystem
 {
     public B2D_WorldComponent WorldComponent;
-
-    /// <summary>
-    /// 碰撞关系表中的Id (Excel中的Id)
-    /// </summary>
-    public int B2D_CollisionRelationConfigId;
 
     /// <summary>
     /// 碰撞处理者名称
@@ -35,66 +30,51 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
     public Unit BelongToUnit;
 
     /// <summary>
-    ///比如诺克放一个Q，那么BelongToSkillConfigId就是技能的配置表id
-    /// </summary>
-    public DefaultColliderData DefaultColliderData;
-
-    /// <summary>
     /// 是否同步归属的UnitPos
     /// </summary>
     public bool SyncPosToBelongUnit;
+
+    public Vector3 Offset;
 
     /// <summary>
     /// 是否同步归属的UnitRot
     /// </summary>
     public bool SyncRotToBelongUnit;
 
+    public float Angle;
+
     /// <summary>
     /// 碰撞体数据实例
     /// </summary>
-    public B2D_ColliderDataStructureBase B2D_ColliderDataStructureBase = new B2D_ColliderDataStructureBase();
+    public B2D_ColliderDataStructureBase B2D_ColliderDataStructureBase;
 
-    public void Awake(UnitFactory.CreateSkillColliderArgs createSkillColliderArgs)
+    private object userData;
+
+    private Transform HangPoint;
+
+    
+    public void Awake(ColliderArgs args)
     {
-        B2D_CollisionRelationConfig serverB2SCollisionRelationConfig =
-            B2D_CollisionRelationConfigFactory.Instance
-                .Get(createSkillColliderArgs.collisionRelationDataConfigId);
-        string collisionHandlerName = serverB2SCollisionRelationConfig.ColliderHandlerName;
-
-        WorldComponent = GetParent<Unit>().DomainScene().GetComponent<B2D_WorldComponent>();
-        BelongToUnit = createSkillColliderArgs.belongToUnit;
-        B2D_CollisionRelationConfigId = serverB2SCollisionRelationConfig.ID;
-        CollisionHandlerName = collisionHandlerName ?? string.Empty;
-
-        SyncPosToBelongUnit = createSkillColliderArgs.FollowUnitPos;
-        SyncRotToBelongUnit = createSkillColliderArgs.FollowUnitRot;
-        DefaultColliderData = createSkillColliderArgs.DefaultColliderData;
-
+        CollisionHandlerName = args.CollisionHandlerName;
+        BelongToUnit = args.BelongToUnit;
+        SyncRotToBelongUnit = args.SyncRot;
+        SyncPosToBelongUnit = args.SyncPos;
+        B2D_ColliderDataStructureBase = args.ColliderDataStructureBase;
+        userData = args.UserData;
+        
         Unit selfUnit = GetParent<Unit>();
-        Transform hangPoint = BelongToUnit.GetComponent<GameObjectComponent>()
-            .Find(createSkillColliderArgs.HangPointPath);
-        selfUnit.Position = hangPoint.position + createSkillColliderArgs.offset;
-        selfUnit.Rotation = math.mul(BelongToUnit.Rotation, hangPoint.rotation);
-
-        this.CreateB2D_Collider();
-        SyncBody();
+        HangPoint = BelongToUnit.GetComponent<GameObjectComponent>()
+            .Find(args.HangPoint);
+        Offset = args.Offset;
+        selfUnit.Position = HangPoint.position + args.Offset;
+        Angle = args.Angle;
+        selfUnit.EulerAngle = new float3(0, HangPoint.eulerAngles.y + Angle, 0);
+        Body = WorldComponent.CreateDynamicBody();
+        B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body,
+            AddChild<ColliderUserData, Unit, object>(GetParent<Unit>(), args.UserData));
+        SyncBody(); 
     }
     
-    public void Awake(UnitFactory.CreateHeroColliderArgs args)
-    {
-        WorldComponent = this.DomainScene().GetComponent<B2D_WorldComponent>();
-        BelongToUnit = args.Unit;
-        SyncPosToBelongUnit = args.FollowUnit;
-        CollisionHandlerName = args.CollisionHandler ?? string.Empty;
-        B2D_ColliderDataStructureBase = args.B2SColliderDataStructureBase;
-        Body = WorldComponent.CreateDynamicBody();
-        SyncPosToBelongUnit = true;
-        SyncRotToBelongUnit = true;
-        B2D_ColliderDataLoadHelper.ApplyFixture(B2D_ColliderDataStructureBase, Body,
-            AddChild<ColliderUserData, Unit, DefaultColliderData>(GetParent<Unit>(), DefaultColliderData));
-        SyncBody();
-    }
-
     /// <summary>
     /// 同步刚体（依据Unit载体，例如诺克UnitA释放碰撞体UnitB，这里的Unit同步是UnitB的同步）
     /// </summary>
@@ -102,7 +82,6 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
     /// <param name="pos"></param>
     public void SyncBody()
     {
-        //Log.Info($"{new Vector2(BelongToUnit.Position.x, BelongToUnit.Position.z)}");
         Unit selfUnit = GetParent<Unit>();
         SetColliderBodyPos(new Vector2(selfUnit.Position.x, selfUnit.Position.z));
         SetColliderBodyAngle(selfUnit.Rotation.value.y * Mathf.PI / 180);
@@ -143,12 +122,45 @@ public class B2D_ColliderComponent : Entity, IAwakeSystem<UnitFactory.CreateSkil
     {
         if (SyncPosToBelongUnit)
         {
-            SetColliderBodyPos(new Vector2(BelongToUnit.Position.x, BelongToUnit.Position.z));
+            var pos = HangPoint.GetPosition();
+            SetColliderBodyPos(new Vector2(pos.x, pos.z));
+        }
+
+        if (SyncPosToBelongUnit)
+        {
+            SetColliderBodyAngle(HangPoint.eulerAngles.y + Angle);
         }
     }
 
     public void OnDestroy()
     {
         this.DomainScene().GetComponent<B2D_WorldComponent>().AddBodyTobeDestroyed(Body);
+    }
+
+}
+
+public class ColliderArgs : IReference
+{
+    public string CollisionHandlerName;
+    public Unit BelongToUnit;
+    public string HangPoint;
+    public Vector3 Offset;
+    public float Angle;
+    public bool SyncPos;
+    public bool SyncRot;
+    public B2D_ColliderDataStructureBase ColliderDataStructureBase;
+    public object UserData;
+
+    public void Clear()
+    {
+        HangPoint = default;
+        CollisionHandlerName = default;
+        BelongToUnit = default;
+        Offset = default;
+        Angle = default;
+        SyncPos = default;
+        SyncRot = default;
+        ColliderDataStructureBase = default;
+        UserData = default;
     }
 }

@@ -67,9 +67,8 @@ public class NP_BlackBoardRelationData<T>
     /// <summary>
     /// 获取目标黑板对应的此处的键的值
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T GetBlackBoardValue<T>(Blackboard blackboard)
+    public T GetBlackBoardValue(Blackboard blackboard)
     {
         return blackboard.Get<T>(this.BBKey);
     }
@@ -79,7 +78,7 @@ public class NP_BlackBoardRelationData<T>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T GetTheBBDataValue<T>()
+    public T GetTheBBDataValue()
     {
         return (this.NP_BBValue as NP_BBValueBase<T>).GetValue();
     }
@@ -98,7 +97,7 @@ public class NP_BlackBoardRelationData<T>
     /// </summary>
     /// <param name="blackboard">将要改变的黑板值</param>
     /// <param name="value">值</param>
-    public void SetBlackBoardValue<T>(Blackboard blackboard, T value)
+    public void SetBlackBoardValue(Blackboard blackboard, T value)
     {
         blackboard.Set(this.BBKey, value);
     }

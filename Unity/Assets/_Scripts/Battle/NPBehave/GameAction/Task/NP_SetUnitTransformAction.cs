@@ -16,7 +16,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
     public NP_BlackBoardRelationData<Vector3> PosBlackBoardRelationData = new ();
 
     [ShowIf(nameof(SetRot))] [LabelText("将要设置的旋转")]
-    public NP_BlackBoardRelationData<Vector3> RotBlackBoardRelationData = new ();
+    public NP_BlackBoardRelationData<float> RotBlackBoardRelationData = new ();
     
     [ShowIf(nameof(SetScale))] [LabelText("将要设置的缩放")]
     public NP_BlackBoardRelationData<Vector3> ScaleBlackBoardRelationData = new ();
@@ -32,7 +32,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
         Unit unit = BelongToUnit;
         if (SetPos)
         {
-            Vector3 result = PosBlackBoardRelationData.GetBlackBoardValue<Vector3>(
+            Vector3 result = PosBlackBoardRelationData.GetBlackBoardValue(
                 this.BelongtoRuntimeTree
                     .GetBlackboard());
             unit.Position = result;
@@ -42,12 +42,12 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
         if (SetRot)
         {
             unit.Rotation = Quaternion.Euler(0,
-                RotBlackBoardRelationData.GetBlackBoardValue<float>(this.BelongtoRuntimeTree.GetBlackboard()), 0);
+                RotBlackBoardRelationData.GetBlackBoardValue(this.BelongtoRuntimeTree.GetBlackboard()), 0);
         }
 
         if (SetScale)
         {
-             Vector3 result = ScaleBlackBoardRelationData.GetBlackBoardValue<Vector3>(
+             Vector3 result = ScaleBlackBoardRelationData.GetBlackBoardValue(
                  this.BelongtoRuntimeTree
                      .GetBlackboard());
              unit.Scale = result;

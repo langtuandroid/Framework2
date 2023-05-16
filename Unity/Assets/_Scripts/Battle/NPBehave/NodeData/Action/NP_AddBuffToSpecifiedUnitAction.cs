@@ -8,7 +8,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
 {
     [LabelText("要添加的Buff的信息")] public VTD_BuffInfo BuffDataInfo = new VTD_BuffInfo();
 
-    [LabelText("添加目标Id")] public NP_BlackBoardRelationData<long> NPBalckBoardRelationData = new ();
+    [LabelText("添加目标Id")] public NP_BlackBoardRelationData<List<long>> NPBalckBoardRelationData = new ();
 
     public override Action GetActionToBeDone()
     {
@@ -21,7 +21,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
         UnitComponent unitComponent = BelongToUnit.DomainScene()
             .GetComponent<UnitComponent>();
 
-        foreach (var targetUnitId in NPBalckBoardRelationData.GetBlackBoardValue<List<long>>(
+        foreach (var targetUnitId in NPBalckBoardRelationData.GetBlackBoardValue(
                      this.BelongtoRuntimeTree.GetBlackboard()))
         {
             BuffDataInfo.AutoAddBuff(BelongtoRuntimeTree.BelongNP_DataSupportor, BuffDataInfo.BuffNodeId.Value,

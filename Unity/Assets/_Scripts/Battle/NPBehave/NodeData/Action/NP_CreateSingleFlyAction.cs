@@ -19,15 +19,15 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("碰撞体id")]
     public VTD_ColliderId ColliderId;
     
-    [ShowIf("@!IsFollowTarget || (IsFollowTarget && IsFlyTrigger)")]
-    [LabelText("目标")]
+    [ShowIf("@!IsFollowTarget || (IsFollowTarget && IsFlyingTrigger)")]
+    [LabelText("射中的目标")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
 
     [LabelText("是否跟随目标")]
     public bool IsFollowTarget;
 
-    [ShowIf(nameof(IsFollowTarget))] [LabelText("目标")]
-    public NP_BlackBoardRelationData<long> Target = new();
+    [ShowIf(nameof(IsFollowTarget))] [LabelText("跟随的目标")]
+    public NP_BlackBoardRelationData<long> FollowTarget = new();
 
     [HideIf(nameof(IsFollowTarget))]
     [LabelText("相对于角色的发射方向")]
@@ -35,7 +35,7 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     [ShowIf(nameof(IsFollowTarget))]
     [LabelText("是否在飞行途中能打中物体")]
-    public bool IsFlyTrigger;
+    public bool IsFlyingTrigger;
     
     public override Action GetActionToBeDone()
     {
@@ -45,5 +45,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     private void Create()
     {
+        FlyObjHelper.CreateSingleFlyObj(this);
     }
 }

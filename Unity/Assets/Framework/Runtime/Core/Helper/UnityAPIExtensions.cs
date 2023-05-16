@@ -1385,3 +1385,39 @@ public static class Vector2Extension
     }
 }
 
+public static class Float3Extension
+{
+    public static float EulerX(this quaternion q)
+    {
+        float sinr_cosp = 2 * (q.value.w * q.value.x + q.value.y * q.value.z);
+        float cosr_cosp = 1 - 2 * (q.value.x * q.value.x + q.value.y * q.value.y);
+        return math.atan2(sinr_cosp, cosr_cosp);
+    }
+
+    public static float EulerY(this quaternion q)
+    {
+        float sinp = 2 * (q.value.w * q.value.y - q.value.z * q.value.x);
+        if (math.abs(sinp) >= 1)
+            return math.PI / 2 * math.sign(sinp); // use 90 degrees if out of range
+        else
+            return math.asin(sinp);
+    }
+
+    public static float EulerZ(this quaternion q)
+    {
+        float siny_cosp = 2 * (q.value.w * q.value.z + q.value.x * q.value.y);
+        float cosy_cosp = 1 - 2 * (q.value.y * q.value.y + q.value.z * q.value.z);
+        return math.atan2(siny_cosp, cosy_cosp);
+    }
+    
+    public static float3 EulerAngles(this quaternion q)
+    {
+        return new float3(EulerX(q), EulerY(q), EulerZ(q));
+    }
+    
+    public static bool NearEqual(this float3 self, float3 other)
+    {
+        return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y) && self.z.NearlyEqual(other.z);
+    } 
+}
+
