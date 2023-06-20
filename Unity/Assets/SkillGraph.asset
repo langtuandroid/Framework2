@@ -2888,7 +2888,7 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 124, y: 191, z: 0}
+  position: {x: 137, y: 173, z: 0}
   scale: {x: 0.8695652, y: 0.8695652, z: 1}
   Name: SkillBehave
   IdInConfig: 10001

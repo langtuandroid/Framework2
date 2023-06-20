@@ -46,7 +46,7 @@ public class B2D_ColliderEditor : OdinEditorWindow
         window.titleContent = new GUIContent("Box2D可视化编辑器");
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         this.ReadColliderNameAndIdInflect();
         this.ReadColliderData();
@@ -70,7 +70,7 @@ public class B2D_ColliderEditor : OdinEditorWindow
         EditorApplication.update += this.MB2DDebuggerHandler.OnUpdate;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         EditorApplication.update -= this.MB2DDebuggerHandler.OnUpdate;
         MB2DDebuggerHandler.CleanCollider();

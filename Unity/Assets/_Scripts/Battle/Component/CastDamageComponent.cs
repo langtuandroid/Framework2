@@ -1,5 +1,4 @@
-﻿using System;
-using Framework;
+﻿using Framework;
 
 /// <summary>
 /// 造成伤害组件
