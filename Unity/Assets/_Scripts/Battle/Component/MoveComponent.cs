@@ -346,7 +346,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         }
     }
 
-    public bool MoveTo(Vector3 target, float speed, int turnTime = 0,
+    public bool MoveTo(float3 target, float speed, int turnTime = 0,
         bool isTurnHorizontal = false)
     {
         if (speed < 0.001)
@@ -367,7 +367,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         return true;
     }
 
-    public bool MoveTo(List<Vector3> target, float speed, int turnTime = 0)
+    public bool MoveTo(List<float3> target, float speed, int turnTime = 0)
     {
         if (target.Count == 0)
         {
@@ -382,7 +382,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
         Stop(false);
 
-        foreach (Vector3 v in target)
+        foreach (var v in target)
         {
             Targets.Add(v);
         }

@@ -44,7 +44,7 @@ namespace Framework
         /// </summary>
         /// <param name="rootId">预制id</param>
         /// <returns></returns>
-        public NP_RuntimeTree GetTreeByPrefabID(long rootId)
+        public NP_RuntimeTree GetTreeByRootID(long rootId)
         {
             if (this.m_HasAddedTrees.TryGetValue(rootId, out var tree))
             {

@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace Framework
 {
-    public sealed class Unit : Entity, IAwakeSystem
+    public sealed class Unit : Entity, IAwakeSystem<int>
     {
     
-        public void Awake()
-        {
-        }
-        
         private float3 position; //坐标
+        
+        public UnitConfig UnitConfig { get; private set; }
 
         public float3 Position
         {
@@ -76,6 +74,12 @@ namespace Framework
             {
                 return $"{this.GetType().Name} ({this.Id})";
             }
+        }
+
+        public void Awake(int unitId)
+        {
+            if (UnitConfigFactory.Instance.Contain(unitId))
+                UnitConfig = UnitConfigFactory.Instance.Get(unitId);
         }
 
         public override string ToString()

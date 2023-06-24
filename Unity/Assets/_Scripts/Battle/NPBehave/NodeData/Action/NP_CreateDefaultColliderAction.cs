@@ -46,8 +46,8 @@ public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
     {
         // BelongtoRuntimeTree.BelongNP_DataSupportor.
         UnitFactory.CreateDefaultColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, ColliderId,
-            10001,10000, 
+            10001,
             BelongtoRuntimeTree.BelongNP_DataSupportor.ExcelId, HangPoint, FollowUnitPos, FollowUnitRot,
-            Offset, Angle, Duration, new DefaultColliderData(BelongtoRuntimeTree.BelongNP_DataSupportor.ExcelId, RoleTag, RoleCast, HitUnitsKey.BBKey, HasHitKey.BBKey));
+            Offset, Angle, Duration, new DefaultColliderData(BelongtoRuntimeTree.BelongNP_DataSupportor.NPBehaveTreeDataId, RoleTag, RoleCast, HitUnitsKey.BBKey, HasHitKey.BBKey));
     }
 }

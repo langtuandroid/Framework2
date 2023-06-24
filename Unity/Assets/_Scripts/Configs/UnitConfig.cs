@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Framework;
 
-public partial class SoldierConfig : BaseConfig
+public partial class UnitConfig : BaseConfig
 {
     /// <summary> ID </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
@@ -11,25 +9,28 @@ public partial class SoldierConfig : BaseConfig
 /// <summary> 碰撞半径 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public float ColliderRadius { get; private set; }
+/// <summary> 攻击距离 </summary>
+	[MongoDB.Bson.Serialization.Attributes.BsonElement]
+	public float AttackRange { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/SoldierConfig.json")]
-public partial class SoldierConfigFactory : ConfigSingleton<SoldierConfigFactory>
+[Config("Assets/Res/Configs/UnitConfig.json")]
+public partial class UnitConfigFactory : ConfigSingleton<UnitConfigFactory>
 {
-    private Dictionary<int, SoldierConfig> dict = new Dictionary<int, SoldierConfig>();
+    private Dictionary<int, UnitConfig> dict = new Dictionary<int, UnitConfig>();
 
     [MongoDB.Bson.Serialization.Attributes.BsonElement]
-    private List<SoldierConfig> list = new List<SoldierConfig>();
+    private List<UnitConfig> list = new List<UnitConfig>();
 
-    public void Merge(SoldierConfigFactory o)
+    public void Merge(UnitConfigFactory o)
     {
         this.list.AddRange(o.list);
     }
 
     public override void EndInit()
     {
-        foreach (SoldierConfig config in list)
+        foreach (UnitConfig config in list)
         {
             this.dict.Add(config.ID, config);
         }
@@ -38,19 +39,19 @@ public partial class SoldierConfigFactory : ConfigSingleton<SoldierConfigFactory
 
         this.AfterEndInit();
     }
-	
+    
     partial void AfterEndInit();
 
-    public SoldierConfig Get(int id)
+    public UnitConfig Get(int id)
     {
-        this.dict.TryGetValue(id, out SoldierConfig SoldierConfig);
+        this.dict.TryGetValue(id, out UnitConfig UnitConfig);
 
-        if (SoldierConfig == null)
+        if (UnitConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(SoldierConfig)}，配置id: {id}");
+            Log.Error($"配置找不到，配置表名: {nameof(UnitConfig)}，配置id: {id}");
         }
 
-        return SoldierConfig;
+        return UnitConfig;
     }
 
     public bool Contain(int id)
@@ -58,12 +59,12 @@ public partial class SoldierConfigFactory : ConfigSingleton<SoldierConfigFactory
         return this.dict.ContainsKey(id);
     }
 
-    public IReadOnlyDictionary<int, SoldierConfig> GetAll()
+    public IReadOnlyDictionary<int, UnitConfig> GetAll()
     {
         return this.dict;
     }
 
-    public SoldierConfig GetOne()
+    public UnitConfig GetOne()
     {
         if (this.dict == null || this.dict.Count <= 0)
         {

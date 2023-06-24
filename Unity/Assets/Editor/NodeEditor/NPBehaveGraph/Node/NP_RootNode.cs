@@ -29,7 +29,8 @@ public class NP_RootNode : NP_NodeBase
         }
     }
 
-    public override string name { get; } = "行为树根节点";
+    [Sirenix.OdinInspector.ShowInInspector]
+    public override string name => "行为树根节点";
 
     [Output("下个节点"), Vertical, HideInInspector]
     public BaseNode NextNode;

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Framework;
 
 public partial class SkillCanvasData : BaseConfig
@@ -11,9 +9,6 @@ public partial class SkillCanvasData : BaseConfig
 /// <summary> 对应技能图数据Id </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public long NPBehaveId { get; private set; }
-/// <summary> 归属技能Id </summary>
-	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public long BelongToSkillId { get; private set; }
 /// <summary> 资源名 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public string SkillConfigPath { get; private set; }
@@ -44,7 +39,7 @@ public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFac
 
         this.AfterEndInit();
     }
-	
+    
     partial void AfterEndInit();
 
     public SkillCanvasData Get(int id)

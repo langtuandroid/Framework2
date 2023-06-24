@@ -215,10 +215,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 281.499969
+      Data: 283
     - Name: 
       Entry: 4
-      Data: 468.16
+      Data: 468
     - Name: 
       Entry: 4
       Data: 179
@@ -849,6 +849,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Time
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -2251,6 +2254,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Time
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -2888,7 +2894,7 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 137, y: 173, z: 0}
+  position: {x: 157, y: 179, z: 0}
   scale: {x: 0.8695652, y: 0.8695652, z: 1}
   Name: SkillBehave
   IdInConfig: 10001

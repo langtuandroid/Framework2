@@ -4,13 +4,31 @@ namespace NPBehave
 {
     public class WaitUntil : Task
     {
-        public WaitUntil(out Action<bool> finishCb) : base("waitUntil")
+        public WaitUntil(Func<bool> checkFinish) : base("waitUntil")
         {
-            finishCb = Finish;
+            this.checkFinish = checkFinish;
+        }
+        
+        private Func<bool> checkFinish = null;
+
+        protected override void DoStart()
+        {
+            Clock.AddUpdateObserver(onTimer);
         }
 
-        private void Finish(bool isSuccess)
+        protected override void DoCancel()
         {
-        } 
+            Clock.RemoveTimer(onTimer);
+            this.Stopped(false);
+        }
+
+        private void onTimer()
+        {
+            if (checkFinish())
+            {
+                Clock.RemoveTimer(onTimer);
+                this.Stopped(true);
+            }
+        }
     }
 }

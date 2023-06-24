@@ -103,11 +103,9 @@ namespace Framework
         /// <param name="nPDataId">行为树数据id</param>
         /// <param name="belongToSkillId">归属的SkillId,一般来说需要从excel表中读取</param>
         /// <returns></returns>
-        public static NP_RuntimeTree CreateSkillNpRuntimeTree(Unit unit, long nPDataId, long belongToSkillId)
+        public static NP_RuntimeTree CreateSkillNpRuntimeTree(Unit unit, long nPDataId)
         {
             NP_RuntimeTree result = CreateNpRuntimeTree(unit, nPDataId);
-            unit.GetComponent<SkillCanvasManagerComponent>()
-                .AddSkillCanvas(belongToSkillId, result);
             return result;
         }
     }

@@ -2,6 +2,7 @@
 using Framework;
 using UnityEngine;
 
+[B2D_CollisionHandler]
 public class DefaultCollisionHandler: AB2D_CollisionHandler
 {
     public override void HandleCollisionStart(ColliderUserData a, ColliderUserData b)
@@ -15,8 +16,8 @@ public class DefaultCollisionHandler: AB2D_CollisionHandler
 
         RoleCast roleCast = aRole.GetRoleCastToTarget(bColliderComponent.BelongToUnit);
 
-            Log.Msg(aColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name, "碰到了",
-                bColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name);
+        Log.Msg(aColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name, "碰到了",
+            bColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name);
         if (aColliderData.RoleCast == roleCast && aColliderData.RoleTag.HasFlag(bRole.RoleTag))
         {
             BroadcastCollider(aColliderComponent, bColliderComponent, aColliderData);
@@ -26,22 +27,18 @@ public class DefaultCollisionHandler: AB2D_CollisionHandler
     private void BroadcastCollider(B2D_ColliderComponent aColliderComponent, B2D_ColliderComponent bColliderComponent,
         DefaultColliderData aColliderData)
     {
-        List<NP_RuntimeTree> targetSkillCanvas = aColliderComponent.GetParent<Unit>()
-            .GetComponent<SkillCanvasManagerComponent>()
-            .GetSkillCanvas(aColliderData.BelongSkillConfigId);
+        var skillTree = aColliderComponent.BelongToUnit.GetComponent<NP_RuntimeTreeManager>()
+            .GetTreeByRootID(aColliderData.BelongSkillRootId);
 
-        foreach (var skillCanvas in targetSkillCanvas)
+        if (!string.IsNullOrEmpty(aColliderData.HitUnitsBlackboardKey))
         {
-            if (!string.IsNullOrEmpty(aColliderData.HitUnitsBlackboardKey))
-            {
-                skillCanvas.GetBlackboard().Get<List<long>>(aColliderData.HitUnitsBlackboardKey)
-                    ?.Add(bColliderComponent.BelongToUnit.Id);
-            }
+            skillTree.GetBlackboard().Get<List<long>>(aColliderData.HitUnitsBlackboardKey)
+                ?.Add(bColliderComponent.BelongToUnit.Id);
+        }
 
-            if (!string.IsNullOrEmpty(aColliderData.IsHitBlackboardKey))
-            {
-                skillCanvas.GetBlackboard().Set(aColliderData.IsHitBlackboardKey, true);
-            }
+        if (!string.IsNullOrEmpty(aColliderData.IsHitBlackboardKey))
+        {
+            skillTree.GetBlackboard().Set(aColliderData.IsHitBlackboardKey, true);
         }
     }
 

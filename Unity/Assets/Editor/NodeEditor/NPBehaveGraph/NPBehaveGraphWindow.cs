@@ -6,7 +6,7 @@ public class NPBehaveGraphWindow : UniversalGraphWindow
 {
     protected override void InitializeWindow(BaseGraph graph)
     {
-        graphView = new UniversalGraphView(this);
+        graphView = new NPBehaveGraphView(this);
 
         m_MiniMap = new MiniMap { anchored = true };
         graphView.Add(m_MiniMap);

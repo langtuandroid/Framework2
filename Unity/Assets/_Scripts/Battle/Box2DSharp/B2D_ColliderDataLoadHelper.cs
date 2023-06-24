@@ -76,15 +76,15 @@ public class ColliderUserData : Entity, IAwakeSystem<Unit,object>
 
 public class DefaultColliderData
 {
-    public long BelongSkillConfigId;
+    public long BelongSkillRootId;
     public RoleTag RoleTag;
     public RoleCast RoleCast;
     public string IsHitBlackboardKey;
     public string HitUnitsBlackboardKey;
 
-    public DefaultColliderData(long belongSkillConfigId, RoleTag roleTag, RoleCast roleCast, string hitUnitsBlackboardKey, string isHitBlackboardKey)
+    public DefaultColliderData(long belongSkillRootId, RoleTag roleTag, RoleCast roleCast, string hitUnitsBlackboardKey, string isHitBlackboardKey)
     {
-        BelongSkillConfigId = belongSkillConfigId;
+        BelongSkillRootId = belongSkillRootId;
         RoleTag = roleTag;
         RoleCast = roleCast;
         HitUnitsBlackboardKey = hitUnitsBlackboardKey;

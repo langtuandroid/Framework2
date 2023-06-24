@@ -7,7 +7,7 @@ public static class FlyObjHelper
     {
         Scene scene = action.BelongToUnit.DomainScene();
         //为碰撞体新建一个Unit
-        Unit flyObj = UnitFactory.CreateUnit(scene);
+        // Unit flyObj = UnitFactory.CreateUnit(scene);
         // SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
         // flyObj.AddComponent<NP_SyncComponent>();
         // flyObj.AddComponent<B2D_ColliderComponent, UnitFactory.CreateSkillColliderArgs>(

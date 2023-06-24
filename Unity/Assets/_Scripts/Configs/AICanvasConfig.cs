@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Framework;
 
 public partial class AICanvasConfig : BaseConfig
@@ -41,7 +39,7 @@ public partial class AICanvasConfigFactory : ConfigSingleton<AICanvasConfigFacto
 
         this.AfterEndInit();
     }
-	
+    
     partial void AfterEndInit();
 
     public AICanvasConfig Get(int id)

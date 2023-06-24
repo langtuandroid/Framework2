@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Framework;
 
 public partial class B2D_CollisionRelationConfig : BaseConfig
@@ -53,7 +51,7 @@ public partial class B2D_CollisionRelationConfigFactory : ConfigSingleton<B2D_Co
 
         this.AfterEndInit();
     }
-	
+    
     partial void AfterEndInit();
 
     public B2D_CollisionRelationConfig Get(int id)

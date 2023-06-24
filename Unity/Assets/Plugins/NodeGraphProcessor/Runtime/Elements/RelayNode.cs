@@ -7,7 +7,6 @@ using Sirenix.Utilities;
 using UnityEngine;
 
 [Serializable]
-[NodeMenuItem("Utils/Relay")]
 public class RelayNode : BaseNode
 {
     private const string packIdentifier = "_Pack";

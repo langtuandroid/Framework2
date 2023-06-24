@@ -1305,6 +1305,21 @@ public static class Vector3Extension
         return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y) && self.z.NearlyEqual(other.z);
     }
     
+    public static bool NearEqual(this Vector2 self, Vector2 other)
+    {
+        return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y);
+    }
+    
+    public static bool NearEqual(this float3 self, float3 other)
+    {
+        return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y) && self.z.NearlyEqual(other.z);
+    }
+    
+    public static bool NearEqual(this float2 self, float2 other)
+    {
+        return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y);
+    }
+    
     public static float2 ToFloat2(this System.Numerics.Vector2 vector2)
     {
         return new float2(vector2.X, vector2.Y);
@@ -1414,10 +1429,5 @@ public static class Float3Extension
     {
         return new float3(EulerX(q), EulerY(q), EulerZ(q));
     }
-    
-    public static bool NearEqual(this float3 self, float3 other)
-    {
-        return self.x.NearlyEqual(other.x) && self.y.NearlyEqual(other.y) && self.z.NearlyEqual(other.z);
-    } 
 }
 
