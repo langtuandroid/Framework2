@@ -111,7 +111,7 @@ namespace NPBehave
                 return true;
             }
 
-            if (!this.RootNode.Blackboard.Isset(key))
+            if (!this.RootNode.Blackboard.IsSet(key))
             {
                 return op == Operator.IS_NOT_SET;
             }

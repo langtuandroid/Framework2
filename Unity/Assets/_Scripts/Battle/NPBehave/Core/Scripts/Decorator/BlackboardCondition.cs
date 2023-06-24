@@ -50,7 +50,7 @@ namespace NPBehave
                 return true;
             }
 
-            if (!this.RootNode.Blackboard.Isset(Key))
+            if (!this.RootNode.Blackboard.IsSet(Key))
             {
                 return Operator == Operator.IS_NOT_SET;
             }

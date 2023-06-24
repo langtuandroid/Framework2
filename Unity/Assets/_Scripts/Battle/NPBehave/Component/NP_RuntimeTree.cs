@@ -35,6 +35,8 @@ public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComp
         this.m_RootNode = rootNode;
     }
 
+    public Root RootNode => m_RootNode;
+
     /// <summary>
     /// 获取黑板
     /// </summary>

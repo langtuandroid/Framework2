@@ -149,4 +149,11 @@ namespace Framework
 
         #endregion
     }
+    
+    public class BlackboardOrValue_List_Long : ABlackboardOrValue<List<long>>
+    {
+        public BlackboardOrValue_List_Long(string label) : base(label)
+        {
+        }
+    }
 }

@@ -1,5 +1,8 @@
+using System;
 using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Framework
 {
@@ -40,3 +43,55 @@ namespace Framework
         }
     }
 }
+
+public interface IBlackboardOrValue
+{
+    object GetObjValue(Blackboard blackboard);
+}
+
+[Serializable]
+public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
+{
+    [LabelText("@label")]
+    [ShowIf("@UseBlackboard")]
+    public NP_BlackBoardRelationData<T> BlackboardKey = new NP_BlackBoardRelationData<T>();
+
+    [LabelText("@string.IsNullOrEmpty(this.label) ? \"值\" : label")]
+    [ShowIf("@!UseBlackboard")]
+    [SerializeField]
+    private T OriginValue;
+
+    [SerializeField]
+    [LabelText("是否使用黑板")]
+    private bool UseBlackboard = true;
+
+    [SerializeField]
+    [HideInInspector]
+    private string label = "值";
+
+    protected ABlackboardOrValue(string label)
+    {
+        if (!string.IsNullOrEmpty(this.label))
+            this.label = label;
+    }
+
+    public object GetObjValue(Blackboard blackboard)
+    {
+        if (UseBlackboard)
+        {
+            return BlackboardKey.GetBlackBoardValue(blackboard);
+        }
+
+        return OriginValue;
+    }
+    
+    public T GetValue(Blackboard blackboard)
+    {
+        if (UseBlackboard)
+        {
+            return BlackboardKey.GetBlackBoardValue(blackboard);
+        }
+
+        return OriginValue;
+    }
+} 

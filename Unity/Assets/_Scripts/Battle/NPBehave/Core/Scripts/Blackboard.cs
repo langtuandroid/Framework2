@@ -101,7 +101,7 @@ namespace NPBehave
         /// <param name="addIfNotExit">如果不存在这个键值的话，就添加一个</param>
         public void Set<T>(string key, T value, bool addIfNotExit = false)
         {
-            if (this.m_ParentBlackboard != null && this.m_ParentBlackboard.Isset(key))
+            if (this.m_ParentBlackboard != null && this.m_ParentBlackboard.IsSet(key))
             {
                 this.m_ParentBlackboard.Set(key, value);
             }
@@ -176,10 +176,10 @@ namespace NPBehave
             }
         }
 
-        public bool Isset(string key)
+        public bool IsSet(string key)
         {
             return this.m_Data.ContainsKey(key) ||
-                   (this.m_ParentBlackboard != null && this.m_ParentBlackboard.Isset(key));
+                   (this.m_ParentBlackboard != null && this.m_ParentBlackboard.IsSet(key));
         }
 
         public void AddObserver(string key, System.Action<Type, ANP_BBValue> observer)

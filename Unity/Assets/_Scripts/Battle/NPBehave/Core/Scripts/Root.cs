@@ -6,7 +6,7 @@ namespace NPBehave
     {
         private Node mainNode;
 
-        //private Node inProgressNode;
+        private bool isLoop;
 
         private Blackboard blackboard;
 
@@ -23,8 +23,9 @@ namespace NPBehave
             get { return clock; }
         }
 
-        public Root(Node mainNode, Clock clock) : base("Root", mainNode)
+        public Root(Node mainNode, Clock clock, bool isLoop) : base("Root", mainNode)
         {
+            this.isLoop = isLoop;
             this.mainNode = mainNode;
             //    m_MainNodeStartActionCache = this.mainNode.Start;
             this.clock = clock;
@@ -47,7 +48,6 @@ namespace NPBehave
             this.mainNode.SetRoot(rootNode);
         }
 
-
         override protected void DoStart()
         {
             this.blackboard.Enable();
@@ -66,10 +66,9 @@ namespace NPBehave
             }
         }
 
-
         override protected void DoChildStopped(Node node, bool success)
         {
-            if (!IsStopRequested)
+            if (isLoop && !IsStopRequested)
             {
                 // wait one tick, to prevent endless recursions
                 this.clock.AddTimer(0, 0, this.mainNode.Start);

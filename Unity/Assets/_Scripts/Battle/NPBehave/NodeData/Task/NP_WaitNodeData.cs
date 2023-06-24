@@ -10,23 +10,12 @@ public class NP_WaitNodeData : NP_NodeDataBase
 
     public override NodeType BelongNodeType => NodeType.Task;
 
-    [LabelText("等待时间的黑板值")]
-    public NP_BlackBoardRelationData<float> NPBlackBoardRelationData = new ();
-
     [LabelText("等待时间")]
-    public float Time;
+    public BlackboardOrValue_Float Time = new BlackboardOrValue_Float("时间");
 
     public override Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {
-        if (string.IsNullOrEmpty(NPBlackBoardRelationData.BBKey))
-        {
-            this.m_WaitNode = new Wait(Time);
-        }
-        else
-        {
-            this.m_WaitNode = new Wait(this.NPBlackBoardRelationData.BBKey);
-        }
-
+        this.m_WaitNode = new Wait(Time.GetValue(runtimeTree.GetBlackboard()));
         return this.m_WaitNode;
     }
 

@@ -112,4 +112,11 @@ namespace Framework
 
         #endregion
     }
+    
+    public class BlackboardOrValue_Bool : ABlackboardOrValue<bool>
+    {
+        public BlackboardOrValue_Bool(string label) : base(label)
+        {
+        }
+    }
 }

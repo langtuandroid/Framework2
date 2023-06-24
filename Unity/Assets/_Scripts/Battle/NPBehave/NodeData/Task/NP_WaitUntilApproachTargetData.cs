@@ -15,7 +15,7 @@ public class NP_WaitUntilApproachTargetData : NP_NodeDataBase
 
     public override Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {
-        m_WaitNode = new WaitUntil(() =>
+        m_WaitNode = new WaitUntil(null,() =>
         {
             if (string.IsNullOrEmpty(TargetPosId.BBKey)) return true;
             return TargetPosId.GetTheBBDataValue().SqrDistance(unit.Position) < 0.1f;

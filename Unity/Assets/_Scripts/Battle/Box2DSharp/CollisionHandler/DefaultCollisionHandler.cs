@@ -2,7 +2,6 @@
 using Framework;
 using UnityEngine;
 
-[B2D_CollisionHandler]
 public class DefaultCollisionHandler: AB2D_CollisionHandler
 {
     public override void HandleCollisionStart(ColliderUserData a, ColliderUserData b)

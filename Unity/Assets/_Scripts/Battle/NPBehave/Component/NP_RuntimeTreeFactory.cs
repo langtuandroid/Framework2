@@ -95,18 +95,5 @@ namespace Framework
 
             return tempTree;
         }
-
-        /// <summary>
-        /// 创建一个技能树实例,默认存入Unit的SkillCanvasManagerComponentComponent中
-        /// </summary>
-        /// <param name="unit">行为树所归属unit</param>
-        /// <param name="nPDataId">行为树数据id</param>
-        /// <param name="belongToSkillId">归属的SkillId,一般来说需要从excel表中读取</param>
-        /// <returns></returns>
-        public static NP_RuntimeTree CreateSkillNpRuntimeTree(Unit unit, long nPDataId)
-        {
-            NP_RuntimeTree result = CreateNpRuntimeTree(unit, nPDataId);
-            return result;
-        }
     }
 }

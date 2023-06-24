@@ -111,4 +111,11 @@ namespace Framework
 
         #endregion
     }
+    
+    public class BlackboardOrValue_Int : ABlackboardOrValue<int>
+    {
+        public BlackboardOrValue_Int(string label) : base(label)
+        {
+        }
+    }
 }

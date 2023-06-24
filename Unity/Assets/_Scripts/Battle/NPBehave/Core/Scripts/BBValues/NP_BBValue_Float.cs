@@ -111,4 +111,11 @@ namespace Framework
 
         #endregion
     }
+    
+    public class BlackboardOrValue_Float : ABlackboardOrValue<float>
+    {
+        public BlackboardOrValue_Float(string label) : base(label)
+        {
+        }
+    }
 }
