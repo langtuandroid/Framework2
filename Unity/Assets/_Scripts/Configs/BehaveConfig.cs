@@ -1,36 +1,36 @@
 using System.Collections.Generic;
 using Framework;
 
-public partial class SkillCanvasData : BaseConfig
+public partial class BehaveConfig : BaseConfig
 {
-    /// <summary> ID </summary>
+    /// <summary> Id </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
-/// <summary> 对应技能图数据Id </summary>
+/// <summary> 对应AI图Id </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public long NPBehaveId { get; private set; }
 /// <summary> 资源名 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public string SkillConfigPath { get; private set; }
+	public string ConfigPath { get; private set; }
 
 }
 
-[Config("Assets/Res/Configs/SkillCanvasData.json")]
-public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFactory>
+[Config("Assets/Res/Configs/BehaveConfig.json")]
+public partial class BehaveConfigFactory : ConfigSingleton<BehaveConfigFactory>
 {
-    private Dictionary<int, SkillCanvasData> dict = new Dictionary<int, SkillCanvasData>();
+    private Dictionary<int, BehaveConfig> dict = new Dictionary<int, BehaveConfig>();
 
     [MongoDB.Bson.Serialization.Attributes.BsonElement]
-    private List<SkillCanvasData> list = new List<SkillCanvasData>();
+    private List<BehaveConfig> list = new List<BehaveConfig>();
 
-    public void Merge(SkillCanvasDataFactory o)
+    public void Merge(BehaveConfigFactory o)
     {
         this.list.AddRange(o.list);
     }
 
     public override void EndInit()
     {
-        foreach (SkillCanvasData config in list)
+        foreach (BehaveConfig config in list)
         {
             this.dict.Add(config.ID, config);
         }
@@ -42,16 +42,16 @@ public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFac
     
     partial void AfterEndInit();
 
-    public SkillCanvasData Get(int id)
+    public BehaveConfig Get(int id)
     {
-        this.dict.TryGetValue(id, out SkillCanvasData SkillCanvasData);
+        this.dict.TryGetValue(id, out BehaveConfig BehaveConfig);
 
-        if (SkillCanvasData == null)
+        if (BehaveConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(SkillCanvasData)}，配置id: {id}");
+            Log.Error($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {id}");
         }
 
-        return SkillCanvasData;
+        return BehaveConfig;
     }
 
     public bool Contain(int id)
@@ -59,12 +59,12 @@ public partial class SkillCanvasDataFactory : ConfigSingleton<SkillCanvasDataFac
         return this.dict.ContainsKey(id);
     }
 
-    public IReadOnlyDictionary<int, SkillCanvasData> GetAll()
+    public IReadOnlyDictionary<int, BehaveConfig> GetAll()
     {
         return this.dict;
     }
 
-    public SkillCanvasData GetOne()
+    public BehaveConfig GetOne()
     {
         if (this.dict == null || this.dict.Count <= 0)
         {

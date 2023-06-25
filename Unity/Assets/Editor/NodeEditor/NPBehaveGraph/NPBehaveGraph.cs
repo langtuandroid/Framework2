@@ -136,10 +136,10 @@ public class NPBehaveGraph : BaseGraph
             }
         }
 
-        var configPath = (typeof(AICanvasConfigFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+        var configPath = (typeof(BehaveConfigFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
             .Path;
         var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
-        AICanvasConfigFactory factory = SerializeHelper.Deserialize<AICanvasConfigFactory>(bytes);
+        BehaveConfigFactory factory = SerializeHelper.Deserialize<BehaveConfigFactory>(bytes);
         var skillCanvasData = factory.Get(IdInConfig);
         if (skillCanvasData != null)
         {

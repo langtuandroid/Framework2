@@ -80,10 +80,10 @@
          }
 
          var configPath =
-             (typeof(SkillCanvasDataFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+             (typeof(BehaveConfigFactory).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
              .Path;
          var bytes = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
-         SkillCanvasDataFactory factory = SerializeHelper.Deserialize<SkillCanvasDataFactory>(bytes);
+         BehaveConfigFactory factory = SerializeHelper.Deserialize<BehaveConfigFactory>(bytes);
          var skillCanvasData = factory.Get(IdInConfig);
          if (skillCanvasData != null)
          {

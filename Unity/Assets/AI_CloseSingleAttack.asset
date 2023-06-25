@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09770286e517450c841c4f839fe2170d, type: 3}
-  m_Name: CloseAI
+  m_Name: AI_CloseSingleAttack
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -94,7 +94,7 @@ MonoBehaviour:
       Data: 3|NP_ParallelNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178247
+      Data: 1887463596300959751
     - Name: LinkedIds
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -103,10 +103,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: 1886117450471178245
+      Data: 1887463596300959749
     - Name: 
       Entry: 3
-      Data: 1886117450471178246
+      Data: 1887463596300959750
     - Name: 
       Entry: 13
       Data: 
@@ -181,7 +181,7 @@ MonoBehaviour:
       Data: 6|NP_RepeaterNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178245
+      Data: 1887463596300959749
     - Name: LinkedIds
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -190,13 +190,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 3
-      Data: 1886117450471178240
+      Data: 1887463596300959748
     - Name: 
       Entry: 3
-      Data: 1886117450471178241
+      Data: 1887463596300959744
     - Name: 
       Entry: 3
-      Data: 1886117450471178242
+      Data: 1887463596300959745
     - Name: 
       Entry: 13
       Data: 
@@ -268,7 +268,7 @@ MonoBehaviour:
       Data: 9|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178241
+      Data: 1887463596300959744
     - Name: LinkedIds
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -391,7 +391,7 @@ MonoBehaviour:
       Data: 15|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178242
+      Data: 1887463596300959745
     - Name: LinkedIds
       Entry: 7
       Data: 16|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -548,7 +548,7 @@ MonoBehaviour:
       Data: 23|NP_RepeaterNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178246
+      Data: 1887463596300959750
     - Name: LinkedIds
       Entry: 7
       Data: 24|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -557,10 +557,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: 1886117450471178243
+      Data: 1887463596300959746
     - Name: 
       Entry: 3
-      Data: 1886117450471178244
+      Data: 1887463596300959747
     - Name: 
       Entry: 13
       Data: 
@@ -641,7 +641,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 1886117450471178247
+      Data: 1887463596300959751
     - Name: 
       Entry: 13
       Data: 
@@ -713,7 +713,7 @@ MonoBehaviour:
       Data: 29|NP_WaitUntilApproachTargetData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178243
+      Data: 1887463596300959746
     - Name: LinkedIds
       Entry: 7
       Data: 30|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -822,7 +822,7 @@ MonoBehaviour:
       Data: 34|NP_RunAnotherTreeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1886117450471178244
+      Data: 1887463596300959747
     - Name: LinkedIds
       Entry: 7
       Data: 35|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -985,16 +985,16 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 18
+      Data: 0
     - Name: 
       Entry: 4
       Data: 697
     - Name: 
       Entry: 4
-      Data: 111
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 76
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -1009,7 +1009,7 @@ MonoBehaviour:
       Data: 45|NP_WaitNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 0
+      Data: 1887463596300959748
     - Name: LinkedIds
       Entry: 7
       Data: 46|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1098,7 +1098,7 @@ MonoBehaviour:
       Data: 1882230831485810000
     - Name: ExcelId
       Entry: 3
-      Data: 10001
+      Data: 1
     - Name: NP_DataSupportorDic
       Entry: 7
       Data: 52|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
@@ -1114,58 +1114,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178240
-    - Name: $v
-      Entry: 7
-      Data: 53|NP_WaitNodeData, Game.Runtime
-    - Name: id
-      Entry: 3
-      Data: 1886117450471178240
-    - Name: LinkedIds
-      Entry: 7
-      Data: 54|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: NodeDes
-      Entry: 1
-      Data: "0.2\u79D2\u627E\u4E00\u6B21\u76EE\u6807"
-    - Name: Time
-      Entry: 7
-      Data: 55|Framework.BlackboardOrValue_Float, Game.Runtime
-    - Name: BlackboardKey
-      Entry: 6
-      Data: 
-    - Name: OriginValue
-      Entry: 4
-      Data: 0
-    - Name: UseBlackboard
-      Entry: 5
-      Data: false
-    - Name: label
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1886117450471178241
+      Data: 1887463596300959744
     - Name: $v
       Entry: 9
       Data: 9
@@ -1177,7 +1126,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178242
+      Data: 1887463596300959745
     - Name: $v
       Entry: 9
       Data: 15
@@ -1189,7 +1138,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178243
+      Data: 1887463596300959746
     - Name: $v
       Entry: 9
       Data: 29
@@ -1201,7 +1150,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178244
+      Data: 1887463596300959747
     - Name: $v
       Entry: 9
       Data: 34
@@ -1213,7 +1162,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178245
+      Data: 1887463596300959748
+    - Name: $v
+      Entry: 9
+      Data: 45
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1887463596300959749
     - Name: $v
       Entry: 9
       Data: 6
@@ -1225,7 +1186,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178246
+      Data: 1887463596300959750
     - Name: $v
       Entry: 9
       Data: 23
@@ -1237,7 +1198,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1886117450471178247
+      Data: 1887463596300959751
     - Name: $v
       Entry: 9
       Data: 3
@@ -1264,11 +1225,11 @@ MonoBehaviour:
       Data: 
     - Name: NP_BBValueManager
       Entry: 7
-      Data: 56|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 53|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 57|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 54|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -1284,7 +1245,7 @@ MonoBehaviour:
       Data: Target
     - Name: $v
       Entry: 7
-      Data: 58|Framework.NP_BBValue_Long, Game.Runtime
+      Data: 55|Framework.NP_BBValue_Long, Game.Runtime
     - Name: Value
       Entry: 3
       Data: 8
@@ -1302,7 +1263,7 @@ MonoBehaviour:
       Data: TargetPos
     - Name: $v
       Entry: 7
-      Data: 59|Framework.NP_BBValue_Vector3, Game.Runtime
+      Data: 56|Framework.NP_BBValue_Vector3, Game.Runtime
     - Name: Value
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -1332,7 +1293,7 @@ MonoBehaviour:
       Data: Log
     - Name: $v
       Entry: 7
-      Data: 60|Framework.NP_BBValue_String, Game.Runtime
+      Data: 57|Framework.NP_BBValue_String, Game.Runtime
     - Name: Value
       Entry: 1
       Data: "\u6253\u5370\u770B\u770B"
@@ -1353,10 +1314,10 @@ MonoBehaviour:
       Data: 
     - Name: NpDataSupportor_Client_Des
       Entry: 7
-      Data: 61|NP_DataSupportor, Game.Runtime
+      Data: 58|NP_DataSupportor, Game.Runtime
     - Name: BuffNodeDataDic
       Entry: 7
-      Data: 62|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
+      Data: 59|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
@@ -1378,7 +1339,7 @@ MonoBehaviour:
       Data: 0
     - Name: NP_DataSupportorDic
       Entry: 7
-      Data: 63|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
+      Data: 60|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
@@ -1394,11 +1355,11 @@ MonoBehaviour:
       Data: 
     - Name: NP_BBValueManager
       Entry: 7
-      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 61|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 57
+      Data: 54
     - Name: 
       Entry: 12
       Data: 0
@@ -1413,14 +1374,14 @@ MonoBehaviour:
       Data: 
     - Name: NpBlackBoardDataManager
       Entry: 7
-      Data: 65|NP_BlackBoardDataManager, Game.Runtime
+      Data: 62|NP_BlackBoardDataManager, Game.Runtime
     - Name: BBValues
       Entry: 7
-      Data: 66|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+      Data: 63|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
         Game.Runtime]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 57
+      Data: 54
     - Name: 
       Entry: 12
       Data: 3
@@ -1432,7 +1393,7 @@ MonoBehaviour:
       Data: Target
     - Name: $v
       Entry: 9
-      Data: 58
+      Data: 55
     - Name: 
       Entry: 8
       Data: 
@@ -1444,7 +1405,7 @@ MonoBehaviour:
       Data: TargetPos
     - Name: $v
       Entry: 9
-      Data: 59
+      Data: 56
     - Name: 
       Entry: 8
       Data: 
@@ -1456,7 +1417,7 @@ MonoBehaviour:
       Data: Log
     - Name: $v
       Entry: 9
-      Data: 60
+      Data: 57
     - Name: 
       Entry: 8
       Data: 
@@ -1468,7 +1429,7 @@ MonoBehaviour:
       Data: 
     - Name: EventValues
       Entry: 7
-      Data: 67|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 64|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1480,11 +1441,11 @@ MonoBehaviour:
       Data: 
     - Name: Ids
       Entry: 7
-      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int64,
+      Data: 65|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int64,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 57
+      Data: 54
     - Name: 
       Entry: 12
       Data: 0
@@ -1498,31 +1459,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   edges:
-  - GUID: 5d9de86f-e2e3-4006-be3b-2b7118598dd6
-    owner: {fileID: 11400000}
-    inputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
-    outputNodeGUID: 83fd41d1-1103-4f9b-a6a4-3a7c3b13ec91
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: d53f63f0-f400-4127-bbc5-97d37b2c3b9f
-    owner: {fileID: 11400000}
-    inputNodeGUID: 996c2c16-1c6f-47b3-a7fc-a3ea713a749d
-    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: af9f77a7-c831-40b1-94db-1b2df8128156
-    owner: {fileID: 11400000}
-    inputNodeGUID: 220937d8-d6d8-48d4-a9f2-b9ae46890f30
-    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 8ec937ec-d904-47e7-a169-cbfc2a981e15
+  - GUID: 4f514f37-c612-4e07-98fb-aa25fae4421a
     owner: {fileID: 11400000}
     inputNodeGUID: 83fd41d1-1103-4f9b-a6a4-3a7c3b13ec91
     outputNodeGUID: 60ebc9ea-9ed6-49cc-93f6-2a446e27b11f
@@ -1530,7 +1467,15 @@ MonoBehaviour:
     outputFieldName: NextNode
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 903a00cb-0282-4c8f-8bca-3e11c19e3b75
+  - GUID: d27abbea-6a34-4e85-ad2b-78d45541c575
+    owner: {fileID: 11400000}
+    inputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
+    outputNodeGUID: 83fd41d1-1103-4f9b-a6a4-3a7c3b13ec91
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 2b60a6bd-4e01-4067-bfe3-282fdc69b203
     owner: {fileID: 11400000}
     inputNodeGUID: 391b77fe-ab5b-4eeb-8576-b2238ccad135
     outputNodeGUID: 83fd41d1-1103-4f9b-a6a4-3a7c3b13ec91
@@ -1538,7 +1483,31 @@ MonoBehaviour:
     outputFieldName: NextNode
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: f675d88e-907f-4db8-8376-2536713f520f
+  - GUID: 1ed905e0-2cde-4fb8-9a20-3fcac4e8254c
+    owner: {fileID: 11400000}
+    inputNodeGUID: 40a3ba4f-5e8e-48a3-a149-1a11563330b9
+    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 1397a8d4-bf78-4976-8f52-007d3fd76850
+    owner: {fileID: 11400000}
+    inputNodeGUID: 996c2c16-1c6f-47b3-a7fc-a3ea713a749d
+    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 6f430818-8e8a-4eea-9196-6af1d346e094
+    owner: {fileID: 11400000}
+    inputNodeGUID: 220937d8-d6d8-48d4-a9f2-b9ae46890f30
+    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 2760f8b9-c3c7-4627-93ea-da6b4cf42870
     owner: {fileID: 11400000}
     inputNodeGUID: 6fe0ab1a-6154-4945-9ba3-e41aab9260b8
     outputNodeGUID: 391b77fe-ab5b-4eeb-8576-b2238ccad135
@@ -1546,18 +1515,10 @@ MonoBehaviour:
     outputFieldName: NextNode
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: aec9ef54-7de3-463a-8333-55152d46b4de
+  - GUID: 3b9ae2b4-1e97-4bbd-a54d-708ce9175d19
     owner: {fileID: 11400000}
     inputNodeGUID: dd73c155-42ee-4857-a06f-0f9e1ece4fe6
     outputNodeGUID: 391b77fe-ab5b-4eeb-8576-b2238ccad135
-    inputFieldName: PrevNode
-    outputFieldName: NextNode
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 53e4de1f-6288-46ff-9603-48189c35742b
-    owner: {fileID: 11400000}
-    inputNodeGUID: 40a3ba4f-5e8e-48a3-a149-1a11563330b9
-    outputNodeGUID: b9241724-27fe-44bd-9c8d-a6e505ea56d8
     inputFieldName: PrevNode
     outputFieldName: NextNode
     inputPortIdentifier: 
@@ -1569,8 +1530,8 @@ MonoBehaviour:
   stickyNotes: []
   position: {x: 86, y: -242, z: 0}
   scale: {x: 1, y: 1, z: 1}
-  Name: Skill_CloseSingleAttack
-  IdInConfig: 10001
+  Name: AI_CloseSingleAttack
+  IdInConfig: 1
   SavePathClient: Assets/Res/Configs/BehaveConfigs
   references:
     version: 2

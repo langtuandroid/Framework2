@@ -7,13 +7,6 @@
     "AssetList": [
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/AICanvasConfig.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
             "AssetPath": "Assets/Res/Configs/B2D_CollisionRelationConfig.json",
             "AssetTags": [],
             "BundleID": 0,
@@ -21,7 +14,7 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/HeroConfig.json",
+            "AssetPath": "Assets/Res/Configs/BehaveConfig.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
@@ -35,28 +28,21 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SkillCanvasData.json",
+            "AssetPath": "Assets/Res/Configs/UnitConfig.json",
             "AssetTags": [],
             "BundleID": 0,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SoldierConfig.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Res/Configs/BehaveConfigs/DefaultColliderBehave.bytes",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/AI_CloseSingleAttack.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/BehaveConfigs/SkillBehave.bytes",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/Collider_DefaultColliderBehave.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []
@@ -70,30 +56,37 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/UI/Item_Buff.prefab",
+            "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_CloseSingleAttack.bytes",
             "AssetTags": [],
             "BundleID": 3,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/UI/Item_Buff.prefab",
+            "AssetTags": [],
+            "BundleID": 4,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/Item_Info.prefab",
             "AssetTags": [],
-            "BundleID": 3,
+            "BundleID": 4,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/Item_Skill.prefab",
             "AssetTags": [],
-            "BundleID": 3,
+            "BundleID": 4,
             "DependIDs": []
         },
         {
             "Address": "",
             "AssetPath": "Assets/Res/UI/UI_UnitInfo.prefab",
             "AssetTags": [],
-            "BundleID": 3,
+            "BundleID": 4,
             "DependIDs": []
         }
     ],
@@ -120,6 +113,16 @@
         },
         {
             "BundleName": "assets_res_configs_colliderconfig.bundle",
+            "FileHash": "00000000000000000000000000000000",
+            "FileCRC": "00000000",
+            "FileSize": 0,
+            "IsRawFile": false,
+            "LoadMethod": 0,
+            "Tags": [],
+            "ReferenceIDs": []
+        },
+        {
+            "BundleName": "assets_res_configs_skillconfigs.bundle",
             "FileHash": "00000000000000000000000000000000",
             "FileCRC": "00000000",
             "FileSize": 0,

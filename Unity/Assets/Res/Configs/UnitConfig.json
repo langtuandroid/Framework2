@@ -1,1 +1,1 @@
-{ "_t" : "UnitConfigFactory", "list" : [] }
+{ "_t" : "UnitConfigFactory", "list" : [{ "ID" : 1, "ColliderRadius" : 1.0, "AttackRange" : 1.1000000238418579 }, { "ID" : 2, "ColliderRadius" : 0.5, "AttackRange" : 0.60000002384185791 }] }

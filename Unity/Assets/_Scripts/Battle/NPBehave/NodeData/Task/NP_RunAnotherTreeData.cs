@@ -7,9 +7,6 @@ public class NP_RunAnotherTreeData :  NP_NodeDataBase
 {
     public override NodeType BelongNodeType => NodeType.Task;
 
-    [LabelText("是否是技能")]
-    public bool IsSkill = true;
-
     [LabelText("对应配置表id")]
     public int ConfigId;
 
@@ -25,18 +22,7 @@ public class NP_RunAnotherTreeData :  NP_NodeDataBase
     {
         if (IsWaitFinish)
         {
-            long behaveId = 0;
-            if (IsSkill)
-            {
-                SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(ConfigId);
-                behaveId = skillCanvasData.NPBehaveId;
-            }
-            else
-            {
-                AICanvasConfig aiCanvasConfig = AICanvasConfigFactory.Instance.Get(ConfigId);
-                behaveId = aiCanvasConfig.NPBehaveId;
-            }
-
+            long behaveId = BehaveConfigFactory.Instance.Get(ConfigId).NPBehaveId;
             runTask = new WaitUntil(() =>
             {
                var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, ConfigId);

@@ -13,9 +13,9 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
     public NP_DataSupportor GetNP_SkillTreeData(long id)
     {
         if (NpRuntimeSkillTreesDatas.TryGetValue(id, out var dataSupportor)) return dataSupportor;
-        var skillCanvasConfig = SkillCanvasDataFactory.Instance.GetByNpDataId(id);
+        var skillCanvasConfig = BehaveConfigFactory.Instance.GetByNpDataId(id);
         TextAsset textAsset =
-            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.SkillConfigPath);
+            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.ConfigPath);
 
         if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
 
@@ -53,7 +53,7 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
     public NP_DataSupportor GetNP_TreeData(long id)
     {
         if (NpRuntimeTreesDatas.TryGetValue(id, out var dataSupportor)) return dataSupportor;
-        var skillCanvasConfig = AICanvasConfigFactory.Instance.GetByNpDataId(id);
+        var skillCanvasConfig = BehaveConfigFactory.Instance.GetByNpDataId(id);
         TextAsset textAsset =
             ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.ConfigPath);
 

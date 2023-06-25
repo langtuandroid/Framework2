@@ -93,7 +93,7 @@ public class UnitFactory
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(room, 0);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
-        SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
+        BehaveConfig skillCanvasData = BehaveConfigFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         B2D_CollisionRelationConfig serverB2SCollisionRelationConfig =
             B2D_CollisionRelationConfigFactory.Instance.Get(collisionRelationDataConfigId);
@@ -137,7 +137,7 @@ public class UnitFactory
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(scene, 0);
         Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
-        SkillCanvasData skillCanvasData = SkillCanvasDataFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
+        BehaveConfig skillCanvasData = BehaveConfigFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
 
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();

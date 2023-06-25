@@ -239,6 +239,9 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: true
+    - Name: label
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
