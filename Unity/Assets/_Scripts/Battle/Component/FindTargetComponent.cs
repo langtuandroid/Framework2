@@ -7,7 +7,7 @@ public class FindTargetComponent : Entity
     public void FindTarget(Action<long> findCb, RoleCast roleCast, RoleTag tag)
     {
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
-        var selfRoleCast = GetComponent<B2D_RoleCastComponent>();
+        var selfRoleCast = parent.GetComponent<B2D_RoleCastComponent>();
         foreach (var unit in unitComponent.idUnits.Values)
         {
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast && tag.Contains(unit.GetComponent<B2D_RoleCastComponent>().RoleTag))

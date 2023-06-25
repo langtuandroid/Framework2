@@ -33,6 +33,13 @@ public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComp
     public void SetRootNode(Root rootNode)
     {
         this.m_RootNode = rootNode;
+        if (!m_RootNode.IsLoop)
+        {
+            m_RootNode.OnFinish += ()=>
+            {
+                (parent as NP_RuntimeTreeManager).RemoveTree(Id);
+            };
+        }
     }
 
     public Root RootNode => m_RootNode;

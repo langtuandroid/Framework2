@@ -100,7 +100,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 1885401702761234432
+      Data: 1887501821509894145
     - Name: 
       Entry: 13
       Data: 
@@ -172,7 +172,7 @@ MonoBehaviour:
       Data: 6|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1885401702761234432
+      Data: 1887501821509894145
     - Name: LinkedIds
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -288,7 +288,7 @@ MonoBehaviour:
       Data: 1882648525645283328
     - Name: ExcelId
       Entry: 3
-      Data: 1001
+      Data: 10001
     - Name: NP_DataSupportorDic
       Entry: 7
       Data: 15|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
@@ -304,7 +304,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1885401702761234432
+      Data: 1887501821509894145
     - Name: $v
       Entry: 9
       Data: 6
@@ -569,7 +569,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
   Name: Skill_CloseSingleAttack
-  IdInConfig: 1001
+  IdInConfig: 10001
   SavePathClient: Assets/Res/Configs/SkillConfigs
   references:
     version: 2

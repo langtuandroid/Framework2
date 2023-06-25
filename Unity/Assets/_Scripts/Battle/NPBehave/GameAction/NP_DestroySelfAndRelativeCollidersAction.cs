@@ -15,6 +15,6 @@ public class NP_DestroySelfAndRelativeCollidersAction : NP_ClassForStoreAction
         Log.Msg("销毁碰撞体");
         UnitComponent unitComponent = BelongToUnit.DomainScene()
             .GetComponent<UnitComponent>();
-        unitComponent.Remove(this.BelongtoRuntimeTree.BelongToUnit.Id);
+        unitComponent.Remove(this.BelongtoRuntimeTree.BelongToUnit.InstanceId);
     }
 }

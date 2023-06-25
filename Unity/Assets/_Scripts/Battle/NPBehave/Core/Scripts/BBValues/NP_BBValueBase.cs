@@ -59,11 +59,11 @@ public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
     [LabelText("@string.IsNullOrEmpty(this.label) ? \"值\" : label")]
     [ShowIf("@!UseBlackboard")]
     [SerializeField]
-    private T OriginValue;
+    public T OriginValue;
 
     [SerializeField]
     [LabelText("是否使用黑板")]
-    private bool UseBlackboard = true;
+    public bool UseBlackboard = true;
 
     [SerializeField]
     [HideInInspector]

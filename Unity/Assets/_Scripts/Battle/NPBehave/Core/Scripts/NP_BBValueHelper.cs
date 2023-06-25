@@ -50,7 +50,7 @@ namespace Framework
         /// </summary>
         public static ANP_BBValue AutoCreateNPBBValueFromTValue<T>(T value)
         {
-            string valueType = typeof(T).ToString();
+            string valueType = value.GetType().ToString();
             object boxedValue = value;
             ANP_BBValue anpBbValue = null;
             switch (valueType)

@@ -30,6 +30,7 @@ public class NP_RunAnotherTreeData :  NP_NodeDataBase
                {
                    tree.GetBlackboard().Set(item.Key, item.Value.GetObjValue(runtimeTree.GetBlackboard()));
                }
+               tree.Start();
             },
                 () => unit.GetComponent<NP_RuntimeTreeManager>().GetTreeByRootID(behaveId)
                     .RootNode.CurrentState == Node.State.INACTIVE);
@@ -41,8 +42,10 @@ public class NP_RunAnotherTreeData :  NP_NodeDataBase
                var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, ConfigId);
                foreach (var item in PassValue.Dic)
                {
-                   tree.GetBlackboard().Set(item.Key, item.Value.GetObjValue(runtimeTree.GetBlackboard()));
+                   var bvalue = NP_BBValueHelper.AutoCreateNPBBValueFromTValue(item.Value.GetObjValue(runtimeTree.GetBlackboard()));
+                   tree.GetBlackboard().Set(item.Key, bvalue);
                }
+               tree.Start();
             });
         }
 

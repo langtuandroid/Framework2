@@ -85,14 +85,7 @@ namespace Framework
                 }
 
                 updates.Enqueue(singleton);
-                try
-                {
-                    update.Update(deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                update.Update(deltaTime);
             }
         }
         
@@ -114,14 +107,8 @@ namespace Framework
                 }
 
                 fixedUpdates.Enqueue(singleton);
-                try
-                {
-                    update.FixedUpdate(deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+
+                update.FixedUpdate(deltaTime);
             }
         } 
         
@@ -143,14 +130,7 @@ namespace Framework
                 }
 
                 rendererUpdates.Enqueue(singleton);
-                try
-                {
-                    update.RendererUpdate(deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                update.RendererUpdate(deltaTime);
             }
         }
 
@@ -172,14 +152,7 @@ namespace Framework
                 }
 
                 lateUpdates.Enqueue(singleton);
-                try
-                {
-                    lateUpdate.LateUpdate(deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                lateUpdate.LateUpdate(deltaTime);
             }
         }
 

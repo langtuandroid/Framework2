@@ -18,7 +18,7 @@ public class NP_WaitUntilApproachTargetData : NP_NodeDataBase
         m_WaitNode = new WaitUntil(null,() =>
         {
             if (string.IsNullOrEmpty(TargetPosId.BBKey)) return true;
-            return TargetPosId.GetTheBBDataValue().SqrDistance(unit.Position) < 0.1f;
+            return TargetPosId.GetBlackBoardValue(runtimeTree.GetBlackboard()).SqrDistance(unit.Position) < 0.1f;
         });
         return this.m_WaitNode;
     }

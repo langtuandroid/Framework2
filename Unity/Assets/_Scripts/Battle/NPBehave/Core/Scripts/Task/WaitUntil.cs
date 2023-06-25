@@ -21,7 +21,7 @@ namespace NPBehave
 
         protected override void DoCancel()
         {
-            Clock.RemoveTimer(onTimer);
+            Clock.RemoveUpdateObserver(onTimer);
             this.Stopped(false);
         }
 
@@ -29,7 +29,7 @@ namespace NPBehave
         {
             if (checkFinish())
             {
-                Clock.RemoveTimer(onTimer);
+                Clock.RemoveUpdateObserver(onTimer);
                 this.Stopped(true);
             }
         }

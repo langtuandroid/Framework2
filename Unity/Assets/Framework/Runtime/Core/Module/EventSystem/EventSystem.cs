@@ -386,14 +386,7 @@ namespace Framework
 
                 if (component is IUpdateSystem iUpdateSystem)
                 {
-                    try
-                    {
-                        iUpdateSystem.Update(deltaTime);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    iUpdateSystem.Update(deltaTime);
                 }
             }
         }

@@ -130,6 +130,36 @@ namespace NPBehave
             }
         }
 
+        public void Set(string key, ANP_BBValue value, bool addIfNotExit = false)
+        {
+             if (this.m_ParentBlackboard != null && this.m_ParentBlackboard.IsSet(key))
+             {
+                 this.m_ParentBlackboard.Set(key, value);
+             }
+             else
+             {
+                 if (!this.m_Data.ContainsKey(key))
+                 {
+                     if (!addIfNotExit) return;
+                     ANP_BBValue newBBValue = NP_BBValueHelper.AutoCreateNPBBValueFromTValue(value);
+                     this.m_Data.Add(key, newBBValue);
+                     this.m_Notifications.Add(new Notification(key, Type.ADD, newBBValue));
+                     this.m_Clock.AddTimer(0, NotifiyObserversActionCache);
+                 }
+                 else
+                 {
+                     ANP_BBValue targetBBValue = this.m_Data[key];
+                     if ((targetBBValue == null && value != null) ||
+                         (targetBBValue != null && NP_BBValueHelper.Compare(value, targetBBValue, Operator.IS_NOT_EQUAL)))
+                     {
+                         targetBBValue.SetValueFrom(value);
+                         this.m_Notifications.Add(new Notification(key, Type.CHANGE, targetBBValue));
+                         this.m_Clock.AddTimer(0f, NotifiyObserversActionCache);
+                     }
+                 }
+             }           
+        }
+
         public void Unset(string key)
         {
             if (this.m_Data.ContainsKey(key))

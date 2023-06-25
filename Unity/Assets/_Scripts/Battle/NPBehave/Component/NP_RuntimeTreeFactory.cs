@@ -7,6 +7,11 @@ namespace Framework
 {
     public class NP_RuntimeTreeFactory
     {
+        public static NP_RuntimeTree CreateNpRuntimeTree(Unit unit, int configId)
+        {
+            return CreateNpRuntimeTree(unit, BehaveConfigFactory.Instance.Get(configId).NPBehaveId);
+        }
+        
         /// <summary>
         /// 创建一个行为树实例,默认存入Unit的NP_RuntimeTreeManager中
         /// </summary>

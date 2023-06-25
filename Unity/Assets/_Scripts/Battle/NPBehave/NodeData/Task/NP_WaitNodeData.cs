@@ -15,7 +15,14 @@ public class NP_WaitNodeData : NP_NodeDataBase
 
     public override Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {
-        this.m_WaitNode = new Wait(Time.GetValue(runtimeTree.GetBlackboard()));
+        if (Time.UseBlackboard)
+        {
+            m_WaitNode = new Wait(Time.BlackboardKey.BBKey);
+        }
+        else
+        {
+            m_WaitNode = new Wait(Time.OriginValue);
+        }
         return this.m_WaitNode;
     }
 

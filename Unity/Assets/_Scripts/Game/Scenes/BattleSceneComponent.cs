@@ -53,14 +53,7 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
 
             if (component is IBattleUpdateSystem iUpdateSystem)
             {
-                try
-                {
-                    iUpdateSystem.BattleUpdate(deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                iUpdateSystem.BattleUpdate(deltaTime);
             }
         }
     }

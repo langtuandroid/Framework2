@@ -31,6 +31,7 @@ public class UnitFactory
         unit.AddComponent<CastDamageComponent>();
         unit.AddComponent<ReceiveDamageComponent>();
 
+        unit.AddComponent<FindTargetComponent>();
         unit.AddComponent<GameObjectComponent>();
         var colliderRadius = UnitConfigFactory.Instance.Get(heroConfigId).ColliderRadius;
         var colliderUnit = CreateUnit(scene, 0);

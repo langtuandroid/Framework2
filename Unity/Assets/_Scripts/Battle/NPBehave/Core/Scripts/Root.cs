@@ -6,9 +6,11 @@ namespace NPBehave
     {
         private Node mainNode;
 
-        private bool isLoop;
+        public bool IsLoop { get; }
 
         private Blackboard blackboard;
+
+        public event System.Action OnFinish;
 
         public override Blackboard Blackboard
         {
@@ -25,7 +27,7 @@ namespace NPBehave
 
         public Root(Node mainNode, Clock clock, bool isLoop) : base("Root", mainNode)
         {
-            this.isLoop = isLoop;
+            this.IsLoop = isLoop;
             this.mainNode = mainNode;
             //    m_MainNodeStartActionCache = this.mainNode.Start;
             this.clock = clock;
@@ -68,7 +70,8 @@ namespace NPBehave
 
         override protected void DoChildStopped(Node node, bool success)
         {
-            if (isLoop && !IsStopRequested)
+            OnFinish?.Invoke();
+            if (IsLoop && !IsStopRequested)
             {
                 // wait one tick, to prevent endless recursions
                 this.clock.AddTimer(0, 0, this.mainNode.Start);

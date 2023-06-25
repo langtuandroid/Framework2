@@ -26,14 +26,14 @@ public class NP_MoveToTargetAction: NP_ClassForStoreAction
         Vector3 pos;
         if (!string.IsNullOrEmpty(TargetInsId.BBKey))
         {
-            pos = BelongToUnit.Domain.GetComponent<UnitComponent>().Get(TargetInsId.GetTheBBDataValue())
+            pos = BelongToUnit.Domain.GetComponent<UnitComponent>().Get(TargetInsId.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard()))
                 .Position;
             this.BelongToUnit.GetComponent<MoveComponent>().MoveTo(pos, speed);
             TargetPosId.SetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard(), pos);
         }
         else
         {
-            pos = TargetPosId.GetTheBBDataValue();
+            pos = TargetPosId.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard());
         }
 
         this.BelongToUnit.GetComponent<MoveComponent>().MoveTo(pos, speed);
