@@ -79,7 +79,7 @@ public class BuffDataBase
     [LabelText("基础数值")]
     [BoxGroup("选填项")]
     [ShowInInspector]
-    public int BasicValue ;
+    public BlackboardOrValue_Int BasicValue ;
 
     [Tooltip("具体的加成(可能会一个效果多种加成方式)，例如法强加成")]
     [BoxGroup("选填项")]

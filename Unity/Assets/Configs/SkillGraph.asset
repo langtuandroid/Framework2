@@ -618,9 +618,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: Run
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Boolean
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: true
@@ -732,9 +729,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: FlyTarget
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Int64
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: true
@@ -1125,9 +1119,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: HasHit
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Boolean
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: false
@@ -1150,9 +1141,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: HitUnits
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Collections.Generic.List`1[System.Int64]
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: false
@@ -1307,9 +1295,6 @@ MonoBehaviour:
       Entry: 7
       Data: 54|NP_BlackBoardRelationData`1[[System.Int64, mscorlib]], Game.Runtime
     - Name: BBKey
-      Entry: 6
-      Data: 
-    - Name: NP_BBValueType
       Entry: 6
       Data: 
     - Name: WriteOrCompareToBB
@@ -2155,9 +2140,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: Run
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Boolean
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: true
@@ -2467,9 +2449,6 @@ MonoBehaviour:
     - Name: BBKey
       Entry: 1
       Data: Run
-    - Name: NP_BBValueType
-      Entry: 1
-      Data: System.Boolean
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: true
@@ -2852,8 +2831,8 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 157, y: 179, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: 135, y: 79, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   Name: SkillBehave
   IdInConfig: 10001
   SavePathClient: Assets/Res/Configs/BehaveConfigs

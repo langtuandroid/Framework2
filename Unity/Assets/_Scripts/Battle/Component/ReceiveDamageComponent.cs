@@ -42,6 +42,8 @@ public class ReceiveDamageComponent : Entity
         int currentHp = GetParent<Unit>().GetComponent<NumericComponent>().GetByKey(NumericType.Hp);
         int finalHp = currentHp - damageData.DamageValue;
 
+        Log.Msg("掉血了", damageData.DamageValue, finalHp);
+        
         if (finalHp <= 0)
         {
             finalHp = 0;

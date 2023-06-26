@@ -7,7 +7,7 @@ public class NP_AddBuffActionNode: NP_TaskNodeBase
     public override string name => "添加BuffAction";
 
     public NP_ActionNodeData NP_ActionNodeData =
-        new NP_ActionNodeData() { NpClassForStoreAction = new NP_AddBuffAction() };
+        new NP_ActionNodeData() { NpClassForStoreAction = new NP_AddBuffToSpecifiedUnitAction() };
 
     public override NP_NodeDataBase NP_GetNodeData()
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Framework
         
         [ShowInInspector]
         [OnValueChanged("OnDicChanged")]
+        [BsonIgnore]
         public Dictionary<TKey, TValue> Dic = new Dictionary<TKey, TValue>();
 
         private void OnDicChanged()
