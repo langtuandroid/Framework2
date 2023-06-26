@@ -113,6 +113,8 @@ namespace Framework
         #endregion
     }
     
+    [HideLabel]
+    [HideReferenceObjectPicker]
     public class BlackboardOrValue_Vector3 : ABlackboardOrValue<Vector3>
     {
         public BlackboardOrValue_Vector3(string label) : base(label)

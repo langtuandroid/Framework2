@@ -112,6 +112,8 @@ namespace Framework
         #endregion
     }
     
+    [HideLabel]
+    [HideReferenceObjectPicker]
     public class BlackboardOrValue_String : ABlackboardOrValue<string>
     {
         public BlackboardOrValue_String(string label) : base(label)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Framework;
+using Sirenix.OdinInspector;
 
 namespace Framework
 {
@@ -150,6 +151,8 @@ namespace Framework
         #endregion
     }
     
+    [HideLabel]
+    [HideReferenceObjectPicker]
     public class BlackboardOrValue_List_Long : ABlackboardOrValue<List<long>>
     {
         public BlackboardOrValue_List_Long(string label) : base(label)

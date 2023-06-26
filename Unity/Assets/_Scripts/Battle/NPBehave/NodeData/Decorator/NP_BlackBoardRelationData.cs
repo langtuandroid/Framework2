@@ -5,6 +5,41 @@ using NPBehave;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[HideReferenceObjectPicker]
+[HideLabel]
+public class NP_BlackBoardKeyData
+{
+    [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnValueChanged")]
+    public string BBKey;
+    
+#if UNITY_EDITOR
+    private List<string> keys;
+    private IEnumerable<string> GetBBKeys()
+    {
+        if (keys == null)
+        {
+            keys = new();
+        }
+        keys.Clear();
+        
+        if (NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager != null)
+        {
+            foreach (var item in NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues)
+            {
+                keys.Add($"{item.Key}|({item.Value.NP_BBValueType.Name})");
+            }
+        }
+
+        return keys;
+    }
+
+    private void OnValueChanged()
+    {
+        BBKey = BBKey.Split('|')[0];
+    }
+    #endif
+}
+
 /// <summary>
 /// 与黑板节点相关的数据
 /// </summary>
@@ -15,8 +50,6 @@ public class NP_BlackBoardRelationData<T>
 {
     [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnBBKeySelected")]
     public string BBKey;
-
-    [LabelText("指定的值类型")] [ReadOnly] public string NP_BBValueType;
 
     [LabelText("是否把值写入黑板，或者是否与黑板进行值对比")] public bool WriteOrCompareToBB;
 
@@ -39,7 +72,7 @@ public class NP_BlackBoardRelationData<T>
             {
                 if (item.Value.NP_BBValueType == typeof(T) || item.Value.NP_BBValueType.IsSubclassOf(typeof(T)))
                 {
-                    keys.Add(item.Key);
+                    keys.Add($"{item.Key}|({item.Value.NP_BBValueType.Name})");
                 }
             }
         }
@@ -49,6 +82,7 @@ public class NP_BlackBoardRelationData<T>
 
     private void OnBBKeySelected()
     {
+        BBKey = BBKey.Split('|')[0];
         if (NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager != null)
         {
             foreach (var bbValues in NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues)
@@ -57,7 +91,6 @@ public class NP_BlackBoardRelationData<T>
                 if (bbValues.Key == this.BBKey)
                 {
                     NP_BBValue = bbValues.Value.DeepCopy();
-                    NP_BBValueType = this.NP_BBValue.NP_BBValueType.ToString();
                 }
             }
         }

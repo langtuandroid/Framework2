@@ -8,8 +8,11 @@ namespace Framework
 {
     public abstract class NP_BBValueBase<T> : ANP_BBValue, INP_BBValue<T>
     {
-        [LabelText("值")] public T Value;
+        [LabelText("@valueLabel")] public T Value;
 
+#if UNITY_EDITOR
+        private string valueLabel => $"{typeof(T).Name}";
+#endif
         public T GetValue()
         {
             return Value;

@@ -30,6 +30,7 @@ public class UnitFactory
         unit.AddComponent<ObjectWait>();
         unit.AddComponent<CastDamageComponent>();
         unit.AddComponent<ReceiveDamageComponent>();
+        unit.AddComponent<PlayAnimComponent>();
 
         unit.AddComponent<FindTargetComponent>();
         unit.AddComponent<GameObjectComponent>();
