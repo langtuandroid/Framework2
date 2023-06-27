@@ -25,8 +25,7 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
         unit.Forward = new float3(0, 0, 1);
         unit.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         unit.GetComponent<GameObjectComponent>().GameObject.name = "player";
-        long nPDataId = 1882230831485810000;
-        var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, nPDataId);
+        var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, 1);
         tree.Start();
         UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM(unit));
         

@@ -59,6 +59,19 @@ namespace NPBehave
             base.Stopped(success);
         }
 
+        public override void ChangeChild(Node oldChild, Node newChild)
+        {
+            for (int i = 0; i < Children.Length; i++)
+            {
+                if (Children[i] == oldChild)
+                {
+                    Children[i] = newChild;
+                    newChild.SetParent(this);
+                    oldChild.SetParent(null);
+                }
+            }
+        }
+        
         public abstract void StopLowerPriorityChildrenForChild(Node child, bool immediateRestart);
     }
 }

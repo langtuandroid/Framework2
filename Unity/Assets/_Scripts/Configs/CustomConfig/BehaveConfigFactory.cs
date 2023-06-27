@@ -12,13 +12,13 @@ public partial class BehaveConfigFactory
         }
     }
 
-    public BehaveConfig GetByNpDataId(long npDataId)
+    public BehaveConfig GetByNpRootNodeId(long rootNodeId)
     {
-        this.npDataId2Data.TryGetValue(npDataId, out BehaveConfig BehaveConfig);
+        this.npDataId2Data.TryGetValue(rootNodeId, out BehaveConfig BehaveConfig);
 
         if (BehaveConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {npDataId}");
+            Log.Error($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {rootNodeId}");
         }
 
         return BehaveConfig;

@@ -59,11 +59,11 @@ namespace Framework
             return resultBuff;
         }
         
-        public static IBuffSystem AcquireBuff(long dataId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
+        public static IBuffSystem AcquireBuff(long rootNodeId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
             NP_RuntimeTree theSkillCanvasBelongTo)
         {
             return AcquireBuff(
-                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNP_SkillTreeData(dataId)
+                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNPTreeData(rootNodeId)
                     .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
                 theUnitFrom, theUnitBelongTo, theSkillCanvasBelongTo);
         } 

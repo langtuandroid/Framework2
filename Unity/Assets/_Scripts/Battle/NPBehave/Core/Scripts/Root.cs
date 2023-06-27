@@ -4,7 +4,7 @@ namespace NPBehave
 {
     public class Root : Decorator
     {
-        private Node mainNode;
+        public Node MainNode { get; }
 
         public bool IsLoop { get; }
 
@@ -28,7 +28,7 @@ namespace NPBehave
         public Root(Node mainNode, Clock clock, bool isLoop) : base("Root", mainNode)
         {
             this.IsLoop = isLoop;
-            this.mainNode = mainNode;
+            this.MainNode = mainNode;
             //    m_MainNodeStartActionCache = this.mainNode.Start;
             this.clock = clock;
             this.blackboard = new Blackboard(this.clock);
@@ -38,7 +38,7 @@ namespace NPBehave
         public Root(Blackboard blackboard, Clock clock, Node mainNode) : base("Root", mainNode)
         {
             this.blackboard = blackboard;
-            this.mainNode = mainNode;
+            this.MainNode = mainNode;
             this.clock = clock;
             this.SetRoot(this);
         }
@@ -47,24 +47,24 @@ namespace NPBehave
         {
             Debug.Assert(this == rootNode);
             base.SetRoot(rootNode);
-            this.mainNode.SetRoot(rootNode);
+            this.MainNode.SetRoot(rootNode);
         }
 
         override protected void DoStart()
         {
             this.blackboard.Enable();
-            this.mainNode.Start();
+            this.MainNode.Start();
         }
 
         override protected void DoCancel()
         {
-            if (this.mainNode.IsActive)
+            if (this.MainNode.IsActive)
             {
-                this.mainNode.Cancel();
+                this.MainNode.Cancel();
             }
             else
             {
-                this.clock.RemoveTimer(this.mainNode.Start);
+                this.clock.RemoveTimer(this.MainNode.Start);
             }
         }
 
@@ -74,7 +74,7 @@ namespace NPBehave
             if (IsLoop && !IsStopRequested)
             {
                 // wait one tick, to prevent endless recursions
-                this.clock.AddTimer(0, 0, this.mainNode.Start);
+                this.clock.AddTimer(0, 0, this.MainNode.Start);
             }
             else
             {

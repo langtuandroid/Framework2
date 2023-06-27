@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using MongoDB.Bson.Serialization.Attributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -7,13 +8,16 @@ using UnityEngine;
 namespace Framework
 {
     [Serializable]
-    public class SerializeDictionary<TKey,TValue> : ISerializationCallbackReceiver
+    public class SerializeDictionary<TKey,TValue> : ISerializationCallbackReceiver , ISupportInitialize
     {
         [SerializeField]
         [HideInInspector]
+        [BsonElement]
         private List<TKey> keys = new List<TKey>();
+        
         [SerializeField]
         [HideInInspector]
+        [BsonElement]
         private List<TValue> values = new List<TValue>();
         
         [ShowInInspector]
@@ -43,6 +47,15 @@ namespace Framework
             {
                 Dic[keys[i]] = values[i];
             }
+        }
+
+        public void BeginInit()
+        {
+        }
+
+        public void EndInit()
+        {
+            OnAfterDeserialize();
         }
     }
 }

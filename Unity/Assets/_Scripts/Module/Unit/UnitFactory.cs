@@ -95,7 +95,6 @@ public class UnitFactory
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(room, 0);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
-        BehaveConfig skillCanvasData = BehaveConfigFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         B2D_CollisionRelationConfig serverB2SCollisionRelationConfig =
             B2D_CollisionRelationConfigFactory.Instance.Get(collisionRelationDataConfigId);
@@ -116,7 +115,7 @@ public class UnitFactory
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
         NP_RuntimeTreeFactory
-            .CreateNpRuntimeTree(b2sColliderEntity, skillCanvasData.NPBehaveId)
+            .CreateNpRuntimeTree(b2sColliderEntity, colliderNPBehaveTreeIdInExcel)
             .Start();
 
         return b2sColliderEntity;
@@ -139,7 +138,6 @@ public class UnitFactory
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(scene, 0);
         Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
-        BehaveConfig skillCanvasData = BehaveConfigFactory.Instance.Get(colliderNPBehaveTreeIdInExcel);
 
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
@@ -161,7 +159,7 @@ public class UnitFactory
         b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
-        var behave = NP_RuntimeTreeFactory.CreateNpRuntimeTree(b2sColliderEntity, skillCanvasData.NPBehaveId);
+        var behave = NP_RuntimeTreeFactory.CreateNpRuntimeTree(b2sColliderEntity, colliderNPBehaveTreeIdInExcel);
         behave.GetBlackboard().Set("Duration", duration);
         behave.Start();
         return b2sColliderEntity;

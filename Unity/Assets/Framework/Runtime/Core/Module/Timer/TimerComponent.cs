@@ -65,7 +65,7 @@ namespace Framework
         public object Args;
     }
 
-    public class TimerComponent : Singleton<TimerComponent>, ISingletonUpdate
+    public class TimerComponent : Singleton<TimerComponent>, ISingletonRendererUpdate
     {
         /// <summary>
         /// key: time, value: timer id
@@ -91,58 +91,6 @@ namespace Framework
         private static long GetNow()
         {
             return TimeHelper.ClientNow();
-        }
-
-        public void Update(float deltaTime)
-        {
-            if (this.TimeId.Count == 0)
-            {
-                return;
-            }
-
-            long timeNow = GetNow();
-
-            if (timeNow < this.minTime)
-            {
-                return;
-            }
-
-            foreach (KeyValuePair<long, List<long>> kv in this.TimeId)
-            {
-                long k = kv.Key;
-                if (k > timeNow)
-                {
-                    this.minTime = k;
-                    break;
-                }
-
-                this.timeOutTime.Enqueue(k);
-            }
-
-            while (this.timeOutTime.Count > 0)
-            {
-                long time = this.timeOutTime.Dequeue();
-                var list = this.TimeId[time];
-                for (int i = 0; i < list.Count; ++i)
-                {
-                    long timerId = list[i];
-                    this.timeOutTimerIds.Enqueue(timerId);
-                }
-
-                this.TimeId.Remove(time);
-            }
-
-            while (this.timeOutTimerIds.Count > 0)
-            {
-                long timerId = this.timeOutTimerIds.Dequeue();
-
-                if (!this.timerActions.Remove(timerId, out TimerAction timerAction))
-                {
-                    continue;
-                }
-
-                this.Run(timerAction);
-            }
         }
 
         private void Run(TimerAction timerAction)
@@ -334,6 +282,58 @@ namespace Framework
             }
 
             return this.NewRepeatedTimerInner(time, type, args);
+        }
+
+        public void RendererUpdate(float deltaTime)
+        {
+            if (this.TimeId.Count == 0)
+            {
+                return;
+            }
+
+            long timeNow = GetNow();
+
+            if (timeNow < this.minTime)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<long, List<long>> kv in this.TimeId)
+            {
+                long k = kv.Key;
+                if (k > timeNow)
+                {
+                    this.minTime = k;
+                    break;
+                }
+
+                this.timeOutTime.Enqueue(k);
+            }
+
+            while (this.timeOutTime.Count > 0)
+            {
+                long time = this.timeOutTime.Dequeue();
+                var list = this.TimeId[time];
+                for (int i = 0; i < list.Count; ++i)
+                {
+                    long timerId = list[i];
+                    this.timeOutTimerIds.Enqueue(timerId);
+                }
+
+                this.TimeId.Remove(time);
+            }
+
+            while (this.timeOutTimerIds.Count > 0)
+            {
+                long timerId = this.timeOutTimerIds.Dequeue();
+
+                if (!this.timerActions.Remove(timerId, out TimerAction timerAction))
+                {
+                    continue;
+                }
+
+                this.Run(timerAction);
+            }
         }
     }
 }

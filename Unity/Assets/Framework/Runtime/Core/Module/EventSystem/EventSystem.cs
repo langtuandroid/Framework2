@@ -181,14 +181,7 @@ namespace Framework
         {
             if (component is IDeserializeSystem deserializeSystem)
             {
-                try
-                {
-                    deserializeSystem.OnDeserialize();
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                deserializeSystem.OnDeserialize();
             }
         }
 
@@ -197,14 +190,7 @@ namespace Framework
         {
             if (entity is IGetComponentSystem getSystem)
             {
-                try
-                {
-                    getSystem.OnGetComponent(component);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                getSystem.OnGetComponent(component);
             }
         }
 
@@ -213,14 +199,7 @@ namespace Framework
         {
             if (entity is IAddComponentSystem addComponentSystem)
             {
-                try
-                {
-                    addComponentSystem.OnAddComponent(component);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                addComponentSystem.OnAddComponent(component);
             }
         }
 
@@ -228,15 +207,7 @@ namespace Framework
         {
             if (component is IAwakeSystem awakeSystem)
             {
-                try
-                {
-                    awakeSystem.Awake();
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                    throw;
-                }
+                awakeSystem.Awake();
             }
         }
 
@@ -252,14 +223,7 @@ namespace Framework
         {
             if (component is IAwakeSystem<P1> aAwakeSystem)
             {
-                try
-                {
-                    aAwakeSystem.Awake(p1);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                aAwakeSystem.Awake(p1);
             }
         }
 
@@ -267,14 +231,7 @@ namespace Framework
         {
             if (component is IAwakeSystem<P1, P2> aAwakeSystem)
             {
-                try
-                {
-                    aAwakeSystem.Awake(p1, p2);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                aAwakeSystem.Awake(p1, p2);
             }
         }
 
@@ -282,14 +239,7 @@ namespace Framework
         {
             if (component is IAwakeSystem<P1, P2, P3> aAwakeSystem)
             {
-                try
-                {
-                    aAwakeSystem.Awake(p1, p2, p3);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                aAwakeSystem.Awake(p1, p2, p3);
             }
         }
 
@@ -297,14 +247,7 @@ namespace Framework
         {
             if (component is IAwakeSystem<P1, P2, P3, P4> aAwakeSystem)
             {
-                try
-                {
-                    aAwakeSystem.Awake(p1, p2, p3, p4);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                aAwakeSystem.Awake(p1, p2, p3, p4);
             }
         }
 
@@ -313,14 +256,7 @@ namespace Framework
 
             if (component is IDestroySystem iDestroySystem)
             {
-                try
-                {
-                    iDestroySystem.OnDestroy();
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
+                iDestroySystem.OnDestroy();
             }
         }
 
@@ -373,14 +309,7 @@ namespace Framework
 
                 if (component is IFixedUpdateSystem iUpdateSystem)
                 {
-                    try
-                    {
-                        iUpdateSystem.FixedUpdate(deltaTime);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    iUpdateSystem.FixedUpdate(deltaTime);
                 }
             }
 
@@ -392,6 +321,7 @@ namespace Framework
             {
                 (Root.Instance.Get(startQueue.Dequeue()) as IStartSystem)?.Start();
             }
+
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.RendererUpdate];
             int count = queue.Count;
             while (count-- > 0)
@@ -412,14 +342,7 @@ namespace Framework
 
                 if (component is IRendererUpdateSystem iUpdateSystem)
                 {
-                    try
-                    {
-                        iUpdateSystem.RenderUpdate(deltaTime);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    iUpdateSystem.RenderUpdate(deltaTime);
                 }
             }
 
@@ -447,14 +370,7 @@ namespace Framework
 
                 if (component is ILateUpdateSystem iLateUpdateSystem)
                 {
-                    try
-                    {
-                        iLateUpdateSystem.LateUpdate();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    iLateUpdateSystem.LateUpdate();
                 }
             }
         }

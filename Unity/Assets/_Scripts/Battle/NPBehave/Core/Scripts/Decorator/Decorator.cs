@@ -24,6 +24,14 @@
         }
 #endif
 
+        public override void ChangeChild(Node oldChild, Node newChild)
+        {
+            if(Decoratee != oldChild) return;
+            Decoratee.SetParent(null);
+            newChild.SetParent(this);
+            Decoratee = newChild;
+        }
+
         public override void ParentCompositeStopped(Composite composite)
         {
             base.ParentCompositeStopped(composite);

@@ -28,6 +28,8 @@ namespace NPBehave
 
         protected abstract void DoChildStopped(Node child, bool succeeded);
 
+        public abstract void ChangeChild(Node oldChild,Node newChild);
+
 #if UNITY_EDITOR
         public abstract Node[] DebugChildren { get; }
 #endif

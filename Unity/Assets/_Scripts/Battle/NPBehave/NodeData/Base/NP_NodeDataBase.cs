@@ -58,10 +58,23 @@ public abstract class NP_NodeDataBase
         return null;
     }
 
+    public virtual ExtraBehave CreateTree(Unit unit, NP_RuntimeTree runtimeTree)
+    {
+        return default;
+    }
+
     public override string ToString()
     {
         return GetType().ToString();
     }
+}
+
+public struct ExtraBehave
+{
+    public Node Node;
+    public int ConfigId;
+    public long LinkedNodeId;
+    public Dictionary<string, ANP_BBValue> Blackboard;
 }
 
 public enum NodeType
@@ -69,4 +82,5 @@ public enum NodeType
     Composite,
     Decorator,
     Task,
+    Tree,
 }
