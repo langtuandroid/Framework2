@@ -13,7 +13,7 @@ namespace Framework
 
         public void Add(Unit unit)
         {
-            idUnits.Add(unit.InstanceId, unit);
+            idUnits.Add(unit.Id, unit);
         }
 
         public Unit Get(long id)

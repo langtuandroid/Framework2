@@ -25,7 +25,7 @@ namespace Framework
 
         public void Add(Entity entity)
         {
-            this.allEntities.Add(entity.InstanceId, entity);
+            this.allEntities.Add(entity.Id, entity);
         }
 
         public void Remove(long instanceId)

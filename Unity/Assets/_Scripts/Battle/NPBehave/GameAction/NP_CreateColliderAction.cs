@@ -46,7 +46,7 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
             .Get(ColliderReleationsRelationSupportIdInExcel.Value)
             .ColliderConfigId;
 
-       UnitFactory.CreateSpecialColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.InstanceId, colliderDataConfigId,
+       UnitFactory.CreateSpecialColliderUnit(BelongToUnit.DomainScene(), BelongToUnit.Id, colliderDataConfigId,
                 ColliderReleationsRelationSupportIdInExcel.Value, ColliderNPBehaveTreeIdInExcel,HangPoint, FollowUnitPos, FollowUnitRot,
                 Offset, Angle);
     }

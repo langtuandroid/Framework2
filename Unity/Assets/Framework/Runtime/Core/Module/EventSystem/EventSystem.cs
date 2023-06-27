@@ -6,56 +6,6 @@ namespace Framework
     public class EventSystem : Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate, ISingletonRendererUpdate,
         ISingletonFixedUpdate
     {
-        private class OneTypeSystems
-        {
-            public readonly UnOrderMultiMap<Type, object> Map = new();
-
-            // 这里不用hash，数量比较少，直接for循环速度更快
-            public readonly bool[] QueueFlag = new bool[(int)InstanceQueueIndex.Max];
-        }
-
-        private class TypeSystems
-        {
-            private readonly Dictionary<Type, OneTypeSystems> typeSystemsMap = new();
-
-            public OneTypeSystems GetOrCreateOneTypeSystems(Type type)
-            {
-                OneTypeSystems systems = null;
-                this.typeSystemsMap.TryGetValue(type, out systems);
-                if (systems != null)
-                {
-                    return systems;
-                }
-
-                systems = new OneTypeSystems();
-                this.typeSystemsMap.Add(type, systems);
-                return systems;
-            }
-
-            public OneTypeSystems GetOneTypeSystems(Type type)
-            {
-                OneTypeSystems systems = null;
-                this.typeSystemsMap.TryGetValue(type, out systems);
-                return systems;
-            }
-
-            public List<object> GetSystems(Type type, Type systemType)
-            {
-                OneTypeSystems oneTypeSystems = null;
-                if (!this.typeSystemsMap.TryGetValue(type, out oneTypeSystems))
-                {
-                    return null;
-                }
-
-                if (!oneTypeSystems.Map.TryGetValue(systemType, out List<object> systems))
-                {
-                    return null;
-                }
-
-                return systems;
-            }
-        }
-
         private class EventInfo
         {
             public IEvent IEvent { get; }
@@ -80,6 +30,8 @@ namespace Framework
         private Dictionary<Type, Dictionary<int, object>> allInvokes = new();
 
         private readonly Queue<long>[] queues = new Queue<long>[(int)InstanceQueueIndex.Max];
+
+        private Queue<long> startQueue = new();
 
         public EventSystem()
         {
@@ -215,7 +167,7 @@ namespace Framework
             {
                 if (instanceQueueIndex.Key.IsAssignableFrom(type))
                 {
-                    this.queues[(int)instanceQueueIndex.Value].Enqueue(component.InstanceId);
+                    this.queues[(int)instanceQueueIndex.Value].Enqueue(component.Id);
                 }
             }
         }
@@ -285,6 +237,14 @@ namespace Framework
                     Log.Error(e);
                     throw;
                 }
+            }
+        }
+
+        public void Start(Entity entity)
+        {
+            if (entity is IStartSystem startSystem)
+            {
+                startQueue.Enqueue(entity.Id);
             }
         }
 
@@ -428,7 +388,10 @@ namespace Framework
 
         public void RendererUpdate(float deltaTime)
         {
-            long currentTime = TimeInfo.Instance.ClientNow();
+            while (startQueue.Count > 0)
+            {
+                (Root.Instance.Get(startQueue.Dequeue()) as IStartSystem)?.Start();
+            }
             Queue<long> queue = this.queues[(int)InstanceQueueIndex.RendererUpdate];
             int count = queue.Count;
             while (count-- > 0)

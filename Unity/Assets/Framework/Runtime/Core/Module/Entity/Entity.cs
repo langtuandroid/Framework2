@@ -21,9 +21,6 @@ namespace Framework
         private UnityEngine.GameObject viewGO;
 #endif
 
-        // 每次被重新使用的时候都会赋予新的实例id
-        [BsonIgnore] public long InstanceId { get; protected set; }
-
         protected Entity()
         {
         }
@@ -72,7 +69,7 @@ namespace Framework
 
                 if (!value)
                 {
-                    Root.Instance.Remove(this.InstanceId);
+                    Root.Instance.Remove(this.Id);
                 }
                 else
                 {
@@ -156,7 +153,7 @@ namespace Framework
             }
         }
 
-        [BsonIgnore] public bool IsDisposed => this.InstanceId == 0;
+        [BsonIgnore] public bool IsDisposed => this.Id == 0;
 
         [BsonIgnore] protected Entity parent;
 
@@ -282,7 +279,7 @@ namespace Framework
 
                 if (preDomain == null)
                 {
-                    this.InstanceId = IdGenerator.Instance.GenerateInstanceId();
+                    this.Id = IdGenerator.Instance.GenerateInstanceId();
                     this.IsRegister = true;
                 }
 
@@ -399,7 +396,7 @@ namespace Framework
             }
 
             this.IsRegister = false;
-            this.InstanceId = 0;
+            this.Id = 0;
 
             // 清理Component
             if (this.components != null)
@@ -604,7 +601,7 @@ namespace Framework
                 return;
             }
 
-            if (c.InstanceId != component.InstanceId)
+            if (c.Id != component.Id)
             {
                 return;
             }

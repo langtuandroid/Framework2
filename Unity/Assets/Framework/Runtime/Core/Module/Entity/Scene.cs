@@ -11,7 +11,6 @@
         public Scene(long instanceId, SceneType sceneType, string name, Entity parent)
         {
             this.Id = instanceId;
-            this.InstanceId = instanceId;
             this.SceneType = sceneType;
             this.Name = name;
             this.IsCreated = true;
@@ -19,14 +18,14 @@
             this.Parent = parent;
             this.Domain = this;
             this.IsRegister = true;
-            Log.Msg($"scene create: {this.SceneType} {this.Name} {this.Id} {this.InstanceId} {this.Zone}");
+            Log.Msg($"scene create: {this.SceneType} {this.Name} {this.Id} {this.Zone}");
         }
 
         public override void Dispose()
         {
             base.Dispose();
 
-            Log.Msg($"scene dispose: {this.SceneType} {this.Name} {this.Id} {this.InstanceId} {this.Zone}");
+            Log.Msg($"scene dispose: {this.SceneType} {this.Name} {this.Id} {this.Zone}");
         }
 
         public new Entity Domain

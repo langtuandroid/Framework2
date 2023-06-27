@@ -12,7 +12,7 @@ public class FindTargetComponent : Entity
         {
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast && tag.Contains(unit.GetComponent<B2D_RoleCastComponent>().RoleTag))
             {
-                findCb(unit.InstanceId);
+                findCb(unit.Id);
                 break;
             }
         }
@@ -28,7 +28,7 @@ public class FindTargetComponent : Entity
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast &&
                 tag.Contains(unit.GetComponent<B2D_RoleCastComponent>().RoleTag))
             {
-                result.Add(unit.InstanceId);
+                result.Add(unit.Id);
             }
         }
 
