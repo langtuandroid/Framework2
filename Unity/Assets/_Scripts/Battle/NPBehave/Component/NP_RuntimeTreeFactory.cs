@@ -6,7 +6,8 @@ namespace Framework
 {
     public class NP_RuntimeTreeFactory
     {
-         public static NPBehave.Root LoadExtraTree(Unit unit, NP_RuntimeTree runtimeTree, int behaveConfigId, ExtraBehave outBehave)
+        public static NPBehave.Root LoadExtraTree(Unit unit, NP_RuntimeTree runtimeTree, int behaveConfigId,
+            ExtraBehave outBehave)
         {
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
                 .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).NPBehaveId);
@@ -14,7 +15,7 @@ namespace Framework
             long rootId = npDataSupportor.NPBehaveTreeDataId;
 
             using RecyclableList<ExtraBehave> extraBehaves = RecyclableList<ExtraBehave>.Create();
-            using RecyclableList<long> taskIds = RecyclableList<long>.Create(); 
+            using RecyclableList<long> taskIds = RecyclableList<long>.Create();
             //配置节点数据
             foreach (var nodeDateBase in npDataSupportor.NP_DataSupportorDic)
             {
@@ -38,6 +39,18 @@ namespace Framework
                             nodeDateBase.Value.CreateDecoratorNode(unit, runtimeTree,
                                 npDataSupportor.NP_DataSupportorDic[nodeDateBase.Value.LinkedIds[0]]
                                     .NP_GetNode());
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error($"{e}-----{nodeDateBase.Value.NodeDes}");
+                            throw;
+                        }
+
+                        break;
+                    case NodeType.CombineNode:
+                        try
+                        {
+                            nodeDateBase.Value.CreateCombineNode(unit, runtimeTree);
                         }
                         catch (Exception e)
                         {
@@ -87,7 +100,7 @@ namespace Framework
             {
                 bbvaluesManager.Add(bbValues.Key, bbValues.Value);
             }
-            
+
             // 把字典放到这里赋值，下面create tree需要在字典赋值之后才能创建
             foreach (var taskId in taskIds)
             {
@@ -96,7 +109,7 @@ namespace Framework
                 behave.LinkedNodeId = taskId;
                 extraBehaves.Add(behave);
             }
-            
+
             foreach (var passItem in outBehave.PassValue)
             {
                 root.Blackboard.Set(passItem.Value,
@@ -106,15 +119,15 @@ namespace Framework
 
             foreach (var getItem in outBehave.GetValue)
             {
-                runtimeTree.GetBlackboard().Set(getItem.Key.BBKey,root.Blackboard.Get(getItem.Value));
+                runtimeTree.GetBlackboard().Set(getItem.Key.BBKey, root.Blackboard.Get(getItem.Value));
             }
-            
+
             // 额外的行为树需要用另外一个行为树的MainNode替换临时节点
             foreach (var extraBehave in extraBehaves)
             {
                 var oldNode = npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
                 oldNode.ParentNode.ChangeChild(oldNode, extraBehave.Root.MainNode);
-                
+
                 NP_DataSupportor tmpData = extraBehave.DataSupportor;
                 foreach (var bbValue in extraBehave.Root.Blackboard.GetDatas())
                 {
@@ -160,7 +173,7 @@ namespace Framework
 
             NP_RuntimeTreeManager npRuntimeTreeManager = unit.GetComponent<NP_RuntimeTreeManager>();
             long rootId = npDataSupportor.NPBehaveTreeDataId;
-            
+
             NP_RuntimeTree tempTree =
                 npRuntimeTreeManager.AddChildWithId<NP_RuntimeTree, NP_DataSupportor, NP_SyncComponent, Unit>(
                     rootId + unit.Id, npDataSupportor,
@@ -169,7 +182,7 @@ namespace Framework
             npRuntimeTreeManager.AddTree(tempTree.Id, rootId, tempTree);
 
             using RecyclableList<ExtraBehave> extraBehaves = RecyclableList<ExtraBehave>.Create();
-            using RecyclableList<long> taskIds = RecyclableList<long>.Create(); 
+            using RecyclableList<long> taskIds = RecyclableList<long>.Create();
             //Log.Info($"运行时id为{theRuntimeTreeID}");
             //配置节点数据
             foreach (var nodeDateBase in npDataSupportor.NP_DataSupportorDic)
@@ -180,6 +193,18 @@ namespace Framework
                         try
                         {
                             nodeDateBase.Value.CreateTask(unit, tempTree);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error($"{e}-----{nodeDateBase.Value.NodeDes}");
+                            throw;
+                        }
+
+                        break;
+                    case NodeType.CombineNode:
+                        try
+                        {
+                            nodeDateBase.Value.CreateCombineNode(unit, tempTree);
                         }
                         catch (Exception e)
                         {
@@ -221,18 +246,18 @@ namespace Framework
                         }
 
                         break;
-                     case NodeType.Tree:
-                         try
-                         {
-                             taskIds.Add(nodeDateBase.Key);
-                         }
-                         catch (Exception e)
-                         {
-                             Log.Error($"{e}-----{nodeDateBase.Value.NodeDes}");
-                             throw;
-                         }
+                    case NodeType.Tree:
+                        try
+                        {
+                            taskIds.Add(nodeDateBase.Key);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error($"{e}-----{nodeDateBase.Value.NodeDes}");
+                            throw;
+                        }
 
-                         break;
+                        break;
                 }
             }
 
@@ -246,7 +271,7 @@ namespace Framework
             {
                 bbvaluesManager.Add(bbValues.Key, bbValues.Value);
             }
-            
+
             foreach (var taskId in taskIds)
             {
                 var nodeDateBase = npDataSupportor.NP_DataSupportorDic[taskId];
@@ -273,7 +298,7 @@ namespace Framework
                     else
                     {
                         npDataSupportor.NP_BBValueManager.Add(bbValue.Key, bbValue.Value);
-                        root.Blackboard.GetDatas().Add(bbValue.Key,bbValue.Value);
+                        root.Blackboard.GetDatas().Add(bbValue.Key, bbValue.Value);
                     }
                 }
 

@@ -6,4 +6,9 @@ public class PlayAnimComponent : Entity
     {
   
     }
+
+    public bool IsArriveTargetFrame(string animName, int frame)
+    {
+        return true;
+    }
 }
