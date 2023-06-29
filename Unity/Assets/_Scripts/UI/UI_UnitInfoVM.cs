@@ -18,6 +18,5 @@ public class UI_UnitInfoVM : ViewModel
         var numeric = unit.GetComponent<NumericComponent>();
         MaxHp.Value = (int)numeric.GetAsFloat(NumericType.MaxHp);
         CurHp.Value = (int)numeric.GetAsFloat(NumericType.Hp);
-        Log.Msg(CurHp);
     }
 }

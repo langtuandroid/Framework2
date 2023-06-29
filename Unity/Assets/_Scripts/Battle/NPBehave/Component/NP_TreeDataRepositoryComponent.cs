@@ -2,25 +2,29 @@
 using Framework;
 using NPBehave;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NP_TreeDataRepositoryComponent : Entity
 {
     /// <summary>
     /// 运行时的行为树仓库，注意，一定不能对这些数据做修改
     /// </summary>
-    public Dictionary<long, NP_DataSupportor> NpRuntimeSkillTreesDatas = new Dictionary<long, NP_DataSupportor>();
+    private Dictionary<long, string> NpRuntimeBehaveDatas = new Dictionary<long, string>();
 
     public NP_DataSupportor GetNPTreeData(long rootNodeId)
     {
-        if (NpRuntimeSkillTreesDatas.TryGetValue(rootNodeId, out var dataSupportor)) return dataSupportor;
-        var skillCanvasConfig = BehaveConfigFactory.Instance.GetByNpRootNodeId(rootNodeId);
-        TextAsset textAsset =
-            ResComponent.Instance.LoadAsset<TextAsset>(skillCanvasConfig.ConfigPath);
+        if (!NpRuntimeBehaveDatas.TryGetValue(rootNodeId, out var content))
+        {
+            var behaveConfig = BehaveConfigFactory.Instance.GetByNpRootNodeId(rootNodeId);
+            TextAsset textAsset =
+                ResComponent.Instance.LoadAsset<TextAsset>(behaveConfig.ConfigPath);
 
-        if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
+            if (textAsset.bytes.Length == 0) Log.Msg("没有读取到文件");
+            content = textAsset.text;
+            NpRuntimeBehaveDatas[rootNodeId] = content;
+        }
 
-        dataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(textAsset.text);
-        NpRuntimeSkillTreesDatas[rootNodeId] = dataSupportor;
+        var dataSupportor = SerializeHelper.Deserialize<NP_DataSupportor>(content);
         return dataSupportor;
     }
 

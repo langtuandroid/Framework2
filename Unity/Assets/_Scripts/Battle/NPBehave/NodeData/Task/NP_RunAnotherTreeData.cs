@@ -17,11 +17,10 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase
 
     public override ExtraBehave CreateTree(Unit unit, NP_RuntimeTree runtimeTree)
     {
-        ExtraBehave behave = default;
-        Dictionary<string, ANP_BBValue> dictionary = new Dictionary<string, ANP_BBValue>();
-        behave.Blackboard = dictionary;
-        behave.Node = NP_RuntimeTreeFactory.LoadExtraTree(unit, runtimeTree, ConfigId, dictionary);
-        behave.ConfigId = ConfigId;
+        ExtraBehave behave = new ExtraBehave();
+        behave.PassValue = PassValue.Dic;
+        behave.GetValue = GetValue.Dic;
+        behave.Root = NP_RuntimeTreeFactory.LoadExtraTree(unit, runtimeTree, ConfigId, behave);
         return behave;
     }
 

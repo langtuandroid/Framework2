@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
+using Root = NPBehave.Root;
 
 public abstract class NP_NodeDataBase
 {
@@ -57,6 +58,17 @@ public abstract class NP_NodeDataBase
     {
         return null;
     }
+    
+    /// <summary>
+    /// 创建组合节点
+    /// </summary>
+    /// <param name="unitId">行为树归属的Unit</param>
+    /// <param name="runtimeTree">运行时归属的行为树</param>
+    /// <returns></returns>
+    public virtual Node CreateCombineNode(Unit unit, NP_RuntimeTree runtimeTree)
+    {
+        return null;
+    }
 
     public virtual ExtraBehave CreateTree(Unit unit, NP_RuntimeTree runtimeTree)
     {
@@ -69,12 +81,13 @@ public abstract class NP_NodeDataBase
     }
 }
 
-public struct ExtraBehave
+public class ExtraBehave
 {
-    public Node Node;
-    public int ConfigId;
+    public Root Root;
+    public NP_DataSupportor DataSupportor;
+    public Dictionary<IBlackboardOrValue, string> PassValue;
+    public Dictionary<NP_BlackBoardKeyData, string> GetValue;
     public long LinkedNodeId;
-    public Dictionary<string, ANP_BBValue> Blackboard;
 }
 
 public enum NodeType
@@ -82,5 +95,6 @@ public enum NodeType
     Composite,
     Decorator,
     Task,
+    CombineNode,
     Tree,
 }
