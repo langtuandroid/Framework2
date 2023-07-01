@@ -72,9 +72,9 @@ public class UniversalToolbarView : ToolbarView
 
         //AddSeparator(5);
 
-        AddToggle(new GUIContent(m_ConditionalToggleIcon, "开/关运行的面板"),
-            graphView.GetPinnedElementStatus<ConditionalProcessorView>() !=
-            DropdownMenuAction.Status.Hidden, v => graphView.ToggleView<ConditionalProcessorView>());
+       // AddToggle(new GUIContent(m_ConditionalToggleIcon, "开/关运行的面板"),
+       //     graphView.GetPinnedElementStatus<ConditionalProcessorView>() !=
+       //     DropdownMenuAction.Status.Hidden, v => graphView.ToggleView<ConditionalProcessorView>());
 
         AddButton(new GUIContent("", m_GotoFileButtonIcon, "定位至资产文件"),
             () =>
