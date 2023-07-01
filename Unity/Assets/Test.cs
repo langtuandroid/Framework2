@@ -3,6 +3,7 @@ using NPBehave;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[AddComponentMenu("My Componet Name")]
 public class Test : MonoBehaviour
 {
     private World world;

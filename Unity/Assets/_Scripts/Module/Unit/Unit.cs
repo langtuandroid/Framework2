@@ -16,6 +16,7 @@ namespace Framework
             get => this.position;
             set
             {
+                if(value.NearEqual(position)) return;
                 float3 oldPos = this.position;
                 this.position = value;
                 EventSystem.Instance.Publish(this.DomainScene(),
@@ -63,6 +64,7 @@ namespace Framework
             get => scale;
             set
             {
+                if(value.NearEqual(scale)) return;
                 scale = value;
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeScale() { Unit = this });
             }

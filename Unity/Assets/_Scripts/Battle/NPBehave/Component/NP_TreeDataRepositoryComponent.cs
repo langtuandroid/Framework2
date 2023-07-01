@@ -37,6 +37,7 @@ public class NP_TreeDataRepositoryComponent : Entity
     {
         NP_DataSupportor result = new NP_DataSupportor();
         var source = GetNPTreeData(rootNodeId);
+        result.ExcelId = source.ExcelId;
         result.BuffNodeDataDic = source.BuffNodeDataDic;
         result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
         result.NP_DataSupportorDic = source.NP_DataSupportorDic;
