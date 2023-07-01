@@ -2600,15 +2600,79 @@ MonoBehaviour:
     inputPortIdentifier: 
     outputPortIdentifier: 
   stackNodes: []
-  pinnedElements: []
-  exposedParameters: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 29
+      y: 283
+      width: 131
+      height: 189
+    opened: 0
+    editorType:
+      serializedType: GraphProcessor.ExposedParameterView, NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 24
+      width: 542
+      height: 995
+    opened: 1
+    editorType:
+      serializedType: AAView, NodeGraphEditor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  exposedParameters:
+  - rid: 4270152454071123968
+  - rid: 4270152454071123972
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 35, y: -298, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: 340, y: -102, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
   Name: AI_CloseSingleAttack
   IdInConfig: 1
   SavePathClient: Assets/Res/Configs/BehaveConfigs
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4270152454071123968
+      type: {class: ColorParameter, ns: GraphProcessor, asm: NodeGraphProcessor.Runtime}
+      data:
+        guid: a98885f3-519e-4318-a59f-39c87d1206d2
+        name: New Color
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          rid: 4270152454071123969
+        val: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 4270152454071123969
+      type: {class: ColorParameter/ColorSettings, ns: GraphProcessor, asm: NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 0
+        guid: a98885f3-519e-4318-a59f-39c87d1206d2
+        mode: 0
+    - rid: 4270152454071123972
+      type: {class: ColorParameter, ns: GraphProcessor, asm: NodeGraphProcessor.Runtime}
+      data:
+        guid: 7f902c1e-099c-4e25-a4c5-aa5a31ff7ad1
+        name: New Color 0
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          rid: 4270152454071123973
+        val: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 4270152454071123973
+      type: {class: ColorParameter/ColorSettings, ns: GraphProcessor, asm: NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 0
+        guid: 7f902c1e-099c-4e25-a4c5-aa5a31ff7ad1
+        mode: 0

@@ -116,8 +116,13 @@ namespace Framework
     [HideReferenceObjectPicker]
     public class BlackboardOrValue_Int : ABlackboardOrValue<int>
     {
-        public BlackboardOrValue_Int(string label) : base(label)
+        public BlackboardOrValue_Int(int defaultValue = 0, string label = "值") : base(label)
         {
+            OriginValue = defaultValue;
+            if (OriginValue != default)
+            {
+                UseBlackboard = false;
+            }
         }
     }
 }

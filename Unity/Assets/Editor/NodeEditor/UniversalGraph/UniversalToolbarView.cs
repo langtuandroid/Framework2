@@ -61,10 +61,10 @@ public class UniversalToolbarView : ToolbarView
 
         //AddSeparator(5);
 
-        AddToggle(new GUIContent("", m_ExposedParamsToggleIcon, "开/关参数面板"),
-            graphView.GetPinnedElementStatus<ExposedParameterView>() != DropdownMenuAction.Status.Hidden,
-            v => graphView.ToggleView<ExposedParameterView>());
-
+      //  AddToggle(new GUIContent("", m_ExposedParamsToggleIcon, "开/关参数面板"),
+      //      graphView.GetPinnedElementStatus<ExposedParameterView>() != DropdownMenuAction.Status.Hidden,
+      //      v => graphView.ToggleView<ExposedParameterView>());
+            
         //AddSeparator(5);
 
         AddToggle(new GUIContent("", m_MiniMapToggleIcon, "开/关小地图"), m_MiniMap.visible,

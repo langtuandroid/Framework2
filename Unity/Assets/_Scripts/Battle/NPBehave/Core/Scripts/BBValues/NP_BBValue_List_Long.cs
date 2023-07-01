@@ -155,8 +155,13 @@ namespace Framework
     [HideReferenceObjectPicker]
     public class BlackboardOrValue_List_Long : ABlackboardOrValue<List<long>>
     {
-        public BlackboardOrValue_List_Long(string label) : base(label)
+        public BlackboardOrValue_List_Long(List<long> value = null, string label = "值") : base(label)
         {
+            OriginValue = value;
+            if (OriginValue != default)
+            {
+                UseBlackboard = false;
+            }
         }
     }
 }

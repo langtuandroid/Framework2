@@ -11,7 +11,7 @@ public class NP_WaitNodeData : NP_NodeDataBase
     public override NodeType BelongNodeType => NodeType.Task;
 
     [LabelText("等待时间")]
-    public BlackboardOrValue_Float Time = new BlackboardOrValue_Float("时间");
+    public BlackboardOrValue_Float Time = new BlackboardOrValue_Float(label: "时间");
 
     public override Task CreateTask(Unit unit, NP_RuntimeTree runtimeTree)
     {

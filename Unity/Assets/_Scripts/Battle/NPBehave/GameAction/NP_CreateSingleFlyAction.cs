@@ -19,6 +19,9 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("碰撞体id")]
     public VTD_ColliderId ColliderId;
     
+    [LabelText("飞行物的id")]
+    public NP_BlackBoardRelationData<long> FlyObjUnit = new ();
+    
     [ShowIf("@!IsFollowTarget || (IsFollowTarget && IsFlyingTrigger)")]
     [LabelText("射中的目标")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
