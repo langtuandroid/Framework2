@@ -100,7 +100,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 1893536010042605570
+      Data: 1897263543439327234
     - Name: 
       Entry: 13
       Data: 
@@ -242,7 +242,7 @@ MonoBehaviour:
       Data: 10|NP_BlackBoardRelationData`1[[System.Int32, mscorlib]], Game.Runtime
     - Name: BBKey
       Entry: 1
-      Data: Damage
+      Data: Damage [10001]
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: false
@@ -364,7 +364,7 @@ MonoBehaviour:
       Data: 15|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1893536010042605568
+      Data: 1897263543439327232
     - Name: LinkedIds
       Entry: 7
       Data: 16|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -439,7 +439,7 @@ MonoBehaviour:
       Data: 19|NP_BlackBoardRelationData`1[[System.Int64, mscorlib]], Game.Runtime
     - Name: BBKey
       Entry: 1
-      Data: Target
+      Data: Target [10001]
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: false
@@ -520,7 +520,7 @@ MonoBehaviour:
       Data: 22|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1893536010042605570
+      Data: 1897263543439327234
     - Name: LinkedIds
       Entry: 7
       Data: 23|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -529,10 +529,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: 1893536010042605569
+      Data: 1897263543439327233
     - Name: 
       Entry: 3
-      Data: 1893536010042605568
+      Data: 1897263543439327232
     - Name: 
       Entry: 13
       Data: 
@@ -598,7 +598,7 @@ MonoBehaviour:
       Data: 25|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: 1893536010042605569
+      Data: 1897263543439327233
     - Name: LinkedIds
       Entry: 7
       Data: 26|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -640,7 +640,7 @@ MonoBehaviour:
       Data: 29|NP_BlackBoardRelationData`1[[System.String, mscorlib]], Game.Runtime
     - Name: BBKey
       Entry: 1
-      Data: PlayAnimName
+      Data: PlayAnimName [10001]
     - Name: WriteOrCompareToBB
       Entry: 5
       Data: false
@@ -739,7 +739,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1893536010042605568
+      Data: 1897263543439327232
     - Name: $v
       Entry: 9
       Data: 15
@@ -751,7 +751,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1893536010042605569
+      Data: 1897263543439327233
     - Name: $v
       Entry: 9
       Data: 25
@@ -763,7 +763,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1893536010042605570
+      Data: 1897263543439327234
     - Name: $v
       Entry: 9
       Data: 22
@@ -807,10 +807,64 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: PlayEffectFrame
+      Data: PlayEffectName [10001]
     - Name: $v
       Entry: 7
-      Data: 37|Framework.NP_BBValue_Int, Game.Runtime
+      Data: 37|Framework.NP_BBValue_String, Game.Runtime
+    - Name: Value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Damage [10001]
+    - Name: $v
+      Entry: 7
+      Data: 38|Framework.NP_BBValue_Int, Game.Runtime
+    - Name: Value
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Target [10001]
+    - Name: $v
+      Entry: 7
+      Data: 39|Framework.NP_BBValue_Long, Game.Runtime
+    - Name: Value
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: PlayEffectFrame [10001]
+    - Name: $v
+      Entry: 7
+      Data: 40|Framework.NP_BBValue_Int, Game.Runtime
     - Name: Value
       Entry: 3
       Data: -1
@@ -825,67 +879,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: PlayAnimName
+      Data: PlayAnimName [10001]
     - Name: $v
       Entry: 7
-      Data: 38|Framework.NP_BBValue_String, Game.Runtime
+      Data: 41|Framework.NP_BBValue_String, Game.Runtime
     - Name: Value
       Entry: 6
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: PlayEffectName
-    - Name: $v
-      Entry: 7
-      Data: 39|Framework.NP_BBValue_String, Game.Runtime
-    - Name: Value
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Damage
-    - Name: $v
-      Entry: 7
-      Data: 40|Framework.NP_BBValue_Int, Game.Runtime
-    - Name: Value
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Target
-    - Name: $v
-      Entry: 7
-      Data: 41|Framework.NP_BBValue_Long, Game.Runtime
-    - Name: Value
-      Entry: 3
-      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -979,7 +979,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: PlayEffectFrame
+      Data: PlayEffectName [10001]
     - Name: $v
       Entry: 9
       Data: 37
@@ -991,7 +991,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: PlayAnimName
+      Data: Damage [10001]
     - Name: $v
       Entry: 9
       Data: 38
@@ -1003,7 +1003,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: PlayEffectName
+      Data: Target [10001]
     - Name: $v
       Entry: 9
       Data: 39
@@ -1015,7 +1015,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: Damage
+      Data: PlayEffectFrame [10001]
     - Name: $v
       Entry: 9
       Data: 40
@@ -1027,7 +1027,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: Target
+      Data: PlayAnimName [10001]
     - Name: $v
       Entry: 9
       Data: 41

@@ -8,10 +8,11 @@ using UnityEngine;
 public class NP_MoveToTargetAction: NP_ClassForStoreAction
 {
     
-    [LabelText("目标")]
+    [LabelText("目标id")]
     public NP_BlackBoardRelationData<long> TargetInsId = new ();
     
     [LabelText("目标位置")]
+    [Tooltip("如果填入目标id,会把目标位置设置成目标id的位置")]
     public NP_BlackBoardRelationData<Vector3> TargetPosId = new ();
 
     public override Action GetActionToBeDone()

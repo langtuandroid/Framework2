@@ -7,5 +7,6 @@
             return;
         }
         NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager = npBehaveGraph.NpBlackBoardDataManager;
+        NP_BlackBoardDataManager.BehaveId = npBehaveGraph.IdInConfig;
     }
 }

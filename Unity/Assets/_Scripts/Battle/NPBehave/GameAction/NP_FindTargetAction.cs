@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 [Title("寻找目标", TitleAlignment = TitleAlignments.Centered)]
 public class NP_FindTargetAction : NP_ClassForStoreAction
 {
-    
+    [LabelText("目标")]
     public NP_BlackBoardRelationData<long> TargetInsId = new ();
     [LabelText("阵营")]
     public RoleCast RoleCast;

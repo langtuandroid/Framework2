@@ -32,6 +32,6 @@ public class SkillGraphWindow : UniversalGraphWindow
             //因为OnFocus执行时机比较诡异，在OnEnable后，或者执行一些操作后都会执行，但这时Graph可能为空，所以做判断
             return;
         }
-        NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager = (this.graph as SkillGraph).NpBlackBoardDataManager;
+        NP_BlackBoardHelper.SetCurrentBlackBoardDataManager(this.graph as SkillGraph);
     }
 }

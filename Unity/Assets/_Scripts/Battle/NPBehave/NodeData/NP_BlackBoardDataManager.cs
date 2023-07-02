@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Framework;
 using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
@@ -11,6 +12,7 @@ public class NP_BlackBoardDataManager
     [Title("黑板数据", TitleAlignment = TitleAlignments.Centered)]
     [LabelText("黑板内容")]
     [BoxGroup]
+    [OnValueChanged(nameof(OnBBValueChanged))]
     [DictionaryDrawerSettings(KeyLabel = "键(string)", ValueLabel = "值(NP_BBValue)",
         DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
     public Dictionary<string, ANP_BBValue> BBValues = new Dictionary<string, ANP_BBValue>();
@@ -29,11 +31,32 @@ public class NP_BlackBoardDataManager
         DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
     public Dictionary<string, long> Ids = new Dictionary<string, long>();
 
+    private void OnBBValueChanged()
+    {
+        using RecyclableList<string> oldNameKeys = RecyclableList<string>.Create();
+        foreach (var valuesKey in BBValues.Keys)
+        {
+            if (!valuesKey.EndsWith($"[{BehaveId}]"))
+            {
+                oldNameKeys.Add(valuesKey);
+            }
+        }
+
+        foreach (var oldNameKey in oldNameKeys)
+        {
+            var newKey = $"{oldNameKey} [{BehaveId}]";
+            BBValues[newKey] = BBValues[oldNameKey];
+            BBValues.Remove(oldNameKey);
+        }
+    }
+
 #if UNITY_EDITOR
     /// <summary>
     /// 由GraphEditor点击Blackboard按钮时传递进来
     /// </summary>
     public static NP_BlackBoardDataManager CurrentEditedNP_BlackBoardDataManager;
+
+    public static int BehaveId;
 #endif
 }
 #endif

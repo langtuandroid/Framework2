@@ -4,7 +4,6 @@ using UnityEditor;
 
 public class NPBehaveGraphView : UniversalGraphView
 {
-    private List<List<NP_NodeView>> m_HashTree = new List<List<NP_NodeView>>();
     public NPBehaveGraphWindow NpBehaveGraphWindow;
 
     private NP_NodeView m_RootNodeView
