@@ -6,15 +6,14 @@ using Unity.Mathematics;
 [Title("创建单一飞行物", TitleAlignment = TitleAlignments.Centered)]
 public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 {
-
     [LabelText("飞行物prefab")]
-    public string FlyPath;
+    public BlackboardOrValue_String FlyPath = new BlackboardOrValue_String();
 
     [LabelText("飞行物出生点")]
-    public string HangPoint;
+    public BlackboardOrValue_String HangPoint = new BlackboardOrValue_String();
 
     [LabelText("飞行速度")]
-    public float Speed;
+    public BlackboardOrValue_Float Speed = new BlackboardOrValue_Float(1);
 
     [LabelText("碰撞体id")]
     public VTD_ColliderId ColliderId;
@@ -22,23 +21,21 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("飞行物的id")]
     public NP_BlackBoardRelationData<long> FlyObjUnit = new ();
     
-    [ShowIf("@!IsFollowTarget || (IsFollowTarget && IsFlyingTrigger)")]
+    [LabelText("是否在飞行途中能打中物体")]
+    public BlackboardOrValue_Bool IsFlyingTrigger;
+    
     [LabelText("射中的目标")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
 
     [LabelText("是否跟随目标")]
-    public bool IsFollowTarget;
+    public BlackboardOrValue_Bool IsFollowTarget;
 
-    [ShowIf(nameof(IsFollowTarget))] [LabelText("跟随的目标")]
+    [LabelText("跟随的目标")]
     public NP_BlackBoardRelationData<long> FollowTarget = new();
 
-    [HideIf(nameof(IsFollowTarget))]
     [LabelText("相对于角色的发射方向")]
-    public float2 FlyDir;
+    public BlackboardOrValue_Vector3 FlyDir;
 
-    [ShowIf(nameof(IsFollowTarget))]
-    [LabelText("是否在飞行途中能打中物体")]
-    public bool IsFlyingTrigger;
     
     public override Action GetActionToBeDone()
     {
