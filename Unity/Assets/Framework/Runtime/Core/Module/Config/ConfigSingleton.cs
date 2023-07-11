@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
+using UnityEngine;
 
 namespace Framework
 {
@@ -10,7 +12,25 @@ namespace Framework
 
         public static T Instance
         {
-            get { return instance ??= ConfigComponent.Instance.LoadOneConfig(typeof(T)) as T; }
+            get
+            {
+                if (instance != null) return instance;
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                {
+                    var configPath = (typeof(T).GetCustomAttribute(typeof(ConfigAttribute)) as ConfigAttribute)
+                        .Path;
+                    var bytes = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(configPath).text;
+                    instance = SerializeHelper.Deserialize<T>(bytes); 
+                }
+                else
+#endif
+                {
+                    instance = ConfigComponent.Instance.LoadOneConfig(typeof(T)) as T; 
+                }
+
+                return instance;
+            }
         }
 
         void ISingleton.Register()

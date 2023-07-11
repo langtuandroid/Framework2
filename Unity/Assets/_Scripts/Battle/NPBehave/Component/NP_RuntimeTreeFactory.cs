@@ -112,14 +112,14 @@ namespace Framework
 
             foreach (var passItem in outBehave.PassValue)
             {
-                root.Blackboard.Set(passItem.Value,
+                root.Blackboard.Set(passItem.Value.BBKey,
                     NP_BBValueHelper.AutoCreateNPBBValueFromTValue(
                         passItem.Key.GetObjValue(runtimeTree.GetBlackboard())));
             }
 
             foreach (var getItem in outBehave.GetValue)
             {
-                runtimeTree.GetBlackboard().Set(getItem.Key.BBKey, root.Blackboard.Get(getItem.Value));
+                runtimeTree.GetBlackboard().Set(getItem.Key.BBKey, root.Blackboard.Get(getItem.Value.BBKey));
             }
 
             // 额外的行为树需要用另外一个行为树的MainNode替换临时节点

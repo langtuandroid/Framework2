@@ -1,29 +1,20 @@
 ﻿using Box2DSharp.Dynamics;
+using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Root = NPBehave.Root;
 
-[AddComponentMenu("My Componet Name")]
 public class Test : MonoBehaviour
 {
-    private World world;
-    private Clock clock;
-    private Root _root;
-    [Button]
+    public SerializeDictionary<int, string> dic = new SerializeDictionary<int, string>();
     void Start()
     {
-        clock = new Clock();
-        _root = new Root(new Sequence(new Action(() =>
-        {
-            print(11);
-        })), clock, false);
-        _root.Start();
+
     }
 
     private void Update()
     {
-        int a = 1;
-        print(_root.CurrentState);
-        clock.Update(Time.deltaTime);
+
     }
 }
