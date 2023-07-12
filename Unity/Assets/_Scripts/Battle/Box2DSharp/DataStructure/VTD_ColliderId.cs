@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Framework;
 using Sirenix.OdinInspector;
 
+[Serializable]
 public struct VTD_ColliderId
 {
     [ReadOnly]

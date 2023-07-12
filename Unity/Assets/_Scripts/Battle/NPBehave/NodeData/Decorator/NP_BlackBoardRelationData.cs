@@ -58,7 +58,22 @@ public class NP_BlackBoardRelationData<T>
 
 #if UNITY_EDITOR
     private List<string> keys;
-    
+
+    public T EditorValue
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(BBKey)) return default;
+            if (NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues.TryGetValue(BBKey,
+                    out var value))
+            {
+                return (value as NP_BBValueBase<T>).Value;
+            }
+
+            return default;
+        }
+    }
+
     private IEnumerable<string> GetBBKeys()
     {
         if (keys == null)

@@ -97,4 +97,16 @@ public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
 
         return OriginValue;
     }
+    
+#if UNITY_EDITOR
+    public T GetEditorValue()
+    {
+        if (UseBlackboard && BlackboardKey != null)
+        {
+            return BlackboardKey.EditorValue;
+        }
+
+        return OriginValue;
+    }
+#endif
 } 

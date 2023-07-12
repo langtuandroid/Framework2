@@ -22,18 +22,20 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     public NP_BlackBoardRelationData<long> FlyObjUnit = new ();
     
     [LabelText("是否在飞行途中能打中物体")]
-    public BlackboardOrValue_Bool IsFlyingTrigger;
+    public BlackboardOrValue_Bool IsFlyingTrigger = new();
     
     [LabelText("射中的目标")]
+    [ShowIf("@IsFlyingTrigger.GetEditorValue()")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
 
     [LabelText("是否跟随目标")]
-    public BlackboardOrValue_Bool IsFollowTarget;
+    public BlackboardOrValue_Bool IsFollowTarget = new();
 
     [LabelText("跟随的目标")]
+    [ShowIf("@IsFollowTarget.GetEditorValue()")]
     public NP_BlackBoardRelationData<long> FollowTarget = new();
 
-    [LabelText("相对于角色的发射方向")]
+    [LabelText("相对于出生点的发射方向")]
     public BlackboardOrValue_Vector3 FlyDir;
 
     

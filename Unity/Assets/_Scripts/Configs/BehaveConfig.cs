@@ -48,7 +48,7 @@ public partial class BehaveConfigFactory : ConfigSingleton<BehaveConfigFactory>
 
         if (BehaveConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {id}");
+            Log.Warning($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {id}");
         }
 
         return BehaveConfig;

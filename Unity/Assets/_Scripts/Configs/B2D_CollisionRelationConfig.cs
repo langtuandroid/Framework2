@@ -60,7 +60,7 @@ public partial class B2D_CollisionRelationConfigFactory : ConfigSingleton<B2D_Co
 
         if (B2D_CollisionRelationConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(B2D_CollisionRelationConfig)}，配置id: {id}");
+            Log.Warning($"配置找不到，配置表名: {nameof(B2D_CollisionRelationConfig)}，配置id: {id}");
         }
 
         return B2D_CollisionRelationConfig;

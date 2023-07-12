@@ -51,7 +51,7 @@ public partial class LanguageDataFactory : ConfigSingleton<LanguageDataFactory>
 
         if (LanguageData == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(LanguageData)}，配置id: {id}");
+            Log.Warning($"配置找不到，配置表名: {nameof(LanguageData)}，配置id: {id}");
         }
 
         return LanguageData;

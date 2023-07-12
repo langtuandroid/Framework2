@@ -101,6 +101,7 @@ namespace Framework
             RegisterStruct<Vector3>();
             RegisterStruct<Vector4>();
             RegisterStruct<Quaternion>();
+            RegisterStruct<VTD_ColliderId>();
 
 #if UNITY_EDITOR
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();

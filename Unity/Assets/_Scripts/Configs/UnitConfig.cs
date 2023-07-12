@@ -48,7 +48,7 @@ public partial class UnitConfigFactory : ConfigSingleton<UnitConfigFactory>
 
         if (UnitConfig == null)
         {
-            Log.Error($"配置找不到，配置表名: {nameof(UnitConfig)}，配置id: {id}");
+            Log.Warning($"配置找不到，配置表名: {nameof(UnitConfig)}，配置id: {id}");
         }
 
         return UnitConfig;
