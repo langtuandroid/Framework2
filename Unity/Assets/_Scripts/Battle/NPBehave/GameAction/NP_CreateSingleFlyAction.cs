@@ -7,7 +7,7 @@ using Unity.Mathematics;
 public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 {
     [LabelText("飞行物prefab")]
-    public BlackboardOrValue_String FlyPath = new BlackboardOrValue_String();
+    public BlackboardOrValue_String PrefabPath = new BlackboardOrValue_String();
 
     [LabelText("飞行物出生点")]
     public BlackboardOrValue_String HangPoint = new BlackboardOrValue_String();
@@ -33,9 +33,21 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("跟随的目标")]
     [ShowIf("@IsFollowTarget.GetEditorValue()")]
     public NP_BlackBoardRelationData<long> FollowTarget = new();
+    
+    [LabelText("是否朝某个物体发射")]
+    public BlackboardOrValue_Bool IsFlyToTarget = new();
 
-    [LabelText("相对于出生点的发射方向")]
+    [LabelText("发射朝向的物体")]
+    [ShowIf("@IsFlyToTarget.GetEditorValue()")]
+    [PropertyTooltip("aaaaaa")]
+    public BlackboardOrValue_Long FlyToTarget = new();
+
+    [LabelText("发射方向")]
+    [HideIf("@IsFlyToTarget.GetEditorValue()")]
     public BlackboardOrValue_Vector3 FlyDir;
+
+    [LabelText("飞行的距离")]
+    public BlackboardOrValue_Float FlyDis;
 
     public override Action GetActionToBeDone()
     {
@@ -45,6 +57,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     private void Create()
     {
-        FlyObjHelper.CreateSingleFlyObj(this);
+        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree);
     }
 }
