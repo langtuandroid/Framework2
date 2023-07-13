@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NPBehave;
 using Vector3 = UnityEngine.Vector3;
 
@@ -48,12 +49,12 @@ namespace Framework
         /// <summary>
         /// 自动从T创建一个NP_BBValue
         /// </summary>
-        public static ANP_BBValue AutoCreateNPBBValueFromTValue<T>(T value)
+        public static ANP_BBValue AutoCreateNPBBValueFromTValue(object value, Type valueType)
         {
-            string valueType = value.GetType().ToString();
+            string valueTypeName = valueType.ToString();
             object boxedValue = value;
             ANP_BBValue anpBbValue = null;
-            switch (valueType)
+            switch (valueTypeName)
             {
                 case "System.String":
                     anpBbValue = new NP_BBValue_String() { Value = boxedValue as string };

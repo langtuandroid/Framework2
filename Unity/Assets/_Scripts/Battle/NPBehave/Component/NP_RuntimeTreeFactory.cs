@@ -112,9 +112,9 @@ namespace Framework
 
             foreach (var passItem in outBehave.PassValue)
             {
+                var val = passItem.Key.GetObjValue(runtimeTree.GetBlackboard());
                 root.Blackboard.Set(passItem.Value.BBKey,
-                    NP_BBValueHelper.AutoCreateNPBBValueFromTValue(
-                        passItem.Key.GetObjValue(runtimeTree.GetBlackboard())));
+                    NP_BBValueHelper.AutoCreateNPBBValueFromTValue(val,val.GetType()));
             }
 
             foreach (var getItem in outBehave.GetValue)

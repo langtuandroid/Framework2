@@ -25,7 +25,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     public BlackboardOrValue_Bool IsFlyingTrigger = new();
     
     [LabelText("射中的目标")]
-    [ShowIf("@IsFlyingTrigger.GetEditorValue()")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
 
     [LabelText("是否跟随目标")]
@@ -38,7 +37,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("相对于出生点的发射方向")]
     public BlackboardOrValue_Vector3 FlyDir;
 
-    
     public override Action GetActionToBeDone()
     {
         this.Action = this.Create;

@@ -27,23 +27,17 @@ public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
     public bool Target2IsPos = false;
 
     [LabelText("移动距目标最短距离")] public BlackboardOrValue_Float EndDis = new BlackboardOrValue_Float(0.1f);
-    
+
     protected override bool UntilFunc()
     {
-        bool IsEnd()
-        {
-            float3 target1Pos = Target1IsSelf
-                ? BelongToUnit.Position
-                : BelongToUnit.Domain.GetComponent<UnitComponent>()
-                    .Get(Target1Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
-            float3 target2Pos = Target2IsPos
-                ? Target2Pos.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())
-                : BelongToUnit.Domain.GetComponent<UnitComponent>()
-                    .Get(Target2Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
-            return math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
-        }
-
-        return IsEnd();
+        float3 target1Pos = Target1IsSelf
+            ? BelongToUnit.Position
+            : BelongToUnit.Domain.GetComponent<UnitComponent>()
+                .Get(Target1Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
+        float3 target2Pos = Target2IsPos
+            ? Target2Pos.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())
+            : BelongToUnit.Domain.GetComponent<UnitComponent>()
+                .Get(Target2Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
+        return math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
     }
-
 }

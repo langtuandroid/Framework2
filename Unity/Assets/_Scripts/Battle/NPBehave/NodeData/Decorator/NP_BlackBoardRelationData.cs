@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Reflection;
 using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
@@ -14,6 +14,22 @@ public class NP_BlackBoardKeyData
     
 #if UNITY_EDITOR
     private List<string> keys;
+    
+    public object EditorValue
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(BBKey)) return default;
+            if (NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager.BBValues.TryGetValue(BBKey,
+                    out var value))
+            {
+                return value.GetType().GetField("Value", BindingFlags.Instance | BindingFlags.Public).GetValue(value);
+            }
+
+            return default;
+        }
+    } 
+    
     private IEnumerable<string> GetBBKeys()
     {
         if (keys == null)
