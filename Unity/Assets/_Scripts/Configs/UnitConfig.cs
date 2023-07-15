@@ -6,9 +6,6 @@ public partial class UnitConfig : BaseConfig
     /// <summary> ID </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public int ID { get; private set; }
-/// <summary> 碰撞半径 </summary>
-	[MongoDB.Bson.Serialization.Attributes.BsonElement]
-	public float ColliderRadius { get; private set; }
 /// <summary> 攻击距离 </summary>
 	[MongoDB.Bson.Serialization.Attributes.BsonElement]
 	public float AttackRange { get; private set; }

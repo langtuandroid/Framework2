@@ -28,7 +28,6 @@ public class Init : MonoBehaviour
         Game.AddSingleton<ConfigComponent>();
         root.Scene.AddComponent<GlobalReferenceComponent>();
         root.Scene.AddComponent<UIComponent>();
-        root.Scene.AddComponent<B2D_CollisionDispatcherComponent>();
         await ResComponent.Instance.Init();
         await ConfigComponent.Instance.LoadAsync();
         ETTask.ExceptionHandler += e => Log.Error(e);

@@ -13,7 +13,7 @@ public class NP_NodeView : BaseNodeView
 
     [HideInInspector] public NP_NodeView Parent;
 
-    [HideInInspector] public List<NP_NodeView> Children = new List<NP_NodeView>();
+    [HideInInspector] public new List<NP_NodeView> Children = new List<NP_NodeView>();
 
     public int ChildCount
     {

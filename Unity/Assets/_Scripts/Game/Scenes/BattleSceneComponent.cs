@@ -11,10 +11,6 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
 
         Scene battleScene = this.DomainScene();
         battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
-        battleScene.AddComponent<B2D_WorldComponent>();
-        battleScene.AddComponent<B2D_ColliderDataRepositoryComponent>();
-        battleScene.AddComponent<B2D_CollisionListenerComponent>();
-        battleScene.AddComponent<B2D_WorldColliderManagerComponent>();
         battleScene.AddComponent<UnitComponent>();
         
         Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);

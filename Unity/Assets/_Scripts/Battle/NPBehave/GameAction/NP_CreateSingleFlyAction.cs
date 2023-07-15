@@ -14,9 +14,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     [LabelText("飞行速度")]
     public BlackboardOrValue_Float Speed = new BlackboardOrValue_Float(1);
-
-    [LabelText("碰撞体id")]
-    public VTD_ColliderId ColliderId;
     
     [LabelText("飞行物的id")]
     public NP_BlackBoardRelationData<long> FlyObjUnit = new ();

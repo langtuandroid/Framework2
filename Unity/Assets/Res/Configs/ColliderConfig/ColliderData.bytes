@@ -1,1 +1,0 @@
-{ "_t" : "ColliderDataSupporter", "colliderDataDic" : [[NumberLong(10001), { "_t" : "B2D_BoxColliderDataStructure", "_id" : NumberLong(10001), "isSensor" : true, "B2D_ColliderType" : 0, "finalOffset" : { "x" : 0.0, "y" : 0.0 }, "hx" : 0.5, "hy" : 0.5 }]] }

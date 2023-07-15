@@ -84,10 +84,10 @@ public class UI_UnitInfo : View
         Binding.BindCommand(components.Close, Close);
         Binding.BindData(vm.MaxHp, vm.CurHp, (max, cur) =>
         {
-            components.TextHp.text = $"HP:{cur}/{max}";
+            components.TextHp.text = $"HP:{cur.ToString()}/{max.ToString()}";
         } );
     }
-     
+    
     public override UILevel UILevel { get; } = UILevel.Common;
     
 }

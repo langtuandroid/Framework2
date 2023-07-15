@@ -14,7 +14,7 @@
  {
 
      [Button("保存技能树信息为二进制文件", 25), GUIColor(0.4f, 0.8f, 1)]
-     public void Save()
+     public new void Save()
      {
          if (string.IsNullOrEmpty(SavePathClient) ||
              string.IsNullOrEmpty(Name))
@@ -30,7 +30,7 @@
      }
 
      [Button("测试技能树反序列化", 25), GUIColor(0.4f, 0.8f, 1)]
-     public void TestDe()
+     public new void TestDe()
      {
          try
          {
