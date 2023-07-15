@@ -8,5 +8,6 @@
         }
         NP_BlackBoardDataManager.CurrentEditedNP_BlackBoardDataManager = npBehaveGraph.NpBlackBoardDataManager;
         NP_BlackBoardDataManager.BehaveId = npBehaveGraph.IdInConfig;
+        NP_BlackBoardDataManager.IsSkill = npBehaveGraph is SkillGraph;
     }
 }

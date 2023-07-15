@@ -14,7 +14,7 @@ public class NP_BlackBoardDataManager
     [BoxGroup]
     [OnValueChanged(nameof(OnBBValueChanged))]
     [DictionaryDrawerSettings(KeyLabel = "键(string)", ValueLabel = "值(NP_BBValue)",
-        DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
+        DisplayMode = DictionaryDisplayOptions.OneLine)]
     public Dictionary<string, ANP_BBValue> BBValues = new Dictionary<string, ANP_BBValue>();
 
     [InfoBox("这是这个NPBehaveCanvas的所有事件数据")]
@@ -55,6 +55,8 @@ public class NP_BlackBoardDataManager
     /// 由GraphEditor点击Blackboard按钮时传递进来
     /// </summary>
     public static NP_BlackBoardDataManager CurrentEditedNP_BlackBoardDataManager;
+
+    public static bool IsSkill;
 
     public static int BehaveId;
 #endif

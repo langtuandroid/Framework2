@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Framework;
+using GraphProcessor;
 using NPBehave;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
-public class NP_RunAnotherTreeData : NP_NodeDataBase , ISerializationCallbackReceiver
+public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
 {
     public override NodeType BelongNodeType => NodeType.Tree;
 
@@ -43,27 +44,57 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase , ISerializationCallbackRec
             value.Value.configId = ConfigId;
         }
 
+        AddRequirePassData();
+
         foreach (var value in GetValue.Dic)
         {
             value.Value.configId = ConfigId;
         }
     }
+
+    private NP_DataSupportor dataSupportor;
+    private void AddRequirePassData()
+    {
+        if (dataSupportor == null || dataSupportor.ExcelId != ConfigId)
+        {
+            var data = BehaveConfigFactory.Instance.Get(ConfigId);
+            if (data != null)
+            {
+                this.dataSupportor =
+                    SerializeHelper.Deserialize<NP_DataSupportor>(File.ReadAllText(data.ConfigPath));
+            }
+        }
+
+        if (dataSupportor != null)
+        {
+            foreach (var item in dataSupportor.NP_BBValueManager)
+            {
+                if (item.Value.Required)
+                {
+                    bool hasAdd = false;
+                    foreach (var key in PassValue.Dic.Values)
+                    {
+                        if (key.BBKey == item.Key)
+                        {
+                            hasAdd = true;
+                            break;
+                        }
+                    }
+
+                    if (!hasAdd)
+                    {
+                        var keyData = new NP_OtherTreeBBKeyData();
+                        keyData.configId = ConfigId;
+                        keyData.BBKey = item.Key;
+                        PassValue.AddData(NP_BBValueHelper.GetBlackboardOrValueByBBValue(item.Value), keyData);
+                    }
+                }
+            }
+        }
+    }
     
     private void EmptyFunc()
     {
-    }
-
-    public void OnBeforeSerialize()
-    {
-        
-    }
-
-    public void OnAfterDeserialize()
-    {
-        if (PassValue == null) PassValue = new SerializeDictionary<IBlackboardOrValue, NP_OtherTreeBBKeyData>();
-        if (GetValue == null) GetValue = new SerializeDictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData>();
-        PassValue.CustomAddFunc += CustomAddPassValue;
-        GetValue.CustomAddFunc += CustomAddGetValue;
     }
 
     private void CustomAddGetValue(List<SerializeDicKeyValue<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData>> obj)
@@ -78,5 +109,16 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase , ISerializationCallbackRec
         var otherKeyData = new NP_OtherTreeBBKeyData();
         otherKeyData.configId = ConfigId;
         obj.Add(new SerializeDicKeyValue<IBlackboardOrValue, NP_OtherTreeBBKeyData>(null, otherKeyData));
+    }
+
+    public void OnNodeDeserialize()
+    {
+        if (PassValue == null) PassValue = new SerializeDictionary<IBlackboardOrValue, NP_OtherTreeBBKeyData>();
+        if (GetValue == null) GetValue = new SerializeDictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData>();
+        OnConfigIdChanged();
+        PassValue.CustomAddFunc -= CustomAddPassValue;
+        GetValue.CustomAddFunc -= CustomAddGetValue;
+        PassValue.CustomAddFunc += CustomAddPassValue;
+        GetValue.CustomAddFunc += CustomAddGetValue;
     }
 }
