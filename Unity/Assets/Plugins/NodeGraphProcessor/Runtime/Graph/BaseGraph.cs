@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -157,7 +158,7 @@ namespace GraphProcessor
             // If you rename / change the assembly of a node or parameter, please use the MovedFrom() attribute to avoid breaking the graph.
             nodes.RemoveAll(n => n == null);
             exposedParameters.RemoveAll(e => e == null);
-
+            
             foreach (var node in nodes.ToList())
             {
                 nodesPerGUID[node.GUID] = node;
@@ -179,6 +180,75 @@ namespace GraphProcessor
                 // Add the edge to the non-serialized port data
                 edge.inputPort.owner.OnEdgeConnected(edge);
                 edge.outputPort.owner.OnEdgeConnected(edge);
+            }
+            
+            List<IGraphNodeDeserialize> nodeDeserializes = new List<IGraphNodeDeserialize>();
+            HashSet<object> searchedObj = new HashSet<object>(); 
+            foreach (var node in nodes)
+            {
+                DeepFindOnDeserialize(node, nodeDeserializes, searchedObj);
+            }
+
+            foreach (var nodeDeserialize in nodeDeserializes)
+            {
+                nodeDeserialize.OnNodeDeserialize();
+            }
+        }
+
+        private static List<string> customDllName = new List<string>()
+        {
+            "Game.Runtime",
+            "Framework",
+            "Framework.Editor",
+            "Game.Editor",
+            "NodeGraphEditor",
+            "NodeGraphProcessor.Editor",
+            "NodeGraphProcessor.Runtime",
+        };
+
+        private void DeepFindOnDeserialize(object obj, List<IGraphNodeDeserialize> list, HashSet<object> checkSearched)
+        {
+            if (obj == null) return;
+            var type = obj.GetType();
+            if (type.IsPrimitive) return;
+            if (!customDllName.Contains(type.Assembly.GetName().Name)) return;
+            if (checkSearched.Contains(obj)) return;
+            checkSearched.Add(obj);
+            if (obj is IGraphNodeDeserialize nodeDeserialize)
+            {
+                list.Add(nodeDeserialize);
+            }
+
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (var fieldInfo in fields)
+            {
+                if (fieldInfo.FieldType.IsPrimitive) continue;
+                if (!customDllName.Contains(fieldInfo.FieldType.Assembly.GetName().Name)) continue;
+                try
+                {
+                    var val = fieldInfo.GetValue(obj);
+                    DeepFindOnDeserialize(val, list, checkSearched);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+
+            var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (var propertyInfo in props)
+            {
+                if (propertyInfo.PropertyType.IsPrimitive) continue;
+                if (!customDllName.Contains(propertyInfo.PropertyType.Assembly.GetName().Name)) continue;
+                try
+                {
+                    var val = propertyInfo.GetValue(obj);
+                    DeepFindOnDeserialize(val, list, checkSearched);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
             }
         }
 
