@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Text;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Framework;
 
 public static class CommonExtension
@@ -2649,18 +2650,66 @@ public static class StringExtension
 
 public static class EnumExtension
 {
-    public static bool Contains<T>(this T self, T other) where T : Enum
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Contains<TEnum>(this TEnum lhs, TEnum rhs) where TEnum : unmanaged, Enum
     {
-        int selfInt = Convert.ToInt32(self);
-        int otherInt = Convert.ToInt32(other);
-        return (selfInt & otherInt) == otherInt;
+        unsafe
+        {
+            switch (sizeof(TEnum))
+            {
+                case 1:
+                    return (*(byte*)(&lhs) & *(byte*)(&rhs)) > 0;
+                case 2:
+                    return (*(ushort*)(&lhs) & *(ushort*)(&rhs)) > 0;
+                case 4:
+                    return (*(uint*)(&lhs) & *(uint*)(&rhs)) > 0;
+                case 8:
+                    return (*(ulong*)(&lhs) & *(ulong*)(&rhs)) > 0;
+                default:
+                    throw new Exception("Size does not match a known Enum backing type.");
+            }
+        }
     }
-    
-    public static T Remove<T>(this T self, T other) where T : Enum
-    {
-        int selfInt = Convert.ToInt32(self);
-        int otherInt = Convert.ToInt32(other);
 
-        return (T)Enum.ToObject(typeof(T), selfInt & ~otherInt);
-    } 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ulong AddFlag<TEnum>(this TEnum lhs, TEnum rhs) where TEnum : unmanaged, Enum
+    {
+        unsafe
+        {
+            switch (sizeof(TEnum))
+            {
+                case 1:
+                    return (ulong)(*(byte*)(&lhs) | *(byte*)(&rhs));
+                case 2:
+                    return (ulong)(*(ushort*)(&lhs) | *(ushort*)(&rhs));
+                case 4:
+                    return (*(uint*)(&lhs) | *(uint*)(&rhs));
+                case 8:
+                    return (*(ulong*)(&lhs) | *(ulong*)(&rhs));
+                default:
+                    throw new Exception("Size does not match a known Enum backing type.");
+            }
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ulong RemoveFlag<TEnum>(this TEnum lhs, TEnum rhs) where TEnum : unmanaged, Enum
+    {
+        unsafe
+        {
+            switch (sizeof(TEnum))
+            {
+                case 1:
+                    return (ulong)(*(byte*)(&lhs) & ~*(byte*)(&rhs));
+                case 2:
+                    return (ulong)(*(ushort*)(&lhs) & ~*(ushort*)(&rhs));
+                case 4:
+                    return *(uint*)(&lhs) & ~*(uint*)(&rhs);
+                case 8:
+                    return (*(ulong*)(&lhs) & ~*(ulong*)(&rhs));
+                default:
+                    throw new Exception("Size does not match a known Enum backing type.");
+            }
+        }
+    }
 }
