@@ -5,7 +5,7 @@ public class B2D_CollisionHandlerAttribute : BaseAttribute
 }
 
 [B2D_CollisionHandler]
-public abstract class AB2D_CollisionHandler
+public abstract class ACollisionHandler
 {
     /// <summary>
     /// a是碰撞者自身，b是碰撞到的目标

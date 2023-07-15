@@ -759,9 +759,6 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: true
-    - Name: label
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -796,9 +793,6 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: false
-    - Name: label
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -836,7 +830,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -846,6 +840,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 9
       Data: 36
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 9
+      Data: 37
+    - Name: $v
+      Entry: 9
+      Data: 38
     - Name: 
       Entry: 8
       Data: 
@@ -994,9 +1000,6 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: false
-    - Name: label
-      Entry: 1
-      Data: "\u65F6\u95F4"
     - Name: 
       Entry: 8
       Data: 
@@ -1322,9 +1325,6 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: true
-    - Name: label
-      Entry: 1
-      Data: "\u503C"
     - Name: 
       Entry: 8
       Data: 
@@ -2009,9 +2009,6 @@ MonoBehaviour:
     - Name: UseBlackboard
       Entry: 5
       Data: false
-    - Name: label
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2562,8 +2559,8 @@ MonoBehaviour:
   - rid: 4270152454071123972
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 191, y: -113, z: 0}
-  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  position: {x: 36, y: -288, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   Name: AI_CloseSingleAttack
   IdInConfig: 1
   SavePathClient: Assets/Res/Configs/BehaveConfigs

@@ -7,10 +7,10 @@ public class FindTargetComponent : Entity
     public void FindTarget(Action<long> findCb, RoleCast roleCast, RoleTag tag)
     {
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
-        var selfRoleCast = parent.GetComponent<B2D_RoleCastComponent>();
+        var selfRoleCast = parent.GetComponent<RoleCastComponent>();
         foreach (var unit in unitComponent.idUnits.Values)
         {
-            if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast && tag.Contains(unit.GetComponent<B2D_RoleCastComponent>().RoleTag))
+            if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast && tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
             {
                 findCb(unit.Id);
                 break;
@@ -22,11 +22,11 @@ public class FindTargetComponent : Entity
     {
         RecyclableList<long> result = RecyclableList<long>.Create();
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
-        var selfRoleCast = GetComponent<B2D_RoleCastComponent>();
+        var selfRoleCast = GetComponent<RoleCastComponent>();
         foreach (var unit in unitComponent.idUnits.Values)
         {
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast &&
-                tag.Contains(unit.GetComponent<B2D_RoleCastComponent>().RoleTag))
+                tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
             {
                 result.Add(unit.Id);
             }

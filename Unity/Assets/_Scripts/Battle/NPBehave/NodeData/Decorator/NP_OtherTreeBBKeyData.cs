@@ -13,6 +13,7 @@ using UnityEngine;
 [HideLabel]
 public class NP_OtherTreeBBKeyData
 {
+    [LabelWidth(40)]
     [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnValueChanged")]
     public string BBKey;
 

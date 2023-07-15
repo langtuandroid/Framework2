@@ -126,25 +126,25 @@ namespace Framework
 
         public static bool operator >(NP_BBValue_List_Long lhs, NP_BBValue_List_Long rhs)
         {
-            Log.Error("你他妈确定对比两个List<long>大小关系？这是人能干出来的事？想对比自己写");
+            Log.Error("List<long>没法对比");
             return false;
         }
 
         public static bool operator <(NP_BBValue_List_Long lhs, NP_BBValue_List_Long rhs)
         {
-            Log.Error("你他妈确定对比两个List<long>大小关系？这是人能干出来的事？想对比自己写");
+            Log.Error("List<long>没法对比");
             return false;
         }
 
         public static bool operator >=(NP_BBValue_List_Long lhs, NP_BBValue_List_Long rhs)
         {
-            Log.Error("你他妈确定对比两个List<long>大小关系？这是人能干出来的事？想对比自己写");
+            Log.Error("List<long>没法对比");
             return false;
         }
 
         public static bool operator <=(NP_BBValue_List_Long lhs, NP_BBValue_List_Long rhs)
         {
-            Log.Error("你他妈确定对比两个List<long>大小关系？这是人能干出来的事？想对比自己写");
+            Log.Error("List<long>没法对比");
             return false;
         }
 
@@ -155,7 +155,7 @@ namespace Framework
     [HideReferenceObjectPicker]
     public class BlackboardOrValue_List_Long : ABlackboardOrValue<List<long>>
     {
-        public BlackboardOrValue_List_Long(List<long> value = null, string label = "值") : base(label)
+        public BlackboardOrValue_List_Long(List<long> value = null) : base()
         {
             OriginValue = value;
             if (OriginValue != default)

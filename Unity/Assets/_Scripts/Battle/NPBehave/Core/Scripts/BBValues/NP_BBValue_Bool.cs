@@ -117,7 +117,7 @@ namespace Framework
     [HideReferenceObjectPicker]
     public class BlackboardOrValue_Bool : ABlackboardOrValue<bool>
     {
-        public BlackboardOrValue_Bool(bool value = false, string label = "值") : base(label)
+        public BlackboardOrValue_Bool(bool value = false) : base()
         {
             OriginValue = value;
             if (OriginValue != default)

@@ -85,8 +85,8 @@ public class ExtraBehave
 {
     public Root Root;
     public NP_DataSupportor DataSupportor;
-    public Dictionary<IBlackboardOrValue, NP_OtherTreeBBKeyData> PassValue;
-    public Dictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData> GetValue;
+    public IReadOnlyDictionary<IBlackboardOrValue, NP_OtherTreeBBKeyData> PassValue;
+    public IReadOnlyDictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData> GetValue;
     public long LinkedNodeId;
 }
 

@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 
 [Flags]
-public enum B2D_AllCollideableObject
+public enum AllCollideableObject
 {
     [LabelText("己方小兵")] FirendSoldier = 1 << 1,
 

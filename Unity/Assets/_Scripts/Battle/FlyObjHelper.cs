@@ -5,14 +5,14 @@ using UnityEngine;
 
 public static class FlyObjHelper
 {
-    public static async void CreateSingleFlyObj(NP_CreateSingleFlyAction action,NP_RuntimeTree runtimeTree)
+    public static async void CreateSingleFlyObj(NP_CreateSingleFlyAction action, NP_RuntimeTree runtimeTree,
+        DefaultColliderData colliderData)
     {
         Scene scene = action.BelongToUnit.DomainScene();
         Blackboard blackboard = runtimeTree.GetBlackboard();
         string prefabPath = action.PrefabPath.GetValue(blackboard);
         string bornPath = action.HangPoint.GetValue(blackboard);
         float speed = action.Speed.GetValue(blackboard);
-        bool isFlyingTrigger = action.IsFlyingTrigger.GetValue(blackboard);
         bool isFollowTarget = action.IsFollowTarget.GetValue(blackboard);
         bool isFlyToTarget = action.IsFlyToTarget.GetValue(blackboard);
         Transform rootTrans = runtimeTree.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.transform;
@@ -20,14 +20,18 @@ public static class FlyObjHelper
         {
             rootTrans = rootTrans.Find(bornPath);
         }
+
         var objUnit = UnitFactory.CreateUnit(scene, 0);
         var selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath, rootTrans);
         objUnit.AddComponent<MoveComponent>();
         objUnit.AddComponent<GameObjectComponent>().GameObject = selfTrans;
+        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject, objUnit.Id, 0, false,
+            colliderData);
         if (isFollowTarget)
         {
-            objUnit.AddComponent<FollowTargetComponent>().Follow(action.FollowTarget.GetBlackBoardValue(blackboard), 0.1f);
+            objUnit.AddComponent<FollowTargetComponent>()
+                .Follow(action.FollowTarget.GetBlackBoardValue(blackboard), 0.1f);
         }
         else
         {

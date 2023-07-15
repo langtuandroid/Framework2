@@ -55,27 +55,21 @@ public interface IBlackboardOrValue
 [Serializable]
 public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
 {
-    [LabelText("@label")]
     [ShowIf("@UseBlackboard")]
     public NP_BlackBoardRelationData<T> BlackboardKey = new NP_BlackBoardRelationData<T>();
 
-    [LabelText("@string.IsNullOrEmpty(this.label) ? \"值\" : label")]
+    [LabelText("Value")]
     [ShowIf("@!UseBlackboard")]
     [SerializeField]
     public T OriginValue;
 
     [SerializeField]
-    [LabelText("是否使用黑板")]
+    [LabelWidth(60)]
+    [LabelText("使用黑板")]
     public bool UseBlackboard = true;
 
-    [SerializeField]
-    [HideInInspector]
-    private string label = "值";
-
-    protected ABlackboardOrValue(string label)
+    protected ABlackboardOrValue()
     {
-        if (!string.IsNullOrEmpty(this.label))
-            this.label = label;
     }
 
     public object GetObjValue(Blackboard blackboard)

@@ -64,10 +64,12 @@ public class NP_BlackBoardKeyData
 [HideReferenceObjectPicker]
 public class NP_BlackBoardRelationData<T>
 {
+    [LabelWidth(60)]
     [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnBBKeySelected")]
     public string BBKey;
 
-    [LabelText("是否把值写入黑板，或者是否与黑板进行值对比")] public bool WriteOrCompareToBB;
+    [LabelWidth(120)]
+    [LabelText("把值写入黑板或对比")] public bool WriteOrCompareToBB;
 
     [ShowIf("WriteOrCompareToBB")] public ANP_BBValue NP_BBValue;
 

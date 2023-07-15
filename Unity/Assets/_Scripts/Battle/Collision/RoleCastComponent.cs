@@ -38,7 +38,7 @@ public enum RoleTag
     Soldier = 1 << 2,
 }
 
-public class B2D_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
+public class RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
 {
     public RoleTag RoleTag;
 
@@ -54,12 +54,12 @@ public class B2D_RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>
     /// <returns></returns>
     public RoleCast GetRoleCastToTarget(Unit unit)
     {
-        if (unit.GetComponent<B2D_RoleCastComponent>() == null)
+        if (unit.GetComponent<RoleCastComponent>() == null)
         {
             return RoleCast.Friendly;
         }
 
-        RoleCamp roleCamp = unit.GetComponent<B2D_RoleCastComponent>().RoleCamp;
+        RoleCamp roleCamp = unit.GetComponent<RoleCastComponent>().RoleCamp;
 
         if (roleCamp == this.RoleCamp)
         {

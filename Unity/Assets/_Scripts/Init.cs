@@ -23,6 +23,7 @@ public class Init : MonoBehaviour
         Game.AddSingleton<IdGenerator>();
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<CoroutineLockComponent>();
+        Game.AddSingleton<CollisionHandlerCollector>();
         var root = Game.AddSingleton<Root>();
         Game.AddSingleton<ResComponent>();
         Game.AddSingleton<ConfigComponent>();

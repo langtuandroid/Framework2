@@ -45,11 +45,29 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
         return GameObject.transform.Find(path);
     }
 
-    public void OnDestroy()
+    public void DestroyGameObject()
     {
         if (GameObject != null)
-            Object.Destroy(GameObject);
-        GameObject = null;
+        {
+            Object.Destroy(gameObject);
+        }
+        OnDestroy();
     }
 
+    public void OnDestroy()
+    {
+        if (gameObject == null) return;
+        var goConnectedId = gameObject.GetComponent<GoConnectedUnitId>();
+        if (goConnectedId != null)
+        {
+            if (goConnectedId.UnitId == parent.Id)
+            {
+                goConnectedId.SetUnitId(0);
+            }
+        }
+#if UNITY_EDITOR
+        gameObject.GetComponent<EditorVisibleUnit>()?.SetUnit(null);
+#endif
+        GameObject = null;
+    }
 }

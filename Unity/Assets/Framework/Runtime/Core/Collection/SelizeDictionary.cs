@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Framework
 {
     [Serializable]
-    public class SerializeDictionary<TKey,TValue> : ISerializationCallbackReceiver , ISupportInitialize
+    public class SerializeDictionary<TKey,TValue>
     {
         [BoxGroup("Dictionary/添加item")]
         [PropertyOrder(1)]
@@ -36,6 +36,8 @@ namespace Framework
             {
                 if (HasSameKey) return;
                 list.Add(new SerializeDicKeyValue<TKey, TValue>(Key, Value));
+                Key = default;
+                Value = default;
             }
         }
 
@@ -61,8 +63,20 @@ namespace Framework
         private List<SerializeDicKeyValue<TKey, TValue>> list = new List<SerializeDicKeyValue<TKey, TValue>>();
 
         [BsonIgnore]
-        [HideInInspector]
-        public Dictionary<TKey, TValue> Dic = new Dictionary<TKey, TValue>();
+        public IReadOnlyDictionary<TKey, TValue> Dic
+        {
+            get
+            {
+                if (dic == null)
+                {
+                    OnListChanged();
+                }
+
+                return dic;
+            }
+        }
+
+        private Dictionary<TKey, TValue> dic;
 
         private bool hasCustomAddFunc => CustomAddFunc != null && CustomAddFunc.GetInvocationList().Length > 0;
         public event Action<List<SerializeDicKeyValue<TKey,TValue>>> CustomAddFunc;
@@ -70,31 +84,40 @@ namespace Framework
         private void OnListChanged()
         {
             if(list == null) return;
-            Dic ??= new Dictionary<TKey, TValue>();
-            Dic.Clear();
+            dic ??= new Dictionary<TKey, TValue>();
+            dic.Clear();
             foreach (var value in list)
             {
-                Dic[value.Key] = value.Value;
+                dic[value.Key] = value.Value;
             }
         }
 
-        public void OnBeforeSerialize()
+        public bool AddData(TKey key, TValue value)
         {
+            if (Dic.ContainsKey(key))
+            {
+                return false;
+            }
+
+            list.Add(new SerializeDicKeyValue<TKey, TValue>(key,value));
+            dic[key] = value;
+            return true;
         }
 
-        public void OnAfterDeserialize()
+        public bool RemoveData(TKey key)
         {
-            Dic = new Dictionary<TKey, TValue>();
-            OnListChanged();
-        }
+            _ = Dic;
+            if (!dic.Remove(key)) return false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Key.Equals(key))
+                {
+                    list.RemoveAt(i);
+                    return true;
+                }
+            }
 
-        public void BeginInit()
-        {
-        }
-
-        public void EndInit()
-        {
-            OnAfterDeserialize();
+            return false;
         }
     }
 

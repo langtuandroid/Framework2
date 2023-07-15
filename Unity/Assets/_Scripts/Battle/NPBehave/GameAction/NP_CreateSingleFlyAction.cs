@@ -9,6 +9,8 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("飞行物prefab")]
     public BlackboardOrValue_String PrefabPath = new BlackboardOrValue_String();
 
+    public DefaultColliderNode DefaultColliderNode = new DefaultColliderNode();
+
     [LabelText("飞行物出生点")]
     public BlackboardOrValue_String HangPoint = new BlackboardOrValue_String();
 
@@ -17,9 +19,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     
     [LabelText("飞行物的id")]
     public NP_BlackBoardRelationData<long> FlyObjUnit = new ();
-    
-    [LabelText("是否在飞行途中能打中物体")]
-    public BlackboardOrValue_Bool IsFlyingTrigger = new();
     
     [LabelText("射中的目标")]
     public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
@@ -36,15 +35,14 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     [LabelText("发射朝向的物体")]
     [ShowIf("@IsFlyToTarget.GetEditorValue()")]
-    [PropertyTooltip("aaaaaa")]
     public BlackboardOrValue_Long FlyToTarget = new();
 
     [LabelText("发射方向")]
     [HideIf("@IsFlyToTarget.GetEditorValue()")]
-    public BlackboardOrValue_Vector3 FlyDir;
+    public BlackboardOrValue_Vector3 FlyDir = new();
 
     [LabelText("飞行的距离")]
-    public BlackboardOrValue_Float FlyDis;
+    public BlackboardOrValue_Float FlyDis = new();
 
     public override Action GetActionToBeDone()
     {
@@ -54,6 +52,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     private void Create()
     {
-        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree);
+        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree, DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
     }
 }

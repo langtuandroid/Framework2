@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class EditorVisibleUnit : MonoBehaviour
 {
-    private Unit unit;
+#if UNITY_EDITOR
+    public Unit unit { get; private set; }
     [ShowInInspector]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout, IsReadOnly = true)]
     private Dictionary<Type,Entity> components => unit?.Components;
@@ -16,7 +17,6 @@ public class EditorVisibleUnit : MonoBehaviour
         this.unit = unit;
     }
     
-#if UNITY_EDITOR
     private void Update()
     {
         if(!transform.hasChanged) return;
