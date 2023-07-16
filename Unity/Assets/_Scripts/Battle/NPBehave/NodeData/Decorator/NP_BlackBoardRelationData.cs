@@ -59,16 +59,14 @@ public class NP_BlackBoardKeyData
 /// <summary>
 /// 与黑板节点相关的数据
 /// </summary>
-[BoxGroup("黑板数据配置"), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
+[BoxGroup("", false), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
 [HideLabel]
 [HideReferenceObjectPicker]
 public class NP_BlackBoardRelationData<T>
 {
-    [LabelWidth(60)]
     [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnBBKeySelected")]
     public string BBKey;
 
-    [LabelWidth(120)]
     [LabelText("把值写入黑板或对比")] public bool WriteOrCompareToBB;
 
     [ShowIf("WriteOrCompareToBB")] public ANP_BBValue NP_BBValue;
@@ -90,6 +88,13 @@ public class NP_BlackBoardRelationData<T>
 
             return default;
         }
+    }
+
+    [OnInspectorGUI]
+    private void OnInspectorGUI()
+    {
+        var rect = UnityEditor.EditorGUILayout.GetControlRect(false, 1);
+        UnityEditor.EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
     }
 
     private IEnumerable<string> GetBBKeys()

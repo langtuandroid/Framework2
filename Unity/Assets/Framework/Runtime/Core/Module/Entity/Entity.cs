@@ -719,6 +719,7 @@ namespace Framework
             component.Id = this.Id;
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component);
+            EventSystem.Instance.Start(component);
 
             if (this is IAddComponentSystem)
             {
@@ -740,6 +741,7 @@ namespace Framework
             component.Id = this.Id;
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component);
+            EventSystem.Instance.Start(component);
 
             if (this is IAddComponentSystem)
             {
@@ -761,6 +763,7 @@ namespace Framework
             component.Id = this.Id;
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1);
+            EventSystem.Instance.Start(component);
 
             if (this is IAddComponentSystem)
             {
@@ -782,6 +785,7 @@ namespace Framework
             component.Id = this.Id;
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1, p2);
+            EventSystem.Instance.Start(component);
 
             if (this is IAddComponentSystem)
             {
@@ -804,6 +808,7 @@ namespace Framework
             component.Id = this.Id;
             component.ComponentParent = this;
             EventSystem.Instance.Awake(component, p1, p2, p3);
+            EventSystem.Instance.Start(component);
 
             if (this is IAddComponentSystem)
             {
@@ -820,6 +825,7 @@ namespace Framework
             child.Parent = this;
 
             EventSystem.Instance.Awake(child);
+            EventSystem.Instance.Start(child);
             return child;
         }
 
@@ -831,6 +837,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -842,6 +849,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -853,6 +861,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a, b);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -864,6 +873,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a, b, c);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -876,6 +886,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a, b, c, d);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -886,6 +897,7 @@ namespace Framework
             component.Id = id;
             component.Parent = this;
             EventSystem.Instance.Awake(component);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -897,6 +909,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -908,6 +921,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a, b);
+            EventSystem.Instance.Start(component);
             return component;
         }
 
@@ -920,6 +934,7 @@ namespace Framework
             component.Parent = this;
 
             EventSystem.Instance.Awake(component, a, b, c);
+            EventSystem.Instance.Start(component);
             return component;
         }
     }

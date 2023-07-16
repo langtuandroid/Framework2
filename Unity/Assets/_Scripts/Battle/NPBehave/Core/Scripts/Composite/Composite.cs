@@ -28,6 +28,10 @@ namespace NPBehave
             }
         }
 
+        public Node GetChild(int index)
+        {
+            return Children[index];
+        }
 
 #if UNITY_EDITOR
         public override Node[] DebugChildren

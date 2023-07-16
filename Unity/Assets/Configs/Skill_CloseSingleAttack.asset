@@ -249,6 +249,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 11|Framework.NP_BBValue_Int, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -443,6 +446,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 20|Framework.NP_BBValue_Long, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -644,6 +650,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 30|Framework.NP_BBValue_String, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 6
       Data: 
@@ -805,6 +814,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 37|Framework.NP_BBValue_String, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 6
       Data: 
@@ -823,6 +835,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 38|Framework.NP_BBValue_Int, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -841,6 +856,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 39|Framework.NP_BBValue_Long, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -859,6 +877,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 40|Framework.NP_BBValue_Int, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 3
       Data: -1
@@ -877,6 +898,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 41|Framework.NP_BBValue_String, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 6
       Data: 

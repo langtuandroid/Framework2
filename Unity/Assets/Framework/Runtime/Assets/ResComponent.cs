@@ -36,26 +36,26 @@ namespace Framework
         public IProgressResult<float, T> InstantiateAsync<T>(string key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
-            return InstantiateAsync<T>(key, parent, instantiateInWorldSpace);
+            return res.InstantiateAsync<T>(key, parent, instantiateInWorldSpace);
         }
 
         public IProgressResult<float, T> InstantiateAsync<T>(string key, Vector3 localPosition, Quaternion localRotation,
             Transform parent = null)
         {
-            return InstantiateAsync<T>(key, localPosition, localRotation, parent);
+            return res.InstantiateAsync<T>(key, localPosition, localRotation, parent);
         }
 
         public IProgressResult<float, GameObject> InstantiateAsync(string key, Vector3 localPosition,
             Quaternion localRotation,
             Transform parent = null)
         {
-            return InstantiateAsync(key, localPosition, localRotation, parent);
+            return res.InstantiateAsync(key, localPosition, localRotation, parent);
         }
 
         public IProgressResult<float, GameObject> InstantiateAsync(string key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
-            return InstantiateAsync(key, parent, instantiateInWorldSpace);
+            return res.InstantiateAsync(key, parent, instantiateInWorldSpace);
         }
 
         public IProgressResult<float, string> LoadScene(string path, LoadSceneMode loadSceneMode = LoadSceneMode.Single,
@@ -76,7 +76,7 @@ namespace Framework
 
         public GameObject Instantiate(string key, Transform parent = null, bool instantiateInWorldSpace = false)
         {
-            return Instantiate(key, parent, instantiateInWorldSpace);
+            return res.Instantiate(key, parent, instantiateInWorldSpace);
         }
 
         public T LoadAsset<T>(string key) where T : Object

@@ -7,13 +7,6 @@
     "AssetList": [
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/B2D_CollisionRelationConfig.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
             "AssetPath": "Assets/Res/Configs/BehaveConfig.json",
             "AssetTags": [],
             "BundleID": 0,
@@ -42,6 +35,13 @@
         },
         {
             "Address": "",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/AI_FarSingleAttack.bytes",
+            "AssetTags": [],
+            "BundleID": 1,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
             "AssetPath": "Assets/Res/Configs/BehaveConfigs/Collider_DefaultColliderBehave.bytes",
             "AssetTags": [],
             "BundleID": 1,
@@ -49,14 +49,28 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/ColliderConfig/ColliderData.bytes",
+            "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_CloseSingleAttack.bytes",
             "AssetTags": [],
             "BundleID": 2,
             "DependIDs": []
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_CloseSingleAttack.bytes",
+            "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_FarSingleAttack.bytes",
+            "AssetTags": [],
+            "BundleID": 2,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/Player.prefab",
+            "AssetTags": [],
+            "BundleID": 3,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/Stone.prefab",
             "AssetTags": [],
             "BundleID": 3,
             "DependIDs": []
@@ -112,7 +126,7 @@
             "ReferenceIDs": []
         },
         {
-            "BundleName": "assets_res_configs_colliderconfig.bundle",
+            "BundleName": "assets_res_configs_skillconfigs.bundle",
             "FileHash": "00000000000000000000000000000000",
             "FileCRC": "00000000",
             "FileSize": 0,
@@ -122,7 +136,7 @@
             "ReferenceIDs": []
         },
         {
-            "BundleName": "assets_res_configs_skillconfigs.bundle",
+            "BundleName": "assets_res.bundle",
             "FileHash": "00000000000000000000000000000000",
             "FileCRC": "00000000",
             "FileSize": 0,

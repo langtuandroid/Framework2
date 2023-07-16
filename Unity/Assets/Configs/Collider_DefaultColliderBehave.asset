@@ -203,6 +203,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 10|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 4
       Data: 10
@@ -407,6 +410,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 20|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 5
       Data: false
@@ -610,6 +616,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 31|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 4
       Data: 10
@@ -628,6 +637,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 32|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 5
       Data: false
@@ -875,6 +887,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 48|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 5
       Data: false
@@ -917,6 +932,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 51|Framework.NP_BBValue_List_Long, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 7
       Data: 52|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1193,6 +1211,9 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 66|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 5
       Data: false
@@ -1324,6 +1345,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 73|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 4
       Data: 0.1
@@ -1342,6 +1366,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 74|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 5
       Data: false
@@ -1360,6 +1387,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 75|Framework.NP_BBValue_List_Long, Game.Runtime
+    - Name: Required
+      Entry: 5
+      Data: false
     - Name: Value
       Entry: 7
       Data: 76|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib

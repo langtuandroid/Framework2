@@ -1,11 +1,19 @@
 ﻿using System;
 using Framework;
 using Sirenix.OdinInspector;
-using Unity.Mathematics;
+using UnityEngine;
 
 [Title("创建单一飞行物", TitleAlignment = TitleAlignments.Centered)]
 public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 {
+    [BoxGroup("/传回的数据")]
+    [LabelText("飞行物的id")]
+    public NP_BlackBoardRelationData<long> FlyObjUnitKey = new();
+
+    [BoxGroup("/传回的数据")]
+    [LabelText("飞行的终点")]
+    public NP_BlackBoardRelationData<Vector3> EndPointKey = new();
+
     [LabelText("飞行物prefab")]
     public BlackboardOrValue_String PrefabPath = new BlackboardOrValue_String();
 
@@ -16,19 +24,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     [LabelText("飞行速度")]
     public BlackboardOrValue_Float Speed = new BlackboardOrValue_Float(1);
-    
-    [LabelText("飞行物的id")]
-    public NP_BlackBoardRelationData<long> FlyObjUnit = new ();
-    
-    [LabelText("射中的目标")]
-    public NP_BlackBoardRelationData<long> TriggeredUnit = new ();
-
-    [LabelText("是否跟随目标")]
-    public BlackboardOrValue_Bool IsFollowTarget = new();
-
-    [LabelText("跟随的目标")]
-    [ShowIf("@IsFollowTarget.GetEditorValue()")]
-    public NP_BlackBoardRelationData<long> FollowTarget = new();
     
     [LabelText("是否朝某个物体发射")]
     public BlackboardOrValue_Bool IsFlyToTarget = new();
@@ -52,6 +47,7 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     private void Create()
     {
-        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree, DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
+        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree,
+            DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
     }
 }

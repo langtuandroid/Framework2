@@ -35,10 +35,9 @@ public class UnitFactory
 
         unit.AddComponent<FindTargetComponent>();
         unit.AddComponent<GameObjectComponent>();
-        var colliderUnit = CreateUnit(scene, 0);
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
-        colliderUnit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs); 
+        unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs); 
         return unit;
     }
     
@@ -62,10 +61,9 @@ public class UnitFactory
 
         unit.AddComponent<GameObjectComponent>();
 
-        var colliderUnit = CreateUnit(scene, 0);
         var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
-        colliderUnit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
+        unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
         return unit;
     }
 
@@ -161,7 +159,7 @@ public class UnitFactory
         colliderArgs.CollisionHandlerName = nameof(DefaultCollisionHandler);
         colliderArgs.BelongToUnit = belongToUnit;
         colliderArgs.UserData = defaultColliderData;
-        var unit = CreateCollider(scene, collider.gameObject, 10001, colliderArgs,
+        var unit = CreateCollider(scene, collider.gameObject, 10000, colliderArgs,
             out var behave);
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
         behave.GetBlackboard().Set("Duration [10000]", duration);

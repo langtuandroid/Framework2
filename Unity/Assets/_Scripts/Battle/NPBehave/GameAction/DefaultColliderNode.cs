@@ -4,7 +4,8 @@ using NPBehave;
 using Sirenix.OdinInspector;
 
 [HideReferenceObjectPicker]
-[LabelText("碰撞数据")]
+[HideLabel]
+[BoxGroup("碰撞数据")]
 public class DefaultColliderNode
 {
     [LabelText("是否只能触发某一个目标")] public BlackboardOrValue_Bool IsOnlyOneTarget = new BlackboardOrValue_Bool(false);

@@ -125,8 +125,8 @@ namespace Framework
             // 额外的行为树需要用另外一个行为树的MainNode替换临时节点
             foreach (var extraBehave in extraBehaves)
             {
-                var oldNode = npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
-                oldNode.ParentNode.ChangeChild(oldNode, extraBehave.Root.MainNode);
+                var extraNode = (Composite)npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
+                extraNode.ChangeChild(extraNode.GetChild(1), extraBehave.Root.MainNode);
 
                 NP_DataSupportor tmpData = extraBehave.DataSupportor;
                 foreach (var bbValue in extraBehave.Root.Blackboard.GetDatas())
@@ -284,8 +284,8 @@ namespace Framework
             // 把子行为树的数据添加到父行为树中
             foreach (var extraBehave in extraBehaves)
             {
-                var oldNode = npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
-                oldNode.ParentNode.ChangeChild(oldNode, extraBehave.Root.MainNode);
+                var extraNode = (Composite)npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
+                extraNode.ChangeChild(extraNode.GetChild(1), extraBehave.Root.MainNode);
 
                 NP_DataSupportor tmpData = extraBehave.DataSupportor;
                 foreach (var bbValue in tmpData.NP_BBValueManager)

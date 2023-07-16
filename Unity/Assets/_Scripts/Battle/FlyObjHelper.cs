@@ -13,7 +13,6 @@ public static class FlyObjHelper
         string prefabPath = action.PrefabPath.GetValue(blackboard);
         string bornPath = action.HangPoint.GetValue(blackboard);
         float speed = action.Speed.GetValue(blackboard);
-        bool isFollowTarget = action.IsFollowTarget.GetValue(blackboard);
         bool isFlyToTarget = action.IsFlyToTarget.GetValue(blackboard);
         Transform rootTrans = runtimeTree.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.transform;
         if (!string.IsNullOrEmpty(bornPath))
@@ -22,31 +21,28 @@ public static class FlyObjHelper
         }
 
         var objUnit = UnitFactory.CreateUnit(scene, 0);
+        action.FlyObjUnitKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), objUnit.Id);
         var selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath, rootTrans);
         objUnit.AddComponent<MoveComponent>();
         objUnit.AddComponent<GameObjectComponent>().GameObject = selfTrans;
-        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject, objUnit.Id, 0, false,
+        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject,
+            runtimeTree.BelongToUnit.Id, 0, false,
             colliderData);
-        if (isFollowTarget)
+        Vector3 endPoint;
+        if (isFlyToTarget)
         {
-            objUnit.AddComponent<FollowTargetComponent>()
-                .Follow(action.FollowTarget.GetBlackBoardValue(blackboard), 0.1f);
+            var targetUnit = scene.GetComponent<UnitComponent>().Get(action.FlyToTarget.GetValue(blackboard));
+            endPoint = math.normalize(targetUnit.Position - runtimeTree.BelongToUnit.Position);
         }
         else
         {
-            Vector3 dir;
-            if (isFlyToTarget)
-            {
-                var targetUnit = scene.GetComponent<UnitComponent>().Get(action.FlyToTarget.GetValue(blackboard));
-                dir = math.normalize(targetUnit.Position - runtimeTree.BelongToUnit.Position);
-            }
-            else
-            {
-                dir = (action.FlyDir.GetValue(blackboard) - (Vector3)runtimeTree.BelongToUnit.Position).normalized;
-            }
-
-            objUnit.GetComponent<MoveComponent>().MoveTo(dir * action.FlyDis.GetValue(blackboard), speed);
+            endPoint = (action.FlyDir.GetValue(blackboard) - (Vector3)runtimeTree.BelongToUnit.Position).normalized;
         }
+
+        endPoint *= action.FlyDis.GetValue(blackboard);
+        action.EndPointKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), endPoint);
+
+        objUnit.GetComponent<MoveComponent>().MoveTo(endPoint, speed);
     }
 }

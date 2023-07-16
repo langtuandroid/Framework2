@@ -27,6 +27,7 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
                 gameObject.GetOrAddComponent<EditorVisibleUnit>().SetUnit(parent as Unit);
 #endif
             }
+
         }
     }
     

@@ -15,6 +15,6 @@ public class NP_PlayAnimAction : NP_ClassForStoreAction
 
     private void PlayAnim()
     {
-        BelongToUnit.GetComponent<PlayAnimComponent>().PlayAnim(AnimName.GetValue(BelongtoRuntimeTree.GetBlackboard()));
+//        BelongToUnit.GetComponent<PlayAnimComponent>().PlayAnim(AnimName.GetValue(BelongtoRuntimeTree.GetBlackboard()));
     }
 }

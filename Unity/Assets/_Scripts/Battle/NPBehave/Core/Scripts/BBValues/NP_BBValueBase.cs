@@ -53,6 +53,8 @@ public interface IBlackboardOrValue
 }
 
 [Serializable]
+[BoxGroup("", false)]
+[PropertySpace(5, 5)]
 public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
 {
     [ShowIf("@UseBlackboard")]
@@ -64,9 +66,8 @@ public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
     public T OriginValue;
 
     [SerializeField]
-    [LabelWidth(60)]
     [LabelText("使用黑板")]
-    public bool UseBlackboard = true;
+    public bool UseBlackboard = false;
 
     protected ABlackboardOrValue()
     {
@@ -101,6 +102,17 @@ public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
         }
 
         return OriginValue;
+    }
+
+    [OnInspectorGUI]
+    private void OnInspectorGUI()
+    {
+        var rect = UnityEditor.EditorGUILayout.GetControlRect(false, 1);
+        UnityEditor.EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+    }
+
+    private void AA()
+    {
     }
 #endif
 } 

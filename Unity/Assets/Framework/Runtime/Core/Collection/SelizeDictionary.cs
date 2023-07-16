@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,6 +10,11 @@ namespace Framework
     [Serializable]
     public class SerializeDictionary<TKey,TValue>
     {
+        static SerializeDictionary()
+        {
+            MongoHelper.RegisterStruct<SerializeDicKeyValue<TKey, TValue>>();
+        }
+        
         [BoxGroup("Dictionary/添加item")]
         [PropertyOrder(1)]
         [InfoBox("有相同的key",InfoMessageType.Error, visibleIfMemberName: "HasSameKey")]
@@ -59,6 +64,7 @@ namespace Framework
         [ShowInInspector]
         [SerializeField]
         [ListDrawerSettings(HideAddButton = true)]
+        [BsonElement]
         [OnValueChanged(nameof(OnListChanged))]
         private List<SerializeDicKeyValue<TKey, TValue>> list = new List<SerializeDicKeyValue<TKey, TValue>>();
 

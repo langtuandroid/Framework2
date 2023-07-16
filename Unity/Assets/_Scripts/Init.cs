@@ -17,6 +17,10 @@ public class Init : MonoBehaviour
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Game).Assembly));
         EventSystem.Instance.Add(AssemblyHelper.GetAssemblyTypes(typeof(Init).Assembly));
         EventSystem.Instance.InitType();
+#if !UNITY_EDITOR
+        MongoHelper.Init();
+        MongoGameRegister.RegisterStruct();
+#endif
         Game.AddSingleton<MainThreadSynchronizationContext>();
         Game.AddSingleton<TimeInfo>();
         Game.AddSingleton<ObjectPool>();

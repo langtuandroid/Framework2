@@ -95,8 +95,6 @@ namespace Framework
             RegisterStruct<float3>();
             RegisterStruct<float4>();
             RegisterStruct<quaternion>();
-            RegisterStruct<VTD_Id>();
-            RegisterStruct<VTD_EventId>();
             RegisterStruct<Vector2>();
             RegisterStruct<Vector3>();
             RegisterStruct<Vector4>();

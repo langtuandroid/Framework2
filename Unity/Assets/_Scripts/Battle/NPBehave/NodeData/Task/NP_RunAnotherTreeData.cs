@@ -16,10 +16,12 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
 
     [LabelText("从那边拿到的数据")] public SerializeDictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData> GetValue = new();
 
-    private Task runTask;
+    private Sequence sequence;
+    private NP_RuntimeTree runtimeTree;
     
     public override ExtraBehave CreateTree(Unit unit, NP_RuntimeTree runtimeTree)
     {
+        this.runtimeTree = runtimeTree;
         ExtraBehave behave = new ExtraBehave();
         behave.PassValue = PassValue.Dic;
         behave.GetValue = GetValue.Dic;
@@ -29,14 +31,28 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
 
     public override Node NP_GetNode()
     {
-        if (runTask == null)
-        {
-            runTask = new Action(EmptyFunc);
-        }
-
-        return runTask;
+        if (sequence == null) sequence = new Sequence(new Action(SetPassGetValue), new Action(EmptyFunc));
+        return sequence;
     }
 
+    private void EmptyFunc()
+    {
+    }
+
+    private void SetPassGetValue()
+    {
+        var blackboard = runtimeTree.GetBlackboard();
+        foreach (var passItem in PassValue.Dic)
+        {
+            var value = passItem.Key.GetObjValue(blackboard);
+            blackboard.Set(passItem.Value.BBKey,
+                NP_BBValueHelper.AutoCreateNPBBValueFromTValue(value, value.GetType()));
+        }
+
+        foreach (var getItem in GetValue.Dic) blackboard.Set(getItem.Key.BBKey, blackboard.Get(getItem.Value.BBKey));
+    }
+
+#if UNITY_EDITOR
     private void OnConfigIdChanged()
     {
         foreach (var value in PassValue.Dic)
@@ -93,9 +109,6 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
         }
     }
     
-    private void EmptyFunc()
-    {
-    }
 
     private void CustomAddGetValue(List<SerializeDicKeyValue<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData>> obj)
     {
@@ -121,4 +134,5 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
         PassValue.CustomAddFunc += CustomAddPassValue;
         GetValue.CustomAddFunc += CustomAddGetValue;
     }
+#endif
 }
