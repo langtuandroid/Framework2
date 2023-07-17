@@ -37,7 +37,8 @@ public class UniversalToolbarView : ToolbarView
     {
         m_MiniMap = miniMap;
         //默认隐藏小地图，防止Graph内容过多而卡顿
-        m_MiniMap.visible = false;
+        if (m_MiniMap != null)
+            m_MiniMap.visible = false;
 
         m_BaseGraph = baseGraph;
         m_BaseGraphView = graphView;
@@ -67,8 +68,9 @@ public class UniversalToolbarView : ToolbarView
             
         //AddSeparator(5);
 
-        AddToggle(new GUIContent("", m_MiniMapToggleIcon, "开/关小地图"), m_MiniMap.visible,
-            v => m_MiniMap.visible = v);
+        if (m_MiniMap != null)
+            AddToggle(new GUIContent("", m_MiniMapToggleIcon, "开/关小地图"), m_MiniMap.visible,
+                v => m_MiniMap.visible = v);
 
         //AddSeparator(5);
 

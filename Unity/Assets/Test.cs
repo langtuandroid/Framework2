@@ -10,6 +10,7 @@ public class Test : MonoBehaviour
 {
     private Clock clock;
     private Blackboard blackboard;
+    public Root root;
 
     [Button]
     private void Start()
@@ -28,12 +29,12 @@ public class Test : MonoBehaviour
         var service = new Service(0.5f, () => { blackboard.Set("foo", !blackboard.Get<bool>("foo"), true); }, selector);
         var behaviorTree = new Root(blackboard, clock, service);
         // behaviorTree.Start();
-        var behaviorTree1 = new Root(blackboard, clock, new Parallel(Parallel.Policy.ALL, Parallel.Policy.ALL,
+        root = new Root(blackboard, clock, new Parallel(Parallel.Policy.ALL, Parallel.Policy.ALL,
             bbc, new Sequence(
                 new Wait(5), action2
             )
         ));
-        behaviorTree1.Start();
+        root.Start();
     }
 
     private void Update()
