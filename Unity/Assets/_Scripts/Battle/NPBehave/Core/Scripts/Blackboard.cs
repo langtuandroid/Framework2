@@ -26,6 +26,9 @@ namespace NPBehave
             }
         }
 
+        private static int aa;
+        private int id;
+
         private Clock m_Clock;
         private Dictionary<string, ANP_BBValue> m_Data = new Dictionary<string, ANP_BBValue>();
 
@@ -58,6 +61,8 @@ namespace NPBehave
         {
             this.m_ParentBlackboard = null;
             this.m_Clock = mClock;
+            id = aa++;
+            Log.Msg($"创建了黑板 {id}");
             NotifiyObserversActionCache = NotifiyObservers;
         }
 
@@ -214,6 +219,7 @@ namespace NPBehave
 
         public void AddObserver(string key, System.Action<Type, ANP_BBValue> observer)
         {
+            Log.Msg($"添加观察{key}  id={id}");
             List<System.Action<Type, ANP_BBValue>> observers = GetObserverList(this.m_Observers, key);
             if (!this.m_IsNotifiyng)
             {

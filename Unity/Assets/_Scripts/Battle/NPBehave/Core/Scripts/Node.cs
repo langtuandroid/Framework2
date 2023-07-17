@@ -18,7 +18,7 @@ namespace NPBehave
             get { return currentState; }
         }
 
-        public Root RootNode;
+        public Root RootNode { get; private set; }
 
         private Container parentNode;
 

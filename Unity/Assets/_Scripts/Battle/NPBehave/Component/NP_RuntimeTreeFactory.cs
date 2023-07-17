@@ -9,6 +9,7 @@ namespace Framework
         public static NPBehave.Root LoadExtraTree(Unit unit, NP_RuntimeTree runtimeTree, int behaveConfigId,
             ExtraBehave outBehave)
         {
+            Log.Msg("创建了行为树", behaveConfigId);
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
                 .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).NPBehaveId);
             outBehave.DataSupportor = npDataSupportor;
@@ -168,6 +169,7 @@ namespace Framework
         /// <returns></returns>
         public static NP_RuntimeTree CreateNpRuntimeTree(Unit unit, int behaveConfigId)
         {
+            Log.Msg("创建了行为树", behaveConfigId);
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
                 .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).NPBehaveId);
 
@@ -284,7 +286,11 @@ namespace Framework
             // 把子行为树的数据添加到父行为树中
             foreach (var extraBehave in extraBehaves)
             {
+                // 默认子行为树会变成一个Sequence，下面有两个节点，第一个节点是PassValue和GetValue赋值
+                // 第二个节点是一个空节点来替换子行为树的MainNode
                 var extraNode = (Composite)npDataSupportor.NP_DataSupportorDic[extraBehave.LinkedNodeId].NP_GetNode();
+                // 需要把子行为树的Root改成父行为树的Root
+                extraBehave.Root.MainNode.SetRoot(root);
                 extraNode.ChangeChild(extraNode.GetChild(1), extraBehave.Root.MainNode);
 
                 NP_DataSupportor tmpData = extraBehave.DataSupportor;

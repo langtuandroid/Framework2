@@ -44,6 +44,7 @@ public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
             ? Target2Pos.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())
             : BelongToUnit.Domain.GetComponent<UnitComponent>()
                 .Get(Target2Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
-        return math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
+        var result = math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
+        return result;
     }
 }
