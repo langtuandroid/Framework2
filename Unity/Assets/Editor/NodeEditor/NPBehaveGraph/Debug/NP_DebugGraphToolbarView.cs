@@ -14,6 +14,6 @@ public class NP_DebugGraphToolbarView : UniversalToolbarView
     {
         base.AddButtons();
         AddButton(new GUIContent("选择"),
-            () => { (m_BaseGraph as NP_DebugGraph).Init(Selection.activeGameObject); }, false);
+            () => { (m_BaseGraphView as NP_DebugGraphView).Init(GameObject.Find("UnitRoot")); }, false);
     }
 }
