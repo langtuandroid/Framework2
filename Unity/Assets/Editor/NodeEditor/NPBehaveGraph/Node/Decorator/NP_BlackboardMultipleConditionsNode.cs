@@ -14,4 +14,9 @@ public class NP_BlackboardMultipleConditionsNode : NP_DecoratorNodeBase
     {
         return NP_BlackboardMultipleConditionsNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_BlackboardMultipleConditionsNodeData = (NP_BlackboardMultipleConditionsNodeData)data;
+    }
 }

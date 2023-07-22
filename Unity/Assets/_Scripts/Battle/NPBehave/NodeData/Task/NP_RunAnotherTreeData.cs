@@ -31,7 +31,9 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
 
     public override Node NP_GetNode()
     {
-        if (sequence == null) sequence = new Sequence(new Action(SetPassGetValue), new Action(EmptyFunc));
+        if (sequence == null)
+            sequence = new Sequence(new Action(SetPassGetValue, nameof(SetPassGetValue)),
+                new Action(EmptyFunc, nameof(EmptyFunc)));
         return sequence;
     }
 

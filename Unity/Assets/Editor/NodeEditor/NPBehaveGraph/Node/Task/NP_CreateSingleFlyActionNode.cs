@@ -12,4 +12,9 @@ public class NP_CreateSingleFlyActionNode : NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_ActionNodeData = (NP_ActionNodeData)data;
+    }
 }

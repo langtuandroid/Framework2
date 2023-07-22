@@ -15,5 +15,7 @@ public class NP_DebugGraphToolbarView : UniversalToolbarView
         base.AddButtons();
         AddButton(new GUIContent("选择"),
             () => { (m_BaseGraphView as NP_DebugGraphView).Init(GameObject.Find("UnitRoot")); }, false);
+        AddButton(new GUIContent("自动布局"),
+            () => { (m_BaseGraphView as NP_DebugGraphView).AutoSortLayout(); }, false);
     }
 }

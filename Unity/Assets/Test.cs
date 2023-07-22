@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Action = NPBehave.Action;
+using IAsyncResult = Framework.IAsyncResult;
+using Parallel = NPBehave.Parallel;
 using Root = NPBehave.Root;
 
 public class Test : MonoBehaviour
@@ -13,12 +19,14 @@ public class Test : MonoBehaviour
     public Root root;
 
     [Button]
-    private void Start()
+    private async void Start()
     {
+        Game.AddSingleton<ObjectPool>();
+        Game.AddSingleton<TimerComponent>();
         clock = new Clock();
         blackboard = new Blackboard(clock);
-        var action1 = new Action(() => Debug.Log("foo"));
-        var action2 = new Action(() => Debug.Log("bar"));
+        var action1 = new Action(() => Debug.Log("foo"), string.Empty);
+        var action2 = new Action(() => Debug.Log("bar"), string.Empty);
         var sequence1 = new Sequence(action1, new WaitUntilStopped());
         var sequence2 = new Sequence(action2, new WaitUntilStopped());
         var bbc = new BlackboardCondition("foo", Operator.IS_EQUAL, new NP_BBValue_Bool() { Value = true },
@@ -42,4 +50,9 @@ public class Test : MonoBehaviour
         clock.Update(Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space)) blackboard.Set("foo", true, true);
     }
+
+    private async IAsyncResult EE()
+    {
+    }
+    
 }

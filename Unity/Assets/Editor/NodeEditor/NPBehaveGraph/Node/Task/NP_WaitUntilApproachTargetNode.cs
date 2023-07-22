@@ -14,5 +14,10 @@ public class NP_WaitUntilApproachTargetNode : NP_TaskNodeBase
     public override NP_NodeDataBase NP_GetNodeData()
      {
          return NP_WaitNodeData;
-     }       
+     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_WaitNodeData = (NP_WaitUntilNodeData)data;
+    }
 }

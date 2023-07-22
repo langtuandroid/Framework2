@@ -14,4 +14,9 @@ public class NP_ServiceNode: NP_DecoratorNodeBase
     {
         return NP_ServiceNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_ServiceNodeData = (NP_ServiceNodeData)data;
+    }
 }

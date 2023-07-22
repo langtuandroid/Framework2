@@ -11,9 +11,8 @@ namespace Plugins.NodeEditor
         /// </summary>
         public int Level;
 
-        public virtual NP_NodeDataBase NP_GetNodeData()
-        {
-            return null;
-        }
+        public abstract NP_NodeDataBase NP_GetNodeData();
+
+        public abstract void Debug_SetNodeData(object data);
     }
 }

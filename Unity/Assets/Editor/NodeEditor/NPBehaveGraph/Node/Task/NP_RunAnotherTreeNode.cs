@@ -6,10 +6,15 @@ public class NP_RunAnotherTreeNode : NP_TaskNodeBase
 {
     public override string name => "运行其他行为树";
 
-    public NP_RunAnotherTreeData NP_WaitNodeData = new ();
+    public NP_RunAnotherTreeData NpRunAnotherTreeData = new ();
 
     public override NP_NodeDataBase NP_GetNodeData()
     {
-        return NP_WaitNodeData;
+        return NpRunAnotherTreeData;
+    }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NpRunAnotherTreeData = (NP_RunAnotherTreeData)data;
     }
 }

@@ -141,5 +141,12 @@ namespace NPBehave
                 return Name;
             }
         }
+
+        public object DebugData { get; private set; }
+
+        public void SetDebugData(object data)
+        {
+            DebugData = data;
+        }
     }
 }

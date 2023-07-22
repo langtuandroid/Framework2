@@ -44,4 +44,9 @@ public class NP_RootNode : NP_NodeBase
     {
         return this.MRootNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        MRootNodeData = (NP_RootNodeData)data;
+    }
 }

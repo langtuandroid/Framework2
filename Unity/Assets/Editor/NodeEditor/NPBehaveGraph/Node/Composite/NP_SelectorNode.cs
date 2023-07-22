@@ -16,4 +16,8 @@ public class NP_SelectorNode: NP_CompositeNodeBase
     {
         return NP_SelectorNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+    }
 }

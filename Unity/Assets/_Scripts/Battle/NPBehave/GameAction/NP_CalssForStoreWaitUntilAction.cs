@@ -28,7 +28,7 @@ public class NP_CalssForStoreWaitUntilAction
         return true;
     }
 
-    public WaitUntil _CreateNPBehaveAction()
+    public WaitUntil _CreateNPBehaveAction(string debugName)
     {
         return new WaitUntil(OnStart, UntilFunc);
     }

@@ -14,4 +14,9 @@ public class NP_ParallelNode : NP_CompositeNodeBase
     {
         return NP_ParallelNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_ParallelNodeData = (NP_ParallelNodeData)data;
+    }
 }

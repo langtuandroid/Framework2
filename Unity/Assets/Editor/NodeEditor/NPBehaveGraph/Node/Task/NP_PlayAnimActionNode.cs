@@ -12,5 +12,10 @@ public class NP_PlayAnimActionNode : NP_TaskNodeBase
      public override NP_NodeDataBase NP_GetNodeData()
      {
          return NP_ActionNodeData;
-     }          
+     }
+
+     public override void Debug_SetNodeData(object data)
+     {
+         NP_ActionNodeData = (NP_ActionNodeData)data;
+     }
 }

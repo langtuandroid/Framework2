@@ -12,4 +12,9 @@ public class NP_WaitUntilStoppedNode: NP_TaskNodeBase
     {
         return NpWaitUntilStoppedData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NpWaitUntilStoppedData = (NP_WaitUntilStoppedData)data;
+    }
 }

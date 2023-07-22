@@ -52,7 +52,7 @@ namespace GraphProcessor
                 e.StopImmediatePropagation();
                 return;
             }
-
+            
             if (!CanStartManipulation(e)) return;
 
             var graphElement = target as Port;

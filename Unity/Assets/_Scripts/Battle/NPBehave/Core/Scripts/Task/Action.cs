@@ -25,23 +25,23 @@ namespace NPBehave
         private System.Action action = null;
         private bool bWasBlocked = false;
 
-        public Action(System.Action action) : base("Action")
+        public Action(System.Action action, string debugName) : base(debugName)
         {
             this.action = action;
         }
 
-        public Action(System.Func<bool, Result> multiframeFunc) : base("Action")
+        public Action(System.Func<bool, Result> multiframeFunc, string debugName) : base(debugName)
         {
             this.multiFrameFunc = multiframeFunc;
         }
 
-        public Action(System.Func<Request, Result> multiframeFunc2) : base("Action")
+        public Action(System.Func<Request, Result> multiframeFunc2, string debugName) : base(debugName)
         {
             this.multiFrameFunc2 = multiframeFunc2;
         }
 
 
-        public Action(System.Func<bool> singleFrameFunc) : base("Action")
+        public Action(System.Func<bool> singleFrameFunc, string debugName) : base(debugName)
         {
             this.singleFrameFunc = singleFrameFunc;
         }

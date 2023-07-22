@@ -49,19 +49,19 @@ public class NP_ClassForStoreAction
         GetActionToBeDone();
         if (this.Action != null)
         {
-            return new NPBehave.Action(this.Action);
+            return new NPBehave.Action(Action, GetType().Name);
         }
 
         GetFunc1ToBeDone();
         if (this.Func1 != null)
         {
-            return new NPBehave.Action(this.Func1);
+            return new NPBehave.Action(Func1, GetType().Name);
         }
 
         GetFunc2ToBeDone();
         if (this.Func2 != null)
         {
-            return new NPBehave.Action(this.Func2);
+            return new NPBehave.Action(Func2, GetType().Name);
         }
 
         Log.Msg($"{this.GetType()} _CreateNPBehaveAction失败，因为没有找到可以绑定的委托");

@@ -12,4 +12,9 @@ public class NP_WaitNode : NP_TaskNodeBase
     {
         return NP_WaitNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_WaitNodeData = (NP_WaitNodeData)data;
+    }
 }

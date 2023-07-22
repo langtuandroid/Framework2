@@ -16,4 +16,9 @@ public class NP_SequenceNode: NP_CompositeNodeBase
     {
         return NP_SequenceNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NP_SequenceNodeData = (NP_SequenceNodeData)data;
+    }
 }

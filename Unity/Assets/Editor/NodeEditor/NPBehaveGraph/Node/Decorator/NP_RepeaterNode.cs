@@ -14,4 +14,9 @@ public class NP_RepeaterNode : NP_DecoratorNodeBase
     {
         return NpRepeaterNodeData;
     }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        NpRepeaterNodeData = (NP_RepeaterNodeData)data;
+    }
 }
