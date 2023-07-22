@@ -23,11 +23,13 @@
  */
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Framework
 {
-    public class AsyncResult : IAsyncResult, IPromise
+    [AsyncMethodBuilder(typeof(AsyncResultTaskMethodBuilder))]
+    public class AsyncResult : IAsyncResult, IPromise, ICriticalNotifyCompletion
     {
 
         private bool _done;
@@ -49,7 +51,8 @@ namespace Framework
         {
         }
 
-        public static AsyncResult Create(bool isFromPool = true, bool cancelable = true, bool isNeedDelayFreePool = false)
+        public static AsyncResult Create(bool isFromPool = false, bool cancelable = true,
+            bool isNeedDelayFreePool = false)
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
              result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
@@ -201,20 +204,12 @@ namespace Framework
             return Executors.WaitWhile(() => !IsDone);
         }
 
-        private async void FreeFormPool()
+        private void FreeFormPool()
         {
             if (!isFromPool) return;
-            if (true)
-            {
-                await TimerComponent.Instance.WaitFrameAsync();
-                Dispose();
-            }
-            else
-            {
-                Dispose();
-            }
+            Dispose();
         }
-        
+
         private static IAsyncResult voidResult;
         
         public static IAsyncResult Void()
@@ -246,7 +241,25 @@ namespace Framework
         {
             ReferencePool.Free(this);
         }
+
+        public void OnCompleted(Action continuation)
+        {
+            UnsafeOnCompleted(continuation);
+        }
+
+        public void UnsafeOnCompleted(Action continuation)
+        {
+            if (IsDone)
+            {
+                continuation?.Invoke();
+                return;
+            }
+
+            Callbackable().OnCallback((r) => { continuation(); });
+        }
+
     }
+
 
     public class AsyncResult<TResult> : AsyncResult, IAsyncResult<TResult>, IPromise<TResult>
     {
@@ -258,8 +271,9 @@ namespace Framework
         protected AsyncResult()
         {
         }
-        
-        public new static AsyncResult<TResult> Create(bool isFromPool = true, bool cancelable = true, bool isNeedDelayFreePool = false)
+
+        public new static AsyncResult<TResult> Create(bool isFromPool = false, bool cancelable = true,
+            bool isNeedDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
             result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
@@ -329,6 +343,22 @@ namespace Framework
             _synchronizable = null;
             ReferencePool.Free(_callbackable);
             _callbackable = null;
+        }
+
+        public void OnCompleted(Action continuation)
+        {
+            UnsafeOnCompleted(continuation);
+        }
+
+        public void UnsafeOnCompleted(Action continuation)
+        {
+            if (IsDone)
+            {
+                continuation?.Invoke();
+                return;
+            }
+
+            Callbackable().OnCallback((r) => { continuation(); });
         }
     }
 }

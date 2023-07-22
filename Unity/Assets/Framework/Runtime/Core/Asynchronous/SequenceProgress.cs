@@ -15,7 +15,8 @@ namespace Framework
         {
         }
 
-        public static SequenceProgress Create(bool cancelable = true, bool isFromPool = true, bool needDelayFreePool = false, params Func<IProgressResult<float>>[] allProgress)
+        public static SequenceProgress Create(bool cancelable = true, bool isFromPool = false,
+            bool needDelayFreePool = false, params Func<IProgressResult<float>>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<SequenceProgress>() : new SequenceProgress();
             result.OnCreate(cancelable, isFromPool, needDelayFreePool);

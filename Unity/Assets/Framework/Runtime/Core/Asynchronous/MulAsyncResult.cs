@@ -20,7 +20,8 @@ namespace Framework
         {
         }
 
-        public static MulAsyncResult Create(bool cancelable = true, bool isFromPool = true, bool isNeedDelayFreePool = false, params IAsyncResult[] allProgress)
+        public static MulAsyncResult Create(bool cancelable = true, bool isFromPool = false,
+            bool isNeedDelayFreePool = false, params IAsyncResult[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulAsyncResult>() : new MulAsyncResult();
             result._allProgress = RecyclableList<IAsyncResult>.Create();
@@ -108,7 +109,8 @@ namespace Framework
         {
         }
 
-        public static MulProgressResult Create(bool cancelable = true,bool isFromPool = true, bool isNeedDelayFreePool = false, params IProgressResult<float>[] allProgress)
+        public static MulProgressResult Create(bool cancelable = true, bool isFromPool = false,
+            bool isNeedDelayFreePool = false, params IProgressResult<float>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulProgressResult>() : new MulProgressResult();
             result._allProgress = RecyclableList<IProgressResult<float>>.Create();

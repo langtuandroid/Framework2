@@ -23,12 +23,14 @@
  */
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Framework
 {
     /// <summary>
     /// IAsyncResult
     /// </summary>
+    [AsyncMethodBuilder(typeof(AsyncResultTaskMethodBuilder))]
     public interface IAsyncResult : IReference , IDisposable
     {
         /// <summary>
@@ -89,6 +91,7 @@ namespace Framework
     /// IAsyncResult
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
+    [AsyncMethodBuilder(typeof(AsyncResultTaskMethodBuilder<>))]
     public interface IAsyncResult<TResult> : IAsyncResult
     {
         /// <summary>
