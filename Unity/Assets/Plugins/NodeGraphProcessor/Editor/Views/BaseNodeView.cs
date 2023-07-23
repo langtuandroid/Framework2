@@ -776,7 +776,7 @@ namespace GraphProcessor
             }
         }
 
-        protected virtual void SetNodeColor(Color color)
+        public virtual void SetNodeColor(Color color)
         {
             titleContainer.style.borderBottomColor = new StyleColor(color);
             titleContainer.style.borderBottomWidth = new StyleFloat(color.a > 0 ? 5f : 0f);

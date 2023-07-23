@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Framework;
+using Framework.Editor;
 using GraphProcessor;
 using NPBehave;
+using Plugins.NodeEditor;
 using UnityEditor;
 using UnityEngine;
-using Root = NPBehave.Root;
+using Root = Framework.Root;
 
 public class NP_DebugGraphView : UniversalGraphView
 {
@@ -18,29 +23,97 @@ public class NP_DebugGraphView : UniversalGraphView
     {
     }
 
+    private DoubleMap<Type, string> viewNode2BehaveName = new();
+    private DoubleMap<Node, BaseNodeView> behaveNode2View = new();
+    
     public void Init(GameObject gameObject)
     {
         if (gameObject == null) return;
-        var test = gameObject.GetComponent("Test");
-        var root = test.GetType().GetField("root", BindingFlags.Instance | BindingFlags.Public).GetValue(test) as Root;
-        var rootNode = AddNode(BaseNode.CreateFromType(typeof(NP_RootNode), Vector2.zero));
-        Debug.Log(rootNode.outputPortViews[0].GetHashCode());
-        var se = AddNode(BaseNode.CreateFromType(typeof(NP_SequenceNode), new Vector2(0.1f, 0.1f)));
-        AddConnect(se.inputPortViews[0], rootNode.outputPortViews[0]);
-        var log = AddNode(BaseNode.CreateFromType<NP_LogActionNode>(new Vector2(0.2f, 0.2f)));
-        AddConnect(log.inputPortViews[0], se.outputPortViews[0]);
-        var log1 = AddNode(BaseNode.CreateFromType<NP_LogActionNode>(new Vector2(0.2f, 0.2f)));
-        AddConnect(log1.inputPortViews[0], se.outputPortViews[0]);
-        var move = AddNode(BaseNode.CreateFromType<NP_MoveToTargetActionNode>(new Vector2(0.2f, 0.2f)));
-        AddConnect(move.inputPortViews[0], se.outputPortViews[0]);
-        var moveNode = move.nodeTarget as NP_MoveToTargetActionNode;
-        moveNode.Debug_SetNodeData(root.MainNode.DebugData);
-        // root.MainNode as NP_LogActionNode
-        // logNode.NP_ActionNodeData
+        if (gameObject.GetComponent<GoConnectedUnitId>() == null)
+        {
+            return;
+        }
+
+        behaveNode2View.Clear();
+
+        InitType();
+        long unitId = gameObject.GetComponent<GoConnectedUnitId>().UnitId;
+        Unit unit = Root.Instance.Scene.GetComponent<CurrentScenesComponent>().Scene.GetComponent<UnitComponent>()
+            .Get(unitId);
+        Dictionary<long, NP_RuntimeTree> trees = unit.GetComponent<NP_RuntimeTreeManager>().runtimeId2Tree;
+        KeyValuePair<long, NP_RuntimeTree> tree = trees.First();
+        Vector2 pos = Vector2.zero;
+        BaseNodeView viewNode =
+            AddNode(BaseNode.CreateFromType(viewNode2BehaveName.GetKeyByValue(tree.Value.RootNode.Name), pos));
+        (viewNode.nodeTarget as NP_NodeBase).Debug_SetNodeData(tree.Value.RootNode.DebugData);
+        behaveNode2View.Add(tree.Value.RootNode, viewNode);
+        GenAllChildren(viewNode, tree.Value.RootNode, pos);
+        Debug.Log("创建完成");
+        // AutoSortLayout();
+        Debug.Log("布局完成");
     }
 
+    public void Update()
+    {
+        behaveNode2View.ForEach((node, view) =>
+        {
+            if (node is NPBehave.Root)
+            {
+                return;
+            }
+
+            view.SetNodeColor(node.IsActive ? Color.green : Color.white);
+        });
+    }
+
+
+    private void GenAllChildren(BaseNodeView parent, Node node, Vector2 pos)
+    {
+        if (node is Container container)
+        {
+            foreach (Node child in container.DebugChildren)
+            {
+                Debug.Log("创建" + child);
+                pos += new Vector2(1f, 1f);
+                Type viewNodeType = viewNode2BehaveName.GetKeyByValue(child.Name);
+                if (viewNodeType == null)
+                {
+                    viewNodeType = typeof(NP_LogActionNode);
+                    Debug.LogWarning($"{child}找不到对应的view");
+                }
+
+                BaseNodeView viewNode =
+                    AddNode(BaseNode.CreateFromType(viewNodeType, pos));
+                (viewNode.nodeTarget as NP_NodeBase).Debug_SetNodeData(child.DebugData);
+                AddConnect(viewNode.inputPortViews[0], parent.outputPortViews[0]);
+                behaveNode2View.Add(child, viewNode);
+                GenAllChildren(viewNode, child, pos);
+            }
+        }
+    }
+
+    private void InitType()
+    {
+        if (viewNode2BehaveName.Keys.Count > 0)
+        {
+            return;
+        }
+
+        PropertyInfo nodeProp =
+            typeof(NP_NodeBase).GetProperty("CreateNodeName", BindingFlags.Instance | BindingFlags.Public);
+        foreach (Type type in GetType().Assembly.GetTypes())
+        {
+            if (!type.IsAbstract && type.IsSubclassOf(typeof(NP_NodeBase)))
+            {
+                string name = nodeProp.GetValue(Activator.CreateInstance(type)) as string;
+                viewNode2BehaveName.Add(type, name);
+            }
+        }
+    }
+    
     private void AddConnect(PortView input, PortView output)
     {
+        Debug.Log($"连接了 {input.owner.nodeTarget.GetType()} 和 {output.owner.nodeTarget.GetType()}");
         var edgeView2 = CreateEdgeView();
         edgeView2.input = input;
         edgeView2.output = output;
@@ -63,6 +136,7 @@ public class NP_DebugGraphView : UniversalGraphView
 
     private void CalculateNodeRelationShip(NP_NodeView rootNodeView)
     {
+        // Debug.Log(rootNodeView.nodeTarget);
         rootNodeView.Parent = null;
         rootNodeView.Children.Clear();
         List<PortView> outputPort = rootNodeView.outputPortViews;

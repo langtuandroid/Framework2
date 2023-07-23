@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/Log", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/Log", typeof (SkillGraph))]
@@ -13,6 +14,8 @@ public class NP_LogActionNode: NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_LogAction);
 
     public override void Debug_SetNodeData(object data)
     {

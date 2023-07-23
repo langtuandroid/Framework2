@@ -25,7 +25,8 @@ namespace Framework
                     case NodeType.Task:
                         try
                         {
-                            nodeDateBase.Value.CreateTask(unit, runtimeTree);
+                            var node = nodeDateBase.Value.CreateTask(unit, runtimeTree);
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -37,9 +38,10 @@ namespace Framework
                     case NodeType.Decorator:
                         try
                         {
-                            nodeDateBase.Value.CreateDecoratorNode(unit, runtimeTree,
+                            var node = nodeDateBase.Value.CreateDecoratorNode(unit, runtimeTree,
                                 npDataSupportor.NP_DataSupportorDic[nodeDateBase.Value.LinkedIds[0]]
                                     .NP_GetNode());
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -51,7 +53,8 @@ namespace Framework
                     case NodeType.CombineNode:
                         try
                         {
-                            nodeDateBase.Value.CreateCombineNode(unit, runtimeTree);
+                            var node = nodeDateBase.Value.CreateCombineNode(unit, runtimeTree);
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -70,7 +73,8 @@ namespace Framework
                                     .NP_GetNode());
                             }
 
-                            nodeDateBase.Value.CreateComposite(temp.ToArray());
+                            var node = nodeDateBase.Value.CreateComposite(temp.ToArray());
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -194,7 +198,8 @@ namespace Framework
                     case NodeType.Task:
                         try
                         {
-                            nodeDateBase.Value.CreateTask(unit, tempTree);
+                            var node = nodeDateBase.Value.CreateTask(unit, tempTree);
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -206,7 +211,8 @@ namespace Framework
                     case NodeType.CombineNode:
                         try
                         {
-                            nodeDateBase.Value.CreateCombineNode(unit, tempTree);
+                            var node = nodeDateBase.Value.CreateCombineNode(unit, tempTree);
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -218,9 +224,10 @@ namespace Framework
                     case NodeType.Decorator:
                         try
                         {
-                            nodeDateBase.Value.CreateDecoratorNode(unit, tempTree,
+                            var node = nodeDateBase.Value.CreateDecoratorNode(unit, tempTree,
                                 npDataSupportor.NP_DataSupportorDic[nodeDateBase.Value.LinkedIds[0]]
                                     .NP_GetNode());
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {
@@ -239,7 +246,8 @@ namespace Framework
                                     .NP_GetNode());
                             }
 
-                            nodeDateBase.Value.CreateComposite(temp.ToArray());
+                            var node = nodeDateBase.Value.CreateComposite(temp.ToArray());
+                            node.SetDebugData(nodeDateBase.Value);
                         }
                         catch (Exception e)
                         {

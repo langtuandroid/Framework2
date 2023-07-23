@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using Action = NPBehave.Action;
 
 [NodeMenuItem("NPBehave行为树/Task/修改黑板值", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/修改黑板值", typeof (SkillGraph))]
@@ -13,6 +15,8 @@ public class NP_ChangeBlackValueActionNode: NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_ChangeBlackValueAction);
 
     public override void Debug_SetNodeData(object data)
     {

@@ -1,5 +1,10 @@
-﻿using GraphProcessor;
+﻿using System;
+using Framework;
+using Framework.Editor;
+using GraphProcessor;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class NP_DebugWindow : UniversalGraphWindow
 {
@@ -7,8 +12,7 @@ public class NP_DebugWindow : UniversalGraphWindow
     private static void OpenWindow()
     {
         var graph = CreateInstance<NP_DebugGraph>();
-        NodeGraphWindowHelper.GetAndShowNodeGraphWindow<NP_DebugWindow>(graph)
-            .InitializeGraph(graph);
+        CreateWindow<NP_DebugWindow>().InitializeGraph(graph);
     }
 
     protected override void InitializeWindow(BaseGraph graph)

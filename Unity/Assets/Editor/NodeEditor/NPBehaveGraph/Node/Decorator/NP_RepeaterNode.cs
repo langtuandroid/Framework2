@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [NodeMenuItem("NPBehave行为树/Decorator/Repeater", typeof(NPBehaveGraph))]
@@ -14,6 +16,8 @@ public class NP_RepeaterNode : NP_DecoratorNodeBase
     {
         return NpRepeaterNodeData;
     }
+
+    public override string CreateNodeName => nameof(Repeater);
 
     public override void Debug_SetNodeData(object data)
     {

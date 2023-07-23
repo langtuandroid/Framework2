@@ -1,4 +1,5 @@
-﻿using Framework;
+﻿using System;
+using Framework;
 using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/创建默认碰撞体", typeof (NPBehaveGraph))]
@@ -15,6 +16,8 @@ public class NP_CreateDefaultColliderActionNode : NP_TaskNodeBase
         return NP_ActionNodeData;
     }
 
+    public override string CreateNodeName => nameof(NP_CreateDefaultColliderAction);
+    
     public override void Debug_SetNodeData(object data)
     {
         NP_ActionNodeData = (NP_ActionNodeData)data;

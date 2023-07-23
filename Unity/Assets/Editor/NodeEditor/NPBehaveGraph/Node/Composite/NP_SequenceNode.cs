@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [NodeMenuItem("NPBehave行为树/Composite/Sequence", typeof (NPBehaveGraph))]
@@ -16,6 +18,8 @@ public class NP_SequenceNode: NP_CompositeNodeBase
     {
         return NP_SequenceNodeData;
     }
+
+    public override string CreateNodeName => nameof(Sequence);
 
     public override void Debug_SetNodeData(object data)
     {

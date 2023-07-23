@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/销毁Unit", typeof(NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/销毁Unit", typeof(SkillGraph))]
@@ -13,6 +14,8 @@ public class NP_DestroyUnitActionNode : NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_DestroyUnitAction);
 
     public override void Debug_SetNodeData(object data)
     {

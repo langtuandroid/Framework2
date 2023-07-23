@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 
 [NodeMenuItem("NPBehave行为树/Task/等待接近目标点", typeof(NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/等待接近目标点", typeof(SkillGraph))]
@@ -15,6 +17,8 @@ public class NP_WaitUntilApproachTargetNode : NP_TaskNodeBase
      {
          return NP_WaitNodeData;
      }
+
+    public override string CreateNodeName => nameof(NP_WaitUntilApproachTargetAction);
 
     public override void Debug_SetNodeData(object data)
     {

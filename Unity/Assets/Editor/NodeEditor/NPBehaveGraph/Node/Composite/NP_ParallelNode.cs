@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [NodeMenuItem("NPBehave行为树/Composite/Parallel", typeof(NPBehaveGraph))]
@@ -14,6 +16,8 @@ public class NP_ParallelNode : NP_CompositeNodeBase
     {
         return NP_ParallelNodeData;
     }
+
+    public override string CreateNodeName => nameof(Parallel);
 
     public override void Debug_SetNodeData(object data)
     {

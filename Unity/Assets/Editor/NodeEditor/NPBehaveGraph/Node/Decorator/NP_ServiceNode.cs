@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 [NodeMenuItem("NPBehave行为树/Decorator/Service", typeof (NPBehaveGraph))]
@@ -14,6 +16,8 @@ public class NP_ServiceNode: NP_DecoratorNodeBase
     {
         return NP_ServiceNodeData;
     }
+
+    public override string CreateNodeName => nameof(Service);
 
     public override void Debug_SetNodeData(object data)
     {

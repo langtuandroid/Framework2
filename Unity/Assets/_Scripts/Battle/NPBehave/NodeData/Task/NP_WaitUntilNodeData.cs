@@ -14,7 +14,7 @@ public class NP_WaitUntilNodeData : NP_NodeDataBase
     {
         StoreWaitUntilAction.BelongToUnit = unit;
         this.StoreWaitUntilAction.BelongtoRuntimeTree = runtimeTree;
-        waitUntilNode = StoreWaitUntilAction._CreateNPBehaveAction(nameof(WaitUntil));
+        waitUntilNode = StoreWaitUntilAction._CreateNPBehaveAction();
         return this.waitUntilNode;
     }
 

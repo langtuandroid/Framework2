@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/设置Unit的Transform信息", typeof(SkillGraph))]
 [NodeMenuItem("NPBehave行为树/Task/设置Unit的Transform信息", typeof(NPBehaveGraph))]
@@ -16,6 +17,8 @@ public class NP_SetUnitTransformActionNode : NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_SetUnitTransformAction);
 
     public override void Debug_SetNodeData(object data)
     {

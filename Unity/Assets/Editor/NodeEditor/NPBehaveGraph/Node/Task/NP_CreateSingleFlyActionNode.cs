@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/创建单一飞行物", typeof (SkillGraph))]
 public class NP_CreateSingleFlyActionNode : NP_TaskNodeBase
@@ -13,6 +14,8 @@ public class NP_CreateSingleFlyActionNode : NP_TaskNodeBase
         return NP_ActionNodeData;
     }
 
+    public override string CreateNodeName => nameof(NP_CreateSingleFlyAction);
+    
     public override void Debug_SetNodeData(object data)
     {
         NP_ActionNodeData = (NP_ActionNodeData)data;

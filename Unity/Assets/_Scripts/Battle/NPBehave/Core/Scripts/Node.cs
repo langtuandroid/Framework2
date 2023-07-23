@@ -146,7 +146,9 @@ namespace NPBehave
 
         public void SetDebugData(object data)
         {
+#if UNITY_EDITOR
             DebugData = data;
+#endif
         }
     }
 }

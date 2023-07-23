@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 
 [NodeMenuItem("NPBehave行为树/Task/播放动画", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/播放动画", typeof (SkillGraph))]
@@ -13,6 +14,8 @@ public class NP_PlayAnimActionNode : NP_TaskNodeBase
      {
          return NP_ActionNodeData;
      }
+
+     public override string CreateNodeName => nameof(NP_PlayAnimAction);
 
      public override void Debug_SetNodeData(object data)
      {

@@ -1,4 +1,5 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
 using Sirenix.OdinInspector;
 
 [NodeMenuItem("NPBehave行为树/Task/寻路到目标点", typeof (NPBehaveGraph))]
@@ -14,6 +15,8 @@ public class NP_MoveToTargetActionNode : NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_MoveToTargetAction);
 
     public override void Debug_SetNodeData(object data)
     {

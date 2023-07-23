@@ -4,7 +4,7 @@ namespace Framework
 {
     public class NP_RuntimeTreeManager : Entity, IBattleUpdateSystem, IAwakeSystem
     {
-        private Dictionary<long, NP_RuntimeTree> runtimeId2Tree = new Dictionary<long, NP_RuntimeTree>();
+        public Dictionary<long, NP_RuntimeTree> runtimeId2Tree = new();
 
         /// <summary>
         /// 已经添加过的行为树，第一个id为root id，第二个id为运行时id

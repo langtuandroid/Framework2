@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 
 [NodeMenuItem("NPBehave行为树/Task/Wait", typeof(NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/Wait", typeof(SkillGraph))]
@@ -12,6 +14,8 @@ public class NP_WaitNode : NP_TaskNodeBase
     {
         return NP_WaitNodeData;
     }
+
+    public override string CreateNodeName => nameof(Wait);
 
     public override void Debug_SetNodeData(object data)
     {

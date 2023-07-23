@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using GraphProcessor;
@@ -32,7 +33,7 @@ public class NP_NodeView : BaseNodeView
     {
         NpNodeBase = this.nodeTarget as NP_NodeBase;
         NP_NodeDataBase nodeDataBase = (this.nodeTarget as NP_NodeBase).NP_GetNodeData();
-        TextField textField = new TextField() { value = nodeDataBase.NodeDes };
+        var textField = new TextField() { value = nodeDataBase.NodeDes ?? string.Empty };
         textField.style.marginTop = 4;
         textField.style.marginBottom = 4;
         textField.RegisterValueChangedCallback((changedDes) => { nodeDataBase.NodeDes = changedDes.newValue; });

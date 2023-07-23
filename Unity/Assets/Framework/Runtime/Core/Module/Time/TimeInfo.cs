@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Framework
 {
@@ -46,6 +47,9 @@ namespace Framework
         /// <returns></returns>
         public long ClientNow()
         {
+#if UNITY_EDITOR
+            return (long)(Time.time * 1000);
+#endif
             return (DateTime.UtcNow.Ticks - this.dt1970.Ticks) / 10000;
         }
 

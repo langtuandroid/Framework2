@@ -1,8 +1,10 @@
-﻿using Framework;
+﻿using System;
+using Framework;
 using GraphProcessor;
 using Plugins.NodeEditor;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Root = NPBehave.Root;
 
 [NodeMenuItem("NPBehave行为树/根结点", typeof(NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/根结点", typeof(SkillGraph))]
@@ -44,6 +46,8 @@ public class NP_RootNode : NP_NodeBase
     {
         return this.MRootNodeData;
     }
+
+    public override string CreateNodeName => nameof(Root);
 
     public override void Debug_SetNodeData(object data)
     {

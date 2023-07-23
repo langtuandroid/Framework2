@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 
 [NodeMenuItem("NPBehave行为树/Task/WaitUntilStopped", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/WaitUntilStopped", typeof (SkillGraph))]
@@ -12,6 +14,8 @@ public class NP_WaitUntilStoppedNode: NP_TaskNodeBase
     {
         return NpWaitUntilStoppedData;
     }
+
+    public override string CreateNodeName => nameof(WaitUntilStopped);
 
     public override void Debug_SetNodeData(object data)
     {

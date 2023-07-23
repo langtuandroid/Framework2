@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using Action = NPBehave.Action;
 
 [NodeMenuItem("NPBehave行为树/Task/创建碰撞体", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Task/创建碰撞体", typeof (SkillGraph))]
@@ -17,6 +19,8 @@ public class NP_CreateColliderActionNode: NP_TaskNodeBase
     {
         return NP_ActionNodeData;
     }
+
+    public override string CreateNodeName => nameof(NP_CreateColliderAction);
 
     public override void Debug_SetNodeData(object data)
     {

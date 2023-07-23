@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 
 [NodeMenuItem("NPBehave行为树/Decorator/黑板条件节点", typeof (NPBehaveGraph))]
 [NodeMenuItem("NPBehave行为树/Decorator/黑板条件节点", typeof (SkillGraph))]
@@ -13,6 +15,8 @@ public class NP_BlackboardConditionNode: NP_DecoratorNodeBase
     {
         return NP_BlackboardConditionNodeData;
     }
+
+    public override string CreateNodeName => nameof(BlackboardCondition);
 
     public override void Debug_SetNodeData(object data)
     {

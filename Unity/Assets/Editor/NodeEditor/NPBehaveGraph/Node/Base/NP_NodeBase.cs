@@ -1,4 +1,6 @@
+using System;
 using GraphProcessor;
+using NPBehave;
 using Sirenix.OdinInspector;
 
 namespace Plugins.NodeEditor
@@ -12,6 +14,8 @@ namespace Plugins.NodeEditor
         public int Level;
 
         public abstract NP_NodeDataBase NP_GetNodeData();
+
+        public abstract string CreateNodeName { get; }
 
         public abstract void Debug_SetNodeData(object data);
     }

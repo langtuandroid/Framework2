@@ -1,4 +1,6 @@
-﻿using GraphProcessor;
+﻿using System;
+using GraphProcessor;
+using NPBehave;
 
 
 [NodeMenuItem("NPBehave行为树/Decorator/BlackboardMultipleConditions", typeof(NPBehaveGraph))]
@@ -14,6 +16,8 @@ public class NP_BlackboardMultipleConditionsNode : NP_DecoratorNodeBase
     {
         return NP_BlackboardMultipleConditionsNodeData;
     }
+
+    public override string CreateNodeName => nameof(BlackboardMultipleConditions);
 
     public override void Debug_SetNodeData(object data)
     {
