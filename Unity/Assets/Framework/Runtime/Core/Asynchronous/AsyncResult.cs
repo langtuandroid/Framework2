@@ -39,7 +39,6 @@ namespace Framework
         protected bool Cancelable;
         protected bool CancellationRequested;
         private bool isFromPool;
-        private bool isNeedDelayFreePool;
 
         protected readonly object Lock = new object();
 
@@ -52,19 +51,18 @@ namespace Framework
         {
         }
 
-        public static AsyncResult Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true, bool isNeedDelayFreePool = false)
+        public static AsyncResult Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true)
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
-             result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
+             result.OnCreate(debugName, cancelable, isFromPool);
              return result;
         }
 
-        protected virtual void OnCreate(string debugName,bool cancelable, bool isFromPool, bool isNeedDelayFreePool)
+        protected virtual void OnCreate(string debugName,bool cancelable, bool isFromPool)
         {
             this.debugName = debugName;
             this.Cancelable = cancelable;
             this.isFromPool = isFromPool;
-            this.isNeedDelayFreePool = isNeedDelayFreePool;
         }
 
         /// <summary>
@@ -270,10 +268,10 @@ namespace Framework
         {
         }
         
-        public new static AsyncResult<TResult> Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true, bool isNeedDelayFreePool = false)
+        public new static AsyncResult<TResult> Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true)
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
-            result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool);
             return result;
         } 
 

@@ -16,18 +16,17 @@ namespace Framework
         {
         }
 
-        public static SequenceProgress Create([CallerMemberName] string debugName = "", bool cancelable = true,
-            bool isFromPool = true, bool needDelayFreePool = false, params Func<IProgressResult<float>>[] allProgress)
+        public static SequenceProgress Create([CallerMemberName]string debugName = "",bool cancelable = true, bool isFromPool = false, params Func<IProgressResult<float>>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<SequenceProgress>() : new SequenceProgress();
-            result.OnCreate(debugName, cancelable, isFromPool, needDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool);
             result.AddAsyncResult(allProgress);
             return result;
         }
 
         public void AddAsyncResult(Func<IProgressResult<float>> progressResult)
         {
-            if (progressResult == null) return;
+            if(progressResult == null) return;
             progressQueue.Add(progressResult);
             if (currentProgress == null)
             {
@@ -61,7 +60,10 @@ namespace Framework
         private void SetSubProgressCb(IProgressResult<float> progressResult)
         {
             progressResult.Callbackable().OnProgressCallback((_ => RaiseOnProgressCallback(0)));
-            progressResult.Callbackable().OnCallback(_ => { SetNextProgress(); });
+            progressResult.Callbackable().OnCallback(_ =>
+            {
+                    SetNextProgress();
+            });
         }
 
         protected override void RaiseOnProgressCallback(float progress)
@@ -86,7 +88,7 @@ namespace Framework
         public override void Clear()
         {
             base.Clear();
-            ReferencePool.Free(progressQueue);
+            progressQueue.Dispose();
             index = 0;
         }
     }

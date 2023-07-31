@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
-using UnityEngine;
 
 namespace Framework
 {
@@ -14,18 +12,33 @@ namespace Framework
     
     public class MulAsyncResult : ProgressResult<float>
     {
+        private RecyclableList<bool> progressFinishState;
         private RecyclableList<IAsyncResult> _allProgress;
-        public override bool IsDone => _allProgress.Count <= 0 || base.IsDone;
+        public override bool IsDone
+        {
+            get
+            {
+                if (isAllDone)
+                {
+                    RaiseOnProgressCallback(0);
+                    return true;
+                }
+                return _allProgress.Count <= 0 || base.IsDone;
+            }
+        }
+
+        private bool isAllDone = false;
 
         private MulAsyncResult()
         {
         }
 
-        public static MulAsyncResult Create([CallerMemberName]string debugName = "",bool cancelable = true, bool isFromPool = true, bool isNeedDelayFreePool = false, params IAsyncResult[] allProgress)
+        public static MulAsyncResult Create([CallerMemberName]string debugName = "", bool cancelable = true, bool isFromPool = true, params IAsyncResult[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulAsyncResult>() : new MulAsyncResult();
             result._allProgress = RecyclableList<IAsyncResult>.Create();
-            result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
+            result.progressFinishState = RecyclableList<bool>.Create();
+            result.OnCreate(debugName, cancelable, isFromPool);
             result.AddAsyncResult(allProgress);
             return result;
         }
@@ -34,7 +47,9 @@ namespace Framework
         {
             if (progressResult == null) return;
             _allProgress.Add(progressResult);
+            progressFinishState.Add(progressResult.IsDone);
             SetSubProgressCb(progressResult);
+            CheckAllFinish();
         }
 
         public void AddAsyncResult(IEnumerable<IAsyncResult> progressResults)
@@ -53,12 +68,25 @@ namespace Framework
 
         private bool CheckAllFinish()
         {
+            for (int i = 0; i < _allProgress.Count; i++)
+            {
+                var progressResult = _allProgress[i];
+                if (!progressFinishState[i] &&  progressResult.IsDone)
+                {
+                    progressFinishState[i] = true;
+                }
+            }
+            
             for (var index = 0; index < _allProgress.Count; index++)
             {
                 var progressResult = _allProgress[index];
-                if (!progressResult.IsDone) return false;
+                if (!progressResult.IsDone)
+                {
+                    isAllDone = false;
+                    return false;
+                }
             }
-
+            isAllDone = true;
             return true;
         }
         
@@ -95,25 +123,43 @@ namespace Framework
             {
                 ReferencePool.Free(asyncResult);
             }
-            ReferencePool.Free(_allProgress);
+            _allProgress.Dispose();
             _allProgress = null;
+            progressFinishState.Dispose();
+            progressFinishState = null;
+            isAllDone = false;
         }
     }
     
     public class MulProgressResult : ProgressResult<float>
     {
+        private RecyclableList<bool> progressFinishState;
         private RecyclableList<IProgressResult<float>> _allProgress;
-        public override bool IsDone => _allProgress.Count <= 0 || base.IsDone;
+        public override bool IsDone
+        {
+            get
+            {
+                if (isAllDone)
+                {
+                    RaiseFinish();
+                    return true;
+                }
+                return _allProgress.Count <= 0 || base.IsDone;
+            }
+        }
+
+        private bool isAllDone = false;
 
         private MulProgressResult()
         {
         }
 
-        public static MulProgressResult Create([CallerMemberName]string debugName = "", bool cancelable = true,bool isFromPool = true, bool isNeedDelayFreePool = false, params IProgressResult<float>[] allProgress)
+        public static MulProgressResult Create([CallerMemberName]string debugName = "",bool cancelable = true,bool isFromPool = true, params IProgressResult<float>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulProgressResult>() : new MulProgressResult();
             result._allProgress = RecyclableList<IProgressResult<float>>.Create();
-            result.OnCreate(debugName,cancelable, isFromPool, isNeedDelayFreePool);
+            result.progressFinishState = RecyclableList<bool>.Create();
+            result.OnCreate(debugName, cancelable, isFromPool);
             result.AddAsyncResult(allProgress);
             return result;
         }
@@ -122,7 +168,9 @@ namespace Framework
         {
             if (progressResult == null) return;
             _allProgress.Add(progressResult);
+            progressFinishState.Add(progressResult.IsDone);
             SetSubProgressCb(progressResult);
+            CheckAllFinish();
         }
 
         public void AddAsyncResult(IEnumerable<IProgressResult<float>> progressResults)
@@ -154,10 +202,25 @@ namespace Framework
         
         private bool CheckAllFinish()
         {
-            foreach (var progressResult in _allProgress)
+            for (int i = 0; i < _allProgress.Count; i++)
             {
-                if(!progressResult.IsDone) return false;
+                var progressResult = _allProgress[i];
+                if (!progressFinishState[i] && progressResult.IsDone)
+                {
+                    progressFinishState[i] = true;
+                }
             }
+
+            for (int i = 0; i < progressFinishState.Count; i++)
+            {
+                if (!progressFinishState[i])
+                {
+                    isAllDone = false;
+                    return false;
+                }
+            }
+
+            isAllDone = true;
             return true;
         }
 
@@ -207,8 +270,12 @@ namespace Framework
             {
                 ReferencePool.Free(asyncResult);
             }
-            ReferencePool.Free(_allProgress);
-            _allProgress = null; 
+
+            progressFinishState.Dispose();
+            progressFinishState = null;
+            _allProgress.Dispose();
+            _allProgress = null;
+            isAllDone = false;
         }
     }
 }
