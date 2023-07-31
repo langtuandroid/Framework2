@@ -51,7 +51,8 @@ namespace Framework
         {
         }
 
-        public static AsyncResult Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true)
+        public static AsyncResult Create([CallerMemberName] string debugName = "", bool isFromPool = true,
+            bool cancelable = true)
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
              result.OnCreate(debugName, cancelable, isFromPool);
@@ -88,13 +89,14 @@ namespace Framework
                         "does not allow call GetResult directly when task not completed. Please use 'await'.");
                 }
 
+                object ret = _result;
                 FreeFormPool();
                 if (_exception != null)
                 {
                     throw _exception;
                 }
 
-                return this._result;
+                return ret;
             }
         }
 
@@ -267,8 +269,9 @@ namespace Framework
         protected AsyncResult()
         {
         }
-        
-        public new static AsyncResult<TResult> Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true)
+
+        public new static AsyncResult<TResult> Create([CallerMemberName] string debugName = "", bool isFromPool = true,
+            bool cancelable = true)
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
             result.OnCreate(debugName, cancelable, isFromPool);
@@ -288,14 +291,14 @@ namespace Framework
                         "does not allow call GetResult directly when task not completed. Please use 'await'.");
                 }
 
+                TResult result = base.Result != null ? (TResult)base.Result : default;
                 FreeFormPool();
                 if (Exception != null)
                 {
                     throw Exception;
                 }
 
-                var result = base.Result;
-                return result != null ? (TResult)result : default(TResult);
+                return result;
             }
         }
 

@@ -77,9 +77,10 @@ namespace Framework
                     return;
                 }
 
-                Sort(progressResult.Result);
-                AddOpenView(progressResult.Result);
-                progressResult.Result.Show();
+                View result = progressResult.Result;
+                Sort(result);
+                AddOpenView(result);
+                result.Show();
                 loadingView.Remove(type);
             });
             if (openedSingleViews.TryGetValue(type, out var view))
@@ -225,7 +226,7 @@ namespace Framework
             var gos = GetDelayDestroyGoes(type);
             if (gos?.Count > 0)
             {
-                var asyncResult = ProgressResult<float, GameObject>.Create(needDelayFreePool: true);
+                ProgressResult<float, GameObject> asyncResult = ProgressResult<float, GameObject>.Create();
                 asyncResult.SetResult(gos.RemoveLast().Go);
                 result = asyncResult;
             }

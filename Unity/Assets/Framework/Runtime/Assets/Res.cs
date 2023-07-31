@@ -98,13 +98,14 @@ namespace Framework
             progress.Callbackable().OnProgressCallback(result.UpdateProgress);
             progress.Callbackable().OnCallback(progressResult =>
             {
-                if (result.IsCancelled && progressResult.Result != null)
+                GameObject pr = progressResult.Result;
+                if (result.IsCancelled && pr != null)
                 {
-                    Object.Destroy(progressResult.Result);
+                    Object.Destroy(pr);
                 }
                 else
                 {
-                    result.SetResult(progressResult.Result.GetComponent<T>());
+                    result.SetResult(pr.GetComponent<T>());
                 }
             });
             return result;

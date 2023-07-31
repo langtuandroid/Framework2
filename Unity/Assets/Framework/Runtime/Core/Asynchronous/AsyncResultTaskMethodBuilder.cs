@@ -14,7 +14,7 @@ namespace Framework
         [DebuggerHidden]
         public static AsyncResultTaskMethodBuilder Create()
         {
-            AsyncResultTaskMethodBuilder builder = new() { tcs = AsyncResult.Create(true) };
+            AsyncResultTaskMethodBuilder builder = new() { tcs = AsyncResult.Create() };
             return builder;
         }
 
@@ -75,7 +75,7 @@ namespace Framework
         [DebuggerHidden]
         public static AsyncResultTaskMethodBuilder<T> Create()
         {
-            AsyncResultTaskMethodBuilder<T> builder = new() { tcs = AsyncResult<T>.Create(true) };
+            AsyncResultTaskMethodBuilder<T> builder = new() { tcs = AsyncResult<T>.Create() };
             return builder;
         }
 
