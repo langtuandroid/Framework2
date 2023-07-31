@@ -13,8 +13,7 @@ public class NP_FindTargetAction : NP_ClassForStoreAction
     
     public override Action GetActionToBeDone()
     {
-        this.Action = this.FindTarget;
-        return this.Action;
+        return FindTarget;
     }
 
     private void FindTarget()

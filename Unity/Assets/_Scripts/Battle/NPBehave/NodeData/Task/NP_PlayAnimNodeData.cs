@@ -12,12 +12,10 @@ public class NP_PlayAnimNodeData : NP_NodeDataBase
 
     public override Node CreateCombineNode(Unit unit, NP_RuntimeTree runtimeTree)
     {
-        sequence = new Sequence(new NP_ClassForStoreAction()
-            {
-                BelongtoRuntimeTree = runtimeTree, BelongToUnit = unit,
-                Action = () =>
-                    unit.GetComponent<PlayAnimComponent>().PlayAnim(AnimName.GetValue(runtimeTree.GetBlackboard()))
-            }._CreateNPBehaveAction(),
+        sequence = new Sequence(new Action(
+                () => unit.GetComponent<PlayAnimComponent>().PlayAnim(AnimName.GetValue(runtimeTree.GetBlackboard())),
+                "PlayAnim"
+            ),
             new WaitUntil(null,
                 () => unit.GetComponent<PlayAnimComponent>()
                     .IsArriveTargetFrame(AnimName.GetValue(runtimeTree.GetBlackboard()), FinishFrame)));

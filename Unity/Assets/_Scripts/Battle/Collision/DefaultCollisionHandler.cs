@@ -32,6 +32,7 @@ public class DefaultCollisionHandler: ACollisionHandler
     private void BroadcastCollider(ColliderComponent aColliderComponent, ColliderComponent bColliderComponent,
         DefaultColliderData aColliderData)
     {
+        Log.Msg(aColliderComponent.BelongToUnit, "撞到了", bColliderComponent.BelongToUnit);
 
         Blackboard blackboard = aColliderData.Blackboard;
         

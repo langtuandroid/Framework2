@@ -14,8 +14,7 @@ public class NP_DestroyUnitAction : NP_ClassForStoreAction
     public BlackboardOrValue_Long DestroyTarget = new BlackboardOrValue_Long();
     public override System.Action GetActionToBeDone()
     {
-        this.Action = this.DestroySelfAndRelativeCollider;
-        return this.Action;
+        return DestroySelfAndRelativeCollider;
     }
 
     public void DestroySelfAndRelativeCollider()

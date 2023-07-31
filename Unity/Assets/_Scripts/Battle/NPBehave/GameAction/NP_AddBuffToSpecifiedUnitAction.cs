@@ -20,8 +20,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.AddBuffToSpecifiedUnit;
-        return this.Action;
+        return AddBuffToSpecifiedUnit;
     }
 
     private void AddBuffToSpecifiedUnit()

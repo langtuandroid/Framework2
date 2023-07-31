@@ -23,8 +23,7 @@ public class NP_SetUnitTransformAction : NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.SetUnitTransformAction;
-        return this.Action;
+        return SetUnitTransformAction;
     }
 
     private void SetUnitTransformAction()

@@ -19,8 +19,7 @@ public class NP_MacroAction : NP_ClassForStoreAction
             npClassForStoreAction.BelongtoRuntimeTree = this.BelongtoRuntimeTree;
         }
 
-        this.Action = this.DoMacro;
-        return this.Action;
+        return DoMacro;
     }
 
     private void DoMacro()

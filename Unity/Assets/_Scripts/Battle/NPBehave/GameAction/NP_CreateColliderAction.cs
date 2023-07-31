@@ -35,8 +35,7 @@ public class NP_CreateColliderAction : NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.CreateColliderData;
-        return this.Action;
+        return CreateColliderData;
     }
 
     private void CreateColliderData()

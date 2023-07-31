@@ -41,8 +41,7 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.Create;
-        return this.Action;
+        return Create;
     }
 
     private void Create()

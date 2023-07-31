@@ -20,8 +20,7 @@ public class NP_MoveToTargetAction: NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.MoveToRandomPos;
-        return this.Action;
+        return MoveToRandomPos;
     }
  
     private void MoveToRandomPos()

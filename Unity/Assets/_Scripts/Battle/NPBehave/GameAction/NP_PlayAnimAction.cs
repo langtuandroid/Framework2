@@ -9,8 +9,7 @@ public class NP_PlayAnimAction : NP_ClassForStoreAction
     
     public override Action GetActionToBeDone()
     {
-        this.Action = this.PlayAnim;
-        return this.Action;
+        return PlayAnim;
     }
 
     private void PlayAnim()

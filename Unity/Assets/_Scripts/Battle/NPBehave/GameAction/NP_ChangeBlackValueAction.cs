@@ -12,8 +12,7 @@ public class NP_ChangeBlackValueAction: NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.ChangeBlackBoard;
-        return this.Action;
+        return ChangeBlackBoard;
     }
 
     public void ChangeBlackBoard()

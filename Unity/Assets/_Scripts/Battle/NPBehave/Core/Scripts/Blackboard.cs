@@ -219,7 +219,6 @@ namespace NPBehave
 
         public void AddObserver(string key, System.Action<Type, ANP_BBValue> observer)
         {
-            Log.Msg($"添加观察{key}  id={id}");
             List<System.Action<Type, ANP_BBValue>> observers = GetObserverList(this.m_Observers, key);
             if (!this.m_IsNotifiyng)
             {

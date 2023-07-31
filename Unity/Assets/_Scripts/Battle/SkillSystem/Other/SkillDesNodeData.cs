@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 public class SkillDesNodeData : BuffNodeDataBase
 {
     [TabGroup("基础信息")] [LabelText("技能名称")] public string SkillName;
+    [TabGroup("基础信息")] [LabelText("技能id")] public long SkillId;
 
     [TabGroup("基础信息")] [HideLabel] [Title("技能描述", Bold = false)] [MultiLineProperty(10)]
     public string SkillDescribe;

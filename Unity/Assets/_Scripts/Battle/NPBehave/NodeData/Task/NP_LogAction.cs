@@ -11,8 +11,7 @@ public class NP_LogAction : NP_ClassForStoreAction
 
     public override Action GetActionToBeDone()
     {
-        this.Action = this.TestLog;
-        return this.Action;
+        return TestLog;
     }
 
     private void TestLog()

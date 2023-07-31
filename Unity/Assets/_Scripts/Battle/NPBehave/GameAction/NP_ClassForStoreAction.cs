@@ -19,11 +19,11 @@ public class NP_ClassForStoreAction
     /// </summary>
     [HideInInspector] public NP_RuntimeTree BelongtoRuntimeTree;
 
-    [HideInInspector] public Action Action;
+    [HideInInspector] private Action Action;
 
-    [HideInInspector] public Func<bool> Func1;
+    [HideInInspector] private Func<bool> Func1;
 
-    [HideInInspector] public Func<bool, NPBehave.Action.Result> Func2;
+    [HideInInspector] private Func<bool, NPBehave.Action.Result> Func2;
 
     /// <summary>
     /// 获取将要执行的委托函数，也可以在这里面做一些初始化操作
@@ -46,19 +46,19 @@ public class NP_ClassForStoreAction
 
     public NPBehave.Action _CreateNPBehaveAction()
     {
-        GetActionToBeDone();
+        Action = GetActionToBeDone();
         if (this.Action != null)
         {
             return new NPBehave.Action(Action, GetType().Name);
         }
 
-        GetFunc1ToBeDone();
+        Func1 = GetFunc1ToBeDone();
         if (this.Func1 != null)
         {
             return new NPBehave.Action(Func1, GetType().Name);
         }
 
-        GetFunc2ToBeDone();
+        Func2 = GetFunc2ToBeDone();
         if (this.Func2 != null)
         {
             return new NPBehave.Action(Func2, GetType().Name);
