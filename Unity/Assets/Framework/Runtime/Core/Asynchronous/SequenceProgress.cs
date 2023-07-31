@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Framework
 {
@@ -15,18 +16,18 @@ namespace Framework
         {
         }
 
-        public static SequenceProgress Create(bool cancelable = true, bool isFromPool = false,
-            bool needDelayFreePool = false, params Func<IProgressResult<float>>[] allProgress)
+        public static SequenceProgress Create([CallerMemberName] string debugName = "", bool cancelable = true,
+            bool isFromPool = true, bool needDelayFreePool = false, params Func<IProgressResult<float>>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<SequenceProgress>() : new SequenceProgress();
-            result.OnCreate(cancelable, isFromPool, needDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool, needDelayFreePool);
             result.AddAsyncResult(allProgress);
             return result;
         }
 
         public void AddAsyncResult(Func<IProgressResult<float>> progressResult)
         {
-            if(progressResult == null) return;
+            if (progressResult == null) return;
             progressQueue.Add(progressResult);
             if (currentProgress == null)
             {
@@ -60,10 +61,7 @@ namespace Framework
         private void SetSubProgressCb(IProgressResult<float> progressResult)
         {
             progressResult.Callbackable().OnProgressCallback((_ => RaiseOnProgressCallback(0)));
-            progressResult.Callbackable().OnCallback(_ =>
-            {
-                    SetNextProgress();
-            });
+            progressResult.Callbackable().OnCallback(_ => { SetNextProgress(); });
         }
 
         protected override void RaiseOnProgressCallback(float progress)

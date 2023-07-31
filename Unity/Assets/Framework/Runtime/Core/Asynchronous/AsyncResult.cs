@@ -28,8 +28,7 @@ using System.Threading;
 
 namespace Framework
 {
-    [AsyncMethodBuilder(typeof(AsyncResultTaskMethodBuilder))]
-    public class AsyncResult : IAsyncResult, IPromise, ICriticalNotifyCompletion
+    public class AsyncResult : IAsyncResult, IPromise
     {
 
         private bool _done;
@@ -46,21 +45,23 @@ namespace Framework
 
         private Synchronizable _synchronizable;
         private Callbackable _callbackable;
+        
+        protected string debugName;
 
         protected AsyncResult()
         {
         }
 
-        public static AsyncResult Create(bool isFromPool = false, bool cancelable = true,
-            bool isNeedDelayFreePool = false)
+        public static AsyncResult Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true, bool isNeedDelayFreePool = false)
         {
              var result = isFromPool ? ReferencePool.Allocate<AsyncResult>() : new AsyncResult();
-             result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
+             result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
              return result;
         }
 
-        protected virtual void OnCreate(bool cancelable, bool isFromPool, bool isNeedDelayFreePool)
+        protected virtual void OnCreate(string debugName,bool cancelable, bool isFromPool, bool isNeedDelayFreePool)
         {
+            this.debugName = debugName;
             this.Cancelable = cancelable;
             this.isFromPool = isFromPool;
             this.isNeedDelayFreePool = isNeedDelayFreePool;
@@ -79,7 +80,25 @@ namespace Framework
         /// <summary>
         /// The execution result
         /// </summary>
-        public virtual object Result => this._result;
+        public virtual object Result
+        {
+            get
+            {
+                if (!IsDone)
+                {
+                    throw new NotSupportedException(
+                        "does not allow call GetResult directly when task not completed. Please use 'await'.");
+                }
+
+                FreeFormPool();
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+
+                return this._result;
+            }
+        }
 
         public virtual bool IsCancellationRequested => this.CancellationRequested;
 
@@ -110,8 +129,6 @@ namespace Framework
             }
 
             this.RaiseOnCallback();
-            
-            FreeFormPool();
         }
 
         public virtual void SetResult(object result = null)
@@ -127,8 +144,6 @@ namespace Framework
             }
             
             this.RaiseOnCallback();
-
-            FreeFormPool();
         }
 
         public virtual void SetCancelled()
@@ -145,8 +160,6 @@ namespace Framework
             }
 
             this.RaiseOnCallback();
-            
-            FreeFormPool();
         }
 
         /// <summary>
@@ -204,12 +217,13 @@ namespace Framework
             return Executors.WaitWhile(() => !IsDone);
         }
 
-        private void FreeFormPool()
+        protected void FreeFormPool()
         {
             if (!isFromPool) return;
-            Dispose();
+            if (HasFree) return;
+            ReferencePool.Free(this);
         }
-
+        
         private static IAsyncResult voidResult;
         
         public static IAsyncResult Void()
@@ -222,6 +236,8 @@ namespace Framework
             }
             return voidResult;
         }
+
+        public bool HasFree { get; set; }
 
         public virtual void Clear()
         {
@@ -239,27 +255,9 @@ namespace Framework
 
         public void Dispose()
         {
-            ReferencePool.Free(this);
+            FreeFormPool();
         }
-
-        public void OnCompleted(Action continuation)
-        {
-            UnsafeOnCompleted(continuation);
-        }
-
-        public void UnsafeOnCompleted(Action continuation)
-        {
-            if (IsDone)
-            {
-                continuation?.Invoke();
-                return;
-            }
-
-            Callbackable().OnCallback((r) => { continuation(); });
-        }
-
     }
-
 
     public class AsyncResult<TResult> : AsyncResult, IAsyncResult<TResult>, IPromise<TResult>
     {
@@ -271,12 +269,11 @@ namespace Framework
         protected AsyncResult()
         {
         }
-
-        public new static AsyncResult<TResult> Create(bool isFromPool = false, bool cancelable = true,
-            bool isNeedDelayFreePool = false)
+        
+        public new static AsyncResult<TResult> Create([CallerMemberName]string debugName = "",bool isFromPool = false, bool cancelable = true, bool isNeedDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<AsyncResult<TResult>>() : new AsyncResult<TResult>();
-            result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
             return result;
         } 
 
@@ -287,8 +284,20 @@ namespace Framework
         {
             get
             {
+                if (!IsDone)
+                {
+                    throw new NotSupportedException(
+                        "does not allow call GetResult directly when task not completed. Please use 'await'.");
+                }
+
+                FreeFormPool();
+                if (Exception != null)
+                {
+                    throw Exception;
+                }
+
                 var result = base.Result;
-                return result != null ? (TResult) result : default(TResult);
+                return result != null ? (TResult)result : default(TResult);
             }
         }
 
@@ -343,22 +352,6 @@ namespace Framework
             _synchronizable = null;
             ReferencePool.Free(_callbackable);
             _callbackable = null;
-        }
-
-        public void OnCompleted(Action continuation)
-        {
-            UnsafeOnCompleted(continuation);
-        }
-
-        public void UnsafeOnCompleted(Action continuation)
-        {
-            if (IsDone)
-            {
-                continuation?.Invoke();
-                return;
-            }
-
-            Callbackable().OnCallback((r) => { continuation(); });
         }
     }
 }

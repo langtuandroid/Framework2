@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+using System.Runtime.CompilerServices;
+
 namespace Framework
 {
     public class ProgressResult<TProgress> : AsyncResult, IProgressResult<TProgress>, IProgressPromise<TProgress>
@@ -32,11 +34,10 @@ namespace Framework
         {
         }
 
-        public new static ProgressResult<TProgress> Create(bool isFromPool = false, bool cancelable = true,
-            bool needDelayFreePool = false)
+        public new static ProgressResult<TProgress> Create([CallerMemberName]string debugName = "",bool isFromPool = true, bool cancelable = true, bool needDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress>>() : new ProgressResult<TProgress>();
-            result.OnCreate(cancelable, isFromPool, needDelayFreePool);
+            result.OnCreate(debugName,cancelable, isFromPool, needDelayFreePool);
             return result;
         }
 
@@ -107,11 +108,10 @@ namespace Framework
         {
         }
 
-        public new static ProgressResult<TProgress, TResult> Create(bool isFromPool = false, bool cancelable = true,
-            bool needDelayFreePool = false)
+        public new static ProgressResult<TProgress, TResult> Create([CallerMemberName]string debugName = "",bool isFromPool = true,bool cancelable = true, bool needDelayFreePool = false)
         {
             var result = isFromPool ? ReferencePool.Allocate<ProgressResult<TProgress, TResult>>() : new ProgressResult<TProgress, TResult>();
-            result.OnCreate(cancelable, isFromPool, needDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool, needDelayFreePool);
             return result;
         }
 

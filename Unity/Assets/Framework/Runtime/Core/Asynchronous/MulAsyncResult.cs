@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 
@@ -20,12 +21,11 @@ namespace Framework
         {
         }
 
-        public static MulAsyncResult Create(bool cancelable = true, bool isFromPool = false,
-            bool isNeedDelayFreePool = false, params IAsyncResult[] allProgress)
+        public static MulAsyncResult Create([CallerMemberName]string debugName = "",bool cancelable = true, bool isFromPool = true, bool isNeedDelayFreePool = false, params IAsyncResult[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulAsyncResult>() : new MulAsyncResult();
             result._allProgress = RecyclableList<IAsyncResult>.Create();
-            result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
+            result.OnCreate(debugName, cancelable, isFromPool, isNeedDelayFreePool);
             result.AddAsyncResult(allProgress);
             return result;
         }
@@ -109,12 +109,11 @@ namespace Framework
         {
         }
 
-        public static MulProgressResult Create(bool cancelable = true, bool isFromPool = false,
-            bool isNeedDelayFreePool = false, params IProgressResult<float>[] allProgress)
+        public static MulProgressResult Create([CallerMemberName]string debugName = "", bool cancelable = true,bool isFromPool = true, bool isNeedDelayFreePool = false, params IProgressResult<float>[] allProgress)
         {
             var result = isFromPool ? ReferencePool.Allocate<MulProgressResult>() : new MulProgressResult();
             result._allProgress = RecyclableList<IProgressResult<float>>.Create();
-            result.OnCreate(cancelable, isFromPool, isNeedDelayFreePool);
+            result.OnCreate(debugName,cancelable, isFromPool, isNeedDelayFreePool);
             result.AddAsyncResult(allProgress);
             return result;
         }

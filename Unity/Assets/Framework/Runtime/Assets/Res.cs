@@ -67,7 +67,7 @@ namespace Framework
             bool instantiateInWorldSpace = false)
         {
             var progress = InstantiateAsync(key, parent, instantiateInWorldSpace);
-            ProgressResult<float, T> result = ProgressResult<float, T>.Create(true);
+            ProgressResult<float, T> result = ProgressResult<float, T>.Create();
             progress.Callbackable().OnProgressCallback(result.UpdateProgress);
             progress.Callbackable().OnCallback(progressResult =>
             {
