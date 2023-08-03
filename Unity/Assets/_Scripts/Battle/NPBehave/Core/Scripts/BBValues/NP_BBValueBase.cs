@@ -53,7 +53,6 @@ public interface IBlackboardOrValue
 }
 
 [Serializable]
-[BoxGroup("", false)]
 [PropertySpace(5, 5)]
 public abstract class ABlackboardOrValue<T> : IBlackboardOrValue
 {

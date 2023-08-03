@@ -10,6 +10,8 @@ public class NP_FindTargetAction : NP_ClassForStoreAction
     public RoleCast RoleCast;
     [LabelText("标签")]
     public RoleTag RoleTag;
+
+    [LabelText("多少范围内")] public float Distance;
     
     public override Action GetActionToBeDone()
     {
@@ -18,9 +20,9 @@ public class NP_FindTargetAction : NP_ClassForStoreAction
 
     private void FindTarget()
     {
-        BelongToUnit.GetComponent<FindTargetComponent>().FindTarget((id) =>
+        if (BelongToUnit.GetComponent<FindTargetComponent>().FindTarget(RoleCast, RoleTag, Distance, out long id))
         {
             TargetInsId.SetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard(), id);
-        }, RoleCast, RoleTag);
+        }
     }
 }

@@ -18,18 +18,8 @@ public class Test : MonoBehaviour
     private Blackboard blackboard;
     public Root root;
 
-    [Button]
-    private async void Start()
-    {
 
-    }
-
-    private void Update()
+    private void Start()
     {
     }
-
-    private async IAsyncResult EE()
-    {
-    }
-    
 }

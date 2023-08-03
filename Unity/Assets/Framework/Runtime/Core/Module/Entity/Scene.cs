@@ -1,42 +1,48 @@
-﻿namespace Framework
+﻿using System.Collections.Generic;
+
+namespace Framework
 {
     public sealed class Scene : Entity
     {
-        public int Zone { get; }
-
         public SceneType SceneType { get; }
 
         public string Name { get; }
 
+        private Dictionary<string, Context> contexts = new();
+
+        public Context SceneContext { get; private set; }
+
         public Scene(long instanceId, SceneType sceneType, string name, Entity parent)
         {
-            this.Id = instanceId;
-            this.SceneType = sceneType;
-            this.Name = name;
-            this.IsCreated = true;
-            this.IsNew = true;
-            this.Parent = parent;
-            this.Domain = this;
-            this.IsRegister = true;
-            Log.Msg($"scene create: {this.SceneType} {this.Name} {this.Id} {this.Zone}");
+            SceneContext = new Context();
+            Id = instanceId;
+            SceneType = sceneType;
+            Name = name;
+            IsCreated = true;
+            IsNew = true;
+            Parent = parent;
+            Domain = this;
+            IsRegister = true;
+            Log.Msg($"scene create: {SceneType} {Name} {Id} ");
         }
 
         public override void Dispose()
         {
             base.Dispose();
-
-            Log.Msg($"scene dispose: {this.SceneType} {this.Name} {this.Id} {this.Zone}");
+            SceneContext.Dispose();
+            SceneContext = null;
+            Log.Msg($"scene dispose: {SceneType} {Name} {Id}");
         }
 
         public new Entity Domain
         {
-            get => this.domain;
-            private set => this.domain = value;
+            get => domain;
+            private set => domain = value;
         }
 
         public new Entity Parent
         {
-            get { return this.parent; }
+            get => parent;
             private set
             {
                 if (value == null)
@@ -45,14 +51,51 @@
                     return;
                 }
 
-                this.parent = value;
-                this.parent.Children.Add(this.Id, this);
+                parent = value;
+                parent.Children.Add(Id, this);
             }
         }
 
-        protected override string ViewName
+
+        public T GetContext<T>(string key) where T : Context
         {
-            get { return $"{this.GetType().Name} ({this.SceneType})"; }
+            if (contexts.TryGetValue(typeof(T).Name, out Context context))
+            {
+                return context as T;
+            }
+
+            return null;
         }
+
+        public T GetContext<T>() where T : Context
+        {
+            return GetContext<T>(typeof(T).Name);
+        }
+
+        public void AddContext<T>(T context) where T : Context
+        {
+            AddContext(context.GetType().Name, context);
+        }
+
+        public void AddContext(string key, Context context)
+        {
+            contexts.Add(key, context);
+        }
+
+        public void RemoveContext<T>()
+        {
+            RemoveContext(typeof(T).Name);
+        }
+
+        public void RemoveContext(string key)
+        {
+            if (contexts.TryGetValue(key, out Context context))
+            {
+                context.Dispose();
+                contexts.Remove(key);
+            }
+        }
+
+        protected override string ViewName => $"{GetType().Name} ({SceneType})";
     }
 }

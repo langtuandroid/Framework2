@@ -82,33 +82,6 @@ public class NP_RunAnotherTreeData : NP_NodeDataBase, IGraphNodeDeserialize
                     SerializeHelper.Deserialize<NP_DataSupportor>(File.ReadAllText(data.ConfigPath));
             }
         }
-
-        if (dataSupportor != null)
-        {
-            foreach (var item in dataSupportor.NP_BBValueManager)
-            {
-                if (item.Value.Required)
-                {
-                    bool hasAdd = false;
-                    foreach (var key in PassValue.Dic.Values)
-                    {
-                        if (key.BBKey == item.Key)
-                        {
-                            hasAdd = true;
-                            break;
-                        }
-                    }
-
-                    if (!hasAdd)
-                    {
-                        var keyData = new NP_OtherTreeBBKeyData();
-                        keyData.configId = ConfigId;
-                        keyData.BBKey = item.Key;
-                        PassValue.AddData(NP_BBValueHelper.GetBlackboardOrValueByBBValue(item.Value), keyData);
-                    }
-                }
-            }
-        }
     }
     
 

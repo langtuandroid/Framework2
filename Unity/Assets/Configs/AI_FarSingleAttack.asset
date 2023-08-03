@@ -473,15 +473,6 @@ MonoBehaviour:
     - Name: BelongtoRuntimeTree
       Entry: 6
       Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
     - Name: NPBalckBoardRelationData
       Entry: 7
       Data: 20|NP_BlackBoardRelationData`1[[System.Object, mscorlib]], Game.Runtime
@@ -698,15 +689,6 @@ MonoBehaviour:
     - Name: BelongtoRuntimeTree
       Entry: 6
       Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
     - Name: LogInfo
       Entry: 7
       Data: 31|Framework.BlackboardOrValue_String, Game.Runtime
@@ -804,15 +786,6 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
       Entry: 6
       Data: 
     - Name: LogInfo
@@ -933,15 +906,6 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
       Entry: 6
       Data: 
     - Name: LogInfo
@@ -1417,15 +1381,6 @@ MonoBehaviour:
     - Name: BelongtoRuntimeTree
       Entry: 6
       Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
     - Name: TargetInsId
       Entry: 7
       Data: 67|NP_BlackBoardRelationData`1[[System.Int64, mscorlib]], Game.Runtime
@@ -1499,15 +1454,6 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: BelongtoRuntimeTree
-      Entry: 6
-      Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
       Entry: 6
       Data: 
     - Name: TargetInsId
