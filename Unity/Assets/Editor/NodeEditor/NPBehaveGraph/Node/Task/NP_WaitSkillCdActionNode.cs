@@ -5,7 +5,7 @@ public class NP_WaitSkillCdActionNode : NP_TaskNodeBase
 {
     public override string name => "等待技能cd";
 
-    public NP_WaitUntilNodeData NP_ActionNodeData = new() { StoreWaitUntilAction = new NP_WaitSkillCdAction() };
+    public NP_ActionNodeData NP_ActionNodeData = new() { NpClassForStoreAction = new NP_WaitSkillCdAction() };
 
     public override NP_NodeDataBase NP_GetNodeData()
     {
@@ -16,6 +16,6 @@ public class NP_WaitSkillCdActionNode : NP_TaskNodeBase
 
     public override void Debug_SetNodeData(object data)
     {
-        NP_ActionNodeData = (NP_WaitUntilNodeData)data;
+        NP_ActionNodeData = (NP_ActionNodeData)data;
     }
 }

@@ -16,6 +16,18 @@ public class SkillCanvasManagerComponent : Entity
     /// </summary>
     private Dictionary<long, int> SkillLevels = new();
 
+    public bool IsSkillRunning { get; private set; }
+
+    public void SkillStart(long skillId)
+    {
+        IsSkillRunning = true;
+    }
+
+    public void SkillEnd(long skillId)
+    {
+        IsSkillRunning = false;
+    }
+
     public void AddSkill(long skillId)
     {
         SkillLevels[skillId] = 0;

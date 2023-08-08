@@ -1,12 +1,14 @@
 ﻿using Framework;
+using NPBehave;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using Vector3 = UnityEngine.Vector3;
 using WaitUntil = NPBehave.WaitUntil;
 
-public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
+public class NP_WaitUntilApproachTargetAction : NP_ClassForStoreAction
 {
-    [HideInEditorMode] private WaitUntil m_WaitNode;
+    [HideInEditorMode]
+    private WaitUntil m_WaitNode;
 
     [BoxGroup("/0", false)]
     [LabelText("目标1是自己吗")]
@@ -15,7 +17,7 @@ public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
     [BoxGroup("/0", false)]
     [LabelText("目标1")]
     [HideIf(nameof(Target1IsSelf))]
-    public NP_BlackBoardRelationData<long> Target1Id = new ();
+    public NP_BlackBoardRelationData<long> Target1Id = new();
 
     [BoxGroup("/1", false)]
     [LabelText("目标2是固定位置吗")]
@@ -24,17 +26,23 @@ public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
     [BoxGroup("/1", false)]
     [LabelText("目标2")]
     [HideIf(nameof(Target2IsPos))]
-    public NP_BlackBoardRelationData<long> Target2Id = new ();
+    public NP_BlackBoardRelationData<long> Target2Id = new();
 
     [BoxGroup("/1", false)]
     [LabelText("目标位置")]
     [ShowIf(nameof(Target2IsPos))]
-    public NP_BlackBoardRelationData<Vector3> Target2Pos= new ();
+    public NP_BlackBoardRelationData<Vector3> Target2Pos = new();
 
     [BoxGroup("/2", false)]
-    [LabelText("移动距目标最短距离")] public BlackboardOrValue_Float EndDis = new BlackboardOrValue_Float(0.1f);
+    [LabelText("移动距目标最短距离")]
+    public BlackboardOrValue_Float EndDis = new(0.1f);
 
-    protected override bool UntilFunc()
+    public override System.Func<bool, Action.Result> GetFunc2ToBeDone()
+    {
+        return UntilFunc;
+    }
+
+    private Action.Result UntilFunc(bool isCancel)
     {
         float3 target1Pos = Target1IsSelf
             ? BelongToUnit.Position
@@ -44,7 +52,7 @@ public class NP_WaitUntilApproachTargetAction : NP_CalssForStoreWaitUntilAction
             ? Target2Pos.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())
             : BelongToUnit.Domain.GetComponent<UnitComponent>()
                 .Get(Target2Id.GetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard())).Position;
-        var result = math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
-        return result;
+        bool result = math.distance(target1Pos, target2Pos) <= EndDis.GetValue(BelongtoRuntimeTree.GetBlackboard());
+        return result ? Action.Result.SUCCESS : Action.Result.PROGRESS;
     }
 }
