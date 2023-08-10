@@ -11,7 +11,7 @@ public class MoveTimer : ATimer<MoveComponent>
     {
         try
         {
-           self.MoveForward(true);
+            self.MoveForward(true);
         }
         catch (Exception e)
         {
@@ -22,21 +22,9 @@ public class MoveTimer : ATimer<MoveComponent>
 
 public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 {
-    public float3 PreTarget
-    {
-        get
-        {
-            return this.Targets[this.N - 1];
-        }
-    }
+    public float3 PreTarget => Targets[N - 1];
 
-    public float3 NextTarget
-    {
-        get
-        {
-            return this.Targets[this.N];
-        }
-    }
+    public float3 NextTarget => Targets[N];
 
     // 开启移动协程的时间
     public long BeginTime;
@@ -47,26 +35,14 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
     // 开启移动协程的Unit的位置
     public float3 StartPos;
 
-    public float3 RealPos
-    {
-        get
-        {
-            return this.Targets[0];
-        }
-    }
+    public float3 RealPos => Targets[0];
 
     private long needTime;
 
     public long NeedTime
     {
-        get
-        {
-            return this.needTime;
-        }
-        set
-        {
-            this.needTime = value;
-        }
+        get => needTime;
+        set => needTime = value;
     }
 
     public long MoveTimer;
@@ -75,15 +51,9 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
     public ETTask<bool> tcs;
 
-    public List<float3> Targets = new List<float3>();
+    public List<float3> Targets = new();
 
-    public float3 FinalTarget
-    {
-        get
-        {
-            return this.Targets[this.Targets.Count - 1];
-        }
-    }
+    public float3 FinalTarget => Targets[Targets.Count - 1];
 
     public int N;
 
@@ -94,6 +64,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
     public quaternion From;
 
     public quaternion To;
+
     public void Awake()
     {
         StartTime = 0;
@@ -123,18 +94,19 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         {
             return false;
         }
-            
+
         Unit unit = GetParent<Unit>();
 
         using RecyclableList<float3> path = RecyclableList<float3>.Create();
-            
+
         MoveForward(false);
-                
+
         path.Add(unit.Position); // 第一个是Unit的pos
         for (int i = N; i < Targets.Count; ++i)
         {
             path.Add(Targets[i]);
         }
+
         MoveToAsync(path, speed).Coroutine();
         return true;
     }
@@ -155,7 +127,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         tcs = ETTask<bool>.Create(true);
 
         StartMove();
-            
+
         bool moveRet = await tcs;
 
         return moveRet;
@@ -242,7 +214,6 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
     private void SetNextTarget()
     {
-
         Unit unit = GetParent<Unit>();
 
         ++N;
@@ -250,14 +221,14 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         // 时间计算用服务端的位置, 但是移动要用客户端的位置来插值
         float3 v = GetFaceV();
         float distance = math.length(v);
-            
+
         // 插值的起始点要以unit的真实位置来算
         StartPos = unit.Position;
 
         StartTime += NeedTime;
-            
-        NeedTime = (long) (distance / Speed * 1000);
-            
+
+        NeedTime = (long)(distance / Speed * 1000);
+
         if (TurnTime > 0)
         {
             // 要用unit的位置
@@ -266,8 +237,9 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
             {
                 return;
             }
+
             From = unit.Rotation;
-                
+
             if (IsTurnHorizontal)
             {
                 faceV.y = 0;
@@ -280,7 +252,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
             return;
         }
-            
+
         if (TurnTime == 0) // turn time == 0 立即转向
         {
             float3 faceV = GetFaceV();
@@ -326,7 +298,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         {
             return;
         }
-            
+
         StartTime = 0;
         StartPos = float3.zero;
         BeginTime = 0;
@@ -340,13 +312,13 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
         if (tcs != null)
         {
-            var tcs = this.tcs;
+            ETTask<bool> tcs = this.tcs;
             this.tcs = null;
             tcs.SetResult(ret);
         }
     }
 
-    public bool MoveTo(float3 target, float speed, int turnTime = 0,
+    public bool MoveTo(float3 target, float speed, int turnTime = 100,
         bool isTurnHorizontal = false)
     {
         if (speed < 0.001)
@@ -367,7 +339,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         return true;
     }
 
-    public bool MoveTo(List<float3> target, float speed, int turnTime = 0)
+    public bool MoveTo(List<float3> target, float speed, int turnTime = 100)
     {
         if (target.Count == 0)
         {
@@ -382,7 +354,7 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
 
         Stop(false);
 
-        foreach (var v in target)
+        foreach (float3 v in target)
         {
             Targets.Add(v);
         }

@@ -5,11 +5,11 @@ using Sirenix.OdinInspector;
 
 public class NP_WaitSkillCdAction : NP_ClassForStoreAction
 {
-    [BoxGroup("引用数据的Id")]
-    [LabelText("技能数据结点Id")]
+    [LabelText("技能描述结点Id")]
     public VTD_Id DataId = new();
 
-    private string skillName;
+    private string cdName;
+    private CDComponent cdComponent;
 
     public override Func<bool, NPBehave.Action.Result> GetFunc2ToBeDone()
     {
@@ -18,15 +18,15 @@ public class NP_WaitSkillCdAction : NP_ClassForStoreAction
 
     private NPBehave.Action.Result UntilFunc(bool isCancel)
     {
-        if (string.IsNullOrEmpty(skillName))
+        if (string.IsNullOrEmpty(cdName))
         {
             SkillDesNodeData skillDesNodeData =
                 (SkillDesNodeData)BelongtoRuntimeTree.BelongNP_DataSupportor.BuffNodeDataDic[DataId.Value];
-            skillName = skillDesNodeData.SkillName;
+            cdName = skillDesNodeData.SkillName + BelongToUnit.Id;
+            cdComponent = BelongToUnit.Domain.GetComponent<CDComponent>();
         }
 
-        CDComponent cdComponent = BelongToUnit.Domain.GetComponent<CDComponent>();
-        return cdComponent.GetCDResult(BelongToUnit.Id, skillName)
+        return cdComponent.GetCDResult(BelongToUnit.Id, cdName)
             ? NPBehave.Action.Result.SUCCESS
             : NPBehave.Action.Result.PROGRESS;
     }

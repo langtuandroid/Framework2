@@ -8,7 +8,7 @@ public class UnitFactory
     {
         UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-        Unit unit = unitComponent.AddChild<Unit,int>(unitId);
+        Unit unit = unitComponent.AddChild<Unit, int>(unitId);
 
         unitComponent.Add(unit);
 
@@ -17,10 +17,11 @@ public class UnitFactory
 
     public static Unit CreateHero(Scene scene, RoleCamp roleCamp, int heroConfigId)
     {
-        Unit unit = CreateUnit(scene,heroConfigId);
+        Unit unit = CreateUnit(scene, heroConfigId);
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
         unit.AddComponent<MoveComponent>();
+        unit.AddComponent<SkillCanvasManagerComponent>();
 
         //增加Buff管理组件
         unit.AddComponent<BuffManagerComponent>();
@@ -35,13 +36,13 @@ public class UnitFactory
 
         unit.AddComponent<FindTargetComponent>();
         unit.AddComponent<GameObjectComponent>();
-        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
-        unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs); 
+        unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
         return unit;
     }
-    
-    
+
+
     public static Unit CreateSoldier(Scene scene, RoleCamp roleCamp, int heroConfigId)
     {
         Unit unit = CreateUnit(scene, heroConfigId);
@@ -61,7 +62,7 @@ public class UnitFactory
 
         unit.AddComponent<GameObjectComponent>();
 
-        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
         unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
         return unit;
@@ -76,15 +77,15 @@ public class UnitFactory
     /// <param name="collisionRelationDataConfigId">碰撞关系数据表Id</param>
     /// <param name="colliderNPBehaveTreeIdInExcel">碰撞体的行为树Id</param>
     /// <returns></returns>
-    public static Unit CreateSpecialColliderUnit(Scene room, long belongToUnitId, 
-        int colliderNPBehaveTreeIdInExcel,string hangPoint, bool followUnitPos,
+    public static Unit CreateSpecialColliderUnit(Scene room, long belongToUnitId,
+        int colliderNPBehaveTreeIdInExcel, string hangPoint, bool followUnitPos,
         bool followUnitRot, Vector3 offset,
         float angle)
     {
         //为碰撞体新建一个Unit
         Unit b2sColliderEntity = CreateUnit(room, 0);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
-        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.CollisionHandlerName = "";
         colliderArgs.BelongToUnit = belongToUnit;
         b2sColliderEntity.AddComponent<NP_SyncComponent>();
@@ -93,7 +94,7 @@ public class UnitFactory
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
         NP_RuntimeTreeFactory
-            .CreateNpRuntimeTree(b2sColliderEntity, colliderNPBehaveTreeIdInExcel)
+            .CreateBehaveRuntimeTree(b2sColliderEntity, colliderNPBehaveTreeIdInExcel)
             .Start();
 
         return b2sColliderEntity;
@@ -117,9 +118,10 @@ public class UnitFactory
     /// <param name="colliderDataConfigId">碰撞体数据表Id</param>
     /// <param name="collisionRelationDataConfigId">碰撞关系数据表Id</param>
     /// <returns></returns>
-    public static async Task<Unit> CreateDefaultColliderUnit(Scene scene,string colliderPath, long belongToUnitId, 
+    public static async Task<Unit> CreateDefaultColliderUnit(Scene scene, string colliderPath, long belongToUnitId,
         string hangPoint, bool followUnit,
-        Vector3 offset, Vector3 angle, float duration, bool needDestroyCollider, DefaultColliderData defaultColliderData)
+        Vector3 offset, Vector3 angle, float duration, bool needDestroyCollider,
+        DefaultColliderData defaultColliderData)
     {
         Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
         Transform collider = (await ResComponent.Instance.InstantiateAsync(colliderPath)).transform;
@@ -139,15 +141,15 @@ public class UnitFactory
         return CreateDefaultColliderUnit(scene, collider.gameObject, belongToUnitId, duration,
             needDestroyCollider, defaultColliderData);
     }
-    
-    public static Unit CreateDefaultColliderUnit(Scene scene,long colliderUnitId, long belongToUnitId, 
+
+    public static Unit CreateDefaultColliderUnit(Scene scene, long colliderUnitId, long belongToUnitId,
         float duration, DefaultColliderData defaultColliderData)
     {
         Unit colliderUnit = scene.GetComponent<UnitComponent>().Get(colliderUnitId);
         return CreateDefaultColliderUnit(scene, colliderUnit.GetComponent<GameObjectComponent>().GameObject,
             belongToUnitId, duration,
             false, defaultColliderData);
-    } 
+    }
 
     public static Unit CreateDefaultColliderUnit(Scene scene, GameObject collider, long belongToUnitId,
         float duration, bool needDestroyCollider,
@@ -155,12 +157,12 @@ public class UnitFactory
     {
         //为碰撞体新建一个Unit
         Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
-        var colliderArgs = ReferencePool.Allocate<ColliderArgs>();
+        ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.CollisionHandlerName = nameof(DefaultCollisionHandler);
         colliderArgs.BelongToUnit = belongToUnit;
         colliderArgs.UserData = defaultColliderData;
-        var unit = CreateCollider(scene, collider.gameObject, 10000, colliderArgs,
-            out var behave);
+        Unit unit = CreateCollider(scene, collider.gameObject, 10000, colliderArgs,
+            out NP_RuntimeTree behave);
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
         behave.GetBlackboard().Set("Duration [10000]", duration);
         behave.GetBlackboard().Set("NeedDestroyCollider [10000]", needDestroyCollider);
@@ -179,7 +181,7 @@ public class UnitFactory
         colliderEntity.AddComponent<NP_RuntimeTreeManager>();
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
-        runtimeTree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(colliderEntity, colliderNpBehaveTreeIdInExcel);
+        runtimeTree = NP_RuntimeTreeFactory.CreateBehaveRuntimeTree(colliderEntity, colliderNpBehaveTreeIdInExcel);
         return colliderEntity;
     }
 }

@@ -33,11 +33,11 @@ public class FindTargetComponent : Entity, IAwakeSystem
     }
 
     private Dictionary<RoleKey, Unit> cacheTargets = new();
-    private Unit unit;
+    private Unit selfUnit;
 
     public void Awake()
     {
-        unit = GetParent<Unit>();
+        selfUnit = GetParent<Unit>();
     }
 
     public bool FindTarget(RoleCast roleCast, RoleTag tag, float dis, out long result)
@@ -45,7 +45,7 @@ public class FindTargetComponent : Entity, IAwakeSystem
         RoleKey key = new(roleCast, tag);
         if (cacheTargets.TryGetValue(key, out Unit targetUnit))
         {
-            if (math.distance(targetUnit.Position, unit.Position) < dis)
+            if (math.distance(targetUnit.Position, selfUnit.Position) < dis)
             {
                 result = targetUnit.Id;
                 return true;
@@ -54,26 +54,30 @@ public class FindTargetComponent : Entity, IAwakeSystem
 
         result = 0;
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
-        var selfRoleCast = parent.GetComponent<RoleCastComponent>();
-        foreach (var unit in unitComponent.idUnits.Values)
+        RoleCastComponent selfRoleCast = parent.GetComponent<RoleCastComponent>();
+        foreach (Unit unit in unitComponent.idUnits.Values)
         {
-            if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast && tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
+            if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast &&
+                tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
             {
-                result = unit.Id;
-                cacheTargets[key] = unit;
-                return true;
+                if (math.distance(selfUnit.Position, unit.Position) < dis)
+                {
+                    result = unit.Id;
+                    cacheTargets[key] = unit;
+                    return true;
+                }
             }
         }
 
         return false;
     }
-    
+
     public void FindTargets(Action<RecyclableList<long>> findCb, RoleCast roleCast, RoleTag tag)
     {
         RecyclableList<long> result = RecyclableList<long>.Create();
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
-        var selfRoleCast = GetComponent<RoleCastComponent>();
-        foreach (var unit in unitComponent.idUnits.Values)
+        RoleCastComponent selfRoleCast = GetComponent<RoleCastComponent>();
+        foreach (Unit unit in unitComponent.idUnits.Values)
         {
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast &&
                 tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
@@ -84,5 +88,4 @@ public class FindTargetComponent : Entity, IAwakeSystem
 
         findCb(result);
     }
-
 }

@@ -9,7 +9,7 @@ namespace Framework
         /// <summary>
         /// 已经添加过的行为树，第一个id为root id，第二个id为运行时id
         /// </summary>
-        private Dictionary<long, long> rootId2TreeRuntimeId = new Dictionary<long, long>();
+        private Dictionary<long, long> rootId2TreeRuntimeId = new();
 
         /// <summary>
         /// 添加行为树
@@ -20,7 +20,7 @@ namespace Framework
         public void AddTree(long runTimeID, long rootId, NP_RuntimeTree npRuntimeTree)
         {
             runtimeId2Tree.Add(runTimeID, npRuntimeTree);
-            this.rootId2TreeRuntimeId.Add(rootId, runTimeID);
+            rootId2TreeRuntimeId.Add(rootId, runTimeID);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Framework
         /// <returns></returns>
         public NP_RuntimeTree GetTreeByRuntimeID(long runtimeid)
         {
-            if (runtimeId2Tree.TryGetValue(runtimeid, out var id))
+            if (runtimeId2Tree.TryGetValue(runtimeid, out NP_RuntimeTree id))
             {
                 return id;
             }
@@ -46,7 +46,7 @@ namespace Framework
         /// <returns></returns>
         public NP_RuntimeTree GetTreeByRootID(long rootId)
         {
-            if (this.rootId2TreeRuntimeId.TryGetValue(rootId, out var tree))
+            if (rootId2TreeRuntimeId.TryGetValue(rootId, out long tree))
             {
                 return runtimeId2Tree[tree];
             }
@@ -60,8 +60,8 @@ namespace Framework
             {
                 runtimeId2Tree[id].Dispose();
                 runtimeId2Tree.Remove(id);
-                long removeId = -1; 
-                foreach (var item in rootId2TreeRuntimeId)
+                long removeId = -1;
+                foreach (KeyValuePair<long, long> item in rootId2TreeRuntimeId)
                 {
                     if (item.Value == id)
                     {
@@ -71,7 +71,9 @@ namespace Framework
                 }
 
                 if (removeId != -1)
+                {
                     rootId2TreeRuntimeId.Remove(removeId);
+                }
             }
             else
             {
@@ -82,15 +84,18 @@ namespace Framework
         public override void Dispose()
         {
             if (IsDisposed)
+            {
                 return;
+            }
+
             base.Dispose();
-            foreach (var runtimeTree in runtimeId2Tree)
+            foreach (KeyValuePair<long, NP_RuntimeTree> runtimeTree in runtimeId2Tree)
             {
                 runtimeTree.Value.Dispose();
             }
 
             runtimeId2Tree.Clear();
-            this.rootId2TreeRuntimeId.Clear();
+            rootId2TreeRuntimeId.Clear();
         }
 
         public void BattleUpdate(float deltaTime)

@@ -23,6 +23,6 @@ public class NP_SetCDInfoAction : NP_ClassForStoreAction
         int skillLevel = unit.GetComponent<SkillCanvasManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId);
         long cd = skillDesNodeData.SkillCD[
             unit.GetComponent<SkillCanvasManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId)];
-        cdComponent.SetCD(unit.Id, skillDesNodeData.SkillName, cd, cd);
+        cdComponent.SetCD(unit.Id, skillDesNodeData.SkillName + unit.Id, cd, cd);
     }
 }

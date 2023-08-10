@@ -9,28 +9,28 @@ public class SkillCanvasManagerComponent : Entity
     /// <summary>
     /// 技能Id与其对应行为树映射,因为一个技能可能由多个行为树组成，所以value使用了List的形式
     /// </summary>
-    public Dictionary<long, List<NP_RuntimeTree>> Skills = new();
+    public Dictionary<int, NP_RuntimeTree> Skills = new();
 
     /// <summary>
     /// 技能Id与其等级映射
     /// </summary>
-    private Dictionary<long, int> SkillLevels = new();
+    private Dictionary<int, int> SkillLevels = new();
 
     public bool IsSkillRunning { get; private set; }
 
-    public void SkillStart(long skillId)
+    public void SkillStart(int skillId)
     {
         IsSkillRunning = true;
     }
 
-    public void SkillEnd(long skillId)
+    public void SkillEnd(int skillId)
     {
         IsSkillRunning = false;
     }
 
-    public void AddSkill(long skillId)
+    public void AddSkill(int skillId, int level = 0)
     {
-        SkillLevels[skillId] = 0;
+        SkillLevels[skillId] = level;
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class SkillCanvasManagerComponent : Entity
     /// </summary>
     /// <param name="skillId"></param>
     /// <param name="count"></param>
-    public void AddSkillLevel(long skillId, int count = 1)
+    public void AddSkillLevel(int skillId, int count = 1)
     {
         if (SkillLevels.TryGetValue(skillId, out int level))
         {
@@ -54,7 +54,7 @@ public class SkillCanvasManagerComponent : Entity
     /// 获取技能等级
     /// </summary>
     /// <param name="skillId"></param>
-    public int GetSkillLevel(long skillId)
+    public int GetSkillLevel(int skillId)
     {
         if (SkillLevels.TryGetValue(skillId, out int level))
         {

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Framework;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRendererUpdateSystem
+public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRendererUpdateSystem
 {
     public void Awake()
     {
@@ -12,26 +13,28 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
         Scene battleScene = this.DomainScene();
         battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
         battleScene.AddComponent<UnitComponent>();
-        
+
         Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);
         unit2.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         unit2.Position = new float3(3, 0, 3);
 
         Unit unit = UnitFactory.CreateHero(battleScene, RoleCamp.red, 1);
+        unit.AddComponent<KeyboardCtrlComponent>();
         unit.Forward = new float3(0, 0, 1);
         unit.GetComponent<GameObjectComponent>().GameObject =
             ResComponent.Instance.Instantiate("Assets/Res/Player.prefab");
 
         unit.GetComponent<GameObjectComponent>().GameObject.name = "player";
-        var tree = NP_RuntimeTreeFactory.CreateNpRuntimeTree(unit, 2);
-        tree.Start();
+        // NP_RuntimeTree tree = NP_RuntimeTreeFactory.CreateBehaveRuntimeTree(unit, 2);
+        // tree.Start();
+        NP_RuntimeTreeFactory.CreateSkillRuntimeTree(unit, 10002);
+        unit.GetComponent<SkillCanvasManagerComponent>().AddSkill(10002);
         UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM(unit));
-        
     }
 
     public void Update(float deltaTime)
     {
-        var queue = EventSystem.Instance.GetQueueByIndex(InstanceQueueIndex.BattleUpdate);
+        Queue<long> queue = EventSystem.Instance.GetQueueByIndex(InstanceQueueIndex.BattleUpdate);
         int count = queue.Count;
         while (count-- > 0)
         {
@@ -46,6 +49,7 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
             {
                 continue;
             }
+
             queue.Enqueue(instanceId);
 
             if (component is IBattleUpdateSystem iUpdateSystem)
@@ -58,5 +62,4 @@ public class BattleSceneComponent : Entity ,IAwakeSystem, IUpdateSystem, IRender
     public void RenderUpdate(float deltaTime)
     {
     }
-
 }

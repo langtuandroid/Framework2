@@ -7,23 +7,36 @@ using Sirenix.OdinInspector;
 [GUIColor(0.4f, 0.8f, 1)]
 public class SkillDesNodeData : BuffNodeDataBase
 {
-    [TabGroup("基础信息")] [LabelText("技能名称")] public string SkillName;
-    [TabGroup("基础信息")] [LabelText("技能id")] public long SkillId;
+    [TabGroup("基础信息")]
+    [LabelText("技能名称")]
+    public string SkillName;
 
-    [TabGroup("基础信息")] [HideLabel] [Title("技能描述", Bold = false)] [MultiLineProperty(10)]
+    [TabGroup("基础信息")]
+    [LabelText("技能id")]
+    [ReadOnly]
+    [InfoBox("技能id需要在SkillBehave表中配置", InfoMessageType.Error, "@SkillId==0")]
+    public int SkillId;
+
+    [TabGroup("基础信息")]
+    [HideLabel]
+    [Title("技能描述", Bold = false)]
+    [MultiLineProperty(10)]
     public string SkillDescribe;
 
-    [TabGroup("基础信息")] [Title("技能资源名,第一个是图标")]
+    [TabGroup("基础信息")]
+    [Title("技能资源名,第一个是图标")]
     public List<string> SkillABInfo = new();
 
-    [TabGroup("基础信息")] [HideLabel] [Title("技能消耗类型")]
+    [TabGroup("基础信息")]
+    [HideLabel]
+    [Title("技能消耗类型")]
     public SkillCostTypes SkillCostTypes = SkillCostTypes.None;
 
     [TabGroup("基础信息")]
     [HideLabel]
     [Title("技能CD", Bold = false)]
     [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-    public Dictionary<int, long> SkillCD = new ();
+    public Dictionary<int, long> SkillCD = new();
 
     [TabGroup("基础信息")]
     [HideLabel]
@@ -31,12 +44,19 @@ public class SkillDesNodeData : BuffNodeDataBase
     [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, float> SkillCost = new();
 
-    [TabGroup("基础信息")] [Title("技能类型", Bold = false)] [HideLabel]
+    [TabGroup("基础信息")]
+    [Title("技能类型", Bold = false)]
+    [HideLabel]
     public SkillTypes SkillTypes = SkillTypes.NoBreak;
 
-    [TabGroup("基础信息")] [Title("技能指示器类型", Bold = false)] [HideLabel] [HideIf("SkillTypes", SkillTypes.Passive)]
+    [TabGroup("基础信息")]
+    [Title("技能指示器类型", Bold = false)]
+    [HideLabel]
+    [HideIf("SkillTypes", SkillTypes.Passive)]
     public SkillReleaseMode SkillReleaseMode;
 
-    [TabGroup("基础信息")] [Title("伤害类型", Bold = false)] [HideLabel]
+    [TabGroup("基础信息")]
+    [Title("伤害类型", Bold = false)]
+    [HideLabel]
     public SkillDamageTypes DamageType;
 }

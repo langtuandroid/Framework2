@@ -21,6 +21,13 @@
         },
         {
             "Address": "",
+            "AssetPath": "Assets/Res/Configs/SkillBehaveConfig.json",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
             "AssetPath": "Assets/Res/Configs/UnitConfig.json",
             "AssetTags": [],
             "BundleID": 0,

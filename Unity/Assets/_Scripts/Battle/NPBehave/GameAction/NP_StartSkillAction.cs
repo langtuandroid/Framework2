@@ -1,9 +1,13 @@
 ﻿using System;
+using Framework;
 using Sirenix.OdinInspector;
 using Action = NPBehave.Action;
 
 public class NP_StartSkillAction : NP_ClassForStoreAction
 {
+    [LabelText("技能描述结点Id")]
+    public VTD_Id DataId = new();
+
     [LabelText("技能优先级")]
     public int SkillPriority;
 
@@ -31,6 +35,9 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
         if (skillPriorityTimer <= 0)
         {
             skillPriorityTimer = SkillPriority;
+            SkillDesNodeData skillDesNodeData =
+                (SkillDesNodeData)BelongtoRuntimeTree.BelongNP_DataSupportor.BuffNodeDataDic[DataId.Value];
+            skillCanvasManagerComponent.SkillStart(skillDesNodeData.SkillId);
             return Action.Result.SUCCESS;
         }
 
