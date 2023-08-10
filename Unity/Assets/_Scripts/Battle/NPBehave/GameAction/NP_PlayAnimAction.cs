@@ -2,6 +2,7 @@
 using Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Action = NPBehave.Action;
 
 [Title("播放动画", TitleAlignment = TitleAlignments.Centered)]
 public class NP_PlayAnimAction : NP_ClassForStoreAction
@@ -14,13 +15,18 @@ public class NP_PlayAnimAction : NP_ClassForStoreAction
 
     private bool isPlayAnim = false;
 
-    public override Func<bool, NPBehave.Action.Result> GetFunc2ToBeDone()
+    public override Func<bool, Action.Result> GetFunc2ToBeDone()
     {
         return IsAnimUntilFrame;
     }
 
-    private NPBehave.Action.Result IsAnimUntilFrame(bool isCancel)
+    private Action.Result IsAnimUntilFrame(bool isCancel)
     {
+        if (isCancel)
+        {
+            return Action.Result.SUCCESS;
+        }
+
         if (!isPlayAnim)
         {
             // play
@@ -29,10 +35,10 @@ public class NP_PlayAnimAction : NP_ClassForStoreAction
         // 判断是否到跳过的帧率
         if (FinishFrame == -1)
         {
-            return NPBehave.Action.Result.SUCCESS;
+            return Action.Result.SUCCESS;
         }
 
-        return NPBehave.Action.Result.SUCCESS;
+        return Action.Result.SUCCESS;
     }
 
     private void PlayAnim()

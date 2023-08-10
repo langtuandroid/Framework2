@@ -21,6 +21,11 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
 
     private Action.Result CanRunSkill(bool isCancel)
     {
+        if (isCancel)
+        {
+            return Action.Result.SUCCESS;
+        }
+
         if (skillCanvasManagerComponent == null)
         {
             skillCanvasManagerComponent = BelongToUnit.GetComponent<SkillCanvasManagerComponent>();

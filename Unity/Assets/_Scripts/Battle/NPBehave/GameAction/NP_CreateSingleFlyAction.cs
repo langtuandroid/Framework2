@@ -39,14 +39,35 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("飞行的距离")]
     public float FlyDis;
 
-    public override Action GetActionToBeDone()
+    private AsyncResult createAsync;
+
+    public override Func<bool, NPBehave.Action.Result> GetFunc2ToBeDone()
     {
         return Create;
     }
 
-    private void Create()
+    private NPBehave.Action.Result Create(bool isCancel)
     {
-        FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree,
-            DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
+        if (isCancel)
+        {
+            return NPBehave.Action.Result.SUCCESS;
+        }
+
+        if (createAsync == null)
+        {
+            createAsync = AsyncResult.Create();
+            FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree,
+                DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()), createAsync);
+            return NPBehave.Action.Result.PROGRESS;
+        }
+
+        if (!createAsync.IsDone)
+        {
+            return NPBehave.Action.Result.PROGRESS;
+        }
+
+        createAsync.Dispose();
+        createAsync = null;
+        return NPBehave.Action.Result.SUCCESS;
     }
 }

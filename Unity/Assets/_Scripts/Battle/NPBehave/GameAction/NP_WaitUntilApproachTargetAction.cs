@@ -44,6 +44,11 @@ public class NP_WaitUntilApproachTargetAction : NP_ClassForStoreAction
 
     private Action.Result UntilFunc(bool isCancel)
     {
+        if (isCancel)
+        {
+            return Action.Result.SUCCESS;
+        }
+
         float3 target1Pos = Target1IsSelf
             ? BelongToUnit.Position
             : BelongToUnit.Domain.GetComponent<UnitComponent>()

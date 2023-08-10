@@ -1,7 +1,7 @@
 ﻿using Framework;
 using UnityEngine;
 
-public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObject>
+public class GameObjectComponent : Entity, IDestroySystem, IAwakeSystem<GameObject>, IRendererUpdateSystem
 {
     private GameObject gameObject;
 
@@ -10,7 +10,11 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
         get => gameObject;
         set
         {
-            if(gameObject == value) return;
+            if (gameObject == value)
+            {
+                return;
+            }
+
             if (gameObject != null)
             {
                 gameObject.GetOrAddComponent<GoConnectedUnitId>().SetUnitId(0);
@@ -27,22 +31,25 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
                 gameObject.GetOrAddComponent<EditorVisibleUnit>().SetUnit(parent as Unit);
 #endif
             }
-
         }
     }
-    
+
     public void Awake(GameObject a)
     {
-        
     }
 
     public Transform Find(string path)
     {
-        if (GameObject == null) return null;
+        if (GameObject == null)
+        {
+            return null;
+        }
+
         if (string.IsNullOrEmpty(path))
         {
             return GameObject.transform;
         }
+
         return GameObject.transform.Find(path);
     }
 
@@ -52,13 +59,18 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
         {
             Object.Destroy(gameObject);
         }
+
         OnDestroy();
     }
 
     public void OnDestroy()
     {
-        if (gameObject == null) return;
-        var goConnectedId = gameObject.GetComponent<GoConnectedUnitId>();
+        if (gameObject == null)
+        {
+            return;
+        }
+
+        GoConnectedUnitId goConnectedId = gameObject.GetComponent<GoConnectedUnitId>();
         if (goConnectedId != null)
         {
             if (goConnectedId.UnitId == parent.Id)
@@ -70,5 +82,15 @@ public class GameObjectComponent: Entity, IDestroySystem, IAwakeSystem<GameObjec
         gameObject.GetComponent<EditorVisibleUnit>()?.SetUnit(null);
 #endif
         GameObject = null;
+    }
+
+    public void RenderUpdate(float deltaTime)
+    {
+        if (gameObject == null)
+        {
+            return;
+        }
+
+        gameObject.transform.position = GetParent<Unit>().Position;
     }
 }

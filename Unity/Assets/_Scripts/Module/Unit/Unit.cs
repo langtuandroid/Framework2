@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -6,82 +7,65 @@ namespace Framework
 {
     public sealed class Unit : Entity, IAwakeSystem<int>
     {
-    
         private float3 position; //坐标
-        
+
         public UnitConfig UnitConfig { get; private set; }
 
+        [ShowInInspector]
         public float3 Position
         {
-            get => this.position;
-            set
-            {
-                if(value.NearEqual(position)) return;
-                float3 oldPos = this.position;
-                this.position = value;
-                EventSystem.Instance.Publish(this.DomainScene(),
-                    new EventType.ChangePosition() { Unit = this, OldPos = oldPos });
-            }
+            get => position;
+            set => position = value;
         }
 
         public float3 Forward
         {
-            get => math.mul(this.Rotation, math.forward());
-            set => this.Rotation = quaternion.LookRotation(value, math.up());
+            get => math.mul(Rotation, math.forward());
+            set => Rotation = quaternion.LookRotation(value, math.up());
         }
 
         private quaternion rotation;
 
         public quaternion Rotation
         {
-            get => this.rotation;
+            get => rotation;
             set
             {
-                this.rotation = value;
+                rotation = value;
                 eulerAngle = rotation.EulerAngles();
-                EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
             }
         }
 
         private float3 eulerAngle;
 
+        [ShowInInspector]
         public float3 EulerAngle
         {
             get => eulerAngle;
             set
             {
-                if(eulerAngle.NearEqual(value)) return;
                 eulerAngle = value;
                 rotation = quaternion.Euler(eulerAngle, math.RotationOrder.XYZ);
-                EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
             }
         }
 
         private float3 scale;
 
+        [ShowInInspector]
         public float3 Scale
         {
             get => scale;
-            set
-            {
-                if(value.NearEqual(scale)) return;
-                scale = value;
-                EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeScale() { Unit = this });
-            }
+            set => scale = value;
         }
 
-        protected override string ViewName
-        {
-            get
-            {
-                return $"{this.GetType().Name} ({this.Id})";
-            }
-        }
+        protected override string ViewName => $"{GetType().Name} ({Id})";
 
         public void Awake(int unitId)
         {
             if (UnitConfigFactory.Instance.Contain(unitId))
+            {
                 UnitConfig = UnitConfigFactory.Instance.Get(unitId);
+            }
         }
 
         public override string ToString()

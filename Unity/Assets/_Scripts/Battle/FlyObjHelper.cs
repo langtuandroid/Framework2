@@ -6,7 +6,7 @@ using UnityEngine;
 public static class FlyObjHelper
 {
     public static async void CreateSingleFlyObj(NP_CreateSingleFlyAction action, NP_RuntimeTree runtimeTree,
-        DefaultColliderData colliderData)
+        DefaultColliderData colliderData, IPromise promise)
     {
         Scene scene = action.BelongToUnit.DomainScene();
         string prefabPath = action.PrefabPath;
@@ -22,12 +22,14 @@ public static class FlyObjHelper
         Unit objUnit = UnitFactory.CreateUnit(scene, 0);
         action.FlyObjUnitKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), objUnit.Id);
         GameObject selfTrans =
-            await ResComponent.Instance.InstantiateAsync(prefabPath, rootTrans);
+            await ResComponent.Instance.InstantiateAsync(prefabPath);
+        objUnit.Position = rootTrans.position;
         objUnit.AddComponent<MoveComponent>();
         objUnit.AddComponent<GameObjectComponent>().GameObject = selfTrans;
-        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject,
-            runtimeTree.BelongToUnit.Id, 0, false,
-            colliderData);
+        // 障碍物和飞行物同时绑定一个GameObject会导致GoConnectedUnitId出错
+        // UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject,
+        //     runtimeTree.BelongToUnit.Id, 0, false,
+        //     colliderData);
         Vector3 endPoint;
         if (isFlyToTarget)
         {
@@ -45,5 +47,6 @@ public static class FlyObjHelper
         action.EndPointKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), endPoint);
 
         objUnit.GetComponent<MoveComponent>().MoveTo(endPoint, speed);
+        promise.SetResult();
     }
 }

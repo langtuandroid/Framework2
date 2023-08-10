@@ -1,5 +1,4 @@
-﻿using Framework.EventType;
-
+﻿
 namespace Framework
 {
     [NumericWatcher(SceneType.Battle, NumericType.Spdef)]

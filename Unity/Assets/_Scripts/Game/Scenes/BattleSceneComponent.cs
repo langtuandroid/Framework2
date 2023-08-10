@@ -13,6 +13,7 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         Scene battleScene = this.DomainScene();
         battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
         battleScene.AddComponent<UnitComponent>();
+        battleScene.AddComponent<CDComponent>();
 
         Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);
         unit2.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -27,8 +28,9 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         unit.GetComponent<GameObjectComponent>().GameObject.name = "player";
         // NP_RuntimeTree tree = NP_RuntimeTreeFactory.CreateBehaveRuntimeTree(unit, 2);
         // tree.Start();
-        NP_RuntimeTreeFactory.CreateSkillRuntimeTree(unit, 10002);
+        NP_RuntimeTree skill = NP_RuntimeTreeFactory.CreateSkillRuntimeTree(unit, 10002);
         unit.GetComponent<SkillCanvasManagerComponent>().AddSkill(10002);
+        skill.Start();
         UIComponent.Instance.OpenAsync<UI_UnitInfo>(new UI_UnitInfoVM(unit));
     }
 

@@ -1,7 +1,7 @@
 ﻿using System;
-using ET;
 using Framework;
 using Sirenix.OdinInspector;
+using Action = NPBehave.Action;
 
 public class NP_WaitSkillCdAction : NP_ClassForStoreAction
 {
@@ -11,13 +11,18 @@ public class NP_WaitSkillCdAction : NP_ClassForStoreAction
     private string cdName;
     private CDComponent cdComponent;
 
-    public override Func<bool, NPBehave.Action.Result> GetFunc2ToBeDone()
+    public override Func<bool, Action.Result> GetFunc2ToBeDone()
     {
         return UntilFunc;
     }
 
-    private NPBehave.Action.Result UntilFunc(bool isCancel)
+    private Action.Result UntilFunc(bool isCancel)
     {
+        if (isCancel)
+        {
+            return Action.Result.SUCCESS;
+        }
+
         if (string.IsNullOrEmpty(cdName))
         {
             SkillDesNodeData skillDesNodeData =
@@ -27,7 +32,7 @@ public class NP_WaitSkillCdAction : NP_ClassForStoreAction
         }
 
         return cdComponent.GetCDResult(BelongToUnit.Id, cdName)
-            ? NPBehave.Action.Result.SUCCESS
-            : NPBehave.Action.Result.PROGRESS;
+            ? Action.Result.SUCCESS
+            : Action.Result.PROGRESS;
     }
 }
