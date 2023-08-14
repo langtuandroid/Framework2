@@ -1,6 +1,6 @@
 ﻿using Framework;
 
-public class ReceiveDamageComponent : Entity
+public class ReceiveDamageComponent : Entity, IAwakeSystem
 {
     /// <summary>
     /// 洗礼这个伤害值
@@ -55,5 +55,9 @@ public class ReceiveDamageComponent : Entity
         }
 
         ReferencePool.Free(damageData);
+    }
+
+    public void Awake()
+    {
     }
 }

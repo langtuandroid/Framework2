@@ -8,6 +8,9 @@ public class NP_SetCDInfoAction : NP_ClassForStoreAction
     [LabelText("技能数据结点Id")]
     public VTD_Id DataId = new();
 
+    [LabelText("cd的相乘系数")]
+    public float CdMult = 1;
+
     public override Action GetActionToBeDone()
     {
         return SetCdInfo;
@@ -22,6 +25,6 @@ public class NP_SetCDInfoAction : NP_ClassForStoreAction
         int skillLevel = unit.GetComponent<SkillCanvasManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId);
         long cd = skillDesNodeData.SkillCD[
             unit.GetComponent<SkillCanvasManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId)];
-        cdComponent.SetCD(unit.Id, skillDesNodeData.SkillName + unit.Id, cd, cd);
+        cdComponent.SetCD(unit.Id, skillDesNodeData.SkillName + unit.Id, cd, cd * CdMult);
     }
 }

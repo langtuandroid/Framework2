@@ -49,7 +49,7 @@ public class CDInfo : IReference
 /// <summary>
 /// CD组件，用于统一管理所有的CD类型的数据，比如攻速CD，服务器上因试图攻击导致的循环MoveTo CD
 /// </summary>
-public class CDComponent : Entity, IDestroySystem, IUpdateSystem
+public class CDComponent : Entity, IDestroySystem, IUpdateSystem, IAwakeSystem
 {
     /// <summary>
     /// 包含所有CD信息的字典
@@ -227,5 +227,9 @@ public class CDComponent : Entity, IDestroySystem, IUpdateSystem
                 }
             }
         }
+    }
+
+    public void Awake()
+    {
     }
 }

@@ -4,7 +4,7 @@ using Framework;
 /// <summary>
 /// 技能行为树管理器
 /// </summary>
-public class SkillCanvasManagerComponent : Entity
+public class SkillCanvasManagerComponent : Entity, IAwakeSystem
 {
     /// <summary>
     /// 技能Id与其对应行为树映射,因为一个技能可能由多个行为树组成，所以value使用了List的形式
@@ -65,5 +65,9 @@ public class SkillCanvasManagerComponent : Entity
             Log.Error($"请求等级的SkillId:{skillId}不存在");
             return -1;
         }
+    }
+
+    public void Awake()
+    {
     }
 }

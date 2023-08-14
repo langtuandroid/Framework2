@@ -35,7 +35,7 @@ public class UnitFactory
         unit.AddComponent<PlayAnimComponent>();
 
         unit.AddComponent<FindTargetComponent>();
-        unit.AddComponent<GameObjectComponent>();
+        unit.AddComponent<GameObjectComponent, bool, bool>(false, true);
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
         unit.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
@@ -60,7 +60,7 @@ public class UnitFactory
         unit.AddComponent<CastDamageComponent>();
         unit.AddComponent<ReceiveDamageComponent>();
 
-        unit.AddComponent<GameObjectComponent>();
+        unit.AddComponent<GameObjectComponent, bool, bool>(false, true);
 
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
@@ -71,52 +71,33 @@ public class UnitFactory
     /// <summary>
     /// 创建碰撞体
     /// </summary>
-    /// <param name="room">归属的房间</param>
-    /// <param name="belongToUnit">归属的Unit</param>
-    /// <param name="colliderDataConfigId">碰撞体数据表Id</param>
-    /// <param name="collisionRelationDataConfigId">碰撞关系数据表Id</param>
-    /// <param name="colliderNPBehaveTreeIdInExcel">碰撞体的行为树Id</param>
     /// <returns></returns>
     public static Unit CreateSpecialColliderUnit(Scene room, long belongToUnitId,
-        int colliderNPBehaveTreeIdInExcel, string hangPoint, bool followUnitPos,
+        int colliderNpBehaveTreeIdInExcel, string hangPoint, bool followUnitPos,
         bool followUnitRot, Vector3 offset,
         float angle)
     {
         //为碰撞体新建一个Unit
-        Unit b2sColliderEntity = CreateUnit(room, 0);
+        Unit b2SColliderEntity = CreateUnit(room, 0);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.CollisionHandlerName = "";
         colliderArgs.BelongToUnit = belongToUnit;
-        b2sColliderEntity.AddComponent<NP_SyncComponent>();
-        b2sColliderEntity.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
-        b2sColliderEntity.AddComponent<NP_RuntimeTreeManager>();
+        b2SColliderEntity.AddComponent<NP_SyncComponent>();
+        b2SColliderEntity.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
+        b2SColliderEntity.AddComponent<NP_RuntimeTreeManager>();
 
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
         NP_RuntimeTreeFactory
-            .CreateBehaveRuntimeTree(b2sColliderEntity, colliderNPBehaveTreeIdInExcel)
+            .CreateBehaveRuntimeTree(b2SColliderEntity, colliderNpBehaveTreeIdInExcel)
             .Start();
 
-        return b2sColliderEntity;
+        return b2SColliderEntity;
     }
 
     /// <summary>
     /// 创建碰撞体
     /// </summary>
-    /// <param name="scene">归属的房间</param>
-    /// <param name="colliderPath">碰撞体的路径</param>
-    /// <param name="belongToUnitId">属于哪个unit</param>
-    /// <param name="colliderNpBehaveTreeIdInExcel">碰撞体的行为树Id</param>
-    /// <param name="hangPoint"></param>
-    /// <param name="followUnit"></param>
-    /// <param name="offset"></param>
-    /// <param name="angle"></param>
-    /// <param name="duration"></param>
-    /// <param name="needDestroyCollider"></param>
-    /// <param name="defaultColliderData"></param>
-    /// <param name="belongToUnit">归属的Unit</param>
-    /// <param name="colliderDataConfigId">碰撞体数据表Id</param>
-    /// <param name="collisionRelationDataConfigId">碰撞关系数据表Id</param>
     /// <returns></returns>
     public static async Task<Unit> CreateDefaultColliderUnit(Scene scene, string colliderPath, long belongToUnitId,
         string hangPoint, bool followUnit,
@@ -155,12 +136,12 @@ public class UnitFactory
         float duration, bool needDestroyCollider,
         DefaultColliderData defaultColliderData)
     {
-        //为碰撞体新建一个Unit
         Unit belongToUnit = scene.GetComponent<UnitComponent>().Get(belongToUnitId);
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.CollisionHandlerName = nameof(DefaultCollisionHandler);
         colliderArgs.BelongToUnit = belongToUnit;
         colliderArgs.UserData = defaultColliderData;
+        //为碰撞体新建一个Unit
         Unit unit = CreateCollider(scene, collider.gameObject, 10000, colliderArgs,
             out NP_RuntimeTree behave);
         //根据传过来的行为树Id来给这个碰撞Unit加上行为树
@@ -176,7 +157,7 @@ public class UnitFactory
         //为碰撞体新建一个Unit
         Unit colliderEntity = CreateUnit(scene, 0);
         colliderEntity.AddComponent<NP_SyncComponent>();
-        colliderEntity.AddComponent<GameObjectComponent>().GameObject = collider;
+        colliderEntity.AddComponent<GameObjectComponent, bool, bool>(true, false).GameObject = collider;
         colliderEntity.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);
         colliderEntity.AddComponent<NP_RuntimeTreeManager>();
 

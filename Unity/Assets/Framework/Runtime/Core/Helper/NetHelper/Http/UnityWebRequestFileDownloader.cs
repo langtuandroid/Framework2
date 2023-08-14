@@ -47,55 +47,55 @@ namespace Framework
             if (fileInfo.Directory != null && !fileInfo.Directory.Exists)
                 fileInfo.Directory.Create();
             ProgressInfo progressInfo = new ProgressInfo {TotalCount = 1};
-            using (UnityWebRequest www = new UnityWebRequest(path))
+            using UnityWebRequest www = new UnityWebRequest(path);
+            var downloadFileHandler = new DownloadFileHandler(fileInfo);
+            www.downloadHandler = downloadFileHandler;
+            _ = www.SendWebRequest();
+            float timer = 0;
+            while (!www.isDone)
             {
-                var downloadFileHandler = new DownloadFileHandler(fileInfo);
-                www.downloadHandler = downloadFileHandler;
-                www.SendWebRequest();
-                float timer = 0;
-                while (!www.isDone)
+                if (www.downloadProgress >= 0)
                 {
-                    if (www.downloadProgress >= 0)
-                    {
-                        if (progressInfo.TotalSize <= 0)
-                            progressInfo.TotalSize = (long) (www.downloadedBytes / www.downloadProgress);
-                        progressInfo.CompletedSize = (long) www.downloadedBytes;
-                        promise.UpdateProgress(progressInfo);
-                    }
-                    timer += Time.deltaTime;
-                    if (timer > overtimeTime)
-                    {
-                        promise.SetException(new TimeoutException());
-                        break;
-                    }
-
-                    await Game.WaitFrameFinish();
+                    if (progressInfo.TotalSize <= 0)
+                        progressInfo.TotalSize = (long)(www.downloadedBytes / www.downloadProgress);
+                    progressInfo.CompletedSize = (long)www.downloadedBytes;
+                    promise.UpdateProgress(progressInfo);
                 }
 
-                while (!downloadFileHandler.WriteFinish)
+                timer += Time.deltaTime;
+                if (timer > overtimeTime)
                 {
-                    timer += Time.deltaTime;
-                    if (timer > overtimeTime)
-                    {
-                        promise.SetException(new TimeoutException());
-                        break;
-                    }
-                    await Game.WaitFrameFinish();
+                    promise.SetException(new TimeoutException());
+                    break;
                 }
+
+                await Game.WaitFrameFinish();
+            }
+
+            while (!downloadFileHandler.WriteFinish)
+            {
+                timer += Time.deltaTime;
+                if (timer > overtimeTime)
+                {
+                    promise.SetException(new TimeoutException());
+                    break;
+                }
+
+                await Game.WaitFrameFinish();
+            }
                 
 #pragma warning disable CS0618
-                if(www.isNetworkError || www.isHttpError)
+            if (www.isNetworkError || www.isHttpError)
 #pragma warning restore CS0618
-                {
-                    promise.SetException(www.error);
-                    return;
-                }
-                
-                progressInfo.CompletedCount = 1;
-                progressInfo.CompletedSize = progressInfo.TotalSize;
-                promise.UpdateProgress(progressInfo);
-                promise.SetResult(fileInfo);
+            {
+                promise.SetException(www.error);
+                return;
             }
+
+            progressInfo.CompletedCount = 1;
+            progressInfo.CompletedSize = progressInfo.TotalSize;
+            promise.UpdateProgress(progressInfo);
+            promise.SetResult(fileInfo);
         }
 
         public override IProgressResult<ProgressInfo, ResourceInfo[]> DownloadFileAsync(ResourceInfo[] infos)
@@ -161,7 +161,7 @@ namespace Framework
                 UnityWebRequest www = new UnityWebRequest(path);
                 www.downloadHandler = new DownloadFileHandler(fileInfo);
 
-                www.SendWebRequest();
+                _ = www.SendWebRequest();
                 tasks.Add(new KeyValuePair<ResourceInfo, UnityWebRequest>(info, www));
 
                 while (tasks.Count >= this.MaxTaskCount || (i == downloadList.Count - 1 && tasks.Count > 0))

@@ -1,4 +1,5 @@
 ﻿using System;
+using Framework;
 using Sirenix.OdinInspector;
 using Action = NPBehave.Action;
 
@@ -15,7 +16,7 @@ public class NP_FindTargetAction : NP_ClassForStoreAction
     public RoleTag RoleTag;
 
     [LabelText("多少范围内")]
-    public float Distance;
+    public BlackboardOrValue_Float Distance;
 
     public override Func<bool, Action.Result> GetFunc2ToBeDone()
     {
@@ -29,7 +30,8 @@ public class NP_FindTargetAction : NP_ClassForStoreAction
             return Action.Result.SUCCESS;
         }
 
-        if (BelongToUnit.GetComponent<FindTargetComponent>().FindTarget(RoleCast, RoleTag, Distance, out long id))
+        if (BelongToUnit.GetComponent<FindTargetComponent>().FindTarget(RoleCast, RoleTag,
+                Distance.GetValue(BelongtoRuntimeTree.GetBlackboard()), out long id))
         {
             TargetInsId.SetBlackBoardValue(BelongtoRuntimeTree.GetBlackboard(), id);
             return Action.Result.SUCCESS;

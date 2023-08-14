@@ -8,6 +8,7 @@ public class NP_BlackboardConditionNodeData : NP_NodeDataBase
 {
     [HideInEditorMode] private BlackboardCondition m_BlackboardConditionNode;
 
+    [InfoBox("字典值 <运算符号> 对比值")]
     [LabelText("运算符号")] public Operator Ope = Operator.IS_EQUAL;
 
     [LabelText("终止条件")] public Stops Stop = Stops.IMMEDIATE_RESTART;

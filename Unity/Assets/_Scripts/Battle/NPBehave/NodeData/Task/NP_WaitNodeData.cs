@@ -1,12 +1,14 @@
 ﻿using Framework;
 using NPBehave;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 [BoxGroup("等待结点数据")]
 [HideLabel]
 public class NP_WaitNodeData : NP_NodeDataBase
 {
-    [HideInEditorMode] private Wait m_WaitNode;
+    [HideInEditorMode]
+    private Task m_WaitNode;
 
     public override NodeType BelongNodeType => NodeType.Task;
 

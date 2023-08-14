@@ -4,7 +4,7 @@ using NPBehave;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NP_TreeDataRepositoryComponent : Entity
+public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
 {
     /// <summary>
     /// 运行时的行为树仓库，注意，一定不能对这些数据做修改
@@ -49,5 +49,8 @@ public class NP_TreeDataRepositoryComponent : Entity
 
         return result;
     }
-    
+
+    public void Awake()
+    {
+    }
 }

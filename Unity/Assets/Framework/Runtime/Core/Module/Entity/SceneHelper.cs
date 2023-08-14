@@ -6,7 +6,7 @@ namespace Framework
         {
             return (Scene)entity.Domain;
         }
-        
+
         public static Scene RootScene(this Entity entity)
         {
             return Root.Instance.Scene;

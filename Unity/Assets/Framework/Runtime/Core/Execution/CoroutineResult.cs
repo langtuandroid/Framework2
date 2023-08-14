@@ -36,7 +36,7 @@ namespace Framework
         {
         }
 
-        public new static CoroutineResult Create(bool cancelable = true)
+        public static CoroutineResult Create(bool cancelable = true)
         {
             CoroutineResult result = ReferencePool.Allocate<CoroutineResult>();
             result.Cancelable = cancelable;
@@ -77,8 +77,8 @@ namespace Framework
         private CoroutineResult()
         {
         }
-        
-        public new static CoroutineResult<TResult> Create(bool cancelable = true)
+
+        public static CoroutineResult<TResult> Create(bool cancelable = true)
         {
             var result = ReferencePool.Allocate<CoroutineResult<TResult>>();
             result.Cancelable = cancelable;
@@ -119,8 +119,8 @@ namespace Framework
         private CoroutineProgressResult()
         {
         }
-        
-        public new static CoroutineProgressResult<TProgress> Create(bool cancelable = true)
+
+        public static CoroutineProgressResult<TProgress> Create(bool cancelable = true)
         {
             var result = ReferencePool.Allocate<CoroutineProgressResult<TProgress>>();
             result.Cancelable = cancelable;
@@ -162,8 +162,8 @@ namespace Framework
         private CoroutineProgressResult()
         {
         }
-        
-        public new static CoroutineProgressResult<TProgress, TResult> Create(bool cancelable = true)
+
+        public static CoroutineProgressResult<TProgress, TResult> Create(bool cancelable = true)
         {
             var result = ReferencePool.Allocate<CoroutineProgressResult<TProgress, TResult>>();
             result.Cancelable = cancelable;

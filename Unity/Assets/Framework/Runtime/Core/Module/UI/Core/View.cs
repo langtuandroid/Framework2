@@ -145,7 +145,7 @@ namespace Framework
         protected abstract void OnVmChange();
         public virtual UILevel UILevel { get; } = UILevel.Common;
 
-        public async void OnDestroy()
+        public void OnDestroy()
         {
             Binding.Clear();
             OnClose();

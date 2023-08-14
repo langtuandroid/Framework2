@@ -49,8 +49,9 @@ namespace Framework
         {
 #if UNITY_EDITOR
             return (long)(Time.time * 1000);
-#endif
+#else
             return (DateTime.UtcNow.Ticks - this.dt1970.Ticks) / 10000;
+#endif
         }
 
         /// <summary>

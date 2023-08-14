@@ -249,9 +249,6 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 11|Framework.NP_BBValue_Int, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -389,15 +386,6 @@ MonoBehaviour:
     - Name: BelongtoRuntimeTree
       Entry: 6
       Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
     - Name: BuffDataInfo
       Entry: 7
       Data: 18|Framework.VTD_BuffInfo, Game.Runtime
@@ -446,9 +434,6 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 20|Framework.NP_BBValue_Long, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -626,15 +611,6 @@ MonoBehaviour:
     - Name: BelongtoRuntimeTree
       Entry: 6
       Data: 
-    - Name: Action
-      Entry: 6
-      Data: 
-    - Name: Func1
-      Entry: 6
-      Data: 
-    - Name: Func2
-      Entry: 6
-      Data: 
     - Name: AnimName
       Entry: 7
       Data: 28|Framework.BlackboardOrValue_String, Game.Runtime
@@ -650,9 +626,6 @@ MonoBehaviour:
     - Name: NP_BBValue
       Entry: 7
       Data: 30|Framework.NP_BBValue_String, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 6
       Data: 
@@ -671,6 +644,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FinishFrame
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -814,9 +790,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 37|Framework.NP_BBValue_String, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 6
       Data: 
@@ -835,9 +808,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 38|Framework.NP_BBValue_Int, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -856,9 +826,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 39|Framework.NP_BBValue_Long, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 3
       Data: 0
@@ -877,9 +844,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 40|Framework.NP_BBValue_Int, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 3
       Data: -1
@@ -898,9 +862,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 41|Framework.NP_BBValue_String, Game.Runtime
-    - Name: Required
-      Entry: 5
-      Data: false
     - Name: Value
       Entry: 6
       Data: 

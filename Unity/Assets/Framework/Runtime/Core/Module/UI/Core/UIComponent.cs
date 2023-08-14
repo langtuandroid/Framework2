@@ -325,7 +325,7 @@ namespace Framework
                     foreach (var openedView in views)
                     {
                         if (openedView != view)
-                            openedView.Hide();
+                            _ = openedView.Hide();
                     }
                 }
             }

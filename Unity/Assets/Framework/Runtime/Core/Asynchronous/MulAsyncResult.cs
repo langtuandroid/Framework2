@@ -89,8 +89,8 @@ namespace Framework
             isAllDone = true;
             return true;
         }
-        
-        protected virtual async void RaiseOnProgressCallback(float progress)
+
+        protected override async void RaiseOnProgressCallback(float progress)
         {
             UpdateProgress();
             //延迟一帧 否则会比子任务提前完成

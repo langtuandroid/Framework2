@@ -91,7 +91,7 @@ namespace Framework
             base.Dispose();
             foreach (KeyValuePair<long, NP_RuntimeTree> runtimeTree in runtimeId2Tree)
             {
-                runtimeTree.Value.Dispose();
+                runtimeTree.Value.Finish();
             }
 
             runtimeId2Tree.Clear();

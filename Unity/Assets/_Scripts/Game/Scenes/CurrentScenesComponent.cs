@@ -1,6 +1,6 @@
 ﻿using Framework;
 
-public class CurrentScenesComponent : Entity
+public class CurrentScenesComponent : Entity, IAwakeSystem
 {
     public Scene Scene { get; set; }
 
@@ -18,5 +18,9 @@ public class CurrentScenesComponent : Entity
                 Scene.AddComponent<BattleSceneComponent>();
                 break;
         }
+    }
+
+    public void Awake()
+    {
     }
 }

@@ -499,7 +499,7 @@ namespace Framework
             return audio;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             StopBackgroundMusic();
             StopSingleSound();

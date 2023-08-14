@@ -3,8 +3,7 @@
 
 namespace Framework
 {
-
-    public class BuffManagerComponent : Entity, IBattleUpdateSystem
+    public class BuffManagerComponent : Entity, IBattleUpdateSystem, IAwakeSystem
     {
         /// <summary>
         /// Buff链表
@@ -152,5 +151,9 @@ namespace Framework
         }
 
         #endregion
+
+        public void Awake()
+        {
+        }
     }
 }

@@ -25,11 +25,12 @@ public static class FlyObjHelper
             await ResComponent.Instance.InstantiateAsync(prefabPath);
         objUnit.Position = rootTrans.position;
         objUnit.AddComponent<MoveComponent>();
-        objUnit.AddComponent<GameObjectComponent>().GameObject = selfTrans;
+        objUnit.AddComponent<GameObjectComponent, bool, bool>(false, true).GameObject = selfTrans;
         // 障碍物和飞行物同时绑定一个GameObject会导致GoConnectedUnitId出错
-        // UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(), selfTrans.gameObject,
-        //     runtimeTree.BelongToUnit.Id, 0, false,
-        //     colliderData);
+        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(),
+            selfTrans.GetComponentInChildren<Collider>().gameObject,
+            runtimeTree.BelongToUnit.Id, -1, false,
+            colliderData);
         Vector3 endPoint;
         if (isFlyToTarget)
         {

@@ -729,7 +729,7 @@ namespace Framework
             return component;
         }
 
-        public K AddComponent<K>(bool isFromPool = false) where K : Entity, new()
+        public K AddComponent<K>(bool isFromPool = false) where K : Entity, IAwakeSystem, new()
         {
             Type type = typeof(K);
             if (this.components != null && this.components.ContainsKey(type))

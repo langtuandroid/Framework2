@@ -1,7 +1,7 @@
 ﻿using Framework;
 using UnityEngine;
 
-public class GameObjectComponent : Entity, IDestroySystem, IAwakeSystem<GameObject>, IRendererUpdateSystem
+public class GameObjectComponent : Entity, IDestroySystem, IAwakeSystem<bool, bool>, IRendererUpdateSystem
 {
     private GameObject gameObject;
 
@@ -34,8 +34,13 @@ public class GameObjectComponent : Entity, IDestroySystem, IAwakeSystem<GameObje
         }
     }
 
-    public void Awake(GameObject a)
+    private bool updatePosToUnit;
+    private bool updatePosFromUnit;
+
+    public void Awake(bool updatePosToUnit, bool updatePosFromUnit)
     {
+        this.updatePosFromUnit = updatePosFromUnit;
+        this.updatePosToUnit = updatePosToUnit;
     }
 
     public Transform Find(string path)
@@ -91,6 +96,14 @@ public class GameObjectComponent : Entity, IDestroySystem, IAwakeSystem<GameObje
             return;
         }
 
-        gameObject.transform.position = GetParent<Unit>().Position;
+        if (updatePosToUnit)
+        {
+            GetParent<Unit>().Position = gameObject.transform.position;
+        }
+
+        if (updatePosFromUnit)
+        {
+            gameObject.transform.position = GetParent<Unit>().Position;
+        }
     }
 }

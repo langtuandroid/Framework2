@@ -3,7 +3,7 @@
 /// <summary>
 /// 造成伤害组件
 /// </summary>
-public class CastDamageComponent : Entity
+public class CastDamageComponent : Entity, IAwakeSystem
 {
     /// <summary>
     /// 洗礼这个伤害值
@@ -27,5 +27,9 @@ public class CastDamageComponent : Entity
                 break;
         }
         return damageData.DamageValue < 0 ? 0 : damageData.DamageValue;
+    }
+
+    public void Awake()
+    {
     }
 }
