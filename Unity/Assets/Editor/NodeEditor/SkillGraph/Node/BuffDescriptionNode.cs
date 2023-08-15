@@ -8,8 +8,15 @@ public class BuffDescriptionNode : BuffNodeBase
 
     public override string name => "技能描述结点";
 
+    public override string CreateNodeName => nameof(SkillDesNodeData);
+
     public override BuffNodeDataBase GetBuffNodeData()
     {
         return this.mSkillDesNodeData;
+    }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        this.mSkillDesNodeData = data as SkillDesNodeData;
     }
 }

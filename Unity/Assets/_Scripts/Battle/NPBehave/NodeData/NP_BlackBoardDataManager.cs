@@ -50,15 +50,18 @@ public class NP_BlackBoardDataManager
         }
     }
 
-#if UNITY_EDITOR
+    // debug时用来显示黑板信息的
+    public void RefreshFromDataSupporter(NP_DataSupportor dataSupportor)
+    {
+        BBValues.Clear();
+        BBValues.AddRange(dataSupportor.NP_BBValueManager);
+    }
+
     /// <summary>
     /// 由GraphEditor点击Blackboard按钮时传递进来
     /// </summary>
     public static NP_BlackBoardDataManager CurrentEditedNP_BlackBoardDataManager;
 
-    public static bool IsSkill;
-
     public static int BehaveId;
-#endif
 }
 #endif

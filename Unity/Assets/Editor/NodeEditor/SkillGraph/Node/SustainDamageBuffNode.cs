@@ -12,8 +12,15 @@ public class SustainDamageBuffNode: BuffNodeBase
             BuffData = new SustainDamageBuffData() { }
         };
 
+    public override string CreateNodeName => nameof(SustainDamageBuffData);
+
     public override BuffNodeDataBase GetBuffNodeData()
     {
         return SkillBuffBases;
+    }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        SkillBuffBases = data as NormalBuffNodeData;
     }
 }

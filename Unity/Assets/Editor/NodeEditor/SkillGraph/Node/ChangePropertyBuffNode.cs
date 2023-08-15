@@ -11,9 +11,16 @@ public class ChangePropertyBuffNode: BuffNodeBase
             BuffDes = "修改属性Buff",
             BuffData = new ChangePropertyBuffData() { }
         };
-        
+
+    public override string CreateNodeName => nameof(ChangePropertyBuffData);
+
     public override BuffNodeDataBase GetBuffNodeData()
     {
         return SkillBuffBases;
+    }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        this.SkillBuffBases = data as NormalBuffNodeData;
     }
 }

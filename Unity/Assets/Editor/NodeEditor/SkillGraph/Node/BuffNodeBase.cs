@@ -1,7 +1,7 @@
 ﻿using GraphProcessor;
 using UnityEngine;
 
-public class BuffNodeBase: BaseNode
+public abstract class BuffNodeBase : BaseNode
 {
     [Input("InputBuff", allowMultiple = true)]
     [HideInInspector]
@@ -13,6 +13,8 @@ public class BuffNodeBase: BaseNode
 
     public override Color color => Color.green;
 
+    public abstract string CreateNodeName { get; }
+
     public virtual void AutoAddLinkedBuffs()
     {
             
@@ -22,4 +24,6 @@ public class BuffNodeBase: BaseNode
     {
         return null;
     }
+
+    public abstract void Debug_SetNodeData(object data);
 }

@@ -11,9 +11,16 @@ public class FlashDamageBuffNode: BuffNodeBase
             BuffDes = "瞬时伤害Buff",
             BuffData = new FlashDamageBuffData() {}
         };
-        
+
+    public override string CreateNodeName => nameof(FlashDamageBuffData);
+
     public override BuffNodeDataBase GetBuffNodeData()
     {
         return SkillBuffBases;
+    }
+
+    public override void Debug_SetNodeData(object data)
+    {
+        SkillBuffBases = data as NormalBuffNodeData;
     }
 }

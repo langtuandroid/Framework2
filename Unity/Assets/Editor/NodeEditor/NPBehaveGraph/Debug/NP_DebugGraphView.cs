@@ -18,13 +18,17 @@ public class NP_DebugGraphView : UniversalGraphView
     {
         get { return (NP_NodeView)nodeViews.Find(x => x.nodeTarget.name == "行为树根节点"); }
     }
-    
+
+    public NP_BlackBoardDataManager NpBlackBoardDataManager;
+
     public NP_DebugGraphView(EditorWindow window) : base(window)
     {
     }
 
     private DoubleMap<Type, string> viewNode2BehaveName = new();
+    private DoubleMap<Type, string> viewNode2BuffTypeName = new();
     private DoubleMap<Node, BaseNodeView> behaveNode2View = new();
+    private NP_RuntimeTree currentTree;
     
     public void Init(GameObject gameObject)
     {
@@ -33,39 +37,52 @@ public class NP_DebugGraphView : UniversalGraphView
         {
             return;
         }
-
         behaveNode2View.Clear();
-
         InitType();
         long unitId = gameObject.GetComponent<GoConnectedUnitId>().UnitId;
         Unit unit = Root.Instance.Scene.GetComponent<CurrentScenesComponent>().Scene.GetComponent<UnitComponent>()
             .Get(unitId);
         Dictionary<long, NP_RuntimeTree> trees = unit.GetComponent<NP_RuntimeTreeManager>().runtimeId2Tree;
         KeyValuePair<long, NP_RuntimeTree> tree = trees.First();
+        CreateGraph(tree.Value);
+    }
+
+    private void CreateGraph(NP_RuntimeTree tree)
+    {
+        currentTree = tree;
         Vector2 pos = Vector2.zero;
         BaseNodeView viewNode =
-            AddNode(BaseNode.CreateFromType(viewNode2BehaveName.GetKeyByValue(tree.Value.RootNode.Name), pos));
-        (viewNode.nodeTarget as NP_NodeBase).Debug_SetNodeData(tree.Value.RootNode.DebugData);
-        behaveNode2View.Add(tree.Value.RootNode, viewNode);
-        GenAllChildren(viewNode, tree.Value.RootNode, pos);
+            AddNode(BaseNode.CreateFromType(viewNode2BehaveName.GetKeyByValue(tree.RootNode.Name), pos));
+        (viewNode.nodeTarget as NP_NodeBase).Debug_SetNodeData(tree.RootNode.DebugData);
+        behaveNode2View.Add(tree.RootNode, viewNode);
+        GenAllChildren(viewNode, tree.RootNode, pos);
+        GenAllBuff(tree.BelongNP_DataSupportor);
+        GenBlackboard(tree.BelongNP_DataSupportor);
         Debug.Log("创建完成");
-        // AutoSortLayout();
+        EditorCoroutine.StartCoroutine(Update());
         Debug.Log("布局完成");
     }
 
-    public void Update()
+    IEnumerator Update()
     {
-        behaveNode2View.ForEach((node, view) =>
+        var wait = new WaitForSeconds(0.2f);
+        yield return wait;
+        AutoSortLayout();
+        while (behaveNode2View != null)
         {
-            if (node is NPBehave.Root)
+            yield return wait;
+            behaveNode2View.ForEach((node, view) =>
             {
-                return;
-            }
+                if (node is NPBehave.Root)
+                {
+                    return;
+                }
 
-            view.SetNodeColor(node.IsActive ? Color.green : Color.white);
-        });
+                view.SetNodeColor(node.IsActive ? Color.green : Color.white);
+            });
+            NpBlackBoardDataManager.RefreshFromDataSupporter(currentTree.BelongNP_DataSupportor);
+        }
     }
-
 
     private void GenAllChildren(BaseNodeView parent, Node node, Vector2 pos)
     {
@@ -73,7 +90,6 @@ public class NP_DebugGraphView : UniversalGraphView
         {
             foreach (Node child in container.DebugChildren)
             {
-                Debug.Log("创建" + child);
                 pos += new Vector2(1f, 1f);
                 Type viewNodeType = viewNode2BehaveName.GetKeyByValue(child.Name);
                 if (viewNodeType == null)
@@ -92,6 +108,41 @@ public class NP_DebugGraphView : UniversalGraphView
         }
     }
 
+    private void GenAllBuff(NP_DataSupportor dataSupportor)
+    {
+        Vector2 pos = new Vector2(0, 600);
+        foreach (BuffNodeDataBase nodeDataBase in dataSupportor.BuffNodeDataDic.Values)
+        {
+            BaseNodeView viewNode = null;
+            if (nodeDataBase is SkillDesNodeData)
+            {
+                viewNode = AddNode(BaseNode.CreateFromType(typeof(BuffDescriptionNode), pos));
+            }
+            else
+            {
+                Type viewNodeType =
+                    viewNode2BuffTypeName.GetKeyByValue((nodeDataBase as NormalBuffNodeData).BuffData.GetType().Name);
+                if (viewNodeType == null)
+                {
+                    Debug.LogWarning($"{nodeDataBase}找不到对应的view");
+                    continue;
+                }
+
+                viewNode = AddNode(BaseNode.CreateFromType(viewNodeType, pos));
+            }
+
+            pos.x += 200;
+
+            (viewNode.nodeTarget as BuffNodeBase).Debug_SetNodeData(nodeDataBase);
+        }
+    }
+
+    private void GenBlackboard(NP_DataSupportor dataSupportor)
+    {
+        NpBlackBoardDataManager = new NP_BlackBoardDataManager();
+        NpBlackBoardDataManager.RefreshFromDataSupporter(dataSupportor);
+    }
+
     private void InitType()
     {
         if (viewNode2BehaveName.Keys.Count > 0)
@@ -101,12 +152,20 @@ public class NP_DebugGraphView : UniversalGraphView
 
         PropertyInfo nodeProp =
             typeof(NP_NodeBase).GetProperty("CreateNodeName", BindingFlags.Instance | BindingFlags.Public);
+        PropertyInfo buffNodeProp =
+            typeof(BuffNodeBase).GetProperty("CreateNodeName", BindingFlags.Instance | BindingFlags.Public);
         foreach (Type type in GetType().Assembly.GetTypes())
         {
             if (!type.IsAbstract && type.IsSubclassOf(typeof(NP_NodeBase)))
             {
                 string name = nodeProp.GetValue(Activator.CreateInstance(type)) as string;
                 viewNode2BehaveName.Add(type, name);
+            }
+
+            if (!type.IsAbstract && type.IsSubclassOf(typeof(BuffNodeBase)))
+            {
+                string name = buffNodeProp.GetValue(Activator.CreateInstance(type)) as string;
+                viewNode2BuffTypeName.Add(type, name);
             }
         }
     }

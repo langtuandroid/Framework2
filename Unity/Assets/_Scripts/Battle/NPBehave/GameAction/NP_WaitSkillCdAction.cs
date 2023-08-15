@@ -31,8 +31,14 @@ public class NP_WaitSkillCdAction : NP_ClassForStoreAction
             cdComponent = BelongToUnit.Domain.GetComponent<CDComponent>();
         }
 
-        return cdComponent.GetCDResult(BelongToUnit.Id, cdName)
-            ? Action.Result.SUCCESS
-            : Action.Result.PROGRESS;
+        var cdInfo = cdComponent.GetCDData(BelongToUnit.Id, cdName);
+        if (cdInfo == null)
+        {
+            return Action.Result.SUCCESS;
+        }
+        else
+        {
+            return cdInfo.Finish ? Action.Result.SUCCESS : Action.Result.PROGRESS;
+        }
     }
 }

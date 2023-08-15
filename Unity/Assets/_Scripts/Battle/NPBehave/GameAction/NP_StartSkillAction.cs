@@ -9,7 +9,11 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
     public VTD_Id DataId = new();
 
     [LabelText("技能优先级")]
+    [InfoBox("优先级值越小，在可放技能的时候越优先")]
+    [ValueDropdown(nameof(priority))]
     public int SkillPriority;
+
+    private static int[] priority = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     private SkillCanvasManagerComponent skillCanvasManagerComponent;
     private int skillPriorityTimer;
