@@ -12,7 +12,7 @@ namespace Framework
         {
             Log.Msg("创建了行为树", behaveConfigId);
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
-                .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).NPBehaveId);
+                .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).ConfigPath);
             outBehave.DataSupportor = npDataSupportor;
             long rootId = npDataSupportor.NPBehaveTreeDataId;
 
@@ -170,7 +170,7 @@ namespace Framework
         public static NP_RuntimeTree CreateSkillRuntimeTree(Unit unit, int skillConfigId)
         {
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
-                .GetNPTreeDataDeepCopyBBValuesOnly(SkillBehaveConfigFactory.Instance.Get(skillConfigId).NPBehaveId);
+                .GetNPTreeDataDeepCopyBBValuesOnly(SkillBehaveConfigFactory.Instance.Get(skillConfigId).ConfigPath);
 
             return CreateNpRuntimeTree(unit, npDataSupportor);
         }
@@ -178,7 +178,7 @@ namespace Framework
         public static NP_RuntimeTree CreateBehaveRuntimeTree(Unit unit, int behaveConfigId)
         {
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
-                .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).NPBehaveId);
+                .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).ConfigPath);
 
             return CreateNpRuntimeTree(unit, npDataSupportor);
         }

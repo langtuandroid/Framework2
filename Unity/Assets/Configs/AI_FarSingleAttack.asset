@@ -579,8 +579,8 @@ MonoBehaviour:
       Entry: 3
       Data: 6
     - Name: Distance
-      Entry: 4
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2119,8 +2119,8 @@ MonoBehaviour:
       Entry: 3
       Data: 6
     - Name: Distance
-      Entry: 4
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 

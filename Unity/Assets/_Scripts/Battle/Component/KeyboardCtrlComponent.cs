@@ -18,6 +18,7 @@ public class KeyboardCtrlComponent : Entity, IAwakeSystem, IUpdateSystem
         float v = Input.GetAxis("Vertical");
         if (h == 0 && v == 0)
         {
+            moveComponent.Stop(true);
             return;
         }
 

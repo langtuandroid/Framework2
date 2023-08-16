@@ -148,10 +148,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 187.666687
+      Data: 186.6775
     - Name: 
       Entry: 4
-      Data: 811.666748
+      Data: 811.3334
     - Name: 
       Entry: 4
       Data: 180.666656
@@ -260,10 +260,10 @@ MonoBehaviour:
       Data: 
     - Name: OriginValue
       Entry: 3
-      Data: 0
+      Data: 30
     - Name: UseBlackboard
       Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 8
       Data: 

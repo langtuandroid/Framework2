@@ -7,7 +7,7 @@ namespace Framework
     /// <summary>
     /// 战斗系统中的事件系统组件，一场战斗挂载一个
     /// </summary>
-    public class BattleEventSystemComponent : Entity, IDestroySystem
+    public class BattleEventSystemComponent : Entity, IAwakeSystem, IDestroySystem
     {
         public readonly Dictionary<string, LinkedList<ISkillSystemEvent>> AllEvents =
             new Dictionary<string, LinkedList<ISkillSystemEvent>>();
@@ -187,6 +187,10 @@ namespace Framework
             AllEvents.Clear();
             CachedNodes.Clear();
             TempNodes.Clear();
+        }
+
+        public void Awake()
+        {
         }
     }
 }

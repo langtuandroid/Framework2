@@ -35,14 +35,7 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/BehaveConfigs/AI_CloseSingleAttack.bytes",
-            "AssetTags": [],
-            "BundleID": 1,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Res/Configs/BehaveConfigs/AI_FarSingleAttack.bytes",
+            "AssetPath": "Assets/Res/Configs/BehaveConfigs/BaseAI.bytes",
             "AssetTags": [],
             "BundleID": 1,
             "DependIDs": []

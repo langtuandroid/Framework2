@@ -15,22 +15,18 @@
             this.TheUnitFrom.GetComponent<CastDamageComponent>().BaptismDamageData(damageData);
 
             this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().BaptismDamageData(damageData);
-            
-            {
-                this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().ReceiveDamage(damageData);
-                //抛出伤害事件
-                //this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"ExecuteDamage{this.TheUnitFrom.Id}", damageData);
-                //抛出受伤事件
-                //this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"TakeDamage{this.GetBuffTarget().Id}", damageData);
-            }
 
-            //TODO 从当前战斗Entity获取BattleEventSystem来Run事件
+            this.GetBuffTarget().GetComponent<ReceiveDamageComponent>().ReceiveDamage(damageData);
+            //抛出伤害事件
+            this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
+                .Run(BattleEvent.DoDamage, damageData);
+
             if (this.BuffData.EventIds != null)
             {
                 foreach (var eventId in this.BuffData.EventIds)
                 {
-                    this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>().Run($"{eventId}{this.TheUnitFrom.Id}", this);
-                    //Log.Info($"抛出了{this.MSkillBuffDataBase.theEventID}{this.theUnitFrom.Id}");
+                    this.GetBuffTarget().DomainScene().GetComponent<BattleEventSystemComponent>()
+                        .Run(eventId.Value, this);
                 }
             }
         }
