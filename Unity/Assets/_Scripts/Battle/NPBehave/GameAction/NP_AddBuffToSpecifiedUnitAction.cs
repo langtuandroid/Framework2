@@ -13,10 +13,12 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
     [LabelText("添加目标Id")] [ShowIf("IsMultiTarget")]
     public NP_BlackBoardRelationData<List<long>> Targets = new();
 
-    [HideIf("@ IsMultiTarget || (!IsMultiTarget && IncludeSelf)")] [LabelText("添加目标Id")]
+    [HideIf("@ IsMultiTarget || (!IsMultiTarget && AddToSelf)")]
+    [LabelText("添加目标Id")]
     public NP_BlackBoardRelationData<long> Target = new();
 
-    [LabelText("是否包含自己")] public bool IncludeSelf = true;
+    [LabelText("加给自己")]
+    public bool AddToSelf = true;
 
     public override Action GetActionToBeDone()
     {
@@ -25,7 +27,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
 
     private void AddBuffToSpecifiedUnit()
     {
-        if (IncludeSelf)
+        if (AddToSelf)
         {
             BuffDataInfo.AutoAddBuff(BelongtoRuntimeTree.BelongNP_DataSupportor, BuffDataInfo.BuffNodeId.Value,
                 BelongToUnit, BelongToUnit, BelongtoRuntimeTree);

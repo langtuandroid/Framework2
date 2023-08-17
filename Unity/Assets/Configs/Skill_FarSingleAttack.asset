@@ -660,16 +660,16 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1262.66675
+      Data: 1258
     - Name: 
       Entry: 4
       Data: 958.6667
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 147.333374
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 78
     - Name: 
       Entry: 8
       Data: 
@@ -779,7 +779,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: IncludeSelf
+    - Name: AddToSelf
       Entry: 5
       Data: false
     - Name: 
@@ -2327,7 +2327,7 @@ MonoBehaviour:
       Data: 
     - Name: SkillPriority
       Entry: 3
-      Data: 0
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -3856,7 +3856,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: IncludeSelf
+    - Name: AddToSelf
       Entry: 5
       Data: false
     - Name: 
@@ -4968,7 +4968,7 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: -172, y: -112, z: 0}
+  position: {x: 63.333332, y: -34.666668, z: 0}
   scale: {x: 0.7561437, y: 0.7561437, z: 1}
   Name: Skill_FarSingleAttack
   IdInConfig: 10002
