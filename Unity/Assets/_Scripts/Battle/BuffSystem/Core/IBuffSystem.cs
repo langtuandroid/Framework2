@@ -43,14 +43,14 @@
         /// </summary>
         Unit TheUnitBelongto { get; set; }
 
-        void Init(BuffDataBase buffDataBase, Unit theUnitFrom, Unit theUnitBelongto, float currentTime);
+        void Init(BuffDataBase buffDataBase, Unit theUnitFrom, Unit theUnitBelongto, long currentTime);
 
-        void Excute(float currentTime);
+        void Excute(long currentTime);
 
-        void Update(float currentTime);
+        void Update(long currentTime);
 
-        void Finished(float currentTime);
+        void Finished(long currentTime);
 
-        void Refresh(float currentTime);
+        void Refresh(long currentTime);
     }
 }

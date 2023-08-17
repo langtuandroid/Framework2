@@ -8,15 +8,15 @@
         /// <summary>
         /// 自身下一个时间点
         /// </summary>
-        private float selfNextExcuteTime = 0;
+        private long selfNextExcuteTime = 0;
 
-        public override void OnExecute(float currentTime)
+        public override void OnExecute(long currentTime)
         {
             ExcuteDamage(currentTime);
             //Log.Info($"作用间隔为{selfNextimer - TimeHelper.Now()},持续时间为{temp.SustainTime},持续到{this.selfNextimer}");
         }
 
-        public override void OnUpdate(float currentTime)
+        public override void OnUpdate(long currentTime)
         {
             if (currentTime >= this.selfNextExcuteTime)
             {
@@ -24,7 +24,7 @@
             }
         }
 
-        private void ExcuteDamage(float currentTime)
+        private void ExcuteDamage(long currentTime)
         {
             //强制类型转换为伤害Buff数据 
             SustainDamageBuffData temp = this.GetBuffDataWithTType;

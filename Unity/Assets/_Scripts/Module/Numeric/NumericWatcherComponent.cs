@@ -21,18 +21,9 @@ namespace Framework
     /// </summary>
     public class NumericWatcherComponent : Entity, IAwakeSystem
     {
-        public static NumericWatcherComponent Instance { get; set; }
-
         public Dictionary<int, List<NumericWatcherInfo>> allWatchers;
 
         public void Awake()
-        {
-            NumericWatcherComponent.Instance = this;
-            Init();
-        }
-
-
-        private void Init()
         {
             allWatchers = new Dictionary<int, List<NumericWatcherInfo>>();
 

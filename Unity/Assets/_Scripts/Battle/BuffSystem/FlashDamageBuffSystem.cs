@@ -5,7 +5,7 @@
     /// </summary>
     public class FlashDamageBuffSystem : ABuffSystemBase<FlashDamageBuffData>
     {
-        public override void OnExecute(float currentTime)
+        public override void OnExecute(long currentTime)
         {
             FlashDamageBuffData flashDamageBuffData = this.GetBuffDataWithTType;
 

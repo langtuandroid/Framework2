@@ -15,6 +15,7 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         battleScene.AddComponent<UnitComponent>();
         battleScene.AddComponent<CDComponent>();
         battleScene.AddComponent<BattleEventSystemComponent>();
+        battleScene.AddComponent<NumericWatcherComponent>();
 
         Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);
         unit2.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);

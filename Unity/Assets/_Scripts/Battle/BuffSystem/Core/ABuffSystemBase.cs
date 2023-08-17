@@ -24,7 +24,7 @@ namespace Framework
         /// </summary>
         public T GetBuffDataWithTType => BuffData as T;
 
-        public void Init(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, float currentTime)
+        public void Init(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, long currentTime)
         {
             //设置Buff来源Unit和归属Unit
             this.TheUnitFrom = theUnitFrom;
@@ -43,7 +43,7 @@ namespace Framework
             }
         }
 
-        public void Excute(float currentTime)
+        public void Excute(long currentTime)
         {
             switch (this.BuffData.SustainTime)
             {
@@ -61,7 +61,7 @@ namespace Framework
             this.OnExecute(currentTime);
         }
 
-        public void Update(float currentTime)
+        public void Update(long currentTime)
         {
             if (currentTime >= MaxLimitTime && this.BuffState != BuffState.Forever)
             {
@@ -73,12 +73,12 @@ namespace Framework
             }
         }
 
-        public void Finished(float currentTime)
+        public void Finished(long currentTime)
         {
             this.OnFinished(currentTime);
         }
 
-        public void Refresh(float currentTime)
+        public void Refresh(long currentTime)
         {
             this.OnRefreshed(currentTime);
         }
@@ -89,33 +89,34 @@ namespace Framework
         /// <param name="buffData">Buff数据</param>
         /// <param name="theUnitFrom">来自哪个Unit</param>
         /// <param name="theUnitBelongto">寄生于哪个Unit</param>
-        public virtual void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, float currentTime)
+        /// <param name="currentTime"></param>
+        public virtual void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto, long currentTime)
         {
         }
 
         /// <summary>
         /// Buff触发
         /// </summary>
-        public abstract void OnExecute(float currentTime);
+        public abstract void OnExecute(long currentTime);
 
         /// <summary>
         /// Buff持续
         /// </summary>
-        public virtual void OnUpdate(float currentTime)
+        public virtual void OnUpdate(long currentTime)
         {
         }
 
         /// <summary>
         /// 重置Buff用
         /// </summary>
-        public virtual void OnFinished(float currentTime)
+        public virtual void OnFinished(long currentTime)
         {
         }
 
         /// <summary>
         /// 刷新，用于刷新Buff状态
         /// </summary>
-        public virtual void OnRefreshed(float currentTime)
+        public virtual void OnRefreshed(long currentTime)
         {
         }
 

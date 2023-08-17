@@ -2,7 +2,7 @@
 {
     public class RefreshTargetBuffTimeBuffSystem: ABuffSystemBase<RefreshTargetBuffTimeBuffData>
     {
-        public override void OnExecute(float currentTime)
+        public override void OnExecute(long currentTime)
         {
             BuffManagerComponent buffManagerComponent = this.GetBuffTarget().GetComponent<BuffManagerComponent>();
 

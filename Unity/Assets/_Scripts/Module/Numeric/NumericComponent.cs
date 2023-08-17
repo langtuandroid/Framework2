@@ -14,6 +14,9 @@ namespace Framework
     {
         public Dictionary<int, int> NumericDic = new Dictionary<int, int>();
 
+        // 记录的数值和显示数值的倍数，6
+        private const int floatRate = 1000;
+
         public int this[int numericType]
         {
             get { return this.GetByKey(numericType); }
@@ -22,7 +25,7 @@ namespace Framework
 
         public float GetAsFloat(int numericType)
         {
-            return (float)GetByKey(numericType) / 1000;
+            return (float)GetByKey(numericType) / floatRate;
         }
 
         public int GetAsInt(int numericType)
@@ -32,7 +35,7 @@ namespace Framework
 
         public void Set(int nt, float value, bool isPublicEvent = true)
         {
-            Insert(nt, (int)(value * 1000), isPublicEvent);
+            Insert(nt, (int)(value * floatRate), isPublicEvent);
         }
 
         public void Set(int nt, int value, bool isPublicEvent = true)
@@ -42,7 +45,7 @@ namespace Framework
 
         public void ApplyChange(int nt, float value, bool isPublicEvent = true)
         {
-            Insert(nt, this[nt] + (int)(value * 1000), isPublicEvent);
+            Insert(nt, this[nt] + (int)(value * floatRate), isPublicEvent);
         }
 
         public void ApplyChange(int nt, int value, bool isPublicEvent = true)
@@ -73,10 +76,15 @@ namespace Framework
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(this.DomainScene(),
+                this.DomainScene().GetComponent<NumericWatcherComponent>().Run(GetParent<Unit>(),
                     new NumericChange()
                         { Unit = GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
             }
+        }
+
+        public float GetFloatByInt(int value)
+        {
+            return value * 1.0f / floatRate;
         }
 
         public int GetByKey(int key)
@@ -97,9 +105,9 @@ namespace Framework
 
             // 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
-            int result = (int)(((GetByKey(bas) + GetByKey(add)) * (100 + GetAsFloat(pct)) / 100f +
+            int result = (int)(((GetByKey(bas) + GetByKey(add)) * (100 + GetByKey(pct)) / 100f +
                                 GetByKey(finalAdd)) *
-                (100 + GetAsFloat(finalPct)) / 100f);
+                (100 + GetByKey(finalPct)) / 100f);
             Insert(final, result, isPublicEvent);
         }
 
@@ -108,7 +116,7 @@ namespace Framework
         {
             Set(NumericType.MaxHp, 10f);
             Set(NumericType.Hp, 10f);
-            Set(NumericType.Speed, 1f);
+            Set(NumericType.SpeedBase, 1f);
         }
     }
 }

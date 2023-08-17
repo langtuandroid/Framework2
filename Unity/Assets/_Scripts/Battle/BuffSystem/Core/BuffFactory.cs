@@ -14,7 +14,6 @@ namespace Framework
         public static Dictionary<Type, Type> AllBuffSystemTypes = new Dictionary<Type, Type>()
         {
             {typeof(ChangePropertyBuffData), typeof(ChangePropertyBuffSystem)},
-            {typeof(PlayEffectBuffData), typeof(PlayEffectBuffSystem)},
             {typeof(RefreshTargetBuffTimeBuffData), typeof(RefreshTargetBuffTimeBuffSystem)},
             {typeof(FlashDamageBuffData), typeof(FlashDamageBuffSystem)},
             {typeof(SustainDamageBuffData), typeof(SustainDamageBuffSystem)},

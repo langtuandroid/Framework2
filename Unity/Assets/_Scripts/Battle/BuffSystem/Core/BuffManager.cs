@@ -27,7 +27,7 @@ namespace Framework
         public void BattleUpdate(float deltaTime)
         {
             this.m_Current = m_Buffs.First;
-            float currentTime = TimeInfo.Instance.ClientNow() / 1000f;
+            long currentTime = TimeInfo.Instance.ClientNow();
             //轮询链表
             while (this.m_Current != null)
             {

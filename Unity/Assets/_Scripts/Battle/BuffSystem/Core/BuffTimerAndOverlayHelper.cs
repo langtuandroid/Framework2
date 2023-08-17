@@ -10,7 +10,7 @@
         /// <param name="currentTime"></param>
         /// <param name="layer">为 -1 时需要计算层数，否则直接强制应用层数</param>
         /// <returns>是否成功加入了运行时Buff列表</returns>
-        public static bool CalculateTimerAndOverlay(IBuffSystem buffSystemBase, float currentTime, int layer = -1)
+        public static bool CalculateTimerAndOverlay(IBuffSystem buffSystemBase, long currentTime, int layer = -1)
         {
             BuffManagerComponent buffManagerComponent =
                 buffSystemBase.GetBuffTarget().GetComponent<BuffManagerComponent>();
