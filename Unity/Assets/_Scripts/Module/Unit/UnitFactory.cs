@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class UnitFactory
 {
-    public static Unit CreateUnit(Scene scene, int unitId)
+    public static Unit CreateUnit(Scene scene)
     {
         UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-        Unit unit = unitComponent.AddChild<Unit, int>(unitId);
+        Unit unit = unitComponent.AddChild<Unit>();
 
         unitComponent.Add(unit);
 
         return unit;
     }
 
-    public static Unit CreateHero(Scene scene, RoleCamp roleCamp, int heroConfigId)
+    public static Unit CreateHero(Scene scene, RoleCamp roleCamp)
     {
-        Unit unit = CreateUnit(scene, heroConfigId);
+        Unit unit = CreateUnit(scene);
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
         unit.AddComponent<MoveComponent>();
@@ -42,10 +42,32 @@ public class UnitFactory
         return unit;
     }
 
-
-    public static Unit CreateSoldier(Scene scene, RoleCamp roleCamp, int heroConfigId)
+    public static Unit CreateTower(Scene scene)
     {
-        Unit unit = CreateUnit(scene, heroConfigId);
+        Unit unit = CreateUnit(scene);
+        unit.AddComponent<NP_SyncComponent>();
+        unit.AddComponent<NumericComponent>();
+        unit.AddComponent<SkillCanvasManagerComponent>();
+
+        //增加Buff管理组件
+        unit.AddComponent<BuffManagerComponent>();
+        unit.AddComponent<RoleCastComponent, RoleCamp, RoleTag>(RoleCamp.self, RoleTag.Tower);
+
+        unit.AddComponent<NP_RuntimeTreeManager>();
+        //Log.Info("行为树创建完成");
+        unit.AddComponent<ObjectWait>();
+        unit.AddComponent<CastDamageComponent>();
+        unit.AddComponent<PlayAnimComponent>();
+
+        unit.AddComponent<FindTargetComponent>();
+        unit.AddComponent<GameObjectComponent, bool, bool>(false, true);
+        return unit;
+    }
+
+
+    public static Unit CreateSoldier(Scene scene, RoleCamp roleCamp)
+    {
+        Unit unit = CreateUnit(scene);
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
         unit.AddComponent<MoveComponent>();
@@ -78,7 +100,7 @@ public class UnitFactory
         float angle)
     {
         //为碰撞体新建一个Unit
-        Unit b2SColliderEntity = CreateUnit(room, 0);
+        Unit b2SColliderEntity = CreateUnit(room);
         Unit belongToUnit = room.GetComponent<UnitComponent>().Get(belongToUnitId);
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.CollisionHandlerName = "";
@@ -155,7 +177,7 @@ public class UnitFactory
         ColliderArgs colliderArgs, out NP_RuntimeTree runtimeTree)
     {
         //为碰撞体新建一个Unit
-        Unit colliderEntity = CreateUnit(scene, 0);
+        Unit colliderEntity = CreateUnit(scene);
         colliderEntity.AddComponent<NP_SyncComponent>();
         colliderEntity.AddComponent<GameObjectComponent, bool, bool>(true, false).GameObject = collider;
         colliderEntity.AddComponent<ColliderComponent, ColliderArgs>(colliderArgs);

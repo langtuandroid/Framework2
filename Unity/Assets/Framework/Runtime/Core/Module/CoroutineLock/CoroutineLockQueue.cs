@@ -10,7 +10,7 @@ namespace Framework
 
         public static CoroutineLockQueue Create(int type, long key)
         {
-            CoroutineLockQueue coroutineLockQueue = ObjectPool.Instance.Fetch<CoroutineLockQueue>();
+            CoroutineLockQueue coroutineLockQueue = ReferencePool.Allocate<CoroutineLockQueue>();
             coroutineLockQueue.type = type;
             coroutineLockQueue.key = key;
             return coroutineLockQueue;
@@ -70,7 +70,7 @@ namespace Framework
             this.key = 0;
             this.type = 0;
             this.currentCoroutineLock = null;
-            ObjectPool.Instance.Recycle(this);
+            ReferencePool.Free(this);
         }
     }
 }

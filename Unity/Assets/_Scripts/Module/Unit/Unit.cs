@@ -5,11 +5,9 @@ using UnityEngine;
 
 namespace Framework
 {
-    public sealed class Unit : Entity, IAwakeSystem<int>
+    public sealed class Unit : Entity, IAwakeSystem
     {
         private float3 position; //坐标
-
-        public UnitConfig UnitConfig { get; private set; }
 
         [ShowInInspector]
         public float3 Position
@@ -60,12 +58,9 @@ namespace Framework
 
         protected override string ViewName => $"{GetType().Name} ({Id})";
 
-        public void Awake(int unitId)
+        public void Awake()
         {
-            if (UnitConfigFactory.Instance.Contain(unitId))
-            {
-                UnitConfig = UnitConfigFactory.Instance.Get(unitId);
-            }
+  
         }
 
         public override string ToString()

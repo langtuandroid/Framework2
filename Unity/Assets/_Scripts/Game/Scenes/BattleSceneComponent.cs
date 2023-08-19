@@ -17,7 +17,7 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         battleScene.AddComponent<BattleEventSystemComponent>();
         battleScene.AddComponent<NumericWatcherComponent>();
 
-        Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.bule, 1);
+        Unit unit2 = UnitFactory.CreateHero(battleScene, RoleCamp.enemy);
         unit2.GetComponent<GameObjectComponent>().GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         unit2.Position = new float3(3, 0, 3);
         var aiBehave = NP_RuntimeTreeFactory.CreateBehaveRuntimeTree(unit2, 10001);
@@ -26,7 +26,7 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         unit2.GetComponent<SkillCanvasManagerComponent>().AddSkill(10001);
         skillBehave.Start();
 
-        Unit unit = UnitFactory.CreateHero(battleScene, RoleCamp.red, 1);
+        Unit unit = UnitFactory.CreateHero(battleScene, RoleCamp.self);
         unit.AddComponent<KeyboardCtrlComponent>();
         unit.Forward = new float3(0, 0, 1);
         unit.GetComponent<GameObjectComponent>().GameObject =

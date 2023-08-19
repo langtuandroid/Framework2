@@ -27,8 +27,8 @@ public enum RoleCast
 [Flags]
 public enum RoleCamp
 {
-    red = 1 << 1,
-    bule = 1 << 2,
+    self = 1 << 1,
+    enemy = 1 << 2,
 }
 
 [Flags]
@@ -36,6 +36,7 @@ public enum RoleTag
 {
     Hero = 1 << 1,
     Soldier = 1 << 2,
+    Tower = 1 << 3,
 }
 
 public class RoleCastComponent : Entity, IAwakeSystem<RoleCamp, RoleTag>

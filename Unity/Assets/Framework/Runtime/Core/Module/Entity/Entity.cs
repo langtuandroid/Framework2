@@ -318,7 +318,7 @@ namespace Framework
         [BsonIgnore]
         public Dictionary<long, Entity> Children
         {
-            get { return this.children ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>(); }
+            get { return this.children ??= ReferencePool.Allocate<Dictionary<long, Entity>>(); }
         }
 
         private void AddToChildren(Entity entity)
@@ -338,7 +338,7 @@ namespace Framework
 
             if (this.children.Count == 0)
             {
-                ObjectPool.Instance.Recycle(this.children);
+                ReferencePool.Free(this.children);
                 this.children = null;
             }
 
@@ -352,7 +352,7 @@ namespace Framework
                 return;
             }
 
-            this.childrenDB ??= ObjectPool.Instance.Fetch<HashSet<Entity>>();
+            this.childrenDB ??= ReferencePool.Allocate<HashSet<Entity>>();
 
             this.childrenDB.Add(entity);
         }
@@ -373,7 +373,7 @@ namespace Framework
 
             if (this.childrenDB.Count == 0 && this.IsNew)
             {
-                ObjectPool.Instance.Recycle(this.childrenDB);
+                ReferencePool.Free(this.childrenDB);
                 this.childrenDB = null;
             }
         }
@@ -385,7 +385,7 @@ namespace Framework
         [BsonIgnore]
         public Dictionary<Type, Entity> Components
         {
-            get { return this.components ??= ObjectPool.Instance.Fetch<Dictionary<Type, Entity>>(); }
+            get { return this.components ??= ReferencePool.Allocate<Dictionary<Type, Entity>>(); }
         }
 
         public override void Dispose()
@@ -407,7 +407,7 @@ namespace Framework
                 }
 
                 this.components.Clear();
-                ObjectPool.Instance.Recycle(this.components);
+                ReferencePool.Free(this.components);
                 this.components = null;
 
                 // 创建的才需要回到池中,从db中不需要回收
@@ -416,7 +416,7 @@ namespace Framework
                     this.componentsDB.Clear();
                     if (this.IsNew)
                     {
-                        ObjectPool.Instance.Recycle(this.componentsDB);
+                        ReferencePool.Free(this.componentsDB);
                         this.componentsDB = null;
                     }
                 }
@@ -431,7 +431,7 @@ namespace Framework
                 }
 
                 this.children.Clear();
-                ObjectPool.Instance.Recycle(this.children);
+                ReferencePool.Free(this.children);
                 this.children = null;
 
                 if (this.childrenDB != null)
@@ -440,7 +440,7 @@ namespace Framework
                     // 创建的才需要回到池中,从db中不需要回收
                     if (this.IsNew)
                     {
-                        ObjectPool.Instance.Recycle(this.childrenDB);
+                        ReferencePool.Free(this.childrenDB);
                         this.childrenDB = null;
                     }
                 }
@@ -472,7 +472,7 @@ namespace Framework
 
             if (this.IsFromPool)
             {
-                ObjectPool.Instance.Recycle(this);
+                ReferencePool.Free(this);
             }
 
             status = EntityStatus.None;
@@ -495,7 +495,7 @@ namespace Framework
 
             if (this.components.Count == 0)
             {
-                ObjectPool.Instance.Recycle(this.components);
+                ReferencePool.Free(this.components);
                 this.components = null;
             }
 
@@ -509,7 +509,7 @@ namespace Framework
                 return;
             }
 
-            this.componentsDB ??= ObjectPool.Instance.Fetch<HashSet<Entity>>();
+            this.componentsDB ??= ReferencePool.Allocate<HashSet<Entity>>();
             this.componentsDB.Add(component);
         }
 
@@ -528,7 +528,7 @@ namespace Framework
             this.componentsDB.Remove(component);
             if (this.componentsDB.Count == 0 && this.IsNew)
             {
-                ObjectPool.Instance.Recycle(this.componentsDB);
+                ReferencePool.Free(this.componentsDB);
                 this.componentsDB = null;
             }
         }
@@ -676,7 +676,7 @@ namespace Framework
             Entity component;
             if (isFromPool)
             {
-                component = (Entity)ObjectPool.Instance.Fetch(type);
+                component = (Entity)ReferencePool.Allocate(type);
             }
             else
             {

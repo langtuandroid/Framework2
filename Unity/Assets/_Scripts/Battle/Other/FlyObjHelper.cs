@@ -19,7 +19,7 @@ public static class FlyObjHelper
             rootTrans = rootTrans.Find(bornPath);
         }
 
-        Unit objUnit = UnitFactory.CreateUnit(scene, 0);
+        Unit objUnit = UnitFactory.CreateUnit(scene);
         action.FlyObjUnitKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), objUnit.Id);
         GameObject selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath);

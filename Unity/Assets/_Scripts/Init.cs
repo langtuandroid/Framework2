@@ -23,7 +23,6 @@ public class Init : MonoBehaviour
 #endif
         Game.AddSingleton<MainThreadSynchronizationContext>();
         Game.AddSingleton<TimeInfo>();
-        Game.AddSingleton<ObjectPool>();
         Game.AddSingleton<IdGenerator>();
         Game.AddSingleton<TimerComponent>();
         Game.AddSingleton<CoroutineLockComponent>();

@@ -10,7 +10,7 @@ namespace Framework
 
         public static CoroutineLock Create(int type, long k, int count)
         {
-            CoroutineLock coroutineLock = ObjectPool.Instance.Fetch<CoroutineLock>();
+            CoroutineLock coroutineLock = ReferencePool.Allocate<CoroutineLock>();
             coroutineLock.type = type;
             coroutineLock.key = k;
             coroutineLock.level = count;
@@ -25,7 +25,7 @@ namespace Framework
             this.key = 0;
             this.level = 0;
 
-            ObjectPool.Instance.Recycle(this);
+            ReferencePool.Free(this);
         }
     }
 }

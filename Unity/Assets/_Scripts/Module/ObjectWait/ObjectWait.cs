@@ -90,14 +90,14 @@ namespace Framework
             return ret;
         }
 
-        public async ETTask<T> Wait<T>(int timeout,
+        public async ETTask<T> Wait<T>(long mstimeout,
             ETCancellationToken cancellationToken = null) where T : struct, IWaitType
         {
             ResultCallback<T> tcs = new ResultCallback<T>();
 
             async ETTask WaitTimeout()
             {
-                await TimerComponent.Instance.WaitAsync(timeout, cancellationToken);
+                await TimerComponent.Instance.WaitAsync(mstimeout, cancellationToken);
                 if (cancellationToken.IsCancel())
                 {
                     return;

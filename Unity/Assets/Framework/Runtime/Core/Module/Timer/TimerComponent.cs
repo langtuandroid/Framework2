@@ -16,7 +16,7 @@ namespace Framework
         public static TimerAction Create(long id, TimerClass timerClass, long startTime, long time, int type,
             object obj)
         {
-            TimerAction timerAction = ObjectPool.Instance.Fetch<TimerAction>();
+            TimerAction timerAction = ReferencePool.Allocate<TimerAction>();
             timerAction.Id = id;
             timerAction.TimerClass = timerClass;
             timerAction.StartTime = startTime;
@@ -28,7 +28,7 @@ namespace Framework
 
         public static TimerAction Create(long id, TimerClass timerClass, long startTime, long time)
         {
-            TimerAction timerAction = ObjectPool.Instance.Fetch<TimerAction>();
+            TimerAction timerAction = ReferencePool.Allocate<TimerAction>();
             timerAction.Id = id;
             timerAction.TimerClass = timerClass;
             timerAction.StartTime = startTime;
@@ -56,7 +56,7 @@ namespace Framework
             this.Time = 0;
             this.TimerClass = TimerClass.None;
             this.Type = 0;
-            ObjectPool.Instance.Recycle(this);
+            ReferencePool.Free(this);
         }
     }
 

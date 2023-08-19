@@ -35,7 +35,7 @@ namespace Framework
         public void Dispose()
         {
             this.Clear();
-            ObjectPool.Instance.Recycle(this);
+            ReferencePool.Free(this);
         }
     }
 }
