@@ -100,7 +100,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: -8660285692452012013
+      Data: -8660285623732535278
     - Name: 
       Entry: 13
       Data: 
@@ -172,7 +172,7 @@ MonoBehaviour:
       Data: 6|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012016
+      Data: -8660285623732535281
     - Name: LinkedIds
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -384,7 +384,7 @@ MonoBehaviour:
       Data: 
     - Name: Speed
       Entry: 4
-      Data: 3
+      Data: 20
     - Name: IsFlyToTarget
       Entry: 5
       Data: true
@@ -684,7 +684,7 @@ MonoBehaviour:
       Data: 36|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012031
+      Data: -8660285623732535296
     - Name: LinkedIds
       Entry: 7
       Data: 37|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -844,7 +844,7 @@ MonoBehaviour:
       Data: 44|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012014
+      Data: -8660285623732535279
     - Name: LinkedIds
       Entry: 7
       Data: 45|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -853,31 +853,31 @@ MonoBehaviour:
       Data: 9
     - Name: 
       Entry: 3
-      Data: -8660285692452012015
+      Data: -8660285623732535280
     - Name: 
       Entry: 3
-      Data: -8660285692452012019
+      Data: -8660285623732535284
     - Name: 
       Entry: 3
-      Data: -8660285692452012023
+      Data: -8660285623732535288
     - Name: 
       Entry: 3
-      Data: -8660285692452012020
+      Data: -8660285623732535285
     - Name: 
       Entry: 3
-      Data: -8660285692452012021
+      Data: -8660285623732535286
     - Name: 
       Entry: 3
-      Data: -8660285692452012016
+      Data: -8660285623732535281
     - Name: 
       Entry: 3
-      Data: -8660285692452012022
+      Data: -8660285623732535287
     - Name: 
       Entry: 3
-      Data: -8660285692452012018
+      Data: -8660285623732535283
     - Name: 
       Entry: 3
-      Data: -8660285692452012017
+      Data: -8660285623732535282
     - Name: 
       Entry: 13
       Data: 
@@ -946,7 +946,7 @@ MonoBehaviour:
       Data: 47|NP_BlackboardConditionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012025
+      Data: -8660285623732535290
     - Name: LinkedIds
       Entry: 7
       Data: 48|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -955,7 +955,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: -8660285692452012027
+      Data: -8660285623732535292
     - Name: 
       Entry: 13
       Data: 
@@ -1051,7 +1051,7 @@ MonoBehaviour:
       Data: 52|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012027
+      Data: -8660285623732535292
     - Name: LinkedIds
       Entry: 7
       Data: 53|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1060,13 +1060,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 3
-      Data: -8660285692452012029
+      Data: -8660285623732535294
     - Name: 
       Entry: 3
-      Data: -8660285692452012031
+      Data: -8660285623732535296
     - Name: 
       Entry: 3
-      Data: -8660285692452012030
+      Data: -8660285623732535295
     - Name: 
       Entry: 13
       Data: 
@@ -1132,7 +1132,7 @@ MonoBehaviour:
       Data: 55|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012030
+      Data: -8660285623732535295
     - Name: LinkedIds
       Entry: 7
       Data: 56|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1294,7 +1294,7 @@ MonoBehaviour:
       Data: 65|NP_SequenceNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012024
+      Data: -8660285623732535289
     - Name: LinkedIds
       Entry: 7
       Data: 66|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1303,10 +1303,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: -8660285692452012028
+      Data: -8660285623732535293
     - Name: 
       Entry: 3
-      Data: -8660285692452012026
+      Data: -8660285623732535291
     - Name: 
       Entry: 13
       Data: 
@@ -1372,7 +1372,7 @@ MonoBehaviour:
       Data: 68|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012026
+      Data: -8660285623732535291
     - Name: LinkedIds
       Entry: 7
       Data: 69|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1543,7 +1543,7 @@ MonoBehaviour:
       Data: 79|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012028
+      Data: -8660285623732535293
     - Name: LinkedIds
       Entry: 7
       Data: 80|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1739,7 +1739,7 @@ MonoBehaviour:
       Data: 91|NP_SelectorNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012017
+      Data: -8660285623732535282
     - Name: LinkedIds
       Entry: 7
       Data: 92|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1748,10 +1748,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: -8660285692452012025
+      Data: -8660285623732535290
     - Name: 
       Entry: 3
-      Data: -8660285692452012024
+      Data: -8660285623732535289
     - Name: 
       Entry: 13
       Data: 
@@ -1820,7 +1820,7 @@ MonoBehaviour:
       Data: 94|NP_RepeaterNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012013
+      Data: -8660285623732535278
     - Name: LinkedIds
       Entry: 7
       Data: 95|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -1829,7 +1829,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: -8660285692452012014
+      Data: -8660285623732535279
     - Name: 
       Entry: 13
       Data: 
@@ -1901,7 +1901,7 @@ MonoBehaviour:
       Data: 97|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012015
+      Data: -8660285623732535280
     - Name: LinkedIds
       Entry: 7
       Data: 98|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2053,7 +2053,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 3
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -2144,7 +2144,7 @@ MonoBehaviour:
       Data: 107|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012019
+      Data: -8660285623732535284
     - Name: LinkedIds
       Entry: 7
       Data: 108|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2288,7 +2288,7 @@ MonoBehaviour:
       Data: 116|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012020
+      Data: -8660285623732535285
     - Name: LinkedIds
       Entry: 7
       Data: 117|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2387,7 +2387,7 @@ MonoBehaviour:
       Data: 120|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012021
+      Data: -8660285623732535286
     - Name: LinkedIds
       Entry: 7
       Data: 121|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2501,7 +2501,7 @@ MonoBehaviour:
       Data: 126|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012022
+      Data: -8660285623732535287
     - Name: LinkedIds
       Entry: 7
       Data: 127|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2597,7 +2597,7 @@ MonoBehaviour:
       Data: 130|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012023
+      Data: -8660285623732535288
     - Name: LinkedIds
       Entry: 7
       Data: 131|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2772,7 +2772,7 @@ MonoBehaviour:
       Data: 141|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012029
+      Data: -8660285623732535294
     - Name: LinkedIds
       Entry: 7
       Data: 142|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -2877,7 +2877,7 @@ MonoBehaviour:
       Data: 147|NP_ActionNodeData, Game.Runtime
     - Name: id
       Entry: 3
-      Data: -8660285692452012018
+      Data: -8660285623732535283
     - Name: LinkedIds
       Entry: 7
       Data: 148|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
@@ -3046,7 +3046,7 @@ MonoBehaviour:
       Data: 
     - Name: OriginValue
       Entry: 3
-      Data: -80
+      Data: -50
     - Name: UseBlackboard
       Entry: 5
       Data: false
@@ -3177,7 +3177,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012031
+      Data: -8660285623732535296
     - Name: $v
       Entry: 9
       Data: 36
@@ -3189,7 +3189,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012030
+      Data: -8660285623732535295
     - Name: $v
       Entry: 9
       Data: 55
@@ -3201,7 +3201,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012029
+      Data: -8660285623732535294
     - Name: $v
       Entry: 9
       Data: 141
@@ -3213,7 +3213,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012028
+      Data: -8660285623732535293
     - Name: $v
       Entry: 9
       Data: 79
@@ -3225,7 +3225,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012027
+      Data: -8660285623732535292
     - Name: $v
       Entry: 9
       Data: 52
@@ -3237,7 +3237,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012026
+      Data: -8660285623732535291
     - Name: $v
       Entry: 9
       Data: 68
@@ -3249,7 +3249,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012025
+      Data: -8660285623732535290
     - Name: $v
       Entry: 9
       Data: 47
@@ -3261,7 +3261,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012024
+      Data: -8660285623732535289
     - Name: $v
       Entry: 9
       Data: 65
@@ -3273,7 +3273,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012023
+      Data: -8660285623732535288
     - Name: $v
       Entry: 9
       Data: 130
@@ -3285,7 +3285,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012022
+      Data: -8660285623732535287
     - Name: $v
       Entry: 9
       Data: 126
@@ -3297,7 +3297,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012021
+      Data: -8660285623732535286
     - Name: $v
       Entry: 9
       Data: 120
@@ -3309,7 +3309,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012020
+      Data: -8660285623732535285
     - Name: $v
       Entry: 9
       Data: 116
@@ -3321,7 +3321,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012019
+      Data: -8660285623732535284
     - Name: $v
       Entry: 9
       Data: 107
@@ -3333,7 +3333,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012018
+      Data: -8660285623732535283
     - Name: $v
       Entry: 9
       Data: 147
@@ -3345,7 +3345,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012017
+      Data: -8660285623732535282
     - Name: $v
       Entry: 9
       Data: 91
@@ -3357,7 +3357,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012016
+      Data: -8660285623732535281
     - Name: $v
       Entry: 9
       Data: 6
@@ -3369,7 +3369,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012015
+      Data: -8660285623732535280
     - Name: $v
       Entry: 9
       Data: 97
@@ -3381,7 +3381,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012014
+      Data: -8660285623732535279
     - Name: $v
       Entry: 9
       Data: 44
@@ -3393,7 +3393,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: -8660285692452012013
+      Data: -8660285623732535278
     - Name: $v
       Entry: 9
       Data: 94
@@ -4968,7 +4968,7 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 63.333332, y: -34.666668, z: 0}
+  position: {x: 68, y: -48, z: 0}
   scale: {x: 0.7561437, y: 0.7561437, z: 1}
   Name: Skill_FarSingleAttack
   IdInConfig: 10002

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Framework;
 using Unity.Mathematics;
+using UnityEngine;
 
-public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem, IUpdateSystem
+public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem
 {
     private struct RoleKey : IEquatable<RoleKey>
     {
@@ -39,7 +40,6 @@ public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem, IUpdate
         }
     }
 
-    private Dictionary<RoleKey, EntityRef<Unit>> cacheTargets = new();
     private Unit selfUnit;
 
     public void Awake()
@@ -49,57 +49,28 @@ public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem, IUpdate
 
     public bool FindTarget(RoleCast roleCast, RoleTag tag, float range, out long result, bool cache = true)
     {
-        RoleKey key = new(roleCast, tag, range);
         result = 0;
-        foreach (var cacheTarget in cacheTargets)
-        {
-            if (cacheTarget.Value.IsDisposed)
-            {
-                continue;
-            }
-
-            if (cacheTarget.Key.IsRoleEqual(key))
-            {
-                var dis = math.distance(cacheTarget.Value.Entity.Position, selfUnit.Position);
-                if (dis < range)
-                {
-                    result = cacheTarget.Value.Entity.Id;
-                }
-            }
-        }
-
-        if (result != 0)
-        {
-            return true;
-        }
-
-        if (cacheTargets.TryGetValue(key, out var targetUnit))
-        {
-            if (math.distance(targetUnit.Entity.Position, selfUnit.Position) < range)
-            {
-                result = targetUnit.Entity.Id;
-                return true;
-            }
-        }
-
         UnitComponent unitComponent = Domain.GetComponent<UnitComponent>();
         RoleCastComponent selfRoleCast = parent.GetComponent<RoleCastComponent>();
+        float minDis = float.MaxValue;
         foreach (Unit unit in unitComponent.idUnits.Values)
         {
             if (selfRoleCast.GetRoleCastToTarget(unit) == roleCast &&
                 tag.Contains(unit.GetComponent<RoleCastComponent>().RoleTag))
             {
-                if (math.distance(selfUnit.Position, unit.Position) < range)
+                var dis = math.distance(selfUnit.Position, unit.Position);
+                if (dis < range)
                 {
-                    result = unit.Id;
-                    if (cache)
-                        cacheTargets[key] = new EntityRef<Unit>(unit);
-                    return true;
+                    if (dis < minDis)
+                    {
+                        result = unit.Id;
+                        minDis = dis;
+                    }
                 }
             }
         }
 
-        return false;
+        return result != 0;
     }
 
     private RecyclableList<RoleKey> needRemoveKey = RecyclableList<RoleKey>.Create();
@@ -109,47 +80,7 @@ public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem, IUpdate
         float minDis = float.MaxValue;
         Unit result = null;
         range = 0;
-        foreach (var cacheTarget in cacheTargets)
-        {
-            if (cacheTarget.Value.IsDisposed)
-            {
-                continue;
-            }
-
-            var dis = math.distance(selfUnit.Position, cacheTarget.Value.Entity.Position);
-            if (dis < minDis)
-            {
-                minDis = dis;
-                result = cacheTarget.Value.Entity;
-                range = cacheTarget.Key.AttackRange;
-            }
-        }
-
         return result;
-    }
-
-    private void CheckNeedRemoveUnit()
-    {
-        needRemoveKey.Clear();
-        foreach (var cacheTarget in cacheTargets)
-        {
-            if (cacheTarget.Value.IsDisposed)
-            {
-                needRemoveKey.Add(cacheTarget.Key);
-                continue;
-            }
-
-            var dis = math.distance(cacheTarget.Value.Entity.Position, selfUnit.Position);
-            if (dis > cacheTarget.Key.AttackRange)
-            {
-                needRemoveKey.Add(cacheTarget.Key);
-            }
-        }
-
-        foreach (RoleKey roleKey in needRemoveKey)
-        {
-            cacheTargets.Remove(roleKey);
-        }
     }
 
     public void FindTargets(Action<RecyclableList<long>> findCb, RoleCast roleCast, RoleTag tag)
@@ -174,8 +105,4 @@ public class FindTargetComponent : Entity, IAwakeSystem, IDestroySystem, IUpdate
         needRemoveKey.Dispose();
     }
 
-    public void Update(float deltaTime)
-    {
-        CheckNeedRemoveUnit();
-    }
 }

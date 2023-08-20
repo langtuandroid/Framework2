@@ -31,5 +31,20 @@
                 return entity.Id != entityId;
             }
         }
+
+        public static implicit operator T(EntityRef<T> entityRef)
+        {
+            if (!entityRef.IsDisposed)
+            {
+                return entityRef.Entity;
+            }
+
+            return null;
+        }
+
+        public static implicit operator EntityRef<T>(T entity)
+        {
+            return new EntityRef<T>(entity);
+        }
     }
 }

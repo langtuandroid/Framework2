@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using Unity.Mathematics;
 using UnityEngine;
@@ -78,14 +79,14 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         TurnTime = 0;
     }
 
-    public bool IsArrived()
+    public bool IsArrived
     {
-        return Targets.Count == 0;
+        get => Targets.Count == 0;
     }
 
     public bool ChangeSpeed(float speed)
     {
-        if (IsArrived())
+        if (IsArrived)
         {
             return false;
         }
@@ -339,25 +340,26 @@ public class MoveComponent : Entity, IAwakeSystem, IDestroySystem
         return true;
     }
 
-    public bool MoveTo(List<float3> target, float speed, int turnTime = 100)
+    public bool MoveTo(IEnumerable<float3> target, float speed, int turnTime = 100)
     {
-        if (target.Count == 0)
-        {
-            return true;
-        }
-
         if (Math.Abs(speed) < 0.001)
         {
             Log.Error($"speed is 0 {GetParent<Unit>().Id}");
             return false;
         }
 
-        Stop(false);
-
         foreach (float3 v in target)
         {
             Targets.Add(v);
         }
+
+        if (Targets.Count <= 1)
+        {
+            Targets.Clear();
+            return true;
+        }
+
+        Stop(false);
 
         IsTurnHorizontal = true;
         TurnTime = turnTime;

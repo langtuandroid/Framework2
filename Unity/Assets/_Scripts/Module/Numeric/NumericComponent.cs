@@ -116,7 +116,7 @@ namespace Framework
         {
             Set(NumericType.MaxHp, 10f);
             Set(NumericType.Hp, 10f);
-            Set(NumericType.SpeedBase, 1f);
+            Set(NumericType.SpeedBase, 4f);
         }
     }
 }

@@ -28,12 +28,12 @@ namespace Framework
             Queue<object> queue = null;
             if (!pool.TryGetValue(type, out queue))
             {
-                return Activator.CreateInstance(type);
+                return Activator.CreateInstance(type, true);
             }
 
             if (queue.Count == 0)
             {
-                return Activator.CreateInstance(type);
+                return Activator.CreateInstance(type, true);
             }
 
             return queue.Dequeue();
@@ -41,6 +41,7 @@ namespace Framework
 
         public static void Free(object obj)
         {
+            if (obj == null) return;
             Type type = obj.GetType();
             Queue<object> queue = null;
             if (!pool.TryGetValue(type, out queue))

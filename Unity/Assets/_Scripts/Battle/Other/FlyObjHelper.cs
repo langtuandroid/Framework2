@@ -31,11 +31,12 @@ public static class FlyObjHelper
             selfTrans.GetComponentInChildren<Collider>().gameObject,
             runtimeTree.BelongToUnit.Id, -1, false,
             colliderData);
-        Vector3 endPoint;
+        float3 endPoint;
         if (isFlyToTarget)
         {
             Unit targetUnit = scene.GetComponent<UnitComponent>()
                 .Get(action.FlyToTarget.GetValue(runtimeTree.GetBlackboard()));
+            Debug.Log($"创建飞行物 目标{targetUnit.GetComponent<GameObjectComponent>().GameObject.name}");
             endPoint = math.normalize(targetUnit.Position - runtimeTree.BelongToUnit.Position);
         }
         else
@@ -45,6 +46,7 @@ public static class FlyObjHelper
         }
 
         endPoint *= action.FlyDis;
+        endPoint += runtimeTree.BelongToUnit.Position;
         action.EndPointKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), endPoint);
 
         objUnit.GetComponent<MoveComponent>().MoveTo(endPoint, speed);

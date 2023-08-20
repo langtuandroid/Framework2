@@ -70,7 +70,7 @@ public class UnitFactory
         Unit unit = CreateUnit(scene);
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
-        unit.AddComponent<MoveComponent>();
+        // unit.AddComponent<MoveComponent>();
 
         //增加Buff管理组件
         unit.AddComponent<BuffManagerComponent>();
@@ -82,7 +82,7 @@ public class UnitFactory
         unit.AddComponent<CastDamageComponent>();
         unit.AddComponent<ReceiveDamageComponent>();
 
-        unit.AddComponent<GameObjectComponent, bool, bool>(false, true);
+        unit.AddComponent<GameObjectComponent, bool, bool>(true, false);
 
         ColliderArgs colliderArgs = ReferencePool.Allocate<ColliderArgs>();
         colliderArgs.BelongToUnit = unit;
