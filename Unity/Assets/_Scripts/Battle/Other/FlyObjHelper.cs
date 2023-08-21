@@ -24,6 +24,7 @@ public static class FlyObjHelper
         GameObject selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath);
         objUnit.Position = rootTrans.position;
+        selfTrans.transform.position = rootTrans.position;
         objUnit.AddComponent<MoveComponent>();
         objUnit.AddComponent<GameObjectComponent, bool, bool>(false, true).GameObject = selfTrans;
         // 障碍物和飞行物同时绑定一个GameObject会导致GoConnectedUnitId出错
@@ -33,8 +34,9 @@ public static class FlyObjHelper
             colliderData);
         if (action.IsFollowTarget)
         {
+            objUnit.AddComponent<NumericComponent>().Set(NumericType.SpeedBase, speed);
             objUnit.AddComponent<FollowTargetComponent>()
-                .Follow(action.FlyObjUnitKey.GetBlackBoardValue(runtimeTree.GetBlackboard()), 0.1f);
+                .Follow(action.FlyToTarget.GetValue(runtimeTree.GetBlackboard()), 0.1f);
             promise.SetResult();
             return;
         }
