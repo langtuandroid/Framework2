@@ -15,7 +15,7 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
 
     private static int[] priority = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-    private SkillCanvasManagerComponent skillCanvasManagerComponent;
+    private SkillManagerComponent skillManagerComponent;
     private int skillPriorityTimer;
 
     public override Func<bool, Action.Result> GetFunc2ToBeDone()
@@ -30,13 +30,13 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
             return Action.Result.SUCCESS;
         }
 
-        if (skillCanvasManagerComponent == null)
+        if (skillManagerComponent == null)
         {
-            skillCanvasManagerComponent = BelongToUnit.GetComponent<SkillCanvasManagerComponent>();
+            skillManagerComponent = BelongToUnit.GetComponent<SkillManagerComponent>();
             skillPriorityTimer = SkillPriority;
         }
 
-        if (skillCanvasManagerComponent.IsSkillRunning)
+        if (skillManagerComponent.IsSkillRunning)
         {
             return Action.Result.PROGRESS;
         }
@@ -46,7 +46,7 @@ public class NP_StartSkillAction : NP_ClassForStoreAction
             skillPriorityTimer = SkillPriority;
             SkillDesNodeData skillDesNodeData =
                 (SkillDesNodeData)BelongtoRuntimeTree.BelongNP_DataSupportor.BuffNodeDataDic[DataId.Value];
-            skillCanvasManagerComponent.SkillStart(skillDesNodeData.SkillId);
+            skillManagerComponent.SkillStart(skillDesNodeData.SkillId);
             return Action.Result.SUCCESS;
         }
 

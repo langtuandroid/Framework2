@@ -31,6 +31,13 @@ public static class FlyObjHelper
             selfTrans.GetComponentInChildren<Collider>().gameObject,
             runtimeTree.BelongToUnit.Id, -1, false,
             colliderData);
+        if (action.IsFollowTarget)
+        {
+            objUnit.AddComponent<FollowTargetComponent>()
+                .Follow(action.FlyObjUnitKey.GetBlackBoardValue(runtimeTree.GetBlackboard()), 0.1f);
+            promise.SetResult();
+            return;
+        }
         float3 endPoint;
         if (isFlyToTarget)
         {
@@ -48,7 +55,6 @@ public static class FlyObjHelper
         endPoint *= action.FlyDis;
         endPoint += runtimeTree.BelongToUnit.Position;
         action.EndPointKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), endPoint);
-
         objUnit.GetComponent<MoveComponent>().MoveTo(endPoint, speed);
         promise.SetResult();
     }

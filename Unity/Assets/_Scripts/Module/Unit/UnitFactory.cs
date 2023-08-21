@@ -21,7 +21,7 @@ public class UnitFactory
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
         unit.AddComponent<MoveComponent>();
-        unit.AddComponent<SkillCanvasManagerComponent>();
+        unit.AddComponent<SkillManagerComponent>();
 
         //增加Buff管理组件
         unit.AddComponent<BuffManagerComponent>();
@@ -47,7 +47,7 @@ public class UnitFactory
         Unit unit = CreateUnit(scene);
         unit.AddComponent<NP_SyncComponent>();
         unit.AddComponent<NumericComponent>();
-        unit.AddComponent<SkillCanvasManagerComponent>();
+        unit.AddComponent<SkillManagerComponent>();
 
         //增加Buff管理组件
         unit.AddComponent<BuffManagerComponent>();

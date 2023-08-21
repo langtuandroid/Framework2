@@ -14,10 +14,10 @@ public class NP_EndSkillAction : NP_ClassForStoreAction
 
     private void EndSkill()
     {
-        SkillCanvasManagerComponent skillCanvasManagerComponent =
-            BelongToUnit.GetComponent<SkillCanvasManagerComponent>();
+        SkillManagerComponent skillManagerComponent =
+            BelongToUnit.GetComponent<SkillManagerComponent>();
         SkillDesNodeData skillDesNodeData =
             (SkillDesNodeData)BelongtoRuntimeTree.BelongNP_DataSupportor.BuffNodeDataDic[DataId.Value];
-        skillCanvasManagerComponent.SkillEnd(skillDesNodeData.SkillId);
+        skillManagerComponent.SkillEnd(skillDesNodeData.SkillId);
     }
 }

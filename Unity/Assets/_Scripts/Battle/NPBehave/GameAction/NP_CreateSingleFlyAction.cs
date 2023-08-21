@@ -25,19 +25,26 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [LabelText("飞行速度")]
     public float Speed;
 
+    [LabelText("是否跟随目标")]
+    [HideIf(nameof(IsFlyToTarget))]
+    public bool IsFollowTarget = true;
+
+    [HideIf(nameof(IsFollowTarget))]
     [LabelText("是否朝某个物体发射")]
     public bool IsFlyToTarget;
 
-    [LabelText("发射朝向的物体")]
-    [ShowIf("IsFlyToTarget")]
+    [LabelText("朝向或跟随的物体")]
+    [ShowIf("@IsFlyToTarget || IsFollowTarget")]
     public BlackboardOrValue_Long FlyToTarget = new();
 
     [LabelText("发射方向")]
-    [HideIf("IsFlyToTarget")]
+    [ShowIf("@!IsFlyToTarget && !IsFollowTarget")]
     public Vector2 FlyDir;
 
     [LabelText("飞行的距离")]
+    [HideIf(nameof(IsFollowTarget))]
     public float FlyDis;
+
 
     private AsyncResult createAsync;
 

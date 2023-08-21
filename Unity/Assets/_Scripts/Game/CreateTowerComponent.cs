@@ -51,7 +51,7 @@ public class CreateTowerComponent : Entity, IAwakeSystem, IRendererUpdateSystem
         unit.GetComponent<GameObjectComponent>().GameObject = go;
         unit.GetComponent<GameObjectComponent>().GameObject.name = "player";
         NP_RuntimeTree skill = NP_RuntimeTreeFactory.CreateSkillRuntimeTree(unit, 10002);
-        unit.GetComponent<SkillCanvasManagerComponent>().AddSkill(10002);
+        unit.GetComponent<SkillManagerComponent>().AddSkill(10002);
         skill.Start();
     }
 }

@@ -44,14 +44,14 @@ public partial class BehaveConfigFactory : ConfigSingleton<BehaveConfigFactory>
 
     public BehaveConfig Get(int id)
     {
-        this.dict.TryGetValue(id, out BehaveConfig behaveConfig);
+        this.dict.TryGetValue(id, out BehaveConfig BehaveConfig);
 
-        if (behaveConfig == null)
+        if (BehaveConfig == null)
         {
-            Log.Warning($"配置找不到，配置表名: {nameof(behaveConfig)}，配置id: {id}");
+            Log.Warning($"配置找不到，配置表名: {nameof(BehaveConfig)}，配置id: {id}");
         }
 
-        return behaveConfig;
+        return BehaveConfig;
     }
 
     public bool Contain(int id)
