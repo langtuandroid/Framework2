@@ -12,7 +12,7 @@ public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
 
     [LabelText("持续时间")] public BlackboardOrValue_Float Duration = new();
 
-    public DefaultColliderNode DefaultColliderNode = new DefaultColliderNode();
+    public BehaveDefaultColliderNode BehaveDefaultColliderNode = new BehaveDefaultColliderNode();
     
     public override Action GetActionToBeDone()
     {
@@ -21,9 +21,9 @@ public class NP_CreateDefaultColliderAction : NP_ClassForStoreAction
 
     private void CreateColliderData()
     {
-        UnitFactory.CreateDefaultColliderUnit(BelongToUnit.DomainScene(),
+        UnitFactory.CreateBehaveDefaultColliderUnit(BelongToUnit.DomainScene(),
             ColliderUnit.GetValue(BelongtoRuntimeTree.GetBlackboard()), BelongToUnit.Id,
             Duration.GetValue(BelongtoRuntimeTree.GetBlackboard()),
-            DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
+            BehaveDefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()));
     }
 }

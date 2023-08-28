@@ -6,18 +6,10 @@ using UnityEngine;
 [Title("创建单一飞行物", TitleAlignment = TitleAlignments.Centered)]
 public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
 {
-    [BoxGroup("/传回的数据")]
-    [LabelText("飞行物的id")]
-    public NP_BlackBoardRelationData<long> FlyObjUnitKey = new();
-
-    [BoxGroup("/传回的数据")]
-    [LabelText("飞行的终点")]
-    public NP_BlackBoardRelationData<Vector3> EndPointKey = new();
-
     [LabelText("飞行物prefab")]
     public string PrefabPath;
 
-    public DefaultColliderNode DefaultColliderNode = new();
+    public NormalDefaultColliderNode NormalDefaultColliderNode = new();
 
     [LabelText("飞行物出生点")]
     public string HangPoint;
@@ -45,7 +37,6 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
     [HideIf(nameof(IsFollowTarget))]
     public float FlyDis;
 
-
     private AsyncResult createAsync;
 
     public override Func<bool, NPBehave.Action.Result> GetFunc2ToBeDone()
@@ -64,7 +55,7 @@ public class NP_CreateSingleFlyAction : NP_ClassForStoreAction
         {
             createAsync = AsyncResult.Create();
             FlyObjHelper.CreateSingleFlyObj(this, BelongtoRuntimeTree,
-                DefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()), createAsync);
+                NormalDefaultColliderNode.ToColliderData(BelongtoRuntimeTree.GetBlackboard()), createAsync);
             return NPBehave.Action.Result.PROGRESS;
         }
 

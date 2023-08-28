@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using Framework;
-using NPBehave;
+﻿using Framework;
 
-public class DefaultCollisionHandler: ACollisionHandler
+/// <summary>
+/// 非行为树里的默认碰撞器
+/// </summary>
+public class NormalDefaultCollisionHandler : ACollisionHandler
 {
     public override void HandleCollisionStart(ColliderUserData a, ColliderUserData b)
     {
-        DefaultColliderData aColliderData = a.UserData as DefaultColliderData;
+        var aColliderData = a.UserData as NormalDefaultColliderData;
 
         ColliderComponent aColliderComponent = a.Unit.GetComponent<ColliderComponent>();
         RoleCastComponent aRole = aColliderComponent.BelongToUnit.GetComponent<RoleCastComponent>();
@@ -30,27 +31,11 @@ public class DefaultCollisionHandler: ACollisionHandler
     }
 
     private void BroadcastCollider(ColliderComponent aColliderComponent, ColliderComponent bColliderComponent,
-        DefaultColliderData aColliderData)
+        NormalDefaultColliderData aColliderData)
     {
         Log.Msg(aColliderComponent.BelongToUnit, "撞到了", bColliderComponent.BelongToUnit);
-
-        Blackboard blackboard = aColliderData.Blackboard;
-        
-        if (!string.IsNullOrEmpty(aColliderData.HitUnitListBlackboardKey))
-        {
-            blackboard.Get<List<long>>(aColliderData.HitUnitListBlackboardKey)
-                .Add(bColliderComponent.BelongToUnit.Id);
-        }
-        
-        if (!string.IsNullOrEmpty(aColliderData.HitUnitBlackboardKey))
-        {
-            blackboard.Set(aColliderData.HitUnitBlackboardKey, bColliderComponent.BelongToUnit.Id);
-        }
-
-        if (!string.IsNullOrEmpty(aColliderData.IsHitBlackboardKey))
-        {
-            blackboard.Set(aColliderData.IsHitBlackboardKey, true);
-        }
+        aColliderData.Targets.Add(bColliderComponent.BelongToUnit.Id);
+        aColliderData.IsHit.Value = true;
     }
 
     public override void HandleCollisionStay(ColliderUserData a, ColliderUserData b)

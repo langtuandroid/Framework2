@@ -12,7 +12,7 @@ namespace Framework
             var numericComponent = buffSystem.TheUnitFrom.GetComponent<NumericComponent>();
         
             BuffDataBase buffData = buffSystem.BuffData;
-            int tempData = buffData.BasicValue.GetValue(buffSystem.BelongtoRuntimeTree.GetBlackboard());
+            int tempData = buffData.BasicValue;
         
             //依据基础数值的加成方式来获取对应数据
             switch (buffData.BaseBuffBaseDataEffectTypes)

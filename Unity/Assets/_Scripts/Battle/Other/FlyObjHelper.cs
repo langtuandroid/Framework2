@@ -1,12 +1,15 @@
-﻿using Framework;
+﻿using System.Collections.Generic;
+using Framework;
 using NPBehave;
 using Unity.Mathematics;
 using UnityEngine;
+using Root = NPBehave.Root;
 
 public static class FlyObjHelper
 {
+
     public static async void CreateSingleFlyObj(NP_CreateSingleFlyAction action, NP_RuntimeTree runtimeTree,
-        DefaultColliderData colliderData, IPromise promise)
+        NormalDefaultColliderData colliderData, IPromise promise)
     {
         Scene scene = action.BelongToUnit.DomainScene();
         string prefabPath = action.PrefabPath;
@@ -20,15 +23,15 @@ public static class FlyObjHelper
         }
 
         Unit objUnit = UnitFactory.CreateUnit(scene);
-        action.FlyObjUnitKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), objUnit.Id);
         GameObject selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath);
         objUnit.Position = rootTrans.position;
         selfTrans.transform.position = rootTrans.position;
         objUnit.AddComponent<MoveComponent>();
         objUnit.AddComponent<GameObjectComponent, bool, bool>(false, true).GameObject = selfTrans;
+        objUnit.AddComponent<FlyObjCollideComponent, NormalDefaultColliderData>(colliderData);
         // 障碍物和飞行物同时绑定一个GameObject会导致GoConnectedUnitId出错
-        UnitFactory.CreateDefaultColliderUnit(runtimeTree.DomainScene(),
+        UnitFactory.CreateNormalDefaultColliderUnit(runtimeTree.DomainScene(),
             selfTrans.GetComponentInChildren<Collider>().gameObject,
             runtimeTree.BelongToUnit.Id, -1, false,
             colliderData);
@@ -45,7 +48,6 @@ public static class FlyObjHelper
         {
             Unit targetUnit = scene.GetComponent<UnitComponent>()
                 .Get(action.FlyToTarget.GetValue(runtimeTree.GetBlackboard()));
-            Debug.Log($"创建飞行物 目标{targetUnit.GetComponent<GameObjectComponent>().GameObject.name}");
             endPoint = math.normalize(targetUnit.Position - runtimeTree.BelongToUnit.Position);
         }
         else
@@ -56,8 +58,8 @@ public static class FlyObjHelper
 
         endPoint *= action.FlyDis;
         endPoint += runtimeTree.BelongToUnit.Position;
-        action.EndPointKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), endPoint);
         objUnit.GetComponent<MoveComponent>().MoveTo(endPoint, speed);
         promise.SetResult();
     }
+
 }

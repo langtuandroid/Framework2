@@ -18,42 +18,6 @@ namespace Framework
         [ShowIf("LayersDetermindByBBValue")] [LabelText("操作Buff层数")]
         public NP_BlackBoardRelationData<int> LayersThatDetermindByBBValue;
 
-        public void AutoAddBuff(long dataId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
-            NP_RuntimeTree theSkillCanvasBelongTo)
-        {
-            int layers = 0;
-            if (LayersDetermindByBBValue)
-            {
-                layers = theSkillCanvasBelongTo.GetBlackboard().Get<int>(LayersThatDetermindByBBValue.BBKey);
-            }
-            else
-            {
-                Layers = layers;
-            }
-
-            if (LayersIsAbs)
-            {
-                IBuffSystem nextBuffSystemBase = BuffFactory.AcquireBuff(dataId, buffNodeId, theUnitFrom,
-                    theUnitBelongTo,
-                    theSkillCanvasBelongTo);
-                if (nextBuffSystemBase.CurrentOverlay < nextBuffSystemBase.BuffData.MaxOverlay &&
-                    nextBuffSystemBase.CurrentOverlay < layers)
-                {
-                    layers -= nextBuffSystemBase.CurrentOverlay;
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            for (int i = 0; i < layers; i++)
-            {
-                BuffFactory.AcquireBuff(dataId, buffNodeId, theUnitFrom, theUnitBelongTo,
-                    theSkillCanvasBelongTo);
-            }
-        }
-
         public void AutoAddBuff(NP_DataSupportor npDataSupportor, long buffNodeId, Unit theUnitFrom,
             Unit theUnitBelongTo,
             NP_RuntimeTree theSkillCanvasBelongTo)
@@ -70,7 +34,8 @@ namespace Framework
 
             if (LayersIsAbs)
             {
-                IBuffSystem nextBuffSystemBase = BuffFactory.AcquireBuff(npDataSupportor, buffNodeId, theUnitFrom,
+                IBuffSystem nextBuffSystemBase = BuffFactory.AcquireBuff(
+                    (npDataSupportor.BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, theUnitFrom,
                     theUnitBelongTo,
                     theSkillCanvasBelongTo);
                 if (nextBuffSystemBase.CurrentOverlay < nextBuffSystemBase.BuffData.MaxOverlay &&
@@ -86,7 +51,8 @@ namespace Framework
 
             for (int i = 0; i < layers; i++)
             {
-                BuffFactory.AcquireBuff(npDataSupportor, buffNodeId, theUnitFrom, theUnitBelongTo,
+                BuffFactory.AcquireBuff((npDataSupportor.BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData,
+                    theUnitFrom, theUnitBelongTo,
                     theSkillCanvasBelongTo);
             }
         }

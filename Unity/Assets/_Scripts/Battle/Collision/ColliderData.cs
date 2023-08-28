@@ -37,7 +37,7 @@ public class ColliderArgs : IReference
     }
 }
 
-public class DefaultColliderData
+public class BehaveDefaultColliderData
 {
     public Blackboard Blackboard;
     public RoleTag RoleTag;
@@ -48,7 +48,8 @@ public class DefaultColliderData
     public string HitUnitListBlackboardKey;
     public string HitUnitBlackboardKey;
 
-    public DefaultColliderData(Blackboard blackboard, RoleTag roleTag, RoleCast roleCast, string isHitBlackboardKey,string hitUnitBlackboardKey, string hitUnitListBlackboardKey, long onlyTarget)
+    public BehaveDefaultColliderData(Blackboard blackboard, RoleTag roleTag, RoleCast roleCast,
+        string isHitBlackboardKey, string hitUnitBlackboardKey, string hitUnitListBlackboardKey, long onlyTarget)
     {
         Blackboard = blackboard;
         RoleTag = roleTag;
@@ -57,5 +58,25 @@ public class DefaultColliderData
         HitUnitListBlackboardKey = hitUnitListBlackboardKey;
         OnlyTarget = onlyTarget;
         IsHitBlackboardKey = isHitBlackboardKey;
+    }
+
+}
+
+public class NormalDefaultColliderData : IReference
+{
+    public RoleTag RoleTag;
+
+    public RoleCast RoleCast;
+
+    // 指定打击目标
+    public long OnlyTarget;
+    public ObservableProperty<bool> IsHit = ReferencePool.Allocate<ObservableProperty<bool>>();
+    public RecyclableList<long> Targets = RecyclableList<long>.Create();
+
+    public void Clear()
+    {
+        IsHit.Value = false;
+        Targets.Clear();
+        OnlyTarget = default;
     }
 }

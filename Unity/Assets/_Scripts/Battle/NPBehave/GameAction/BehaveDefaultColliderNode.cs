@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 [HideReferenceObjectPicker]
 [HideLabel]
 [BoxGroup("碰撞数据")]
-public class DefaultColliderNode
+public class BehaveDefaultColliderNode
 {
     [LabelText("是否只能触发某一个目标")]
     public bool IsOnlyOneTarget = false;
@@ -34,7 +34,7 @@ public class DefaultColliderNode
     [LabelText("碰撞到的物体字典key")]
     public NP_BlackBoardRelationData<long> HitUnitKey = new();
 
-    public DefaultColliderData ToColliderData(Blackboard blackboard)
+    public BehaveDefaultColliderData ToColliderData(Blackboard blackboard)
     {
         if (!IsOnlyOneTarget)
         {
@@ -42,7 +42,7 @@ public class DefaultColliderNode
             OnlyTriggerTarget.OriginValue = default;
         }
 
-        return new DefaultColliderData(blackboard, RoleTag, RoleCast,
+        return new BehaveDefaultColliderData(blackboard, RoleTag, RoleCast,
             HasHitKey.BBKey, HitUnitKey.BBKey, HitUnitListKey.BBKey, OnlyTriggerTarget.GetValue(blackboard));
     }
 }
