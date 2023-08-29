@@ -111,18 +111,4 @@ namespace Framework
 
         #endregion
     }
-    
-    [HideLabel]
-    [HideReferenceObjectPicker]
-    public class BlackboardOrValue_Uint : ABlackboardOrValue<uint>
-    {
-        public BlackboardOrValue_Uint(uint value = default) : base()
-        {
-            OriginValue = value;
-            if (OriginValue != default)
-            {
-                UseBlackboard = false;
-            }
-        }
-    }
 }

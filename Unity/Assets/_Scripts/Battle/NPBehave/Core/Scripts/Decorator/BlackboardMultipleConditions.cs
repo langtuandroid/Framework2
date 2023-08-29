@@ -25,9 +25,8 @@ namespace NPBehave
     /// </summary>
     public class MatchInfo
     {
-        public NP_BlackBoardRelationData<object> NPBalckBoardRelationData = new ()
-            { WriteOrCompareToBB = true };
-
+        public string Key;
+        public ANP_BBValue Value;
         public Operator Operator = Operator.IS_EQUAL;
     }
 
@@ -52,7 +51,7 @@ namespace NPBehave
         {
             foreach (var matchInfo in this.matchInfos)
             {
-                this.RootNode.Blackboard.AddObserver(matchInfo.NPBalckBoardRelationData.BBKey, onValueChanged);
+                this.RootNode.Blackboard.AddObserver(matchInfo.Key, onValueChanged);
             }
         }
 
@@ -60,7 +59,7 @@ namespace NPBehave
         {
             foreach (var matchInfo in matchInfos)
             {
-                this.RootNode.Blackboard.RemoveObserver(matchInfo.NPBalckBoardRelationData.BBKey, onValueChanged);
+                this.RootNode.Blackboard.RemoveObserver(matchInfo.Key, onValueChanged);
             }
         }
 
@@ -74,8 +73,7 @@ namespace NPBehave
             int realMatchCount = 0;
             foreach (var matchInfo in this.matchInfos)
             {
-                if (CheckCondition(matchInfo.NPBalckBoardRelationData.BBKey,
-                        matchInfo.NPBalckBoardRelationData.NP_BBValue, matchInfo.Operator))
+                if (CheckCondition(matchInfo.Key, matchInfo.Value, matchInfo.Operator))
                 {
                     realMatchCount++;
                 }

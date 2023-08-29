@@ -30,11 +30,9 @@ namespace Framework
         /// <param name="theSkillCanvasBelongTo"></param>
         /// <returns></returns>
         public static IBuffSystem AcquireBuff(BuffDataBase buffDataBase, Unit theUnitFrom,
-            Unit theUnitBelongTo,
-            NP_RuntimeTree theSkillCanvasBelongTo)
+            Unit theUnitBelongTo)
         {
             IBuffSystem resultBuff = ReferencePool.Allocate(AllBuffSystemTypes[buffDataBase.GetType()]) as IBuffSystem;
-            resultBuff.BelongtoRuntimeTree = theSkillCanvasBelongTo;
             resultBuff.Init(buffDataBase, theUnitFrom, theUnitBelongTo, TimeInfo.Instance.ClientNow());
             return resultBuff;
         }

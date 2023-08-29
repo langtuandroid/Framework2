@@ -98,6 +98,12 @@ namespace Framework
             }
         }
 
+        public TValue this[TKey key]
+        {
+            get => Dic[key];
+            set => AddData(key, value);
+        }
+
         public bool AddData(TKey key, TValue value)
         {
             if (Dic.ContainsKey(key))

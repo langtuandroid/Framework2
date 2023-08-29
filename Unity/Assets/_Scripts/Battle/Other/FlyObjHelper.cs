@@ -7,8 +7,7 @@ using Root = NPBehave.Root;
 
 public static class FlyObjHelper
 {
-
-    public static async void CreateSingleFlyObj(NP_CreateSingleFlyAction action, NP_RuntimeTree runtimeTree,
+    public static async void CreateSingleFlyObj(CreateSingleFlyAction action, NP_RuntimeTree runtimeTree,
         NormalDefaultColliderData colliderData, IPromise promise)
     {
         Scene scene = action.BelongToUnit.DomainScene();

@@ -63,7 +63,7 @@ public class BuffDataBase
     [LabelText("要抛出的事件ID，如果有的话")]
     [BoxGroup("选填项")]
     [ShowInInspector]
-    public List<VTD_EventId> EventIds = new List<VTD_EventId>();
+    public List<string> EventIds = new List<string>();
 
     [LabelText("Buff持续时间")]
     [Tooltip("-1代表永久,0代表只执行一次,单位ms")]

@@ -112,18 +112,5 @@ namespace Framework
 
         #endregion
     }
-    
-    [HideLabel]
-    [HideReferenceObjectPicker]
-    public class BlackboardOrValue_Bool : ABlackboardOrValue<bool>
-    {
-        public BlackboardOrValue_Bool(bool value = false) : base()
-        {
-            OriginValue = value;
-            if (OriginValue != default)
-            {
-                UseBlackboard = false;
-            }
-        }
-    }
+
 }

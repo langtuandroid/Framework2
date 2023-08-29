@@ -112,18 +112,4 @@ namespace Framework
 
         #endregion
     }
-    
-    [HideLabel]
-    [HideReferenceObjectPicker]
-    public class BlackboardOrValue_Vector3 : ABlackboardOrValue<Vector3>
-    {
-        public BlackboardOrValue_Vector3(Vector3 value = default) : base()
-        {
-            OriginValue = value;
-            if (OriginValue != default)
-            {
-                UseBlackboard = false;
-            }
-        }
-    }
 }
