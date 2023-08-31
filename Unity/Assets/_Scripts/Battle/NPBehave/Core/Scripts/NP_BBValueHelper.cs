@@ -266,5 +266,29 @@ namespace Framework
                 default: return false;
             }
         }
+
+        public static IBlackboardOrValue GetBlackboardOrValueByBBValue(ANP_BBValue bbValue)
+        {
+            switch (bbValue)
+            {
+                case NP_BBValue_Bool:
+                    return new BlackboardOrValue_Bool();
+                case NP_BBValue_Float :
+                    return new BlackboardOrValue_Float();
+                case NP_BBValue_Int :
+                    return new BlackboardOrValue_Int();
+                case NP_BBValue_UInt :
+                    return new BlackboardOrValue_Uint();
+                case NP_BBValue_String :
+                    return new BlackboardOrValue_String();
+                case NP_BBValue_Long :
+                    return new BlackboardOrValue_Long();
+                case NP_BBValue_Vector3 :
+                    return new BlackboardOrValue_Vector3();
+                default:
+                    Log.Error($"类型为{bbValue.GetType()}的数未注册为NP_BBValue");
+                    return null;
+            } 
+        }
     }
 }

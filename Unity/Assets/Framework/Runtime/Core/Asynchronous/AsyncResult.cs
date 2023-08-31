@@ -220,6 +220,7 @@ namespace Framework
         protected void FreeFormPool()
         {
             if (!isFromPool) return;
+            if (HasFree) return;
             ReferencePool.Free(this);
         }
         
@@ -235,6 +236,8 @@ namespace Framework
             }
             return voidResult;
         }
+
+        public bool HasFree { get; set; }
 
         public virtual void Clear()
         {

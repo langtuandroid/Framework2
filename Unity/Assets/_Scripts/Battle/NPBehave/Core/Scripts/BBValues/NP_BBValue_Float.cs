@@ -111,5 +111,18 @@ namespace Framework
 
         #endregion
     }
-
+    
+    [HideLabel]
+    [HideReferenceObjectPicker]
+    public class BlackboardOrValue_Float : ABlackboardOrValue<float>
+    {
+        public BlackboardOrValue_Float(float value = 0) : base()
+        {
+            OriginValue = value;
+            if (!OriginValue.NearlyEqual(0))
+            {
+                UseBlackboard = false;
+            }
+        }
+    }
 }

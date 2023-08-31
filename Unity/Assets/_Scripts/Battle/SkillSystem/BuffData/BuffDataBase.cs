@@ -63,7 +63,7 @@ public class BuffDataBase
     [LabelText("要抛出的事件ID，如果有的话")]
     [BoxGroup("选填项")]
     [ShowInInspector]
-    public List<string> EventIds = new List<string>();
+    public List<VTD_EventId> EventIds = new List<VTD_EventId>();
 
     [LabelText("Buff持续时间")]
     [Tooltip("-1代表永久,0代表只执行一次,单位ms")]
@@ -79,7 +79,7 @@ public class BuffDataBase
     [LabelText("基础数值")]
     [BoxGroup("选填项")]
     [ShowInInspector]
-    public int BasicValue;
+    public BlackboardOrValue_Int BasicValue ;
 
     [Tooltip("具体的加成(可能会一个效果多种加成方式)，例如法强加成")]
     [BoxGroup("选填项")]

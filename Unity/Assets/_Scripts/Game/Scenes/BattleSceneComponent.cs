@@ -14,6 +14,7 @@ public class BattleSceneComponent : Entity, IAwakeSystem, IUpdateSystem, IRender
         SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
         await TimerComponent.Instance.WaitAsync(1000);
         Scene battleScene = this.DomainScene();
+        battleScene.AddComponent<NP_TreeDataRepositoryComponent>();
         battleScene.AddComponent<UnitComponent>();
         battleScene.AddComponent<AutoGenEnemyComponent>();
         battleScene.AddComponent<CDComponent>();

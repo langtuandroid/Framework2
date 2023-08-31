@@ -28,6 +28,13 @@
         },
         {
             "Address": "",
+            "AssetPath": "Assets/Res/Configs/UnitConfig.json",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
             "AssetPath": "Assets/Res/Configs/BehaveConfigs/BaseAI.bytes",
             "AssetTags": [],
             "BundleID": 1,

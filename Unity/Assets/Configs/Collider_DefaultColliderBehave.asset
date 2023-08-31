@@ -1,0 +1,1766 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d443753b8c4de0b1884e55b9c84517, type: 3}
+  m_Name: Collider_DefaultColliderBehave
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: groups
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[GraphProcessor.Group, NodeGraphProcessor.Runtime]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nodes
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[GraphProcessor.BaseNode, NodeGraphProcessor.Runtime]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 2|NP_RootNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 0
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 53bdfc38-8532-48ea-974e-f1423677c720
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 191.333328
+    - Name: 
+      Entry: 4
+      Data: 186
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: NextNode
+      Entry: 6
+      Data: 
+    - Name: MRootNodeData
+      Entry: 7
+      Data: 3|NP_RootNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273658
+    - Name: LinkedIds
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273659
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: m_Root
+      Entry: 6
+      Data: 
+    - Name: IsLoop
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|NP_WaitNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 4
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: fc4e5cde-627a-4e30-a8f1-71c39061ad0e
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 722
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NP_WaitNodeData
+      Entry: 7
+      Data: 6|NP_WaitNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273664
+    - Name: LinkedIds
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: Time
+      Entry: 7
+      Data: 8|Framework.BlackboardOrValue_Float, Game.Runtime
+    - Name: BlackboardKey
+      Entry: 7
+      Data: 9|NP_BlackBoardRelationData`1[[System.Single, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: Duration [10000]
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 10|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Value
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OriginValue
+      Entry: 4
+      Data: 0
+    - Name: UseBlackboard
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|NP_SequenceNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 1
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 09d3b98a-0df1-4ab4-aa27-4b1d3b02c545
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 203.333328
+    - Name: 
+      Entry: 4
+      Data: 314
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NextNode
+      Entry: 6
+      Data: 
+    - Name: NP_SequenceNodeData
+      Entry: 7
+      Data: 12|NP_SequenceNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273659
+    - Name: LinkedIds
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273660
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273661
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u5E8F\u5217\u7EC4\u5408\u5668"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|NP_DestroyUnitActionNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 5
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 4caa075d-c4b1-48a9-87c1-69c292437a1c
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 285
+    - Name: 
+      Entry: 4
+      Data: 450
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NP_ActionNodeData
+      Entry: 7
+      Data: 15|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273661
+    - Name: LinkedIds
+      Entry: 7
+      Data: 16|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 17|NP_DestroyUnitAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: IsDestroyRelativeGameObject
+      Entry: 7
+      Data: 18|Framework.BlackboardOrValue_Bool, Game.Runtime
+    - Name: BlackboardKey
+      Entry: 7
+      Data: 19|NP_BlackBoardRelationData`1[[System.Boolean, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: NeedDestroyCollider [10000]
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 20|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OriginValue
+      Entry: 5
+      Data: false
+    - Name: UseBlackboard
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: IsDestroySelf
+      Entry: 7
+      Data: 21|Framework.BlackboardOrValue_Bool, Game.Runtime
+    - Name: BlackboardKey
+      Entry: 7
+      Data: 22|NP_BlackBoardRelationData`1[[System.Boolean, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 6
+      Data: 
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OriginValue
+      Entry: 5
+      Data: true
+    - Name: UseBlackboard
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: DestroyTarget
+      Entry: 7
+      Data: 23|Framework.BlackboardOrValue_Long, Game.Runtime
+    - Name: BlackboardKey
+      Entry: 7
+      Data: 24|NP_BlackBoardRelationData`1[[System.Int64, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 6
+      Data: 
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OriginValue
+      Entry: 3
+      Data: 0
+    - Name: UseBlackboard
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 25|NP_BlackboardConditionNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 3
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: b240edbd-4928-4161-a672-b240d2f9c13e
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -12
+    - Name: 
+      Entry: 4
+      Data: 586
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NextNode
+      Entry: 6
+      Data: 
+    - Name: NP_BlackboardConditionNodeData
+      Entry: 7
+      Data: 26|NP_BlackboardConditionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273663
+    - Name: LinkedIds
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273664
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u9ED1\u677F\u6761\u4EF6\u7ED3\u70B9"
+    - Name: Ope
+      Entry: 3
+      Data: 4
+    - Name: Stop
+      Entry: 3
+      Data: 4
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 28|NP_BlackBoardRelationData`1[[System.Object, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: Duration [10000]
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: true
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 29|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 30|NP_SelectorNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 2
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 10a4ea43-503a-4d06-aee3-dcc72279e4bd
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 123
+    - Name: 
+      Entry: 4
+      Data: 450
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NextNode
+      Entry: 6
+      Data: 
+    - Name: NP_SelectorNodeData
+      Entry: 7
+      Data: 31|NP_SelectorNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273660
+    - Name: LinkedIds
+      Entry: 7
+      Data: 32|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273663
+    - Name: 
+      Entry: 3
+      Data: -8660285658092273662
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u9009\u62E9\u7EC4\u5408\u5668"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 33|NP_WaitUntilStoppedNode, NodeGraphEditor
+    - Name: computeOrder
+      Entry: 3
+      Data: 6
+    - Name: debug
+      Entry: 5
+      Data: false
+    - Name: expanded
+      Entry: 5
+      Data: false
+    - Name: GUID
+      Entry: 1
+      Data: 72ad2d7c-42b2-4345-b236-9bb7a3271bee
+    - Name: nodeCustomName
+      Entry: 6
+      Data: 
+    - Name: nodeLock
+      Entry: 5
+      Data: false
+    - Name: position
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 174
+    - Name: 
+      Entry: 4
+      Data: 586
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Level
+      Entry: 3
+      Data: 0
+    - Name: PrevNode
+      Entry: 6
+      Data: 
+    - Name: NpWaitUntilStoppedData
+      Entry: 7
+      Data: 34|NP_WaitUntilStoppedData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: -8660285658092273662
+    - Name: LinkedIds
+      Entry: 7
+      Data: 35|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u963B\u6B62\u8F6E\u8BE2\uFF0C\u63D0\u9AD8\u6548\u7387"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NpDataSupportor_Client
+      Entry: 7
+      Data: 36|NP_DataSupportor, Game.Runtime
+    - Name: BuffNodeDataDic
+      Entry: 7
+      Data: 37|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 38|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NPBehaveTreeDataId
+      Entry: 3
+      Data: -8660285658092273658
+    - Name: ExcelId
+      Entry: 3
+      Data: 10000
+    - Name: NP_DataSupportorDic
+      Entry: 7
+      Data: 39|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 38
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273664
+    - Name: $v
+      Entry: 9
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273663
+    - Name: $v
+      Entry: 9
+      Data: 26
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273662
+    - Name: $v
+      Entry: 9
+      Data: 34
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273661
+    - Name: $v
+      Entry: 9
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273660
+    - Name: $v
+      Entry: 9
+      Data: 31
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273659
+    - Name: $v
+      Entry: 9
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: -8660285658092273658
+    - Name: $v
+      Entry: 9
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NP_BBValueManager
+      Entry: 7
+      Data: 40|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 41|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Duration [10000]
+    - Name: $v
+      Entry: 7
+      Data: 42|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Value
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: NeedDestroyCollider [10000]
+    - Name: $v
+      Entry: 7
+      Data: 43|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NpDataSupportor_Client_Des
+      Entry: 7
+      Data: 44|NP_DataSupportor, Game.Runtime
+    - Name: BuffNodeDataDic
+      Entry: 7
+      Data: 45|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[BuffNodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 46|System.Collections.Generic.GenericEqualityComparer`1[[System.Int64,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NPBehaveTreeDataId
+      Entry: 3
+      Data: 1807319661176422408
+    - Name: ExcelId
+      Entry: 3
+      Data: 0
+    - Name: NP_DataSupportorDic
+      Entry: 7
+      Data: 47|System.Collections.Generic.Dictionary`2[[System.Int64, mscorlib],[NP_NodeDataBase,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 46
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601728
+    - Name: $v
+      Entry: 7
+      Data: 48|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601728
+    - Name: LinkedIds
+      Entry: 7
+      Data: 49|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 50|NP_AddBuffToSpecifiedUnitAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: BuffDataInfo
+      Entry: 7
+      Data: 51|Framework.VTD_BuffInfo, Game.Runtime
+    - Name: BuffNodeId
+      Entry: 7
+      Data: Framework.VTD_Id, Game.Runtime
+    - Name: IdKey
+      Entry: 6
+      Data: 
+    - Name: Value
+      Entry: 3
+      Data: 10001
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: LayersDetermindByBBValue
+      Entry: 5
+      Data: false
+    - Name: LayersIsAbs
+      Entry: 5
+      Data: false
+    - Name: Layers
+      Entry: 3
+      Data: 1
+    - Name: LayersThatDetermindByBBValue
+      Entry: 7
+      Data: 52|NP_BlackBoardRelationData`1[[System.Int32, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 6
+      Data: 
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: IsMultiTarget
+      Entry: 5
+      Data: false
+    - Name: Targets
+      Entry: 6
+      Data: 
+    - Name: Target
+      Entry: 6
+      Data: 
+    - Name: IncludeSelf
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601729
+    - Name: $v
+      Entry: 7
+      Data: 53|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601729
+    - Name: LinkedIds
+      Entry: 7
+      Data: 54|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 55|NP_MacroAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreActions
+      Entry: 7
+      Data: 56|System.Collections.Generic.List`1[[NP_ClassForStoreAction, Game.Runtime]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 57|NP_ChangeBlackValueAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 58|NP_BlackBoardRelationData`1[[System.Object, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: IsHitUnit
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: true
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 59|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 60|NP_ChangeBlackValueAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 61|NP_BlackBoardRelationData`1[[System.Object, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: HitUnitIds
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: true
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 62|Framework.NP_BBValue_List_Long, Game.Runtime
+    - Name: Value
+      Entry: 7
+      Data: 63|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601730
+    - Name: $v
+      Entry: 7
+      Data: 64|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601730
+    - Name: LinkedIds
+      Entry: 7
+      Data: 65|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 66|NP_LogAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: LogInfo
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601731
+    - Name: $v
+      Entry: 7
+      Data: 67|NP_WaitNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601731
+    - Name: LinkedIds
+      Entry: 7
+      Data: 68|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: Time
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601732
+    - Name: $v
+      Entry: 7
+      Data: 69|NP_ActionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601732
+    - Name: LinkedIds
+      Entry: 7
+      Data: 70|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: NpClassForStoreAction
+      Entry: 7
+      Data: 71|NP_ClassForStoreAction, Game.Runtime
+    - Name: BelongToUnit
+      Entry: 6
+      Data: 
+    - Name: BelongtoRuntimeTree
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601733
+    - Name: $v
+      Entry: 7
+      Data: 72|NP_SequenceNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601733
+    - Name: LinkedIds
+      Entry: 7
+      Data: 73|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601731
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601732
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u5E8F\u5217\u7EC4\u5408\u5668"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601734
+    - Name: $v
+      Entry: 7
+      Data: 74|NP_BlackboardConditionNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601734
+    - Name: LinkedIds
+      Entry: 7
+      Data: 75|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601728
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601729
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601730
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u9ED1\u677F\u6761\u4EF6\u7ED3\u70B9"
+    - Name: Ope
+      Entry: 3
+      Data: 2
+    - Name: Stop
+      Entry: 3
+      Data: 4
+    - Name: NPBalckBoardRelationData
+      Entry: 7
+      Data: 76|NP_BlackBoardRelationData`1[[System.Object, mscorlib]], Game.Runtime
+    - Name: BBKey
+      Entry: 1
+      Data: IsHitUnit
+    - Name: WriteOrCompareToBB
+      Entry: 5
+      Data: false
+    - Name: NP_BBValue
+      Entry: 7
+      Data: 77|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807327254678601735
+    - Name: $v
+      Entry: 7
+      Data: 78|NP_ParallelNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807327254678601735
+    - Name: LinkedIds
+      Entry: 7
+      Data: 79|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601733
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601734
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 1
+      Data: "\u5E76\u884C\u7EC4\u5408\u5668"
+    - Name: SuccessPolicy
+      Entry: 3
+      Data: 1
+    - Name: FailurePolicy
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1807319661176422408
+    - Name: $v
+      Entry: 7
+      Data: 80|NP_RootNodeData, Game.Runtime
+    - Name: id
+      Entry: 3
+      Data: 1807319661176422408
+    - Name: LinkedIds
+      Entry: 7
+      Data: 81|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 1807327254678601735
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NodeDes
+      Entry: 6
+      Data: 
+    - Name: m_Root
+      Entry: 6
+      Data: 
+    - Name: IsLoop
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NP_BBValueManager
+      Entry: 7
+      Data: 82|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 83|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Duration
+    - Name: $v
+      Entry: 7
+      Data: 84|Framework.NP_BBValue_Float, Game.Runtime
+    - Name: Value
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: IsHitUnit
+    - Name: $v
+      Entry: 7
+      Data: 85|Framework.NP_BBValue_Bool, Game.Runtime
+    - Name: Value
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: HitUnitIds
+    - Name: $v
+      Entry: 7
+      Data: 86|Framework.NP_BBValue_List_Long, Game.Runtime
+    - Name: Value
+      Entry: 7
+      Data: 87|System.Collections.Generic.List`1[[System.Int64, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NpBlackBoardDataManager
+      Entry: 7
+      Data: 88|NP_BlackBoardDataManager, Game.Runtime
+    - Name: BBValues
+      Entry: 7
+      Data: 89|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ANP_BBValue,
+        Game.Runtime]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 41
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Duration [10000]
+    - Name: $v
+      Entry: 9
+      Data: 42
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: NeedDestroyCollider [10000]
+    - Name: $v
+      Entry: 9
+      Data: 43
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EventValues
+      Entry: 7
+      Data: 90|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Ids
+      Entry: 7
+      Data: 91|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int64,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 41
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  edges:
+  - GUID: 6d835b43-9d8b-4274-8951-60e520c137ac
+    owner: {fileID: 11400000}
+    inputNodeGUID: 09d3b98a-0df1-4ab4-aa27-4b1d3b02c545
+    outputNodeGUID: 53bdfc38-8532-48ea-974e-f1423677c720
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: d6f671b6-4af8-4227-a4b9-c55f9ff949b5
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4caa075d-c4b1-48a9-87c1-69c292437a1c
+    outputNodeGUID: 09d3b98a-0df1-4ab4-aa27-4b1d3b02c545
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 83257225-de7d-4c2c-a9f2-4f363fb2c8aa
+    owner: {fileID: 11400000}
+    inputNodeGUID: 10a4ea43-503a-4d06-aee3-dcc72279e4bd
+    outputNodeGUID: 09d3b98a-0df1-4ab4-aa27-4b1d3b02c545
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: da4bad88-8e68-4c8b-8687-95a078e84e44
+    owner: {fileID: 11400000}
+    inputNodeGUID: b240edbd-4928-4161-a672-b240d2f9c13e
+    outputNodeGUID: 10a4ea43-503a-4d06-aee3-dcc72279e4bd
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: af3dd25a-11c7-4edf-b8fe-f966c9920d35
+    owner: {fileID: 11400000}
+    inputNodeGUID: fc4e5cde-627a-4e30-a8f1-71c39061ad0e
+    outputNodeGUID: b240edbd-4928-4161-a672-b240d2f9c13e
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 217208ee-c610-47d6-b239-8a7ea539af28
+    owner: {fileID: 11400000}
+    inputNodeGUID: 72ad2d7c-42b2-4345-b236-9bb7a3271bee
+    outputNodeGUID: 10a4ea43-503a-4d06-aee3-dcc72279e4bd
+    inputFieldName: PrevNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  stackNodes: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 150
+      height: 200
+    opened: 0
+    editorType:
+      serializedType: ConditionalProcessorView, NodeGraphProcessor.Examples, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  position: {x: 390.66666, y: -79.333336, z: 0}
+  scale: {x: 1, y: 1, z: 1}
+  Name: Collider_DefaultColliderBehave
+  IdInConfig: 10000
+  SavePathClient: Assets/Res/Configs/BehaveConfigs
+  references:
+    version: 2
+    RefIds: []

@@ -23,19 +23,49 @@ namespace Framework
         /// <summary>
         /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal
         /// </summary>
+        /// <param name="npDataSupportor">Buff数据归属的数据块</param>
+        /// <param name="buffNodeId">Buff节点的Id</param>
+        /// <param name="theUnitFrom">Buff来源者</param>
+        /// <param name="theUnitBelongTo">Buff寄生者</param>
+        /// <returns></returns>
+        public static IBuffSystem AcquireBuff(NP_DataSupportor npDataSupportor, long buffNodeId, Unit theUnitFrom,
+            Unit theUnitBelongTo,
+            NP_RuntimeTree theSkillCanvasBelongTo)
+        {
+            return AcquireBuff((npDataSupportor.BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData,
+                buffNodeId,
+                theUnitFrom, theUnitBelongTo,
+                theSkillCanvasBelongTo);
+        }
+
+        /// <summary>
+        /// 取得Buff,Buff流程是Acquire->OnInit(CalculateTimerAndOverlay)->AddTemp->经过筛选->AddReal
+        /// </summary>
         /// <param name="buffDataBase">Buff数据</param>
         /// <param name="buffNodeId"></param>
         /// <param name="theUnitFrom">Buff来源者</param>
         /// <param name="theUnitBelongTo">Buff寄生者</param>
         /// <param name="theSkillCanvasBelongTo"></param>
         /// <returns></returns>
-        public static IBuffSystem AcquireBuff(BuffDataBase buffDataBase, Unit theUnitFrom,
-            Unit theUnitBelongTo)
+        public static IBuffSystem AcquireBuff(BuffDataBase buffDataBase, long buffNodeId, Unit theUnitFrom,
+            Unit theUnitBelongTo,
+            NP_RuntimeTree theSkillCanvasBelongTo)
         {
             IBuffSystem resultBuff = ReferencePool.Allocate(AllBuffSystemTypes[buffDataBase.GetType()]) as IBuffSystem;
+            resultBuff.BelongtoRuntimeTree = theSkillCanvasBelongTo;
+            resultBuff.BuffNodeId = buffNodeId;
             resultBuff.Init(buffDataBase, theUnitFrom, theUnitBelongTo, TimeInfo.Instance.ClientNow());
             return resultBuff;
         }
+        
+        public static IBuffSystem AcquireBuff(long rootNodeId, long buffNodeId, Unit theUnitFrom, Unit theUnitBelongTo,
+            NP_RuntimeTree theSkillCanvasBelongTo)
+        {
+            return AcquireBuff(
+                (theUnitFrom.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>().GetNPTreeData(rootNodeId)
+                    .BuffNodeDataDic[buffNodeId] as NormalBuffNodeData)?.BuffData, buffNodeId,
+                theUnitFrom, theUnitBelongTo, theSkillCanvasBelongTo);
+        } 
         
         /// <summary>
         /// 回收一个Buff

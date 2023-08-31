@@ -9,6 +9,6 @@ namespace Framework
     public class RefreshTargetBuffTimeBuffData : BuffDataBase
     {
         [BoxGroup("自定义项")] [LabelText("要刷新的BuffNodeId")]
-        public List<string> TheBuffNodeIdToBeRefreshed = new List<string>();
+        public List<VTD_Id> TheBuffNodeIdToBeRefreshed = new List<VTD_Id>();
     }
 }

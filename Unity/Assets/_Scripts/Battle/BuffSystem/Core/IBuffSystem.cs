@@ -4,6 +4,11 @@
     public interface IBuffSystem
     {
         /// <summary>
+        /// 归属的运行时行为树实例
+        /// </summary>
+        NP_RuntimeTree BelongtoRuntimeTree { get; set; }
+
+        /// <summary>
         /// Buff当前状态
         /// </summary>
         BuffState BuffState { get; set; }
@@ -22,6 +27,11 @@
         /// Buff数据
         /// </summary>
         BuffDataBase BuffData { get; set; }
+
+        /// <summary>
+        /// Buff节点Id，用于索引具体的BuffNode
+        /// </summary>
+        long BuffNodeId { get; set; }
 
         /// <summary>
         /// 来自哪个Unit

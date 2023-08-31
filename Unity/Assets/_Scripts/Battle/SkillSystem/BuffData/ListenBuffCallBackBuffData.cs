@@ -10,7 +10,7 @@ namespace Framework
     {
         [BoxGroup("自定义项")]
         [LabelText("要监听的事件ID标识")]
-        public string EventId;
+        public VTD_EventId EventId;
 
         /// <summary>
         /// 是否需要判断层数

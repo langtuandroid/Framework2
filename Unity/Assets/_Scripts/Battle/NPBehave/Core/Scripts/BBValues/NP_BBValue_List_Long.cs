@@ -150,5 +150,18 @@ namespace Framework
 
         #endregion
     }
-
+    
+    [HideLabel]
+    [HideReferenceObjectPicker]
+    public class BlackboardOrValue_List_Long : ABlackboardOrValue<List<long>>
+    {
+        public BlackboardOrValue_List_Long(List<long> value = null) : base()
+        {
+            OriginValue = value;
+            if (OriginValue != default)
+            {
+                UseBlackboard = false;
+            }
+        }
+    }
 }
