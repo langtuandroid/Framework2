@@ -20,9 +20,16 @@ public class NP_OtherTreeBBKeyData
 #if UNITY_EDITOR
     private NP_DataSupportor dataSupportor;
 
-    [HideInInspector]
-    public int configId;
+    private int configId;
 
+    private bool isSkill;
+
+    public void Refresh(int configId, bool isSkill)
+    {
+        this.isSkill = isSkill;
+        this.configId = configId;
+    }
+    
     private List<string> keys;
 
     private IEnumerable<string> GetBBKeys()
@@ -36,11 +43,22 @@ public class NP_OtherTreeBBKeyData
 
         if (dataSupportor == null || dataSupportor.ExcelId != configId)
         {
-            var data = BehaveConfigFactory.Instance.Get(configId);
-            if (data != null)
+            string configPath = null;
+            if (isSkill)
+            {
+                var data = SkillBehaveConfigFactory.Instance.Get(configId);
+                configPath = data?.ConfigPath;
+            }
+            else
+            {
+                var data = BehaveConfigFactory.Instance.Get(configId);
+                configPath = data?.ConfigPath;
+            }
+
+            if (!string.IsNullOrEmpty(configPath))
             {
                 this.dataSupportor =
-                    SerializeHelper.Deserialize<NP_DataSupportor>(File.ReadAllText(data.ConfigPath));
+                    SerializeHelper.Deserialize<NP_DataSupportor>(File.ReadAllText(configPath));
             }
         }
 

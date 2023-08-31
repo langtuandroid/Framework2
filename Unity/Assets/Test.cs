@@ -16,6 +16,5 @@ public class Test : MonoBehaviour
 
     private void Update()
     {
-        Agent.SetDestination(target.position);
     }
 }
