@@ -70,24 +70,10 @@ public abstract class NP_NodeDataBase
         return null;
     }
 
-    public virtual ExtraBehave CreateTree(Unit unit, NP_RuntimeTree runtimeTree)
-    {
-        return default;
-    }
-
     public override string ToString()
     {
         return GetType().ToString();
     }
-}
-
-public class ExtraBehave
-{
-    public Root Root;
-    public NP_DataSupportor DataSupportor;
-    public IReadOnlyDictionary<IBlackboardOrValue, NP_OtherTreeBBKeyData> PassValue;
-    public IReadOnlyDictionary<NP_BlackBoardKeyData, NP_OtherTreeBBKeyData> GetValue;
-    public long LinkedNodeId;
 }
 
 public enum NodeType
