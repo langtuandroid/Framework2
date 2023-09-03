@@ -37,7 +37,7 @@ public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComp
         {
             m_RootNode.OnFinish += ()=>
             {
-                (parent as NP_RuntimeTreeManager).RemoveTree(Id);
+                (parent as NP_RuntimeTreeManager)?.RemoveTree(Id);
             };
         }
     }

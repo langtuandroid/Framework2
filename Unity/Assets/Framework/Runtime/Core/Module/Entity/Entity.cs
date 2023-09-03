@@ -277,9 +277,9 @@ namespace Framework
                 Entity preDomain = this.domain;
                 this.domain = value;
 
+                this.Id = IdGenerator.Instance.GenerateInstanceId();
                 if (preDomain == null)
                 {
-                    this.Id = IdGenerator.Instance.GenerateInstanceId();
                     this.IsRegister = true;
                 }
 

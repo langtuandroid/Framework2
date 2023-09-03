@@ -170,6 +170,7 @@ public class NP_BlackBoardRelationData<T>
     /// <param name="value">值</param>
     public void SetBlackBoardValue(Blackboard blackboard, T value)
     {
+        if (string.IsNullOrEmpty(BBKey)) return;
         blackboard.Set(this.BBKey, value);
     }
 

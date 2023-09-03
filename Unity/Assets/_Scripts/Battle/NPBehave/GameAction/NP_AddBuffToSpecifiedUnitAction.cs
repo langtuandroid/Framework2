@@ -37,6 +37,7 @@ public class NP_AddBuffToSpecifiedUnitAction : NP_ClassForStoreAction
 
         UnitComponent unitComponent = BelongToUnit.DomainScene()
             .GetComponent<UnitComponent>();
+        Log.Msg("添加buff", Target);
 
         if (IsMultiTarget)
         {

@@ -28,13 +28,6 @@
         },
         {
             "Address": "",
-            "AssetPath": "Assets/Res/Configs/UnitConfig.json",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependIDs": []
-        },
-        {
-            "Address": "",
             "AssetPath": "Assets/Res/Configs/BehaveConfigs/BaseAI.bytes",
             "AssetTags": [],
             "BundleID": 1,
@@ -57,6 +50,13 @@
         {
             "Address": "",
             "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_FarSingleAttack.bytes",
+            "AssetTags": [],
+            "BundleID": 2,
+            "DependIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Res/Configs/SkillConfigs/Skill_FarSingleAttackDamage.bytes",
             "AssetTags": [],
             "BundleID": 2,
             "DependIDs": []

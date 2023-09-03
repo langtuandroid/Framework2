@@ -36,7 +36,7 @@ public class SkillDesNodeData : BuffNodeDataBase
     [HideLabel]
     [Title("技能CD", Bold = false)]
     [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-    public Dictionary<int, long> SkillCD = new();
+    public Dictionary<int, float> SkillCD = new();
 
     [TabGroup("基础信息")]
     [HideLabel]

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Framework;
 
 namespace NPBehave
@@ -62,7 +63,6 @@ namespace NPBehave
             this.m_ParentBlackboard = null;
             this.m_Clock = mClock;
             id = aa++;
-            Log.Msg($"创建了黑板 {id}");
             NotifiyObserversActionCache = NotifiyObservers;
         }
 
@@ -348,6 +348,17 @@ namespace NPBehave
             }
 
             return observers;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in m_Data)
+            {
+                sb.Append($"key:{item.Key},value:{item.Value}\n");
+            }
+
+            return sb.ToString();
         }
     }
 }

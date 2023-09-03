@@ -1,7 +1,7 @@
 ﻿using Framework;
 using Unity.Mathematics;
 
-public class FollowTargetComponent : Entity , IUpdateSystem , IAwakeSystem
+public class FollowTargetComponent : Entity, IUpdateSystem, IAwakeSystem
 {
     private Unit targetUnit;
     private float endDis;

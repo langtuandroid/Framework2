@@ -12,10 +12,7 @@ namespace NPBehave
 
         public event System.Action OnFinish;
 
-        public override Blackboard Blackboard
-        {
-            get { return blackboard; }
-        }
+        public override Blackboard Blackboard => blackboard;
 
 
         private Clock clock;

@@ -23,7 +23,7 @@ public class NP_SetCDInfoAction : NP_ClassForStoreAction
         SkillDesNodeData skillDesNodeData =
             (SkillDesNodeData)BelongtoRuntimeTree.BelongNP_DataSupportor.BuffNodeDataDic[DataId.Value];
         int skillLevel = unit.GetComponent<SkillManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId);
-        long cd = skillDesNodeData.SkillCD[
+        var cd = skillDesNodeData.SkillCD[
             unit.GetComponent<SkillManagerComponent>().GetSkillLevel(skillDesNodeData.SkillId)];
         cdComponent.SetCD(unit.Id, skillDesNodeData.SkillName + unit.Id, cd, cd * CdMult);
     }

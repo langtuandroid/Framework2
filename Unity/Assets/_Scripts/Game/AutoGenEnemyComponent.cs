@@ -41,7 +41,6 @@ public class AutoGenEnemyComponent : Entity, IAwakeSystem, IUpdateSystem
 
             if (moveCom.remainingDistance <= 0.1f)
             {
-                Debug.Log($"pos:{moveCom.transform.position}  target:{moveCom.destination}  remain:{moveCom.remainingDistance}");
                 moveCom.gameObject.DestroySelf();
                 this.DomainScene().GetComponent<UnitComponent>().Get(moveCom.GetComponent<GoConnectedUnitId>().UnitId)
                     .Dispose();

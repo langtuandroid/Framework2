@@ -20,7 +20,7 @@ namespace Framework
         public void AddTree(long runTimeID, long rootId, NP_RuntimeTree npRuntimeTree)
         {
             runtimeId2Tree.Add(runTimeID, npRuntimeTree);
-            rootId2TreeRuntimeId.Add(rootId, runTimeID);
+            rootId2TreeRuntimeId[rootId] = runTimeID;
         }
 
         /// <summary>

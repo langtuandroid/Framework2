@@ -21,6 +21,7 @@ public static class FlyObjHelper
 
         Unit objUnit = UnitFactory.CreateUnit(scene);
         action.FlyObjUnitKey.SetBlackBoardValue(runtimeTree.GetBlackboard(), objUnit.Id);
+        Log.Msg("创建了tree:", runtimeTree.Id, "unit", objUnit.Id);
         GameObject selfTrans =
             await ResComponent.Instance.InstantiateAsync(prefabPath);
         objUnit.Position = rootTrans.position;

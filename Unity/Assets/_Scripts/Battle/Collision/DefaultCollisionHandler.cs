@@ -16,8 +16,6 @@ public class DefaultCollisionHandler: ACollisionHandler
 
         RoleCast roleCast = aRole.GetRoleCastToTarget(bColliderComponent.BelongToUnit);
 
-        Log.Msg(aColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name, "碰到了",
-            bColliderComponent.BelongToUnit.GetComponent<GameObjectComponent>().GameObject.name);
         if (aColliderData.OnlyTarget != default)
         {
             if (b.Unit.Id != aColliderData.OnlyTarget) return;
@@ -35,6 +33,8 @@ public class DefaultCollisionHandler: ACollisionHandler
         Log.Msg(aColliderComponent.BelongToUnit, "撞到了", bColliderComponent.BelongToUnit);
 
         Blackboard blackboard = aColliderData.Blackboard;
+        
+        Log.Msg("tree",aColliderData.Blackboard);
         
         if (!string.IsNullOrEmpty(aColliderData.HitUnitListBlackboardKey))
         {
