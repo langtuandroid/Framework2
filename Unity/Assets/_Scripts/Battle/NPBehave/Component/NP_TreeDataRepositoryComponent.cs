@@ -53,7 +53,11 @@ public class NP_TreeDataRepositoryComponent : Entity, IAwakeSystem
         result.ExcelId = source.ExcelId;
         result.BuffNodeDataDic = source.BuffNodeDataDic;
         result.NPBehaveTreeDataId = source.NPBehaveTreeDataId;
-        result.NP_DataSupportorDic = source.NP_DataSupportorDic;
+        result.NP_DataSupportorDic = new Dictionary<long, NP_NodeDataBase>();
+        foreach (KeyValuePair<long, NP_NodeDataBase> dataSupportor in source.NP_DataSupportorDic)
+        {
+            result.NP_DataSupportorDic[dataSupportor.Key] = dataSupportor.Value.DeepCopy();
+        }
         result.NP_BBValueManager = new Dictionary<string, ANP_BBValue>();
         foreach (KeyValuePair<string, ANP_BBValue> valuePair in source.NP_BBValueManager)
         {

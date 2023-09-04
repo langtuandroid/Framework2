@@ -28,7 +28,7 @@ namespace NPBehave
         }
 
         private static int aa;
-        private int id;
+        public int debugId;
 
         private Clock m_Clock;
         private Dictionary<string, ANP_BBValue> m_Data = new Dictionary<string, ANP_BBValue>();
@@ -62,7 +62,7 @@ namespace NPBehave
         {
             this.m_ParentBlackboard = null;
             this.m_Clock = mClock;
-            id = aa++;
+            debugId = aa++;
             NotifiyObserversActionCache = NotifiyObservers;
         }
 
@@ -353,9 +353,10 @@ namespace NPBehave
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("id:" + debugId);
             foreach (var item in m_Data)
             {
-                sb.Append($"key:{item.Key},value:{item.Value}\n");
+                sb.AppendLine($"key:{item.Key},value:{item.Value}");
             }
 
             return sb.ToString();

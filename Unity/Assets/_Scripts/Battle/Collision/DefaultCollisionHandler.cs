@@ -34,7 +34,6 @@ public class DefaultCollisionHandler: ACollisionHandler
 
         Blackboard blackboard = aColliderData.Blackboard;
         
-        Log.Msg("tree",aColliderData.Blackboard);
         
         if (!string.IsNullOrEmpty(aColliderData.HitUnitListBlackboardKey))
         {
@@ -51,6 +50,7 @@ public class DefaultCollisionHandler: ACollisionHandler
         {
             blackboard.Set(aColliderData.IsHitBlackboardKey, true);
         }
+
     }
 
     public override void HandleCollisionStay(ColliderUserData a, ColliderUserData b)

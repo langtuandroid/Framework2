@@ -24,7 +24,6 @@ public class NP_DestroyUnitAction : NP_ClassForStoreAction
         long destroyUnitId = IsDestroySelf.GetValue(BelongtoRuntimeTree.GetBlackboard())
             ? BelongtoRuntimeTree.BelongToUnit.Id
             : DestroyTarget.GetValue(BelongtoRuntimeTree.GetBlackboard());
-        Log.Msg("tree:", BelongtoRuntimeTree.Id, "销毁了", destroyUnitId);
         if (IsDestroyRelativeGameObject.GetValue(BelongtoRuntimeTree.GetBlackboard()))
         {
             unitComponent.Get(destroyUnitId).GetComponent<GameObjectComponent>()?.DestroyGameObject();

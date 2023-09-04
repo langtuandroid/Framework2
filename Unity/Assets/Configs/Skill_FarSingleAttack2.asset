@@ -2575,8 +2575,8 @@ MonoBehaviour:
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 384, y: -198, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: 456.66666, y: -96, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
   Name: Skill_FarSingleAttackDamage
   IdInConfig: 10003
   SavePathClient: Assets/Res/Configs/SkillConfigs

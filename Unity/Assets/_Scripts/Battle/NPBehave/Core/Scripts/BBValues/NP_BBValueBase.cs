@@ -44,6 +44,11 @@ namespace Framework
         {
             Value = bbValue;
         }
+
+        public override string ToString()
+        {
+            return GetValue().ToString();
+        }
     }
 }
 
