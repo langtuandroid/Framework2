@@ -23,28 +23,21 @@ public class NP_DebugGraphView : UniversalGraphView
 
     public NP_DebugGraphView(EditorWindow window) : base(window)
     {
+        InitType();
     }
 
     private DoubleMap<Type, string> viewNode2BehaveName = new();
     private DoubleMap<Type, string> viewNode2BuffTypeName = new();
     private DoubleMap<Node, BaseNodeView> behaveNode2View = new();
     private NP_RuntimeTree currentTree;
-    
-    public void Init(GameObject gameObject)
+
+    public void Refresh(NP_RuntimeTree tree)
     {
-        if (gameObject == null) return;
-        if (gameObject.GetComponent<GoConnectedUnitId>() == null)
-        {
-            return;
-        }
         behaveNode2View.Clear();
-        InitType();
-        long unitId = gameObject.GetComponent<GoConnectedUnitId>().UnitId;
-        Unit unit = Root.Instance.Scene.GetComponent<CurrentScenesComponent>().Scene.GetComponent<UnitComponent>()
-            .Get(unitId);
-        Dictionary<long, NP_RuntimeTree> trees = unit.GetComponent<NP_RuntimeTreeManager>().runtimeId2Tree;
-        KeyValuePair<long, NP_RuntimeTree> tree = trees.First();
-        CreateGraph(tree.Value);
+        RemoveGroups();
+        RemoveNodeViews();
+        RemoveEdges();
+        CreateGraph(tree);
     }
 
     private void CreateGraph(NP_RuntimeTree tree)
@@ -58,9 +51,7 @@ public class NP_DebugGraphView : UniversalGraphView
         GenAllChildren(viewNode, tree.RootNode, pos);
         GenAllBuff(tree.BelongNP_DataSupportor);
         GenBlackboard(tree.BelongNP_DataSupportor);
-        Debug.Log("创建完成");
         EditorCoroutine.StartCoroutine(Update());
-        Debug.Log("布局完成");
     }
 
     IEnumerator Update()

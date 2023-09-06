@@ -111,7 +111,6 @@ namespace NPBehave
                         }
                     }
 
-                    Debug.Log("");
                     Stopped(successState);
                 }
                 else if (!this.childrenAborted)

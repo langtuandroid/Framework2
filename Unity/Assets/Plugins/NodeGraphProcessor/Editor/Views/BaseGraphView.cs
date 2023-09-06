@@ -957,7 +957,7 @@ namespace GraphProcessor
             nodeViewsPerNode.Remove(nodeView.nodeTarget);
         }
 
-        private void RemoveNodeViews()
+        public void RemoveNodeViews()
         {
             foreach (var nodeView in nodeViews)
                 RemoveElement(nodeView);
@@ -1308,6 +1308,17 @@ namespace GraphProcessor
             pinnedElements.Remove(type);
             Remove(elem);
             graph.ClosePinned(type);
+        }
+
+        public T GetPinned<T>() where T : PinnedElementView
+        {
+            var type = typeof(T);
+            if (pinnedElements.TryGetValue(type, out var view))
+            {
+                return view as T;
+            }
+
+            return null;
         }
 
         public DropdownMenuAction.Status GetPinnedElementStatus<T>() where T : PinnedElementView

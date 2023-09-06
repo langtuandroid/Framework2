@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NP_DebugGraphToolbarView : UniversalToolbarView
 {
@@ -28,11 +29,14 @@ public class NP_DebugGraphToolbarView : UniversalToolbarView
 
     protected override void AddButtons()
     {
-        base.AddButtons();
+        AddToggle("行为树", true, v => graphView.ToggleView<NP_BehaveTreesView>());
+        graphView.ToggleView<NP_BehaveTreesView>();
         AddButton(new GUIContent("选择"),
-            () => { (m_BaseGraphView as NP_DebugGraphView).Init(Selection.activeGameObject); }, false);
-        AddButton(new GUIContent("自动布局"),
-            () => { (m_BaseGraphView as NP_DebugGraphView).AutoSortLayout(); }, false);
+            () =>
+            {
+                graphView.GetPinned<NP_BehaveTreesView>().Refresh(Selection.activeGameObject,
+                    m_BaseGraphView as NP_DebugGraphView);
+            }, false);
         AddButton(new GUIContent("Blackboard", "打开Blackboard数据面板"),
             () =>
             {

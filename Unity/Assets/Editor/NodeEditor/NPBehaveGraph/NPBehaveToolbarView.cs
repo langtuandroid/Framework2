@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NPBehaveToolbarView: UniversalToolbarView
 {
@@ -34,6 +35,8 @@ public class NPBehaveToolbarView: UniversalToolbarView
     protected override void AddButtons()
     {
         base.AddButtons();
+
+ 
             
         AddButton(new GUIContent("AutoLayout", "自动优化布局"),
             () =>

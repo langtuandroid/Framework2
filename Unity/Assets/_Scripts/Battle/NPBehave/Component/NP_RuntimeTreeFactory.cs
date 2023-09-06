@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using NPBehave;
+using UnityExtensions.Paths;
 using Exception = NPBehave.Exception;
+using Path = System.IO.Path;
 
 namespace Framework
 {
@@ -172,15 +174,24 @@ namespace Framework
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
                 .GetNPTreeDataDeepCopyBBValuesOnly(SkillBehaveConfigFactory.Instance.Get(skillConfigId).ConfigPath);
 
-            return CreateNpRuntimeTree(unit, npDataSupportor);
+            var tree = CreateNpRuntimeTree(unit, npDataSupportor);
+#if UNITY_EDITOR
+            tree.SetDebugName(
+                Path.GetFileNameWithoutExtension(SkillBehaveConfigFactory.Instance.Get(skillConfigId).ConfigPath));
+#endif
+            return tree;
         }
 
         public static NP_RuntimeTree CreateBehaveRuntimeTree(Unit unit, int behaveConfigId)
         {
             NP_DataSupportor npDataSupportor = unit.DomainScene().GetComponent<NP_TreeDataRepositoryComponent>()
                 .GetNPTreeDataDeepCopyBBValuesOnly(BehaveConfigFactory.Instance.Get(behaveConfigId).ConfigPath);
-
-            return CreateNpRuntimeTree(unit, npDataSupportor);
+            var tree = CreateNpRuntimeTree(unit, npDataSupportor);
+#if UNITY_EDITOR
+            tree.SetDebugName(
+                Path.GetFileNameWithoutExtension(BehaveConfigFactory.Instance.Get(behaveConfigId).ConfigPath));
+#endif
+            return tree;
         }
 
         /// <summary>

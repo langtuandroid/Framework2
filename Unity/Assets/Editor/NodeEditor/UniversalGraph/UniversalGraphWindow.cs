@@ -51,7 +51,7 @@ public abstract class UniversalGraphWindow : BaseGraphWindow
 
     protected override void InitializeGraphView(BaseGraphView view)
     {
-        // graphView.OpenPinned< ExposedParameterView >();
+        // graphView.OpenPinned<ExposedParameterView>();
         // toolbarView.UpdateButtonStatus();
     }
 }

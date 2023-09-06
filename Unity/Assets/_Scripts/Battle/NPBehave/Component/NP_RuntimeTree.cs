@@ -42,6 +42,13 @@ public class NP_RuntimeTree : Entity, IAwakeSystem<NP_DataSupportor, NP_SyncComp
         }
     }
 
+    public string DebugName { get; private set; }
+
+    public void SetDebugName(string debugName)
+    {
+        DebugName = debugName;
+    }
+
     public Root RootNode => m_RootNode;
 
     /// <summary>
